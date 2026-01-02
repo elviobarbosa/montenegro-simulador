@@ -2478,3 +2478,4 @@ Stack trace:
 [02-Jan-2026 13:59:55 UTC] Hook: plugins.php, Post Type: 
 [02-Jan-2026 13:59:58 UTC] Scripts frontend carregados com sucesso
 [02-Jan-2026 14:00:00 UTC] 💾 [CVCRM] Cache HIT para cvcrm_empreendimento_26
+[02-Jan-2026 14:03:10 UTC] Hook: edit.php, Post Type: terreno
