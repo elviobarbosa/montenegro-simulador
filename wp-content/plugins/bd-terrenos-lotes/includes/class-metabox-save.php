@@ -71,6 +71,24 @@ class TerrenosLotes_MetaBoxSave {
                 update_post_meta($post_id, '_terreno_zoom', $zoom);
                 error_log('Zoom salvo: ' . $zoom);
             }
+
+            // Salvar Facebook Pixel ID
+            if (isset($_POST['facebook_pixel_id'])) {
+                $pixel_id = sanitize_text_field($_POST['facebook_pixel_id']);
+                update_post_meta($post_id, '_facebook_pixel_id', $pixel_id);
+                error_log('Facebook Pixel ID salvo: ' . $pixel_id);
+            } else {
+                delete_post_meta($post_id, '_facebook_pixel_id');
+            }
+
+            // Salvar Facebook Pixel Token
+            if (isset($_POST['facebook_pixel_token'])) {
+                $pixel_token = sanitize_text_field($_POST['facebook_pixel_token']);
+                update_post_meta($post_id, '_facebook_pixel_token', $pixel_token);
+                error_log('Facebook Pixel Token salvo');
+            } else {
+                delete_post_meta($post_id, '_facebook_pixel_token');
+            }
             
             // Salvar dados dos lotes (mais cuidadoso)
             if (isset($_POST['terreno_lotes_data'])) {
