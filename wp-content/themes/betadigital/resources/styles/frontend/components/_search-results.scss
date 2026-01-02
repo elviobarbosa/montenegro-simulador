@@ -1,0 +1,52 @@
+.search-page {
+    @include container(980px, 30px, 60px);
+    @include fluid-size(margin-top, 30px, 60px);
+
+    &__title {
+        @include fluid-size(font-size, 20px, 30px);
+        color: $secondary-color;
+        font-weight: 300;
+        padding-bottom: 40px;
+        margin-bottom: 40px;
+    }
+
+    &__posts {
+        .blog-block__wrapper {
+            max-width: initial;
+            padding-bottom: 5px;
+        }
+    }
+}
+
+.search-results {
+    background-color: $color5
+}
+
+.search-no-results {
+    .search-page__posts {
+        @include container(600px, 30px, 60px);
+    }
+
+    .search-page__container {
+        height: 60vh;
+        display: flex;
+        align-items: center;
+    }
+
+    .search-page {
+        background-repeat: no-repeat;
+        background-position: bottom right;
+        background-size: 300px;
+    }
+    h2 {
+        @include fluid-size(font-size, 24px, 44px);
+        color: $primary-color;
+        text-align: center;
+    }
+
+    p {
+        @include fluid-size(font-size, 20px, 30px);
+        color: $secondary-color;
+        text-align: center;
+    }
+}

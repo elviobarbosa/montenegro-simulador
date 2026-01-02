@@ -1,0 +1,17 @@
+@use "./functions" as fn;
+
+$imgpath: "../../images/bmp/";
+$svgpath: "../../images/svg/";
+
+$variable-prefix: "";
+
+// BREAKPOINTS
+
+$max-vw: 1920px;
+$min-vw: 320px;
+
+$max-width: 1400px;
+:root {
+  --padding-x-container-mobile: 20px;
+  --padding-x-container-desktop: 40px;
+}

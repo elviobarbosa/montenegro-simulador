@@ -1,0 +1,78 @@
+@use "../mixins/breakpoints" as bp;
+@use "../mixins/mixins" as mx;
+@use "../mixins/proportional-image" as pimg;
+
+.ultimos-posts {
+  &__container {
+    display: grid;
+    gap: 20px;
+    grid-auto-flow: dense;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+
+    a {
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .item-post {
+      @include mx.border-radius(12px);
+      background-color: white;
+      overflow: hidden;
+      transition: transform 0.3s;
+      transform: scale(1);
+
+      &:hover {
+        transform: scale(1.05);
+        z-index: 9;
+      }
+
+      &__content-wrapper {
+        padding: 30px 40px;
+      }
+
+      &__thumb {
+        @include pimg.image-proportional(386px, 181px);
+      }
+
+      &__title {
+        font-family: var(--heading-font);
+        font-weight: 700;
+        font-size: 20px;
+        line-height: 100%;
+        letter-spacing: -1%;
+        padding: 0;
+        margin-top: 0;
+        color: var(--primary-color);
+      }
+
+      &__time {
+        font-family: var(--body-font);
+        font-weight: 500;
+        font-style: Medium;
+        font-size: 14px;
+        line-height: 100%;
+        letter-spacing: -1%;
+        color: #9fa5a0;
+      }
+
+      &__content {
+        font-family: var(--body-font);
+        font-weight: 500;
+        font-style: Medium;
+        font-size: 16px;
+        line-height: 25px;
+        letter-spacing: -1%;
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  &__carregar-mais-wrapper {
+    padding: 30px 0;
+    text-align: center;
+  }
+
+  &____carregar-mais-posts {
+    cursor: pointer;
+  }
+}

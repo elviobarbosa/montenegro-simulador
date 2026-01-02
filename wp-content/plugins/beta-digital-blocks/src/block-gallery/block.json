@@ -1,0 +1,32 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 2,
+	"name": "create-block/block-gallery",
+	"version": "0.1.0",
+	"title": "Block Galeria",
+	"category": "beta-digital-category",
+	"icon": "smiley",
+	"description": "Galeria de imagens",
+	"supports": {
+		"html": false
+	},
+	"textdomain": "block-call-to-action",
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"style": "file:./style-index.css",
+	"attributes": {
+		"imageUrl": {
+			"type": "string"
+		  },
+		  "imageId": {
+			"type": "number"
+		  },
+		  "imageAlt": {
+			"type": "string",
+			"source": "attribute",
+			"selector": "img",
+			"attribute": "alt",
+			"default": ""
+		  }
+	}
+}

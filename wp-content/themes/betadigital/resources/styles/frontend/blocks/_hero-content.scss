@@ -1,0 +1,123 @@
+@use "../mixins/breakpoints" as bp;
+@use "../functions" as fn;
+@use "../placeholders/texts";
+
+.editor-styles-wrapper .wp-block-custom-hero-content,
+.hero-content {
+  .button {
+    @include bp.max-xl {
+      display: block;
+      margin-bottom: fn.px-rem(30px);
+    }
+  }
+  @include bp.min-xl {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    gap: 30px;
+
+    &.invert-layout {
+      grid-template-columns: 1fr auto;
+
+      .hero-content__content {
+        order: 2;
+      }
+
+      .hero-content__image {
+        order: 1;
+      }
+    }
+  }
+
+  &__image {
+    img {
+      @include bp.min-lg {
+        width: 100%;
+      }
+    }
+  }
+
+  &__tagline {
+    font-family: var(--body-font);
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 36px;
+    letter-spacing: 0%;
+    vertical-align: middle;
+    margin: 0;
+    padding: 0;
+    text-transform: uppercase;
+
+    @include bp.max-xl {
+      display: none;
+    }
+  }
+
+  &__title {
+    font-family: var(--heading-font);
+    @extend %heading_h2;
+    text-align: center;
+    margin: 0;
+
+    @include bp.min-lg {
+      text-align: left;
+    }
+  }
+
+  &__items {
+    padding: 60px 0;
+    margin: 0;
+    opacity: 1 !important;
+  }
+
+  &__edit-item-container,
+  &__item {
+    list-style: none;
+    opacity: 1 !important;
+    text-align: center;
+
+    @include bp.min-lg {
+      display: flex;
+      column-gap: 20px;
+      text-align: left;
+    }
+
+    &:not(:last-child) {
+      margin-bottom: fn.px-rem(40px);
+    }
+
+    img {
+      width: 100%;
+      height: auto;
+      max-width: 123px;
+      max-height: 123px;
+    }
+
+    span {
+      display: block;
+      opacity: 0.8;
+      font-size: 20px;
+    }
+  }
+
+  &__content {
+    @include bp.min-xl {
+      width: 100%;
+      min-width: 460px;
+      max-width: 560px;
+    }
+  }
+
+  .wp-block-custom-hero-image-desktop {
+    @include bp.max-xl {
+      display: none;
+    }
+  }
+
+  .wp-block-custom-hero-image-mobile {
+    text-align: center;
+    @include bp.min-xl {
+      display: none;
+    }
+  }
+}

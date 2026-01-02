@@ -1,0 +1,13 @@
+{
+  "name": "custom/hero-image-desktop",
+  "title": "Imagem Content Desktop",
+  "parent": [
+    "custom/hero-content"
+  ],
+  "category": "widgets",
+  "icon": "format-image",
+  "supports": {
+    "html": false
+  },
+  "editorScript": "file:./index.js"
+}

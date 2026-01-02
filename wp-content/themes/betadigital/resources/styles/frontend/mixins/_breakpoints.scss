@@ -1,0 +1,90 @@
+$screen-xs-min: 375px;
+$screen-sm-min: 576px;
+$screen-md-min: 768px;
+$screen-lg-min: 992px;
+$screen-xl-min: 1200px;
+$screen-xxl-min: 1366px;
+$screen-xxxl-min: 1440px;
+$screen-xxxxl-min: 1600px;
+
+// BREAKPOINTS
+@mixin between-breakpoints($screen-min, $screen-max) {
+  @media (min-width: $screen-min) and (max-width: $screen-max) {
+    @content;
+  }
+}
+
+@mixin max-sm {
+  @media (max-width: 575.9px) {
+    @content;
+  }
+}
+
+@mixin min-sm {
+  @media (min-width: #{$screen-sm-min}) {
+    @content;
+  }
+}
+
+// Medium devices
+@mixin min-md {
+  @media (min-width: #{$screen-md-min}) {
+    @content;
+  }
+}
+
+@mixin max-md {
+  @media (max-width: #{767.9px}) {
+    @content;
+  }
+}
+
+// Large devices
+@mixin min-lg {
+  @media (min-width: #{$screen-lg-min}) {
+    @content;
+  }
+}
+
+@mixin max-lg {
+  @media (max-width: #{$screen-lg-min}) {
+    @content;
+  }
+}
+
+// Extra large devices
+@mixin min-xl {
+  @media (min-width: #{$screen-xl-min}) {
+    @content;
+  }
+}
+
+@mixin max-xl {
+  @media (max-width: #{$screen-xl-min}) {
+    @content;
+  }
+}
+
+@mixin min-xxl {
+  @media (min-width: #{$screen-xxl-min}) {
+    @content;
+  }
+}
+
+@mixin max-xxxl {
+  @media (min-width: #{$screen-xxxl-min}) {
+    @content;
+  }
+}
+
+@mixin min-xxxl {
+  @media (min-width: #{$screen-xxxl-min}) {
+    @content;
+  }
+}
+
+@mixin min-xxxxl {
+  @media (min-width: #{$screen-xxxxl-min}) {
+    @content;
+  }
+}

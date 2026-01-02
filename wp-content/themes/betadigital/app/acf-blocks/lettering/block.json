@@ -1,0 +1,17 @@
+{
+    "name": "acf/lettering",
+    "title": "Resama lettering",
+    "description": "",
+    "category": "resama-blocks",
+    "icon": "images-alt",
+    "keywords": ["Lettering"],
+    "acf": {
+        "mode": "preview",
+        "renderTemplate": "lettering.php"
+    },
+    "supports": {
+        "anchor": true,
+        "align": false
+    }
+    
+}

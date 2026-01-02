@@ -1,0 +1,16 @@
+.nav-links {
+    list-style-type: none;
+    width: max-content;
+
+    .page-numbers {
+        
+
+        &:not(:last-child) {
+            
+        }
+
+        &.current {
+           
+        }
+    }
+}

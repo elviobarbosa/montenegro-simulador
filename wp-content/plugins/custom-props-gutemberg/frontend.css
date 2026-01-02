@@ -1,0 +1,119 @@
+/* ========================================
+   SISTEMA DE CUSTOMIZAÇÃO DE BLOCOS
+   Estilos modulares para diferentes customizações
+======================================== */
+
+/* ========================================
+   VISIBILIDADE MOBILE - IMAGENS
+======================================== */
+
+/* Oculta imagens marcadas como hidden-on-mobile em dispositivos móveis */
+@media (max-width: 768px) {
+  .wp-block-image.hidden-on-mobile,
+  .hidden-on-mobile {
+    display: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+}
+
+/* Breakpoint para smartphones */
+@media (max-width: 480px) {
+  .wp-block-image.hidden-on-mobile,
+  .hidden-on-mobile {
+    display: none !important;
+  }
+}
+
+/* ========================================
+   ALINHAMENTO MOBILE - TEXTOS
+======================================== */
+
+/* Alinhamento de texto no mobile */
+@media (max-width: 768px) {
+  /* Esquerda */
+  .mobile-text-align-left,
+  .wp-block-paragraph.mobile-text-align-left,
+  .wp-block-heading.mobile-text-align-left,
+  .wp-block-list.mobile-text-align-left {
+    text-align: left !important;
+  }
+
+  /* Centro */
+  .mobile-text-align-center,
+  .wp-block-paragraph.mobile-text-align-center,
+  .wp-block-heading.mobile-text-align-center,
+  .wp-block-list.mobile-text-align-center {
+    text-align: center !important;
+  }
+
+  /* Direita */
+  .mobile-text-align-right,
+  .wp-block-paragraph.mobile-text-align-right,
+  .wp-block-heading.mobile-text-align-right,
+  .wp-block-list.mobile-text-align-right {
+    text-align: right !important;
+  }
+
+  /* Justificado */
+  .mobile-text-align-justify,
+  .wp-block-paragraph.mobile-text-align-justify,
+  .wp-block-heading.mobile-text-align-justify,
+  .wp-block-list.mobile-text-align-justify {
+    text-align: justify !important;
+  }
+}
+
+/* ========================================
+   UTILITÁRIOS GERAIS
+======================================== */
+
+/* Classe genérica para ocultar qualquer elemento no mobile */
+@media (max-width: 768px) {
+  .mobile-hidden {
+    display: none !important;
+  }
+}
+
+/* Classe genérica para mostrar apenas no mobile */
+@media (min-width: 769px) {
+  .mobile-only {
+    display: none !important;
+  }
+}
+
+/* ========================================
+   BREAKPOINTS PERSONALIZÁVEIS
+======================================== */
+
+/* Variáveis CSS para facilitar customização (para navegadores modernos) */
+:root {
+  --mobile-breakpoint: 768px;
+  --mobile-small-breakpoint: 480px;
+}
+
+/* ========================================
+   EXTENSIBILIDADE FUTURA
+======================================== */
+
+/* Placeholder para futuras customizações */
+/* 
+Exemplos de futuras adições:
+
+1. Espaçamento Mobile:
+.mobile-spacing-small { margin: 10px !important; }
+.mobile-spacing-large { margin: 20px !important; }
+
+2. Tamanho de Fonte Mobile:
+.mobile-font-small { font-size: 14px !important; }
+.mobile-font-large { font-size: 18px !important; }
+
+3. Cores Mobile:
+.mobile-text-light { color: #ffffff !important; }
+.mobile-text-dark { color: #000000 !important; }
+
+4. Largura Mobile:
+.mobile-full-width { width: 100% !important; }
+.mobile-half-width { width: 50% !important; }
+
+*/

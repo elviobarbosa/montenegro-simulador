@@ -1,0 +1,17 @@
+{
+    "name": "acf/blog",
+    "title": "Resama Blog",
+    "description": "",
+    "category": "resama-blocks",
+    "icon": "images-alt",
+    "keywords": ["Blog"],
+    "acf": {
+        "mode": "preview",
+        "renderTemplate": "blog.php"
+    },
+    "supports": {
+        "anchor": true,
+        "align": false
+    }
+    
+}

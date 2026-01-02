@@ -1,0 +1,91 @@
+@use "../mixins/mixins" as mx;
+@use "../functions" as fn;
+@use "../variables" as v;
+@use "../mixins/breakpoints" as bp;
+
+.editor-styles-wrapper .wp-block-beta-digital-blocks-card,
+.page .wp-block-beta-digital-blocks-card {
+  @include mx.border-radius(24px);
+  max-width: v.$max-width;
+  box-sizing: border-box;
+  height: 100%;
+
+  @include bp.min-lg {
+    padding: fn.px-rem(38px) fn.px-rem(54px);
+  }
+
+  @include bp.max-lg {
+    padding: fn.px-rem(28px) fn.px-rem(40px);
+  }
+
+  h1.wp-block-heading,
+  h2.wp-block-heading,
+  h3.wp-block-heading,
+  h4.wp-block-heading,
+  h5.wp-block-heading,
+  h6.wp-block-heading {
+    --heading-font: var(--body-font);
+    font-family: var(--heading-font) !important;
+    text-align: center;
+    padding: 0;
+    margin: 0;
+  }
+
+  h2.wp-block-heading {
+    color: var(--light-color);
+    font-size: clamp(34px, calc(2.5vw + 1rem), 48px);
+    font-style: normal;
+    font-weight: 400;
+    line-height: var(40px, 60px);
+    letter-spacing: -1.44px;
+  }
+
+  p {
+    color: var(--light-color);
+    @include bp.max-lg {
+      font-size: fn.px-rem(16px);
+    }
+  }
+  .wp-block-image {
+    @include bp.min-lg {
+      padding-top: fn.px-rem(40px);
+      padding-bottom: fn.px-rem(40px);
+    }
+
+    @include bp.max-lg {
+      padding-top: 0;
+      padding-bottom: 0;
+    }
+  }
+
+  .card-block-button {
+    text-align: center;
+
+    @include bp.max-lg {
+      padding-top: fn.px-rem(20px);
+    }
+
+    a {
+      color: var(--light-color);
+      text-align: center;
+      font-family: var(--body-font);
+      font-size: 18px;
+      font-style: normal;
+      font-weight: 500;
+      line-height: 27.903px;
+      text-decoration: none;
+
+      display: inline-block;
+      padding: 20px 32px;
+      justify-content: center;
+      align-items: center;
+      gap: 3.285px;
+      align-self: stretch;
+
+      border-radius: 13.844px;
+      background: rgba(0, 0, 0, 0.26);
+
+      @include mx.border-radius(12px);
+    }
+  }
+}

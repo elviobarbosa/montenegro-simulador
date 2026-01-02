@@ -1,0 +1,51 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 2,
+	"name": "beta-digital-blocks/depoimento",
+	"title": "Depoimento",
+	"category": "beta-digital-category",
+	"icon": "comments",
+	"description": "Bloco para depoimentos.",
+	"textdomain": "beta-digital-blocks",
+	"attributes": {
+		"title": {
+			"type": "string",
+			"default": ""
+		},
+		"subtitle": {
+			"type": "string",
+			"default": ""
+		},
+		"image": {
+			"type": "object",
+			"default": {
+				"url": "",
+				"alt": "",
+				"id": 0
+			}
+		},
+		"videoUrl": {
+			"type": "string",
+			"default": ""
+		},
+		"backgroundColor": {
+			"type": "string",
+			"default": "var(--wp--preset--color--green-300)"
+		},
+		"textAlign": {
+			"type": "string",
+			"default": "left"
+		},
+		"subtitleAlignMobile": {
+			"type": "string",
+			"default": "left"
+		}
+	},
+	"supports": {
+		"align": true,
+		"html": false
+	},
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./editor.css",
+	"style": "file:./style.css"
+}

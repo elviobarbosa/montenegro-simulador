@@ -1,0 +1,69 @@
+@use "../typography" as type;
+@use "../mixins/" as mx;
+@use "../functions" as fn;
+
+.button {
+  text-decoration: none;
+  border: none;
+  font-weight: 600;
+  line-height: 24px;
+  text-align: center;
+  text-transform: uppercase;
+  display: inline-block;
+  box-sizing: border-box;
+  @include mx.border-radius(12px);
+
+  &:focus {
+    outline: 0;
+  }
+
+  &--normal {
+    @include mx.max-lg {
+      padding: fn.px-rem(10px) fn.px-rem(20px);
+      font-size: 16px;
+    }
+
+    @include mx.min-lg {
+      padding: fn.px-rem(20px) fn.px-rem(30px);
+      font-size: 18px;
+    }
+  }
+
+  &--primary {
+    color: var(--wp--preset--color--white);
+    background-color: var(--wp--preset--color--primary);
+    transition: all 0.5s ease-in-out;
+
+    &:hover {
+      background-color: var(--wp--preset--color--secondary);
+      transition: all 0.5s ease-in-out;
+    }
+  }
+
+  &--secondary {
+    color: var(--wp--preset--color--white);
+    background-color: var(--wp--preset--color--secondary);
+    transition: all 0.5s ease-in-out;
+
+    &:hover {
+      background-color: var(--wp--preset--color--primary);
+      transition: all 0.5s ease-in-out;
+    }
+  }
+}
+
+@keyframes btn-marquee {
+  0% {
+    transform: translateX(0%);
+  }
+  50% {
+    transform: translateX(50%);
+  }
+  100% {
+    transform: translateX(0%);
+  }
+}
+
+.aligncenter.wp-block-acf-button-arrow {
+  text-align: center;
+}

@@ -1,0 +1,163 @@
+// style.scss - Estilos para frontend e editor
+.custom-container-block {
+	// Aplicar as variáveis CSS customizadas
+	max-width: var(--max-width, 100%) !important;
+	height: var(--height);
+	margin: 0 auto;
+
+	// Breakpoint para mobile (até 768px)
+	@media (max-width: 768px) {
+		display: var(--display-mobile, block);
+		padding: var(--padding-mobile, 0);
+
+		&.custom-container-block {
+			flex-direction: var(--flex-direction-mobile, column);
+			justify-content: var(--justify-content-mobile, flex-start);
+			align-items: var(--align-items-mobile, stretch);
+		}
+	}
+
+	// Breakpoint para desktop (769px+)
+	@media (min-width: 769px) {
+		display: var(--display-desktop, block);
+		padding: var(--padding-desktop, 0);
+
+		&.custom-container-block {
+			flex-direction: var(--flex-direction-desktop, row);
+			justify-content: var(--justify-content-desktop, flex-start);
+			align-items: var(--align-items-desktop, stretch);
+		}
+	}
+
+	// Garantir que funciona quando display é flex
+	&.custom-container-block {
+		box-sizing: border-box;
+
+		// Reset para garantir comportamento consistente
+		* {
+			box-sizing: inherit;
+		}
+	}
+
+	// Estilos específicos para quando é flexbox
+	&[style*="--display-desktop: flex"],
+	&[style*="--display-mobile: flex"] {
+		// Garantir que os filhos diretos sejam flexíveis
+		> .wp-block {
+			flex: 1 1 auto;
+			min-width: 0; // Previne overflow em flex items
+		}
+	}
+
+	// Estilos para alinhamentos específicos
+	// Quando justify-content é space-between ou space-around
+	&[style*="space-between"],
+	&[style*="space-around"] {
+		> .wp-block:first-child {
+			margin-left: 0;
+		}
+
+		> .wp-block:last-child {
+			margin-right: 0;
+		}
+	}
+
+	// Melhorias para o editor
+	.block-editor-block-list__layout & {
+		min-height: 50px;
+		border: 1px dashed #ccc;
+		position: relative;
+
+		&:hover {
+			border-color: #007cba;
+		}
+
+		// Indicador visual quando vazio
+		&:empty::before {
+			content: "Container Responsivo - Adicione blocos aqui";
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			color: #999;
+			font-size: 14px;
+			pointer-events: none;
+		}
+	}
+}
+
+// Estilos específicos para diferentes resoluções
+// Mobile First Approach
+.custom-container-block {
+	// Base styles (mobile)
+	width: 100%;
+
+	// Tablet
+	@media (min-width: 769px) and (max-width: 1024px) {
+		// Estilos específicos para tablet se necessário
+	}
+
+	// Desktop
+	@media (min-width: 1025px) {
+		// Estilos específicos para desktop se necessário
+	}
+
+	// Large screens
+	@media (min-width: 1400px) {
+		// Estilos para telas grandes se necessário
+	}
+}
+
+// Utilities para casos específicos
+.custom-container-block {
+	// Quando usado com align wide
+	&.alignwide {
+		max-width: var(--wp--style--global--wide-size, 1200px);
+	}
+
+	// Quando usado com align full
+	&.alignfull {
+		max-width: none;
+		width: 100vw;
+		margin-left: calc(50% - 50vw);
+		margin-right: calc(50% - 50vw);
+	}
+
+	// Gap entre elementos filhos quando é flex
+	&[style*="flex"] {
+		gap: var(--wp--style--block-gap, 1rem);
+	}
+}
+
+// Estilos para casos específicos de flexbox
+.custom-container-block {
+	// Quando flex-direction é column
+	&[style*="column"] {
+		> .wp-block {
+			width: 100%;
+		}
+	}
+
+	// Quando flex-direction é row
+	&[style*="row"] {
+		> .wp-block {
+			flex: 1 1 0%;
+		}
+	}
+
+	// Alinhamentos específicos
+	&[style*="align-items-desktop: center"],
+	&[style*="align-items-mobile: center"] {
+		> .wp-block {
+			align-self: center;
+		}
+	}
+}
+
+// Compatibilidade com temas
+.wp-site-blocks .custom-container-block,
+.wp-block-group .custom-container-block {
+	// Garantir que herda corretamente os estilos do tema
+	color: inherit;
+	font-family: inherit;
+}

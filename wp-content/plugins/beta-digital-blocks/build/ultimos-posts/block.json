@@ -1,0 +1,15 @@
+{
+  "apiVersion": 2,
+  "name": "custom/ultimos-posts",
+  "title": "Últimos Posts",
+  "category": "beta-digital-category",
+  "icon": "list-view",
+  "description": "Lista os últimos posts com botão para carregar mais.",
+  "supports": {
+    "html": false
+  },
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./editor.css",
+  "render": "file:./render.php",
+  "viewScript": "file:./view.js"
+}

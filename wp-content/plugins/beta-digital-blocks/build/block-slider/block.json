@@ -1,0 +1,31 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 2,
+  "name": "beta-digital/block-slider",
+  "version": "0.1.0",
+  "title": "Slider",
+  "category": "beta-digital-category",
+  "icon": "slides",
+  "description": "Slider de imagens",
+  "supports": {
+    "html": false
+  },
+  "textdomain": "bd-block-slider",
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "style": "file:./style-index.css",
+  "attributes": {
+    "align": {
+      "type": "string",
+      "default": "center"
+    },
+    "termId": {
+      "type": "number",
+      "default": 0
+    },
+    "numSlides": {
+      "type": "number",
+      "default": 3
+    }
+  }
+}

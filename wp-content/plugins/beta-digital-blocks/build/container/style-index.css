@@ -1,0 +1,98 @@
+/*!*************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[4].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[4].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[4].use[3]!./src/container/style.scss ***!
+  \*************************************************************************************************************************************************************************************************************************************************/
+.custom-container-block {
+  max-width: var(--max-width, 100%) !important;
+  height: var(--height);
+  margin: 0 auto;
+}
+@media (max-width: 768px) {
+  .custom-container-block {
+    display: var(--display-mobile, block);
+    padding: var(--padding-mobile, 0);
+  }
+  .custom-container-block.custom-container-block {
+    flex-direction: var(--flex-direction-mobile, column);
+    justify-content: var(--justify-content-mobile, flex-start);
+    align-items: var(--align-items-mobile, stretch);
+  }
+}
+@media (min-width: 769px) {
+  .custom-container-block {
+    display: var(--display-desktop, block);
+    padding: var(--padding-desktop, 0);
+  }
+  .custom-container-block.custom-container-block {
+    flex-direction: var(--flex-direction-desktop, row);
+    justify-content: var(--justify-content-desktop, flex-start);
+    align-items: var(--align-items-desktop, stretch);
+  }
+}
+.custom-container-block.custom-container-block {
+  box-sizing: border-box;
+}
+.custom-container-block.custom-container-block * {
+  box-sizing: inherit;
+}
+.custom-container-block[style*="--display-desktop: flex"] > .wp-block, .custom-container-block[style*="--display-mobile: flex"] > .wp-block {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+.custom-container-block[style*=space-between] > .wp-block:first-child, .custom-container-block[style*=space-around] > .wp-block:first-child {
+  margin-left: 0;
+}
+.custom-container-block[style*=space-between] > .wp-block:last-child, .custom-container-block[style*=space-around] > .wp-block:last-child {
+  margin-right: 0;
+}
+.block-editor-block-list__layout .custom-container-block {
+  min-height: 50px;
+  border: 1px dashed #ccc;
+  position: relative;
+}
+.block-editor-block-list__layout .custom-container-block:hover {
+  border-color: #007cba;
+}
+.block-editor-block-list__layout .custom-container-block:empty::before {
+  content: "Container Responsivo - Adicione blocos aqui";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #999;
+  font-size: 14px;
+  pointer-events: none;
+}
+
+.custom-container-block {
+  width: 100%;
+}
+.custom-container-block.alignwide {
+  max-width: var(--wp--style--global--wide-size, 1200px);
+}
+.custom-container-block.alignfull {
+  max-width: none;
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+}
+.custom-container-block[style*=flex] {
+  gap: var(--wp--style--block-gap, 1rem);
+}
+
+.custom-container-block[style*=column] > .wp-block {
+  width: 100%;
+}
+.custom-container-block[style*=row] > .wp-block {
+  flex: 1 1 0%;
+}
+.custom-container-block[style*="align-items-desktop: center"] > .wp-block, .custom-container-block[style*="align-items-mobile: center"] > .wp-block {
+  align-self: center;
+}
+
+.wp-site-blocks .custom-container-block,
+.wp-block-group .custom-container-block {
+  color: inherit;
+  font-family: inherit;
+}
+
+/*# sourceMappingURL=style-index.css.map*/

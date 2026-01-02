@@ -1,0 +1,56 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "beta-digital-blocks/hero-slider",
+	"title": "Hero Slider",
+	"category": "beta-digital-category",
+	"icon": "slides",
+	"description": "Slider com imagem à esquerda e texto à direita com link em palavra específica",
+	"keywords": ["hero", "slider", "imagem", "texto", "link"],
+	"version": "1.0.0",
+	"textdomain": "beta-digital-blocks",
+	"supports": {
+		"html": false,
+		"align": ["wide", "full"]
+	},
+	"attributes": {
+		"imageAlignment": {
+			"type": "string",
+			"default": "center"
+		},
+		"imageUrl": {
+			"type": "string"
+		},
+		"imageId": {
+			"type": "number"
+		},
+		"imageAlt": {
+			"type": "string",
+			"source": "attribute",
+			"selector": "img",
+			"attribute": "alt",
+			"default": ""
+		},
+		"slides": {
+			"type": "array",
+			"default": [
+				{
+					"id": 1,
+					"title": "Título do Slide",
+					"content": "Texto do slide com palavra com link",
+					"linkText": "palavra",
+					"linkUrl": "https://example.com",
+					"image": {
+						"url": "",
+						"alt": "",
+						"id": 0
+					},
+					"backgroundColor": "#ffffff"
+				}
+			]
+		}
+	},
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./editor.css",
+	"style": "file:./style.css"
+}

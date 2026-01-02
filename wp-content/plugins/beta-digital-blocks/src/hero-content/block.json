@@ -1,0 +1,72 @@
+{
+	"apiVersion": 2,
+	"name": "custom/hero-content",
+	"title": "Hero com Imagem e Lista",
+	"category": "layout",
+	"icon": "format-image",
+	"description": "Bloco com imagem (desktop/mobile), texto e lista com ícones.",
+	"attributes": {
+		"imageDesktop": {
+			"type": "string"
+		},
+		"imageMobile": {
+			"type": "string"
+		},
+		"button": {
+			"type": "object",
+			"default": {
+				"text": "Comece já",
+				"url": "",
+				"style": "primary",
+				"target": "_self",
+				"icon": ""
+			}
+		},
+
+		"tagline": {
+			"type": "string"
+		},
+		"title": {
+			"type": "string"
+		},
+		"ctaText": {
+			"type": "string"
+		},
+		"ctaUrl": {
+			"type": "string"
+		},
+		"items": {
+			"type": "array",
+			"default": [],
+			"items": {
+				"type": "object",
+				"properties": {
+					"icon": {
+						"type": "string"
+					},
+					"iconAlt": {
+						"type": "string"
+					},
+					"iconTitle": {
+						"type": "string"
+					},
+					"text": {
+						"type": "string"
+					}
+				}
+			}
+		},
+		"invertLayout": {
+			"type": "boolean",
+			"default": false
+		}
+	},
+	"usesContext": [],
+	"providesContext": {},
+	"innerBlocks": true,
+	"template": [["custom/hero-image-desktop"], ["custom/hero-image-mobile"]],
+	"supports": {
+		"html": false
+	},
+	"editorScript": "file:./index.js"
+}

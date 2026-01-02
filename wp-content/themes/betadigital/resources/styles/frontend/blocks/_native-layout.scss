@@ -1,0 +1,131 @@
+:where(.wp-block-columns) {
+    margin-bottom: 0;
+}
+
+.no-limit {
+    @include container(100vw);
+    margin: 0 auto;
+}
+
+.max-container {
+    @include container(1040px, 30px, 60px);
+}
+
+.areas {
+    p.has-background {
+        padding: 0 px-rem(20px);
+    }
+}
+
+.limit-text {
+    @include container(400px, 30px, 60px);
+}
+
+.limit-text-large {
+    @include container(800px, 30px, 60px);
+}
+
+.limit-map {
+    @include container(590px, 30px, 60px);
+    height: 100%;
+}
+
+.hiden-on-mobile {
+    @include max-xl {
+        display: none;
+    }
+}
+
+.hiden-on-desktop {
+    @include min-xl {
+        display: none!important;
+    }
+}
+
+.wp-block-cover .wp-block-cover__image-background {
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+    width: inherit;
+}
+
+:where(.wp-block-columns.is-layout-flex.no-gap) {
+    gap: 0;
+}
+
+.has-media-on-the-right {
+    @include max-xl {
+        display: flex;
+        flex-direction: column!important;
+    }
+}
+
+.home__areas-trabalho {
+    @include min-xl {
+        background-image: url($imgpath + '/textura_left_bottom.png');
+        background-position: left bottom;
+        background-repeat: no-repeat;
+    }
+    
+}
+
+.wp-block-media-text {
+    @include max-xl {
+        display: flex;
+        flex-direction: column-reverse;
+    }
+
+    @include min-xl {
+        @include container;
+        img {
+            max-width: 90%;
+        }
+    }
+
+    &__content {
+        font-size: 20px;
+        font-weight: 300;
+        line-height: 30px;
+        padding: 0!important;
+
+        p {
+            color: $gray-500;
+        }
+    }
+}
+
+.wp-block-search__inside-wrapper {
+    align-items: center;
+    
+    &::before {
+        content: "";
+        display: inline-block;
+        width: 30px;
+        height: 30px; 
+        margin-right: 10px;
+        background-image: url($imgpath + "ico-search.png");
+        background-size: contain;
+        background-repeat: no-repeat; 
+    }
+    
+}
+
+.wp-block-categories-list {
+    background-color: $secondary-color;
+    overflow: hidden;
+    padding: 20px;
+    margin: 0;
+    display: flex;
+
+    li {
+        list-style: none;
+        padding-right: 20px;
+
+        a {
+            color: white;
+            text-decoration: none;
+        }
+    }
+}
+
+

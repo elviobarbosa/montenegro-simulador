@@ -1,0 +1,33 @@
+.blog {
+    &__article {}
+
+    &__link {}
+
+    &__image {}
+
+    &__date {}
+
+    &__title {}
+
+    &__excerpet {}
+
+    &__search {
+
+        input[name="s"] {
+            
+            &::placeholder {
+                
+            }
+        }
+
+        input[name="s"]:focus {
+            
+        }
+
+        h2 {}
+
+        h3 {}
+    }
+
+    &__categorias {}
+}

@@ -1,0 +1,167 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "beta-digital-blocks/custom-container",
+  "title": "Container Responsivo",
+  "category": "beta-digital-category",
+  "description": "Container flexível com controles responsivos avançados para layout.",
+  "keywords": [
+    "container",
+    "flexbox",
+    "responsive",
+    "layout"
+  ],
+  "version": "1.0.0",
+  "textdomain": "beta-digital-blocks",
+  "icon": "layout",
+  "supports": {
+    "html": false,
+    "align": [
+      "wide",
+      "full"
+    ],
+    "spacing": {
+      "margin": true,
+      "padding": false,
+      "blockGap": true
+    },
+    "color": {
+      "background": true,
+      "text": false,
+      "gradients": true
+    },
+    "typography": {
+      "fontSize": false,
+      "lineHeight": false
+    }
+  },
+  "attributes": {
+    "maxWidth": {
+      "type": "string",
+      "default": "1420px"
+    },
+    "height": {
+      "type": "string",
+      "default": ""
+    },
+    "paddingDesktop": {
+      "type": "string",
+      "default": "0 122px"
+    },
+    "paddingMobile": {
+      "type": "string",
+      "default": "0 20px"
+    },
+    "displayDesktop": {
+      "type": "string",
+      "default": "block",
+      "enum": [
+        "block",
+        "flex"
+      ]
+    },
+    "displayMobile": {
+      "type": "string",
+      "default": "block",
+      "enum": [
+        "block",
+        "flex"
+      ]
+    },
+    "flexDirectionDesktop": {
+      "type": "string",
+      "default": "row",
+      "enum": [
+        "row",
+        "column"
+      ]
+    },
+    "flexDirectionMobile": {
+      "type": "string",
+      "default": "column",
+      "enum": [
+        "row",
+        "column"
+      ]
+    },
+    "justifyContentDesktop": {
+      "type": "string",
+      "default": "flex-start",
+      "enum": [
+        "flex-start",
+        "center",
+        "flex-end",
+        "space-between",
+        "space-around"
+      ]
+    },
+    "justifyContentMobile": {
+      "type": "string",
+      "default": "flex-start",
+      "enum": [
+        "flex-start",
+        "center",
+        "flex-end",
+        "space-between",
+        "space-around"
+      ]
+    },
+    "alignItemsDesktop": {
+      "type": "string",
+      "default": "stretch",
+      "enum": [
+        "stretch",
+        "center",
+        "flex-start",
+        "flex-end",
+        "baseline"
+      ]
+    },
+    "alignItemsMobile": {
+      "type": "string",
+      "default": "stretch",
+      "enum": [
+        "stretch",
+        "center",
+        "flex-start",
+        "flex-end",
+        "baseline"
+      ]
+    }
+  },
+  "providesContext": {
+    "beta-digital-blocks/containerSettings": "attributes"
+  },
+  "usesContext": [],
+  "example": {
+    "attributes": {
+      "maxWidth": "1200px",
+      "paddingDesktop": "40px 20px",
+      "paddingMobile": "20px 10px",
+      "displayDesktop": "flex",
+      "displayMobile": "flex",
+      "flexDirectionDesktop": "row",
+      "flexDirectionMobile": "column",
+      "justifyContentDesktop": "center",
+      "justifyContentMobile": "center"
+    },
+    "innerBlocks": [
+      {
+        "name": "core/heading",
+        "attributes": {
+          "content": "Container Responsivo",
+          "level": 2
+        }
+      },
+      {
+        "name": "core/paragraph",
+        "attributes": {
+          "content": "Este é um exemplo de container com controles flexbox responsivos."
+        }
+      }
+    ]
+  },
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "style": "file:./style-index.css"
+}

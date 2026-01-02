@@ -1,0 +1,14 @@
+/**
+ * The following styles get applied inside the editor only.
+ *
+ * Replace them with your own styles or remove the file completely.
+ */
+
+.wp-block-create-block-three-column-image {
+	position: relative;
+	p {
+		position: absolute;
+		bottom: 20px;
+		left: 20px;
+	}
+}

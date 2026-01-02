@@ -1,0 +1,17 @@
+{
+    "name": "acf/timeline",
+    "title": "Rsm Timeline",
+    "description": "",
+    "category": "resama-blocks",
+    "icon": "images-alt",
+    "keywords": ["Timeline"],
+    "acf": {
+        "mode": "preview",
+        "renderTemplate": "timeline.php"
+    },
+    "supports": {
+        "anchor": true,
+        "align": false
+    }
+    
+}

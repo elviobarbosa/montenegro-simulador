@@ -1,0 +1,185 @@
+.nav-container {
+	background-color: $secondary-color;
+	box-sizing: border-box;
+	padding: px-rem(10px) px-rem(20px);
+	width: 100%;
+	z-index: 100;
+
+	&.fixed {
+		left: 0;
+		position: fixed;
+		top: 0;
+	}
+
+	&__container {
+		align-items: center;
+		display: flex;
+		justify-content: space-between;
+		overflow: hidden;
+	}
+
+	&__menu {
+		position: fixed;
+    	right: -100vw;
+		transition: all 1s ease-out;
+		z-index: 99;
+		width: 100vw;
+		margin: 0;
+		padding: 0;
+		overflow: hidden;
+		height: 100vh;
+		top: 0;
+		display: flex;
+		align-items: center;
+
+		@include min-xl {
+			position: relative;
+			width: auto;
+			height: auto;
+			right: unset;
+		}
+
+		@include max-lg {
+			background-color: $secondary-color;
+			background-position: bottom center;
+			background-repeat: no-repeat;
+		}
+	}
+
+	nav {
+		width: 100%;
+
+		ul {
+			display: block;
+			list-style: none;
+			padding: 0;
+			width: 100%;
+			text-align: center;
+			margin: 0;
+
+			@include min-xl {
+				display: flex;
+				align-items: center;
+				height: 100%;
+			}
+
+			li {
+				text-align: center;
+				padding: 0rem 0;
+		
+				&:not(:last-child) {
+					margin-bottom: 30px;
+				}
+		
+				@include min-xl {
+					text-align: left;
+		
+					&:not(:last-child) {
+						margin-bottom: 0;
+						margin-right: 20px;
+					}
+				}
+		
+				a {
+					font-weight: 300;
+					position: relative;
+					text-decoration: none;
+					padding: 1rem;
+					transition: all 0.5s ease-in-out;
+					
+					@include min-xl {
+						color: $light-color;
+						font-size: 16px;
+					}
+
+					@include max-xl {
+						color: $light-color;
+						font-size: 20px;
+					}
+		
+					&:hover {
+						color: $primary-color;
+						transition: all 0.5s ease-in-out;
+					}
+				}
+		
+				&.current_page_item {
+					a {
+						font-weight: 500;
+					}
+				}
+			}
+		}
+	}
+
+	&__logo {
+		z-index: 100;
+
+		img {
+			@include max-lg {
+				height: 70px;
+			}
+
+			@include min-lg {
+				height: 100px;
+			}
+		}
+
+		svg {
+			max-height: 51px;
+			@include min-xl {
+				width: 330px;
+			}
+
+			@include max-xl {
+				width: 250px;
+			}
+		}
+	}
+
+	&__menu.active {
+		right: 0;
+		transition: all 1s ease-in-out;
+	}
+
+	&__control {
+		z-index: 100;
+
+		@include min-xl {
+			display: none;
+		}
+	}
+
+	.h-menu {
+		width: px-rem(30px);
+	
+		&__line {
+			display: block;
+			width: 100%;
+			height: px-rem(4px);
+			background-color: $light-color;
+			margin-bottom: px-rem(4px);
+			transition: all .3s ease-out;
+			@include border-radius(px-rem(5px));
+	
+		}
+	}
+	
+	.h-menu.active {
+		.h-menu__line {
+			background-color: $light-color;
+			&:first-child {
+				transform: rotate(45deg);
+				transition: all .3s ease-in-out;
+			}
+			&:last-child {
+				transform: rotate(-45deg);
+				margin-top: -8px;
+				transition: all .3s ease-in-out;
+			}
+			&:nth-child(2) {
+				display: none;
+			}
+		}
+	}
+}

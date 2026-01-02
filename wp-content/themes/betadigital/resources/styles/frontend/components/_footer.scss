@@ -1,0 +1,124 @@
+@use "../variables" as v;
+@use "../mixins/breakpoints" as bp;
+@use "../functions" as fn;
+
+.footer {
+  background-color: var(--wp--preset--color--primary);
+
+  &__wrapper {
+    max-width: v.$max-width;
+    padding: 50px 30px;
+    margin: 0 auto;
+
+    @include bp.min-lg {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+    }
+  }
+
+  &__logo {
+    @include bp.max-lg {
+      padding-bottom: fn.px-rem(30px);
+    }
+
+    @include bp.min-lg {
+      width: 30%;
+    }
+    svg {
+      @include bp.max-lg {
+        width: 100%;
+        height: 100;
+      }
+      @include bp.min-lg {
+        width: 100%;
+        height: 300px;
+      }
+    }
+  }
+
+  &__item {
+    padding-bottom: fn.px-rem(30px);
+  }
+
+  &__title {
+    font-weight: 600;
+    color: var(--wp--preset--color--light-green-cyan);
+    padding: 0;
+    margin: 0;
+    font-size: fn.px-rem(16px) !important;
+  }
+
+  &__description {
+    padding: 0;
+    margin: 0;
+    font-size: fn.px-rem(16px) !important;
+    color: white;
+  }
+
+  &__list {
+    margin: 0;
+    padding: 0;
+    opacity: 1;
+
+    @include bp.min-lg {
+      display: flex;
+    }
+
+    li {
+      list-style: none;
+      font-weight: 500;
+      font-size: 15px;
+      line-height: 20px;
+      letter-spacing: 0%;
+    }
+
+    .menu-item-has-children {
+      padding-bottom: fn.px-rem(20px);
+    }
+  }
+
+  &__menu {
+    @include bp.min-lg {
+      width: 50%;
+    }
+
+    > ul {
+      > li {
+        width: 33%;
+      }
+    }
+  }
+
+  .sub-menu {
+    margin: 0;
+    padding: 0;
+
+    li {
+      padding: 7px 0;
+    }
+  }
+
+  .redes-sociais {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    li {
+      list-style: none;
+
+      &:not(:first-child) {
+        margin-left: 20px;
+      }
+
+      svg {
+        width: 24px;
+        height: 24px;
+      }
+    }
+  }
+
+  a {
+    color: #fff;
+    text-decoration: none;
+  }
+}

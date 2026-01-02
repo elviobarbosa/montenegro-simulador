@@ -1,0 +1,94 @@
+@use "../mixins/breakpoints" as bp;
+@use "../mixins/fluidsize" as fsz;
+@use "../variables" as v;
+
+.wp-block-beta-digital-blocks-hero-slider {
+  .hero-slide {
+    padding: 3rem 20px 0;
+    box-sizing: border-box;
+
+    &-inner {
+      max-width: v.$max-width;
+      margin: 0 auto;
+      @include bp.max-lg {
+        display: flex;
+        flex-direction: column-reverse;
+      }
+
+      @include bp.min-lg {
+        display: grid;
+        grid-template-columns: 45% auto;
+        align-items: center;
+        column-gap: 3rem;
+      }
+    }
+
+    &-image {
+      img {
+        vertical-align: top;
+        @include bp.max-lg {
+          width: 100%;
+        }
+      }
+    }
+
+    &-content {
+      h2 {
+        padding: 0;
+        margin-top: 0;
+        margin-left: 0;
+        margin-right: 0;
+        color: #fff;
+
+        @include fsz.fluid-size("margin-bottom", 40px, 0px);
+        font-size: clamp(52px, calc(2.5vw + 1rem), 72px);
+        font-style: normal;
+        font-weight: 700;
+        line-height: 92%;
+        letter-spacing: -0.739px;
+
+        @include bp.max-lg {
+          text-align: center;
+        }
+      }
+    }
+  }
+
+  a:has(.has-primary-color-color) {
+    text-decoration-color: var(--primary-color);
+  }
+
+  a:has(.has-secondary-color-color) {
+    text-decoration-color: var(--secondary-color);
+  }
+
+  a:has(.has-color-1-color) {
+    text-decoration-color: var(--color-1);
+  }
+
+  a:has(.has-color-2-color) {
+    text-decoration-color: var(--color-2);
+  }
+
+  a:has(.has-dark-500-color) {
+    text-decoration-color: var(--dark-500);
+  }
+
+  a:has(.has-gray-500-color) {
+    text-decoration-color: var(--gray-500);
+  }
+
+  a:has(.has-gray-200-color) {
+    text-decoration-color: var(--gray-200);
+  }
+
+  .swiper-wrapper {
+    height: inherit;
+  }
+
+  .swiper-button-next,
+  .swiper-button-prev {
+    --swiper-theme-color: white;
+    color: var(--swiper-theme-color);
+  }
+}

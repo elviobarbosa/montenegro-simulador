@@ -1,0 +1,11 @@
+{
+  "apiVersion": 2,
+  "name": "custom/faq-bloco",
+  "title": "Bloco de FAQ",
+  "category": "beta-digital-category",
+  "icon": "editor-help",
+  "description": "Lista de perguntas frequentes com botão para carregar mais.",
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./editor.css",
+  "render": "file:./render.php"
+}

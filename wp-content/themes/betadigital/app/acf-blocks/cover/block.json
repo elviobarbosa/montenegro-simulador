@@ -1,0 +1,17 @@
+{
+    "name": "acf/cover",
+    "title": "Rsm Cover",
+    "description": "",
+    "category": "resama-blocks",
+    "icon": "images-alt",
+    "keywords": ["Cover"],
+    "acf": {
+        "mode": "preview",
+        "renderTemplate": "cover.php"
+    },
+    "supports": {
+        "anchor": true,
+        "align": false
+    }
+    
+}

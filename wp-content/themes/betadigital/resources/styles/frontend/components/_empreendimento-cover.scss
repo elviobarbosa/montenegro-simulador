@@ -1,0 +1,106 @@
+@use "../typography" as type;
+@use "../mixins/" as mx;
+@use "../functions" as fn;
+.empreendimento-cover {
+  background-color: #0000006e;
+  position: relative;
+
+  &__container {
+    @include mx.max-lg {
+      padding-top: fn.px-rem(40px);
+      padding-bottom: fn.px-rem(40px);
+      padding-left: var(--padding-x-container-mobile);
+      padding-right: var(--padding-x-container-mobile);
+    }
+
+    @include mx.min-lg {
+      @include mx.container(1366px, 0, 0);
+      padding-top: fn.px-rem(80px);
+      padding-bottom: fn.px-rem(80px);
+      padding-left: var(--padding-x-container-desktop);
+      padding-right: var(--padding-x-container-desktop);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+      align-items: center;
+    }
+  }
+
+  &__simulador-mini {
+    @include mx.min-lg {
+      width: 80%;
+      margin: 0 auto;
+    }
+  }
+
+  &__simulator {
+    background-color: var(--wp--preset--color--white);
+    max-width: 600px;
+
+    @include mx.border-radius(12px);
+    padding: fn.px-rem(20px);
+    img {
+      max-width: 153px;
+      height: auto;
+    }
+    @include mx.max-lg {
+      margin-top: fn.px-rem(40px);
+    }
+  }
+
+  &__logo {
+    text-align: center;
+  }
+
+  h1 {
+    padding: 0;
+    margin: 0;
+    font-size: clamp(30px, 4.4vw, 40px);
+    font-family: type.$headings;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 104%;
+    letter-spacing: -0.566px;
+    color: var(--wp--preset--color--white);
+
+    @include mx.max-lg {
+      text-align: center;
+    }
+  }
+  h3 {
+    padding: fn.px-rem(20px) 0 0 0;
+    margin: 0;
+    font-size: clamp(20px, 3.4vw, 24px);
+    font-family: type.$body-font;
+    font-style: normal;
+    font-weight: 300;
+    line-height: 1.8rem;
+    letter-spacing: -0.566px;
+    max-width: 560px;
+    color: var(--wp--preset--color--white);
+    @include mx.max-lg {
+      text-align: center;
+    }
+  }
+
+  p {
+    color: var(--wp--preset--color--gray-500);
+    text-align: center;
+  }
+
+  .button {
+    @include mx.max-lg {
+      width: 100%;
+    }
+  }
+
+  > img {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: -1;
+    filter: blur(6px);
+    top: 0;
+  }
+}

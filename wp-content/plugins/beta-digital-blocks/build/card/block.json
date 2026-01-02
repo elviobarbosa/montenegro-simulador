@@ -1,0 +1,59 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 2,
+  "name": "beta-digital-blocks/card",
+  "title": "Card",
+  "category": "beta-digital-category",
+  "icon": "format-image",
+  "description": "Bloco com título, descrição, imagem e call to action.",
+  "textdomain": "beta-digital-blocks",
+  "attributes": {
+    "title": {
+      "type": "string",
+      "default": ""
+    },
+    "subtitle": {
+      "type": "string",
+      "default": ""
+    },
+    "image": {
+      "type": "object",
+      "default": {
+        "url": "",
+        "alt": "",
+        "id": 0
+      }
+    },
+    "ctaText": {
+      "type": "string",
+      "default": ""
+    },
+    "ctaUrl": {
+      "type": "string",
+      "default": ""
+    },
+    "backgroundColor": {
+      "type": "string",
+      "default": ""
+    },
+    "textAlign": {
+      "type": "string",
+      "default": "left"
+    },
+    "subtitleAlignMobile": {
+      "type": "string",
+      "default": "left"
+    },
+    "imagePosition": {
+      "type": "string",
+      "default": "top"
+    }
+  },
+  "supports": {
+    "align": true,
+    "html": false
+  },
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./editor.css",
+  "style": "file:./style.css"
+}

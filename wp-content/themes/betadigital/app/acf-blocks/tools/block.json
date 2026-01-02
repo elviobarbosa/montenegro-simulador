@@ -1,0 +1,17 @@
+{
+    "name": "acf/tools",
+    "title": "Resama Tools",
+    "description": "",
+    "category": "resama-blocks",
+    "icon": "images-alt",
+    "keywords": ["Tools"],
+    "acf": {
+        "mode": "preview",
+        "renderTemplate": "tools.php"
+    },
+    "supports": {
+        "anchor": true,
+        "align": false
+    }
+    
+}

@@ -1,0 +1,48 @@
+@use "../variables" as v;
+@use "../mixins/fluidsize" as fsz;
+.faq-bloco {
+  max-width: v.$max-width;
+  padding: 50px 30px;
+  margin: 0 auto;
+  background-color: #f4f4f4;
+
+  &__item {
+    padding-bottom: 30px;
+  }
+
+  &__item:not(:last-child) {
+    border-bottom: 1px solid #c5c3c3;
+  }
+
+  &__item:not(:first-child) {
+    padding-top: 30px;
+  }
+
+  &__question {
+    font-family: var(--body-font);
+    font-weight: 600;
+    @include fsz.fluid-size("font-size", 28px, 24px);
+    line-height: 41px;
+    margin: 0;
+    color: var(--wp--preset--color--primary);
+  }
+
+  &__answer {
+    color: #656565;
+    width: calc(100% - 72px);
+  }
+
+  [data-js="faq-question"] {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    column-gap: 20px;
+  }
+
+  h2 {
+    @include fsz.fluid-size("font-size", 36px, 50px);
+    text-align: center;
+    font-weight: 700;
+    color: var(--wp--preset--color--secondary);
+  }
+}

@@ -1,0 +1,122 @@
+@use "../mixins/mixins" as mx;
+@use "../typography" as t;
+@use "../mixins/breakpoints" as bp;
+@use "../placeholders/general";
+
+body {
+  padding: 0;
+  margin: 0;
+}
+
+body,
+p,
+ul,
+ol,
+li {
+  font-family: t.$body-font;
+}
+
+body p span,
+body p a,
+ul span,
+ul a,
+li span,
+li a {
+  font-family: inherit;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  font-family: var(--heading-font);
+
+  a,
+  span,
+  strong,
+  em,
+  mark {
+    font-family: inherit !important;
+  }
+}
+
+.opacity-0 {
+  opacity: 0;
+  transition: all 0.5s ease-in-out;
+}
+
+figure {
+  padding: 0;
+  margin: 0;
+}
+
+.align-center {
+  text-align: center;
+}
+
+.desktop-align-center,
+.align-center {
+  text-align: center;
+}
+
+.desktop-align-left,
+.align-left {
+  text-align: left;
+}
+
+.desktop-align-right,
+.align-right {
+  text-align: right;
+}
+
+.mobile-align-center {
+  @include bp.max-lg {
+    text-align: center;
+  }
+}
+
+.mobile-align-right {
+  @include bp.max-lg {
+    text-align: right;
+  }
+}
+
+.mobile-align-left {
+  @include bp.max-lg {
+    text-align: left;
+  }
+}
+
+.wp-block-image.aligncenter {
+  text-align: center;
+  width: 100%;
+}
+
+.wp-block-image .alignleft {
+  text-align: left;
+}
+
+.wp-block-image .alignright {
+  text-align: right;
+}
+
+.wp-block-embed.is-type-video {
+  .wp-block-embed__wrapper {
+    float: none;
+    clear: both;
+    width: 100%;
+    position: relative;
+    padding-bottom: 56.25%;
+    padding-top: 25px;
+    height: 0;
+
+    iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+  }
+}

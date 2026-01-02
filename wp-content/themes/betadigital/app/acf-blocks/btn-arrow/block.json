@@ -1,0 +1,17 @@
+{
+    "name": "acf/button-arrow",
+    "title": "Resama Button",
+    "description": "",
+    "category": "resama-blocks",
+    "icon": "images-alt",
+    "keywords": ["Button"],
+    "acf": {
+        "mode": "preview",
+        "renderTemplate": "btn-arrow.php"
+    },
+    "supports": {
+        "anchor": true,
+        "align": true
+    }
+    
+}

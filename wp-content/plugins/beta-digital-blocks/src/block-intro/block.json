@@ -1,0 +1,34 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 2,
+	"name": "beta-digital/block-intro",
+	"version": "0.1.0",
+	"title": "Job Description",
+	"category": "beta-digital-category",
+	"icon": "smiley",
+	"description": "Insira o Título e o texto do job",
+	"supports": {
+		"html": false
+	},
+	"textdomain": "block-intro",
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"style": "file:./style-index.css",
+	"attributes": {
+		"titleContent": {
+			"type": "string",
+			"source": "html",
+			"selector": "h1.beta-digital__title span.letters"
+		},
+		"subTitleContent": {
+			"type": "string",
+			"source": "html",
+			"selector": ".subtitle p"
+		},
+		"descriptionContent": {
+			"type": "string",
+			"source": "html",
+			"selector": ".description p"
+		}
+	}
+}

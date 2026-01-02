@@ -1,0 +1,43 @@
+@use "../mixins/mixins" as mx;
+@use "../functions" as fn;
+@use "../mixins/breakpoints" as bp;
+
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+select,
+textarea {
+  border: 1px solid var(--wp--preset--color--gray-200);
+  @include mx.border-radius(8px);
+  font-weight: 300;
+  padding: 10px 10px;
+  width: 100%;
+  box-sizing: border-box;
+  font-size: fn.px-rem(16px);
+
+  &:focus {
+    outline: none;
+  }
+}
+
+label {
+  font-size: fn.px-rem(14px);
+  color: var(--wp--preset--color--gray-200);
+  margin-bottom: 5px;
+  margin-left: 5px;
+}
+
+.tools-search {
+  .wp-block-search__input {
+    background-color: #faf8f5;
+  }
+}
+
+.wpcf7-response-output {
+  border: none !important;
+  text-align: center;
+}
+
+input[type="submit"] {
+  width: 100%;
+}

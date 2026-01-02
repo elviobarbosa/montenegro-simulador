@@ -1,0 +1,70 @@
+@use "../../frontend/typography" as t;
+@use "../../frontend/mixins/breakpoints" as bp;
+
+.editor-styles-wrapper {
+  body,
+  p,
+  ul,
+  ol,
+  li {
+    font-family: t.$body-font;
+  }
+
+  body p span,
+  body p a,
+  ul span,
+  ul a,
+  li span,
+  li a {
+    font-family: inherit;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5 {
+    font-family: t.$headings;
+
+    a,
+    span,
+    strong,
+    em,
+    mark {
+      font-family: inherit !important;
+    }
+  }
+
+  .desktop-align-center,
+  .align-center {
+    text-align: center;
+  }
+
+  .desktop-align-left,
+  .align-left {
+    text-align: left;
+  }
+
+  .desktop-align-right,
+  .align-right {
+    text-align: right;
+  }
+
+  .mobile-align-center {
+    @include bp.max-lg {
+      text-align: center;
+    }
+  }
+
+  .mobile-align-right {
+    @include bp.max-lg {
+      text-align: right;
+    }
+  }
+
+  .mobile-align-left {
+    @include bp.max-lg {
+      text-align: left;
+    }
+  }
+}

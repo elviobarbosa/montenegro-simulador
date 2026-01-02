@@ -1,0 +1,21 @@
+// @use "../../frontend/variables" as v;
+
+// $colors: (
+//   "primary": v.$primary-color,
+//   "secondary": v.$secondary-color,
+//   "color-1": v.$color-1,
+//   "color-2": v.$color-2,
+//   "gray-500": v.$gray-500,
+//   "gray-200": v.$gray-200,
+//   "dark-500": v.$dark-500,
+// );
+
+// @each $name, $color in $colors {
+//   .has-#{$name}-color {
+//     color: $color;
+//   }
+
+//   .has-#{$name}-background-color {
+//     background-color: $color;
+//   }
+// }

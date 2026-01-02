@@ -1,0 +1,42 @@
+.cover-slider {
+    
+    &__picture {
+        &.is--mobile {
+            @include image-proportional(600px, 580px);
+            @include max-lg {
+                display: block;
+            }
+
+            @include min-lg {
+                display: none;
+            }   
+        }
+
+        &.is--desktop {
+            @include image-proportional(1240px, 640px);
+            @include max-lg {
+                display: none;
+            }
+
+            @include min-lg {
+                display: block;
+            }
+        }
+    }
+
+    .swiper-pagination {
+        .swiper-pagination-bullet {
+            background: $primary-color;
+            border: 1px solid $secondary-color;
+            width: 35px;
+            height: 8px;
+            border-radius: 12px;
+        }
+    }
+
+    .swiper-button-prev,
+    .swiper-button-next {
+        color: $primary-color;
+    }
+   
+}

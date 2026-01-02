@@ -1,0 +1,182 @@
+/* ========================================
+   ESTILOS DO EDITOR GUTENBERG
+   Sistema modular de indicadores visuais
+======================================== */
+
+/* ========================================
+   INDICADORES PARA IMAGENS OCULTAS NO MOBILE
+======================================== */
+
+/* Indicador visual para imagens que serão ocultas no mobile */
+.wp-block-image.hidden-on-mobile {
+  position: relative;
+  opacity: 0.7;
+  border: 2px dashed #e74c3c;
+  border-radius: 4px;
+}
+
+/* Badge para imagens ocultas */
+.wp-block-image.hidden-on-mobile::before {
+  content: "📱 Oculto no Mobile";
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background: #e74c3c;
+  color: white;
+  padding: 4px 8px;
+  font-size: 11px;
+  font-weight: bold;
+  border-radius: 4px;
+  z-index: 100;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  white-space: nowrap;
+}
+
+/* Hover effect */
+.wp-block-image.hidden-on-mobile:hover {
+  opacity: 1;
+  border-color: #c0392b;
+}
+
+/* ========================================
+   INDICADORES PARA ALINHAMENTO MOBILE
+======================================== */
+
+/* Container para badges de alinhamento */
+.wp-block-paragraph.mobile-text-align-left,
+.wp-block-paragraph.mobile-text-align-center,
+.wp-block-paragraph.mobile-text-align-right,
+.wp-block-paragraph.mobile-text-align-justify,
+.wp-block-heading.mobile-text-align-left,
+.wp-block-heading.mobile-text-align-center,
+.wp-block-heading.mobile-text-align-right,
+.wp-block-heading.mobile-text-align-justify,
+.wp-block-list.mobile-text-align-left,
+.wp-block-list.mobile-text-align-center,
+.wp-block-list.mobile-text-align-right,
+.wp-block-list.mobile-text-align-justify {
+  position: relative;
+}
+
+/* Badges específicos para cada alinhamento */
+.mobile-text-align-left::after {
+  content: "📱 ⬅️ Esquerda";
+  background: #3498db;
+}
+
+.mobile-text-align-center::after {
+  content: "📱 ⬆️ Centro";
+  background: #9b59b6;
+}
+
+.mobile-text-align-right::after {
+  content: "📱 ➡️ Direita";
+  background: #e67e22;
+}
+
+.mobile-text-align-justify::after {
+  content: "📱 ⬌ Justificado";
+  background: #27ae60;
+}
+
+/* Estilo comum dos badges de alinhamento */
+.mobile-text-align-left::after,
+.mobile-text-align-center::after,
+.mobile-text-align-right::after,
+.mobile-text-align-justify::after {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  color: white;
+  padding: 3px 6px;
+  font-size: 10px;
+  font-weight: bold;
+  border-radius: 3px;
+  z-index: 50;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+/* ========================================
+   ESTILOS DO PAINEL DE CONTROLE
+======================================== */
+
+/* Estilo do painel customizado */
+.components-panel__body .components-toggle-control,
+.components-panel__body .components-select-control {
+  margin-bottom: 16px;
+}
+
+/* Destaque para toggles ativos */
+.components-form-toggle.is-checked .components-form-toggle__track {
+  background-color: #e74c3c;
+}
+
+/* Estilo dos selects customizados */
+.components-select-control__input {
+  border-radius: 4px;
+  border: 1px solid #ddd;
+  transition: border-color 0.2s ease;
+}
+
+.components-select-control__input:focus {
+  border-color: #3498db;
+  box-shadow: 0 0 0 1px #3498db;
+}
+
+/* ========================================
+   RESPONSIVIDADE DO EDITOR
+======================================== */
+
+/* Ajustes para telas menores no editor */
+@media (max-width: 782px) {
+  .wp-block-image.hidden-on-mobile::before,
+  .mobile-text-align-left::after,
+  .mobile-text-align-center::after,
+  .mobile-text-align-right::after,
+  .mobile-text-align-justify::after {
+    font-size: 9px;
+    padding: 2px 4px;
+    top: -6px;
+    right: -6px;
+  }
+}
+
+/* ========================================
+   SISTEMA DE CORES PARA DIFERENTES TIPOS
+======================================== */
+
+/* Cores organizadas por tipo de customização */
+:root {
+  --visibility-color: #e74c3c; /* Vermelho para visibilidade */
+  --alignment-color: #3498db; /* Azul para alinhamento */
+  --spacing-color: #f39c12; /* Laranja para espaçamento */
+  --typography-color: #9b59b6; /* Roxo para tipografia */
+}
+
+/* ========================================
+   UTILITÁRIOS DO EDITOR
+======================================== */
+
+/* Remove badges no modo de preview */
+.editor-styles-wrapper
+  .is-root-container.is-selected
+  .mobile-text-align-left::after,
+.editor-styles-wrapper
+  .is-root-container.is-selected
+  .mobile-text-align-center::after,
+.editor-styles-wrapper
+  .is-root-container.is-selected
+  .mobile-text-align-right::after,
+.editor-styles-wrapper
+  .is-root-container.is-selected
+  .mobile-text-align-justify::after {
+  display: none;
+}
+
+/* Fade suave para transições */
+.wp-block-image.hidden-on-mobile,
+[class*="mobile-text-align-"] {
+  transition: opacity 0.2s ease, border-color 0.2s ease;
+}

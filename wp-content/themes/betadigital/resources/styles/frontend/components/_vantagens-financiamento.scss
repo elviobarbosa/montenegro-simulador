@@ -1,0 +1,86 @@
+@use "../typography" as type;
+@use "../mixins/" as mx;
+@use "../functions" as fn;
+.vantagens {
+  &__title {
+    font-size: clamp(30px, 4.4vw, 50px);
+    font-weight: 700;
+    color: var(--wp--preset--color--primary);
+  }
+
+  &__description {
+    p {
+      font-size: clamp(20px, 3.4vw, 24px);
+      color: var(--wp--preset--color--gray-500);
+      line-height: 1.4em;
+    }
+  }
+
+  &__content {
+    @include mx.max-lg {
+      padding-top: fn.px-rem(40px);
+      padding-bottom: fn.px-rem(40px);
+      padding-left: var(--padding-x-container-mobile);
+      padding-right: var(--padding-x-container-mobile);
+    }
+
+    @include mx.min-lg {
+      text-align: left;
+      justify-self: center;
+      padding-right: fn.px-rem(30px);
+      padding-left: fn.px-rem(30px);
+    }
+  }
+
+  &__content-wrapper {
+    max-width: 700px;
+  }
+
+  &__link {
+    .button {
+      width: 100%;
+    }
+  }
+
+  &__image {
+    img {
+      width: 100%;
+      height: auto;
+    }
+  }
+
+  &__item {
+    @include mx.min-lg {
+      margin: 40px 0;
+      display: grid;
+      grid-template-columns: 50% auto;
+      align-items: center;
+      gap: 4rem;
+    }
+
+    &:first-child {
+      margin: 0;
+    }
+  }
+
+  &__item:nth-child(2n + 1) & {
+    &__image {
+      @include mx.min-lg {
+        grid-row: 1;
+      }
+    }
+  }
+
+  &__item:not(:first-child) & {
+    &__image {
+      justify-self: center;
+      align-self: center;
+      text-align: center;
+      img {
+        @include mx.min-lg {
+          width: 90%;
+        }
+      }
+    }
+  }
+}

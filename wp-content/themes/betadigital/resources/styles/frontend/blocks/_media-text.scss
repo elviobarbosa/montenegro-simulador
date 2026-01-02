@@ -1,0 +1,45 @@
+.media-text {
+    background-color: $secondary-color;
+    overflow: hidden;
+
+    &__text {
+        color: $light-color;
+        font-weight: 300;
+        line-height: 30px;
+        font-size: 20px;
+    }
+
+    &__wrapper {
+        @include max-xl {
+            @include container;
+            padding-top: 50px;
+        }
+
+        @include min-xl {
+            display: grid;
+            grid-template-columns: 55% 45%;
+            padding: 50px;
+            align-items: center;
+        } 
+    }
+
+    &--about & {
+        &__text {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        &__image-wrapper {
+            img {
+                @include max-xl {
+                    transform: translateX(-50%);
+                    margin-left: 50%;
+                    width: 150%;
+                    height: auto;
+                }
+            }
+        }
+
+        
+    }
+}

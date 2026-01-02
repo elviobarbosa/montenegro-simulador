@@ -1,0 +1,24 @@
+h2.wp-block-heading {
+    @extend %heading_h2;
+}
+
+.has-large-font-size {
+    
+    @include fluid-size(font-size, 26px, 31px);
+    @include fluid-size(line-height, 40px, 45px);
+    font-weight: 300;
+
+    @include max-xl {
+        --wp--preset--font-size--large: 26px;
+    }
+
+    @include min-xl {
+        --wp--preset--font-size--large: 31px;
+    }
+}
+
+.has-medium-font-size {
+    font-weight: 300;
+   line-height: 30px;
+   --wp--preset--font-size--medium: 20px; 
+}

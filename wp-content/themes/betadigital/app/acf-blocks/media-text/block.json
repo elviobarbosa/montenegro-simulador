@@ -1,0 +1,17 @@
+{
+    "name": "acf/media-text",
+    "title": "Resama Media Text",
+    "description": "",
+    "category": "resama-blocks",
+    "icon": "images-alt",
+    "keywords": ["Media text"],
+    "acf": {
+        "mode": "preview",
+        "renderTemplate": "media-text.php"
+    },
+    "supports": {
+        "anchor": true,
+        "align": false
+    }
+    
+}
