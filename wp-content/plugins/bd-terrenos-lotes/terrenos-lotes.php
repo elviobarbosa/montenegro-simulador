@@ -15,13 +15,15 @@ require_once __DIR__ . '/includes/class-metabox-save.php';
 require_once __DIR__ . '/includes/class-enqueue.php';
 require_once __DIR__ . '/includes/class-lote-info.php';
 require_once __DIR__ . '/includes/class-settings-page.php';
+require_once __DIR__ . '/includes/class-facebook-pixel.php';
 
-new TerrenosLotes_CPT();    
+new TerrenosLotes_CPT();
 new TerrenosLotes_MetaBox();
 new TerrenosLotes_MetaBoxSave();
 new TerrenosLotes_Enqueue();
 new TerrenosLotes_LoteInfo();
 new TerrenosLotes_SettingsPage();
+new TerrenosLotes_FacebookPixel();
 
 function get_terreno_lotes($post_id) {
     $lotes_data = get_post_meta($post_id, '_terreno_lotes', true);

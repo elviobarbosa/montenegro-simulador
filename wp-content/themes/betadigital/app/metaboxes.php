@@ -39,7 +39,7 @@ function empreendimento_meta_box_callback($post) {
         />
     </div>
 
-    <div>
+    <div style="margin-bottom: 15px;">
         <label for="marca_empreendimento" style="display: block; margin-bottom: 5px; font-weight: 600;">
             Marca do empreendimento
         </label>

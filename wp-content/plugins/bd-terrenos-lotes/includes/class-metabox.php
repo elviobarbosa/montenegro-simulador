@@ -29,6 +29,8 @@ class TerrenosLotes_MetaBox {
     $lotes_data = get_post_meta($post->ID, '_terreno_lotes', true);
     $zoom = get_post_meta($post->ID, '_terreno_zoom', true) ?: '18';
     $empreendimento_id = get_post_meta($post->ID, '_empreendimento_id', true);
+    $facebook_pixel_id = get_post_meta($post->ID, '_facebook_pixel_id', true);
+    $facebook_pixel_token = get_post_meta($post->ID, '_facebook_pixel_token', true);
     
     ?>
 
@@ -49,13 +51,36 @@ class TerrenosLotes_MetaBox {
 
 
     <div id="terreno-mapa-container">
+        <!-- Configurações Facebook Pixel -->
+        <div class="terreno-controls" style="margin-bottom: 15px;">
+            <h4 style="margin: 0 0 10px 0; font-size: 14px; color: #23282d;">
+                <span class="dashicons dashicons-facebook" style="vertical-align: middle;"></span>
+                Facebook Pixel
+            </h4>
+            <div class="control-row">
+                <div class="control-group">
+                    <label for="facebook_pixel_id">Pixel ID:</label>
+                    <input type="text" id="facebook_pixel_id" name="facebook_pixel_id"
+                        value="<?php echo esc_attr($facebook_pixel_id); ?>"
+                        placeholder="Ex: 1423368039304251"
+                        style="max-width: 300px;" />
+
+                    <label for="facebook_pixel_token" style="margin-left: 15px;">Access Token:</label>
+                    <input type="text" id="facebook_pixel_token" name="facebook_pixel_token"
+                        value="<?php echo esc_attr($facebook_pixel_token); ?>"
+                        placeholder="Cole o token de acesso aqui"
+                        style="flex: 1;" />
+                </div>
+            </div>
+        </div>
+
         <!-- Controles superiores -->
         <div class="terreno-controls">
             <div class="control-row">
                 <div class="control-group">
                     <label for="empreendimento_id">ID do Empreendimento:</label>
                     <input type="text" id="empreendimento_id" name="empreendimento_id"
-                        value="<?php echo esc_attr($empreendimento_id); ?>" 
+                        value="<?php echo esc_attr($empreendimento_id); ?>"
                         placeholder="Digite ID do Empreendimento" />
                 
                     <label for="terreno_endereco">Endereço:</label>
