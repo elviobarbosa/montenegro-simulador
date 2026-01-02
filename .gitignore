@@ -9,6 +9,7 @@ wp-config.php
 .htaccess
 \*.log
 error_log
+debug.log
 
 # Dynamic and temporary files
 
