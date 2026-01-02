@@ -7,6 +7,7 @@ require_once 'app/ajax.php';
 // require_once 'app/acf-blocks/config.php';
 require_once 'app/enqueue.php';
 require_once 'app/cpt.php';
+require_once 'app/metaboxes.php';
 require_once 'template-parts/components/button.php';
 // add_filter('mec_activation_import_events', '__return_false');
 // add_action( 'wp_enqueue_scripts', 'grand_sunrise_enqueue_styles' );

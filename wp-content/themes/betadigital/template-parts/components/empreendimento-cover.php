@@ -1,5 +1,5 @@
 <?php
-$image_id = get_field('marca_empreendimento');
+$image_id = get_post_meta(get_the_ID(), 'marca_empreendimento', true);
 $feature_image = get_the_post_thumbnail( get_the_ID(), 'full' );
 ?>
 <div class="empreendimento-cover">
