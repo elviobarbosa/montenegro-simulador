@@ -1,0 +1,42 @@
+# WordPress Core
+
+wp-admin/
+wp-includes/
+
+# Environment-specific configuration files
+
+wp-config.php
+.htaccess
+\*.log
+error_log
+
+# Dynamic and temporary files
+
+wp-content/cache/
+wp-content/uploads/
+wp-content/languages/
+wp-content/upgrade/
+
+# Node / Front-end
+
+node_modules/
+
+# System and editor files
+
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Ignora tudo dentro de plugins
+
+wp-content/plugins/\*
+
+# Reabre a pasta de plugins
+
+!wp-content/plugins/
+
+# Permite versionar apenas este plugin
+
+!wp-content/plugins/bd-terreno-lotes/
+!wp-content/plugins/bd-terreno-lotes/\*\*
