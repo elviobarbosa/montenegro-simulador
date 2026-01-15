@@ -71,7 +71,7 @@ function terreno_mapa_shortcode($atts) {
 
     async function loadEmpreendimentos(id) {
         try {
-            const res = await fetch(`/wp-json/cvcrm/v1/empreendimentos/${id}`);
+            const res = await fetch(`/wp-json/cvcrm/v1/empreendimentos/${id}?limite_dados_unidade=60`);
             if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
             const data = await res.json();
             
@@ -137,6 +137,12 @@ function terreno_mapa_shortcode($atts) {
 
     function infoWindowTemplate(lote) {
         console.log(lote)
+
+        // Validação defensiva
+        if (!lote || !lote.situacao) {
+            return '<div class="info-window-step1">Dados do lote indisponíveis</div>';
+        }
+
         const { situacao } = lote;
         const disponivel = (!situacao.bloqueada && situacao.vendida === null);
         const statusBadge = `
@@ -196,6 +202,12 @@ function terreno_mapa_shortcode($atts) {
 
     function infoWindowTemplateStep2(lote) {
         console.log(`STEP2`, lote)
+
+        // Validação defensiva
+        if (!lote) {
+            return '<div class="info-window-step2">Dados do lote indisponíveis</div>';
+        }
+
         const price = lote.valor ?? 150000;
         const entradaMin = price * 0.1;
         const entradaMed = (price + entradaMin) / 2;
@@ -346,6 +358,13 @@ function terreno_mapa_shortcode($atts) {
                 });
 
                 const unidade = findUnidade(blocos, lote.bloco, lote.id);
+
+                // Validação defensiva: verifica se unidade existe antes de acessar propriedades
+                if (!unidade) {
+                    console.warn(`Unidade não encontrada para bloco ${lote.bloco}, lote ${lote.id}`);
+                    return; // Pula este lote se unidade não foi encontrada
+                }
+
                 const { situacao } = unidade;
                 const disponivel = (!situacao.bloqueada && situacao.vendida === null);
                 const color = disponivel ? '#5aa381' : '#FF0000';

@@ -34,20 +34,35 @@ class TerrenosLotes_MetaBox {
     
     ?>
 
-    <!-- Modal -->
-    <div id="editModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index: 999">
-        <div style="background:white; padding:20px; max-width:300px; margin:100px auto; border-radius:10px;">
-            <label>ID do Lote:</label>
-            <input type="text" id="editLoteId" /><br /><br />
-            
-            <label>Bloco do Lote:</label>
-            <input type="text" id="editLoteBloco" /><br /><br />
-            
-            <button onclick="saveEditLote()">Salvar</button>
-            <button onclick="closeEditModal()">Cancelar</button>
+    <!-- Modal de Edição de Lote -->
+    <div id="editModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); z-index: 9999;">
+        <div style="background:white; padding:30px; max-width:400px; margin:100px auto; border-radius:8px; box-shadow: 0 4px 20px rgba(0,0,0,0.3);">
+            <h3 style="margin: 0 0 20px 0; color: #23282d;">Dados do Lote</h3>
+
+            <div style="margin-bottom: 15px;">
+                <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #23282d;">ID da Unidade: <span style="color: red;">*</span></label>
+                <input type="text" id="editLoteUnidadeId" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;" placeholder="Ex: 123" />
+                <small style="color: #666; font-size: 11px;">ID da unidade correspondente na API</small>
+            </div>
+
+            <div style="margin-bottom: 15px;">
+                <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #23282d;">Bloco: <span style="color: red;">*</span></label>
+                <input type="text" id="editLoteBloco" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;" placeholder="Ex: A, B, C..." />
+                <small style="color: #666; font-size: 11px;">Bloco onde a unidade está localizada</small>
+            </div>
+
+            <div style="margin-bottom: 20px;">
+                <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #23282d;">Nome do Lote (opcional):</label>
+                <input type="text" id="editLoteNome" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;" placeholder="Ex: Lote 1" />
+            </div>
+
+            <div style="display: flex; gap: 10px; justify-content: flex-end;">
+                <button type="button" class="button button-secondary" onclick="closeEditModal()">Cancelar</button>
+                <button type="button" class="button button-primary" onclick="saveEditLote()">Salvar</button>
+            </div>
         </div>
     </div>
-    <!-- Modal -->
+    <!-- Fim Modal -->
 
 
     <div id="terreno-mapa-container">
