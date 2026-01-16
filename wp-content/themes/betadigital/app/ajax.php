@@ -1,6 +1,4 @@
 <?php
-
-
 add_action('rest_api_init', function () {
     register_rest_route('cvcrm/v1', '/empreendimentos/(?P<id>\d+)', array(
         'methods' => 'GET',
@@ -52,7 +50,7 @@ function cvcrm_request($endpoint, $cache_key, $timeout = 15, $cache_ttl = 300) {
   ));
 
   if (is_wp_error($response)) {
-      error_log("❌ [CVCRM] Erro WP: " . $response->get_error_message());
+      error_log("[CVCRM] Erro WP: " . $response->get_error_message());
       return new WP_Error('cvcrm_error', 'Erro na comunicação com CVCRM', array('status' => 500));
   }
 
@@ -60,8 +58,8 @@ function cvcrm_request($endpoint, $cache_key, $timeout = 15, $cache_ttl = 300) {
   $body = wp_remote_retrieve_body($response);
 
   if (defined('WP_DEBUG') && WP_DEBUG) {
-      error_log("📡 [CVCRM] Status: $status_code");
-      error_log("📦 [CVCRM] Body: " . substr($body, 0, 500));
+      error_log("[CVCRM] Status: $status_code");
+      error_log("[CVCRM] Body: " . substr($body, 0, 500));
   }
 
   if ($status_code >= 400) {
@@ -90,8 +88,22 @@ function cvcrm_get_empreendimento_by_id($request) {
 function cvcrm_get_unidade($request) {
   $id = intval($request['id']);
   $empreendimento = intval($request['empreendimento']);
-  $url = "https://montenegro.cvcrm.com.br/api/v1/cadastros/empreendimentos/{$empreendimento}/unidades/{$id}"; 
+  $url = "https://montenegro.cvcrm.com.br/api/v1/cadastros/empreendimentos/{$empreendimento}/unidades/{$id}";
   return cvcrm_request($url, "cvcrm_unidade_$id", 15, 86400);
+}
+
+add_action('rest_api_init', function () {
+    register_rest_route('cvcrm/v1', '/unidades/(?P<empreendimento_id>\d+)', array(
+        'methods' => 'GET',
+        'callback' => 'cvcrm_get_unidades_by_empreendimento',
+        'permission_callback' => '__return_true'
+    ));
+});
+
+function cvcrm_get_unidades_by_empreendimento($request) {
+    $empreendimento_id = intval($request['empreendimento_id']);
+    $url = "https://montenegro.cvcrm.com.br/api/v1/cvdw/unidades?a_partir_referencia={$empreendimento_id}";
+    return cvcrm_request($url, "cvcrm_unidades_emp_$empreendimento_id", 15, 300);
 }
 
 

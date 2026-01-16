@@ -74,7 +74,7 @@ function terreno_mapa_shortcode($atts) {
             const res = await fetch(`/wp-json/cvcrm/v1/empreendimentos/${id}?limite_dados_unidade=60`);
             if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
             const data = await res.json();
-            
+
             return data;
         } catch (err) {
             console.error('Erro ao carregar empreendimento:', err);
@@ -83,6 +83,25 @@ function terreno_mapa_shortcode($atts) {
                 container.innerHTML = "<p>Erro ao carregar empreendimento.</p>";
             }
             throw err;
+        }
+    }
+
+    async function loadUnidadeValor(empreendimentoId, idunidade) {
+        try {
+            const res = await fetch(`/wp-json/cvcrm/v1/unidades/${empreendimentoId}`);
+            if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+            const data = await res.json();
+
+            if (data && data.dados && Array.isArray(data.dados)) {
+                const unidade = data.dados.find(u => String(u.idunidade) === String(idunidade) || String(u.idunidade_int) === String(idunidade));
+                if (unidade && unidade.valor) {
+                    return parseFloat(unidade.valor);
+                }
+            }
+            return null;
+        } catch (err) {
+            console.error('Erro ao carregar valor da unidade:', err);
+            return null;
         }
     }
 
@@ -144,7 +163,7 @@ function terreno_mapa_shortcode($atts) {
         }
 
         const { situacao } = lote;
-        const disponivel = (!situacao.bloqueada && situacao.vendida === null);
+        const disponivel = (situacao.situacao_mapa_disponibilidade === 1);
         const statusBadge = `
         <span class="status-badge ${disponivel ? 'status-badge--disponivel' : 'status-badge--indisponivel'}">
         ${disponivel ? 'Disponível' : 'Indisponível'}
@@ -203,7 +222,6 @@ function terreno_mapa_shortcode($atts) {
     function infoWindowTemplateStep2(lote) {
         console.log(`STEP2`, lote)
 
-        // Validação defensiva
         if (!lote) {
             return '<div class="info-window-step2">Dados do lote indisponíveis</div>';
         }
@@ -366,7 +384,7 @@ function terreno_mapa_shortcode($atts) {
                 }
 
                 const { situacao } = unidade;
-                const disponivel = (!situacao.bloqueada && situacao.vendida === null);
+                const disponivel = (situacao.situacao_mapa_disponibilidade === 1);
                 const color = disponivel ? '#5aa381' : '#FF0000';
                 console.log(`BLOCOS`, empreedimentosData)
                 
@@ -385,17 +403,27 @@ function terreno_mapa_shortcode($atts) {
                 });
                 
                 polygon.addListener('click', async function(event) {
-                    infoWindow.setContent(infoWindowTemplate(unidade));
+                    // Mostrar loading enquanto busca o valor
+                    infoWindow.setContent('<div class="info-window-step1" style="text-align:center;padding:20px;">Carregando...</div>');
                     infoWindow.setPosition(event.latLng);
-                    infoWindow.open(map);        
+                    infoWindow.open(map);
+
+                    // Buscar valor atualizado da API de unidades
+                    const valorApi = await loadUnidadeValor(<?php echo $empreendimento_id; ?>, unidade.idunidade);
+                    if (valorApi !== null) {
+                        unidade.valor = valorApi;
+                    }
+
+                    // Agora exibe o template com o valor atualizado
+                    infoWindow.setContent(infoWindowTemplate(unidade));
 
                     google.maps.event.addListenerOnce(infoWindow, "domready", function () {
                         const btnStart = document.querySelector('[data-js="start"]');
                         if (btnStart) {
                             btnStart.addEventListener("click", function() {
                                 const values = {
-                                    ...lote, 
-                                    price:  unidade.valor ?? 150000
+                                    ...lote,
+                                    price: unidade.valor ?? 150000
                                 };
                                 infoWindow.setContent(infoWindowTemplateStep2(unidade));
 
