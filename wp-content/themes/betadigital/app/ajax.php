@@ -82,14 +82,82 @@ function cvcrm_get_simulacoes($request) {
 function cvcrm_get_empreendimento_by_id($request) {
     $id = intval($request['id']);
     $url = "https://montenegro.cvcrm.com.br/api/v1/cadastros/empreendimentos/{$id}";
-    return cvcrm_request($url, "cvcrm_empreendimento_$id", 15, 86400);
+    $data = cvcrm_request($url, "cvcrm_empreendimento_$id", 15, 86400);
+
+    if (is_wp_error($data)) {
+        return $data;
+    }
+
+    return cvcrm_filter_empreendimento($data);
+}
+
+function cvcrm_filter_empreendimento($data) {
+    $filtered = array(
+        'nome' => $data['nome'] ?? '',
+        'etapas' => array()
+    );
+
+    if (!empty($data['etapas'])) {
+        foreach ($data['etapas'] as $etapa) {
+            $filtered_etapa = array('blocos' => array());
+
+            if (!empty($etapa['blocos'])) {
+                foreach ($etapa['blocos'] as $bloco) {
+                    $filtered_bloco = array(
+                        'idbloco' => $bloco['nome'] ?? '',
+                        'unidades' => array()
+                    );
+
+                    if (!empty($bloco['unidades'])) {
+                        foreach ($bloco['unidades'] as $unidade) {
+                            $filtered_bloco['unidades'][] = array(
+                                'nome' => $unidade['nome'] ?? '',
+                                'idunidade' => $unidade['idunidade'] ?? null,
+                                'valor' => $unidade['valor'] ?? null,
+                                'area_privativa' => $unidade['area_privativa'] ?? null,
+                                'situacao' => array(
+                                    'situacao_mapa_disponibilidade' => $unidade['situacao']['situacao_mapa_disponibilidade'] ?? null
+                                )
+                            );
+                        }
+                    }
+
+                    $filtered_etapa['blocos'][] = $filtered_bloco;
+                }
+            }
+
+            $filtered['etapas'][] = $filtered_etapa;
+        }
+    }
+
+    return $filtered;
 }
 
 function cvcrm_get_unidade($request) {
-  $id = intval($request['id']);
-  $empreendimento = intval($request['empreendimento']);
-  $url = "https://montenegro.cvcrm.com.br/api/v1/cadastros/empreendimentos/{$empreendimento}/unidades/{$id}";
-  return cvcrm_request($url, "cvcrm_unidade_$id", 15, 86400);
+    $id = intval($request['id']);
+    $empreendimento = intval($request['empreendimento']);
+    $url = "https://montenegro.cvcrm.com.br/api/v1/cadastros/empreendimentos/{$empreendimento}/unidades/{$id}";
+    $data = cvcrm_request($url, "cvcrm_unidade_$id", 15, 86400);
+
+    if (is_wp_error($data)) {
+        return $data;
+    }
+
+    return cvcrm_filter_unidade($data);
+}
+
+function cvcrm_filter_unidade($data) {
+    return($data);
+    return array(
+        'idunidade' => $data['idunidade'] ?? null,
+        'idunidade_int' => $data['idunidade_int'] ?? null,
+        'idbloco' => $data['idbloco'] ?? null,
+        'valor' => $data['valor'] ?? null,
+        'area_privativa' => $data['area_privativa'] ?? null,
+        'situacao' => array(
+            'situacao_mapa_disponibilidade' => $data['situacao']['situacao_mapa_disponibilidade'] ?? null
+        )
+    );
 }
 
 add_action('rest_api_init', function () {
@@ -104,6 +172,47 @@ function cvcrm_get_unidades_by_empreendimento($request) {
     $empreendimento_id = intval($request['empreendimento_id']);
     $url = "https://montenegro.cvcrm.com.br/api/v1/cvdw/unidades?a_partir_referencia={$empreendimento_id}";
     return cvcrm_request($url, "cvcrm_unidades_emp_$empreendimento_id", 15, 300);
+}
+
+add_action('rest_api_init', function () {
+    register_rest_route('cvcrm/v1', '/porcentagem-vendida/(?P<id>\d+)', array(
+        'methods' => 'GET',
+        'callback' => 'cvcrm_get_porcentagem_vendida',
+        'permission_callback' => '__return_true'
+    ));
+});
+
+function cvcrm_get_porcentagem_vendida($request) {
+    $id = intval($request['id']);
+    $url = "https://montenegro.cvcrm.com.br/api/v1/comercial/mapadisponibilidade/{$id}/?limitePagina=800&pag=1";
+    $data = cvcrm_request($url, "cvcrm_mapa_disponibilidade_$id", 15, 300);
+
+    if (is_wp_error($data)) {
+        return $data;
+    }
+
+    $lotes = $data['data'] ?? [];
+    $total = count($lotes);
+
+    if ($total === 0) {
+        return array('porcentagem' => 0, 'total' => 0, 'vendidos' => 0);
+    }
+// var_dump($lotes);
+    $vendidos = 0;
+    foreach ($lotes as $lote) {
+        $situacao = strtolower($lote['situacao'] ?? '');
+        if ($situacao === 'reservada') {
+            $vendidos++;
+        }
+    }
+
+    $porcentagem = round(($vendidos / $total) * 100);
+
+    return array(
+        'porcentagem' => $porcentagem,
+        'total' => $total,
+        'vendidos' => $vendidos
+    );
 }
 
 

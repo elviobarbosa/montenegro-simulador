@@ -1828,7 +1828,7 @@ input[type=submit] {
 }
 @media (min-width: 992px) {
   .simulador {
-    grid-template-columns: 70% auto;
+    grid-template-columns: 60% auto;
   }
 }
 @media (max-width: 992px) {
