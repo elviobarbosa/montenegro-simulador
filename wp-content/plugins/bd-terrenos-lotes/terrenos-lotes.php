@@ -105,6 +105,38 @@ function terreno_mapa_shortcode($atts) {
         }
     }
 
+    function calcularPorcentagemVendida(data) {
+        if (!data || !data.etapas) return;
+
+        let total = 0;
+        let vendidos = 0;
+
+        data.etapas.forEach(etapa => {
+            if (etapa.blocos) {
+                etapa.blocos.forEach(bloco => {
+                    if (bloco.unidades) {
+                        bloco.unidades.forEach(unidade => {
+                            total++;
+                            if (unidade.situacao && unidade.situacao.situacao_mapa_disponibilidade !== 1) {
+                                vendidos++;
+                            }
+                        });
+                    }
+                });
+            }
+        });
+
+        const porcentagem = total > 0 ? Math.round((vendidos / total) * 100) : 0;
+
+        const el = document.querySelector('[data-js="porcentagem_vendida"]');
+        if (el) {
+            const strong = el.querySelector('strong');
+            if (strong) {
+                strong.textContent = `${porcentagem}%`;
+            }
+        }
+    }
+
     function waitForGoogleMaps<?php echo $post_id; ?>() {
         if (typeof google !== 'undefined' && typeof google.maps !== 'undefined') {
             console.log('Dados:', empreedimentosData);
@@ -117,6 +149,7 @@ function terreno_mapa_shortcode($atts) {
         loadEmpreendimentos(<?php echo $empreendimento_id ?>)
         .then(data => {
             empreedimentosData = data;
+            calcularPorcentagemVendida(data);
             waitForGoogleMaps<?php echo $post_id; ?>();
         })
         .catch(err => {
@@ -174,7 +207,7 @@ function terreno_mapa_shortcode($atts) {
         return `
             <div class="info-window-step1">
                 <div class="info-window-step1__header">
-                    Bloco ${lote.idbloco} | Lote ${lote.idunidade}
+                    Quadra ${lote.idbloco} | Lote ${lote.nome}
                     <div class="info-window-step1__status">
                         ${statusBadge}
                     </div>
@@ -228,43 +261,53 @@ function terreno_mapa_shortcode($atts) {
 
         const price = lote.valor ?? 150000;
         const entradaMin = price * 0.1;
-        const entradaMed = (price + entradaMin) / 2;
+        const entradaInicial = entradaMin; // Começa no mínimo (10%)
 
-        const parcelasMin = 1;
-        const parcelasMax = 132;
-        const parcelasMed = Math.round((parcelasMax + parcelasMin) / 2);
+        const parcelasMin = 12;  // 1 ano
+        const parcelasMax = 144; // 12 anos
+        const parcelasInicial = 72; // 6 anos
 
-        const financiado = price - entradaMed;
-        const valorParcela = financiado / parcelasMed;
+        const financiado = price - entradaInicial;
+        const qtdAnos = Math.ceil(parcelasInicial / 12);
+        const totalBaloes = financiado * 0.2 * qtdAnos; // 20% por ano
+        const valorBalao = financiado * 0.2;
+        const restanteParaMensais = financiado - totalBaloes;
+        const valorParcela = restanteParaMensais / parcelasInicial;
+
+        const { situacao } = lote;
+        const disponivel = (situacao && situacao.situacao_mapa_disponibilidade === 1);
+        const statusBadge = `
+        <span class="status-badge ${disponivel ? 'status-badge--disponivel' : 'status-badge--indisponivel'}">
+        ${disponivel ? 'Disponível' : 'Indisponível'}
+        </span>`;
 
         return `
             <div class="info-window-step2">
+                <div class="info-window-step2__status">
+                    ${statusBadge}
+                </div>
                 <div class="info-window-step1__header">
-                    <div>Bloco ${lote.idbloco} | Lote ${lote.idunidade}</div>
-                    <div>${price.toLocaleString("pt-BR",{style:"currency",currency:"BRL"})}</div>
+                    <div>Bloco ${lote.idbloco} | Lote ${lote.nome} | ${formatDecimal(lote.area_privativa)} m²</div>
+                    <div>${formatCurrency(price)}</div>
                 </div>
 
                 <!-- Entrada -->
                 <div class="simulador" data-js="entrada-slider">
-                    
-                    <div class="label">Entrada (<span data-js="porcentagem">50%</span>)</div>
+                    <div class="label">Entrada (<span data-js="porcentagem">10%</span>)</div>
                     <div class="simulador__valor-display" data-js="valor-display">
-                        ${entradaMed.toLocaleString("pt-BR",{style:"currency",currency:"BRL"})}
+                        ${formatCurrency(entradaInicial)}
                     </div>
-                   
                     <div class="simulador__slider-wrapper">
-                        <input type="range" min="${entradaMin}" max="${price}" value="${entradaMed}" class="simulador__slider">
+                        <input type="range" min="${entradaMin}" max="${price}" value="${entradaInicial}" class="simulador__slider">
                     </div>
                 </div>
 
                 <!-- Parcelas -->
                 <div class="simulador" data-js="parcelas-slider">
-                    
-                    <div class="label">Qtd. de parcelas</div>
-                    <div class="simulador__valor-display" data-js="valor-display">${parcelasMed}</div>
-                   
+                    <div class="label">Prazo (<span data-js="anos">${qtdAnos} anos</span>)</div>
+                    <div class="simulador__valor-display" data-js="valor-display">${parcelasInicial} parcelas</div>
                     <div class="simulador__slider-wrapper">
-                        <input type="range" min="${parcelasMin}" max="${parcelasMax}" value="${parcelasMed}" class="simulador__slider">
+                        <input type="range" min="${parcelasMin}" max="${parcelasMax}" step="12" value="${parcelasInicial}" class="simulador__slider">
                     </div>
                 </div>
 
@@ -272,73 +315,43 @@ function terreno_mapa_shortcode($atts) {
                 <div class="simulador valor-financiado">
                     <div class="label">Valor financiado</div>
                     <div class="simulador__valor-display" data-js="valor-financiado">
-                        ${financiado.toLocaleString("pt-BR",{style:"currency",currency:"BRL"})}
+                        ${formatCurrency(financiado)}
+                    </div>
+                </div>
+
+                <!-- Balão anual -->
+                <div class="simulador valor-balao">
+                    <div class="label">Balão anual (20%)</div>
+                    <div class="simulador__valor-display" data-js="valor-balao">
+                        ${formatCurrency(valorBalao)} x ${qtdAnos}
                     </div>
                 </div>
 
                 <!-- Valor da parcela -->
                 <div class="valor-parcela">
-                    <div class="label">Valor da parcela</div>
+                    <div class="label">Valor da parcela mensal</div>
                     <div class="simulador__valor-display" data-js="valor-parcela">
-                        ${valorParcela.toLocaleString("pt-BR",{style:"currency",currency:"BRL"})}
+                        ${formatCurrency(valorParcela)}
                     </div>
                 </div>
 
                 <button class="button button--secondary button--normal" data-js="send-wapp">ENVIAR POR WHATSAPP</button>
                 <button class="button button--primary button--normal" data-js="send-email">ENVIAR POR EMAIL</button>
-                <span class="disclaimer">Essa simulação apresenta uma estimativa de valores conforme suas seleções, não equivale à contratação de um financimanto.</span>
+                <span class="disclaimer">Essa simulação apresenta uma estimativa de valores conforme suas seleções, não equivale à contratação de um financiamento.</span>
             </div>
         `;
     }
 
-    // async function loadSimulacoes() {
-    //     try {
-    //         const res = await fetch(`/wp-json/cvcrm/v1/simulacoes`);
-    //         const data = await res.json();
-
-    //         if (!Array.isArray(data)) {
-    //             console.error("<Nenhuma simulação encontrada.");
-    //             return;
-    //         }
-
-    //         console.log(data)
-    //     } catch (err) {
-    //         console.error("Erro ao carregar simulações.");
-    //     }
-    // }
-
-    // async function loadUnidade(empreendimento, id) {
-    //     loading = true;
-    //     try {
-    //         const res = await fetch(`/wp-json/cvcrm/v1/unidade/${empreendimento}/${id}`);
-    //         const data = await res.json();
-    //         loading = false;
-    //         console.log(data, loading)
-    //     } catch (err) {
-    //         loading = false;
-    //         container.innerHTML = "<p>Erro ao carregar empreendimento.</p>";
-    //     }
-    // }
-
-    // async function loadEmpreendimentos(id) {
-    //     loading = true;
-    //     try {
-    //         const res = await fetch(`/wp-json/cvcrm/v1/empreendimentos/${id}`);
-    //         const data = await res.json();
-    //         loading = false;
-    //         console.log(data, loading)
-    //     } catch (err) {
-    //         loading = false;
-    //         container.innerHTML = "<p>Erro ao carregar empreendimento.</p>";
-    //     }
-    // }
-
     function findUnidade(result, idBloco, idUnidade) {
-        const bloco = result.find((b) => b.idbloco === Number(idBloco));
+        const bloco = result.find((b) => Number(b.idbloco) === Number(idBloco));
         if (!bloco) return null;
-
         const unidade = bloco.unidades.find((u) => u.idunidade === Number(idUnidade));
-        return unidade || null;
+        const unidadeResult = {
+            ...unidade,
+            idbloco: idBloco
+        };
+        
+        return unidadeResult || null;
     }
 
 
@@ -376,7 +389,7 @@ function terreno_mapa_shortcode($atts) {
                 });
 
                 const unidade = findUnidade(blocos, lote.bloco, lote.id);
-
+                console.log(unidade);
                 // Validação defensiva: verifica se unidade existe antes de acessar propriedades
                 if (!unidade) {
                     console.warn(`Unidade não encontrada para bloco ${lote.bloco}, lote ${lote.id}`);
@@ -404,7 +417,7 @@ function terreno_mapa_shortcode($atts) {
                 
                 polygon.addListener('click', async function(event) {
                     // Mostrar loading enquanto busca o valor
-                    infoWindow.setContent('<div class="info-window-step1" style="text-align:center;padding:20px;">Carregando...</div>');
+                    infoWindow.setContent('<div class="info-window-step2" style="text-align:center;padding:20px;">Carregando...</div>');
                     infoWindow.setPosition(event.latLng);
                     infoWindow.open(map);
 
@@ -414,77 +427,70 @@ function terreno_mapa_shortcode($atts) {
                         unidade.valor = valorApi;
                     }
 
-                    // Agora exibe o template com o valor atualizado
-                    infoWindow.setContent(infoWindowTemplate(unidade));
+                    // Ir direto para o simulador (step 2)
+                    const values = {
+                        ...lote,
+                        price: unidade.valor ?? 150000
+                    };
+                    infoWindow.setContent(infoWindowTemplateStep2(unidade));
 
                     google.maps.event.addListenerOnce(infoWindow, "domready", function () {
-                        const btnStart = document.querySelector('[data-js="start"]');
-                        if (btnStart) {
-                            btnStart.addEventListener("click", function() {
-                                const values = {
-                                    ...lote,
-                                    price: unidade.valor ?? 150000
-                                };
-                                infoWindow.setContent(infoWindowTemplateStep2(unidade));
+                        const btnWapp = document.querySelector('[data-js="send-wapp"]');
+                        const btnEmail = document.querySelector('[data-js="send-email"]');
+                        const slider = new NumberSlider(document.querySelector(".info-window-step2"), values);
 
-                                google.maps.event.addListenerOnce(infoWindow, "domready", function () {
-                                    const btnWapp = document.querySelector('[data-js="send-wapp"]');
-                                    const btnEmail = document.querySelector('[data-js="send-email"]');
-                                    const slider = new NumberSlider(document.querySelector(".info-window-step2"), values);
-                                    
-                                    const simulacao = slider.getValues();
+                        const simulacao = slider.getValues();
 
-                                    const send = (isWapp = false) => {
-                                        infoWindow.setContent(terrenoForm);
+                        const send = (isWapp = false) => {
+                            infoWindow.setContent(terrenoForm);
 
-                                        google.maps.event.addListenerOnce(infoWindow, "domready", function () {
-                                            const formEl = document.querySelector('.gm-style-iw .wpcf7 form'); 
-                                            if (formEl && typeof wpcf7 !== "undefined") {
-                                                formEl.addEventListener("keyup", (e) => {
-                                                    if (e.target.matches("input[type=tel]")) {
-                                                        let value = e.target.value.replace(/\D/g, "");
-                                                        value = value.replace(/^(\d{2})(\d)/g, "($1) $2");
-                                                        value = value.replace(/(\d)(\d{4})$/, "$1-$2");
-                                                        e.target.value = value;
-                                                    }
-                                                });
+                            google.maps.event.addListenerOnce(infoWindow, "domready", function () {
+                                const formEl = document.querySelector('.gm-style-iw .wpcf7 form');
+                                if (formEl && typeof wpcf7 !== "undefined") {
+                                    formEl.addEventListener("keyup", (e) => {
+                                        if (e.target.matches("input[type=tel]")) {
+                                            let value = e.target.value.replace(/\D/g, "");
+                                            value = value.replace(/^(\d{2})(\d)/g, "($1) $2");
+                                            value = value.replace(/(\d)(\d{4})$/, "$1-$2");
+                                            e.target.value = value;
+                                        }
+                                    });
 
-                                                document.addEventListener('wpcf7mailsent', function(event) {
-                                                    const data = event.detail.inputs;
-                                                    const phone = data.find(f => f.name === 'whatsapp')?.value;
-                                                    const nome = data.find(f => f.name === 'your-name')?.value;
+                                    document.addEventListener('wpcf7mailsent', function(event) {
+                                        const data = event.detail.inputs;
+                                        const phone = data.find(f => f.name === 'whatsapp')?.value;
+                                        const nome = data.find(f => f.name === 'your-name')?.value;
 
-                                                    let mensagem = `Olá! ${nome}. Aqui estão os dados da simulação:\n\n`;
-                                                    mensagem += `Empreendimento: ${empreedimentosData.nome || ''}\n`;
-                                                    mensagem += `Bloco: ${unidade.idbloco || ''}\n`;
-                                                    mensagem += `Lote: ${unidade.idunidade}\n\n`;
-                                                    mensagem += `--------------------------\n\n`;
-                                                    mensagem += `Valor do Lote: ${simulacao.preco.toLocaleString("pt-BR",{style:"currency",currency:"BRL"})}\n`;
-                                                    mensagem += `Entrada: ${simulacao.entrada.toLocaleString("pt-BR",{style:"currency",currency:"BRL"})}\n`;
-                                                    mensagem += `Qtd. Parcelas: ${simulacao.parcelas}\n`;
-                                                    mensagem += `Valor da Parcela: ${simulacao.valorParcela.toLocaleString("pt-BR",{style:"currency",currency:"BRL"})}\n`;
+                                        let mensagem = `Olá! ${nome}. Aqui estão os dados da simulação:\n\n`;
+                                        mensagem += `Empreendimento: ${empreedimentosData.nome || ''}\n`;
+                                        mensagem += `Quadra: ${unidade.idbloco || ''}\n`;
+                                        mensagem += `Lote: ${unidade.nome}\n\n`;
+                                        mensagem += `--------------------------\n\n`;
+                                        mensagem += `Valor do Lote: ${Number(simulacao.preco).toLocaleString("pt-BR",{style:"currency",currency:"BRL"})}\n`;
+                                        mensagem += `Entrada: ${simulacao.entrada.toLocaleString("pt-BR",{style:"currency",currency:"BRL"})}\n`;
+                                        mensagem += `Valor Financiado: ${simulacao.financiado.toLocaleString("pt-BR",{style:"currency",currency:"BRL"})}\n`;
+                                        mensagem += `Balão Anual (20%): ${simulacao.valorBalao.toLocaleString("pt-BR",{style:"currency",currency:"BRL"})} x ${simulacao.qtdBaloes}\n`;
+                                        mensagem += `Qtd. Parcelas: ${simulacao.parcelas}\n`;
+                                        mensagem += `Valor da Parcela Mensal: ${simulacao.valorParcela.toLocaleString("pt-BR",{style:"currency",currency:"BRL"})}\n`;
 
-                                                    const url = `https://wa.me/55${phone.replace(/\D/g, "")}?text=${encodeURIComponent(mensagem)}`;
-                                                    if (isWapp) window.open(url, '_blank');
-                                                }, { once: true });
+                                        const url = `https://wa.me/55${phone.replace(/\D/g, "")}?text=${encodeURIComponent(mensagem)}`;
+                                        if (isWapp) window.open(url, '_blank');
+                                    }, { once: true });
 
-                                                formEl.reset();
-                                                formEl.querySelectorAll('.wpcf7-not-valid-tip').forEach(el => el.remove());
-                                                formEl.querySelectorAll('.wpcf7-response-output').forEach(el => el.innerHTML = '');
-                                                wpcf7.init(formEl);
-                                            }
-                                        });
-                                    };
-
-                                    if (btnEmail) {
-                                        btnEmail.addEventListener("click", () => send(false));
-                                    }
-
-                                    if (btnWapp) {
-                                        btnWapp.addEventListener("click", () => send(true));
-                                    }
-                                });
+                                    formEl.reset();
+                                    formEl.querySelectorAll('.wpcf7-not-valid-tip').forEach(el => el.remove());
+                                    formEl.querySelectorAll('.wpcf7-response-output').forEach(el => el.innerHTML = '');
+                                    wpcf7.init(formEl);
+                                }
                             });
+                        };
+
+                        if (btnEmail) {
+                            btnEmail.addEventListener("click", () => send(false));
+                        }
+
+                        if (btnWapp) {
+                            btnWapp.addEventListener("click", () => send(true));
                         }
                     });
                         
@@ -526,9 +532,11 @@ function terreno_mapa_shortcode($atts) {
                 entrada: 0,
                 parcelas: 0,
                 valorParcela: 0,
+                valorBalao: 0,
+                qtdBaloes: 0,
                 financiado: 0
             };
-            
+
             this.init();
         }
 
@@ -539,9 +547,13 @@ function terreno_mapa_shortcode($atts) {
 
             const parcelasSlider = this.root.querySelector("[data-js=parcelas-slider] input");
             const parcelasDisplay = this.root.querySelector("[data-js=parcelas-slider] [data-js=valor-display]");
+            const anosDisplay = this.root.querySelector("[data-js=parcelas-slider] [data-js=anos]");
 
             const financiadoDisplay = this.root.querySelector("[data-js=valor-financiado]");
+            const balaoDisplay = this.root.querySelector("[data-js=valor-balao]");
             const parcelaDisplay = this.root.querySelector("[data-js=valor-parcela]");
+
+            const formatCurrency = (valor) => valor.toLocaleString("pt-BR", {style: "currency", currency: "BRL"});
 
             const updateSliderStyle = (slider) => {
                 const min = Number(slider.min);
@@ -554,22 +566,44 @@ function terreno_mapa_shortcode($atts) {
             const update = () => {
                 const entrada = Number(entradaSlider.value);
                 const parcelas = Number(parcelasSlider.value);
+                const qtdAnos = Math.ceil(parcelas / 12);
 
-                entradaDisplay.innerHTML = entrada.toLocaleString("pt-BR",{style:"currency",currency:"BRL"});
+                // Atualiza entrada
+                entradaDisplay.innerHTML = formatCurrency(entrada);
                 entradaPct.innerHTML = Math.floor((entrada / this.lote.price) * 100) + "%";
                 updateSliderStyle(entradaSlider);
 
-                parcelasDisplay.innerHTML = parcelas;
+                // Atualiza parcelas
+                parcelasDisplay.innerHTML = `${parcelas} parcelas`;
+                anosDisplay.innerHTML = `${qtdAnos} ano${qtdAnos > 1 ? "s" : ""}`;
                 updateSliderStyle(parcelasSlider);
 
+                // Cálculo do financiamento
                 const financiado = this.lote.price - entrada;
-                financiadoDisplay.innerHTML = financiado.toLocaleString("pt-BR",{style:"currency",currency:"BRL"});
 
-                const valorParcela = financiado / parcelas;
-                parcelaDisplay.innerHTML = valorParcela.toLocaleString("pt-BR",{style:"currency",currency:"BRL"});
+                // 👉 20% do TOTAL financiado para balões
+                const totalBaloes = financiado * 0.2;
+                const valorBalao = totalBaloes / qtdAnos;
 
-                this.values = { preco: this.lote.price, entrada, parcelas, valorParcela, financiado };
+                // 👉 restante vai para parcelas mensais
+                const restanteParaMensais = financiado - totalBaloes;
+                const valorParcela = restanteParaMensais / parcelas;
+
+                financiadoDisplay.innerHTML = formatCurrency(financiado);
+                balaoDisplay.innerHTML = `${formatCurrency(valorBalao)} x ${qtdAnos}`;
+                parcelaDisplay.innerHTML = formatCurrency(valorParcela);
+
+                this.values = {
+                    preco: this.lote.price,
+                    entrada,
+                    parcelas,
+                    valorParcela,
+                    valorBalao,
+                    qtdBaloes: qtdAnos,
+                    financiado
+                };
             };
+
 
             update();
 

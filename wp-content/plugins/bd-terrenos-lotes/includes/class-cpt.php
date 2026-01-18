@@ -2,6 +2,20 @@
 class TerrenosLotes_CPT {
   public function __construct() {
     add_action('init', array($this, 'create_post_type'));
+    add_filter('single_template', array($this, 'load_single_template'));
+  }
+
+  public function load_single_template($template) {
+    global $post;
+
+    if ($post->post_type === 'terreno') {
+      $plugin_template = plugin_dir_path(__DIR__) . 'templates/single-terreno.php';
+      if (file_exists($plugin_template)) {
+        return $plugin_template;
+      }
+    }
+
+    return $template;
   }
   public function create_post_type() {
     $labels = array(

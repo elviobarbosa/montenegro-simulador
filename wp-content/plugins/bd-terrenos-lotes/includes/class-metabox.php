@@ -13,6 +13,108 @@ class TerrenosLotes_MetaBox {
       'normal',
       'high'
     );
+
+    add_meta_box(
+      'terreno_sidebar',
+      'Configurações',
+      array($this, 'sidebar_meta_box_callback'),
+      'terreno',
+      'side',
+      'default'
+    );
+  }
+
+  public function sidebar_meta_box_callback($post) {
+    $facebook_pixel_id = get_post_meta($post->ID, '_facebook_pixel_id', true);
+    $facebook_pixel_token = get_post_meta($post->ID, '_facebook_pixel_token', true);
+    $logo_empreendimento = get_post_meta($post->ID, '_logo_empreendimento', true);
+    ?>
+    <!-- Logo do Empreendimento -->
+    <div style="margin-bottom: 20px;">
+        <label style="display: block; margin-bottom: 5px; font-weight: 600;">
+            Logo do Empreendimento
+        </label>
+        <div id="logo_empreendimento_preview" style="margin-bottom: 10px;">
+            <?php if ($logo_empreendimento): ?>
+                <?php echo wp_get_attachment_image($logo_empreendimento, 'medium', false, ['style' => 'max-width: 100%; height: auto;']); ?>
+            <?php endif; ?>
+        </div>
+        <input type="hidden" id="logo_empreendimento" name="logo_empreendimento" value="<?php echo esc_attr($logo_empreendimento); ?>" />
+        <button type="button" class="button" id="logo_empreendimento_button" style="width: 100%;">
+            <?php echo $logo_empreendimento ? 'Alterar Logo' : 'Selecionar Logo'; ?>
+        </button>
+        <?php if ($logo_empreendimento): ?>
+            <button type="button" class="button" id="logo_empreendimento_remove" style="width: 100%; margin-top: 5px;">
+                Remover Logo
+            </button>
+        <?php endif; ?>
+    </div>
+<hr>
+    <!-- Facebook Pixel -->
+    <div style="margin-bottom: 15px;">
+        <label for="facebook_pixel_id" style="display: block; margin-bottom: 5px; font-weight: 600;">
+            Facebook Pixel ID
+        </label>
+        <input type="text" id="facebook_pixel_id" name="facebook_pixel_id"
+            value="<?php echo esc_attr($facebook_pixel_id); ?>"
+            placeholder="Ex: 1423368039304251"
+            style="width: 100%;" />
+    </div>
+
+    <div style="margin-bottom: 15px;">
+        <label for="facebook_pixel_token" style="display: block; margin-bottom: 5px; font-weight: 600;">
+            Facebook Access Token
+        </label>
+        <input type="text" id="facebook_pixel_token" name="facebook_pixel_token"
+            value="<?php echo esc_attr($facebook_pixel_token); ?>"
+            placeholder="Cole o token aqui"
+            style="width: 100%;" />
+    </div>
+
+    <script>
+    jQuery(document).ready(function($) {
+        var logoMediaUploader;
+
+        $('#logo_empreendimento_button').on('click', function(e) {
+            e.preventDefault();
+
+            if (logoMediaUploader) {
+                logoMediaUploader.open();
+                return;
+            }
+
+            logoMediaUploader = wp.media({
+                title: 'Selecionar Logo do Empreendimento',
+                button: {
+                    text: 'Usar esta imagem'
+                },
+                multiple: false
+            });
+
+            logoMediaUploader.on('select', function() {
+                var attachment = logoMediaUploader.state().get('selection').first().toJSON();
+                $('#logo_empreendimento').val(attachment.id);
+                $('#logo_empreendimento_preview').html('<img src="' + attachment.url + '" style="max-width: 100%; height: auto;">');
+                $('#logo_empreendimento_button').text('Alterar Logo');
+
+                if ($('#logo_empreendimento_remove').length === 0) {
+                    $('#logo_empreendimento_button').after('<button type="button" class="button" id="logo_empreendimento_remove" style="width: 100%; margin-top: 5px;">Remover Logo</button>');
+                }
+            });
+
+            logoMediaUploader.open();
+        });
+
+        $(document).on('click', '#logo_empreendimento_remove', function(e) {
+            e.preventDefault();
+            $('#logo_empreendimento').val('');
+            $('#logo_empreendimento_preview').html('');
+            $('#logo_empreendimento_button').text('Selecionar Logo');
+            $(this).remove();
+        });
+    });
+    </script>
+    <?php
   }
 
   public function mapa_meta_box_callback($post) {
@@ -29,8 +131,6 @@ class TerrenosLotes_MetaBox {
     $lotes_data = get_post_meta($post->ID, '_terreno_lotes', true);
     $zoom = get_post_meta($post->ID, '_terreno_zoom', true) ?: '18';
     $empreendimento_id = get_post_meta($post->ID, '_empreendimento_id', true);
-    $facebook_pixel_id = get_post_meta($post->ID, '_facebook_pixel_id', true);
-    $facebook_pixel_token = get_post_meta($post->ID, '_facebook_pixel_token', true);
     
     ?>
 
@@ -46,7 +146,7 @@ class TerrenosLotes_MetaBox {
             </div>
 
             <div style="margin-bottom: 15px;">
-                <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #23282d;">Bloco: <span style="color: red;">*</span></label>
+                <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #23282d;">Quadra: <span style="color: red;">*</span></label>
                 <input type="text" id="editLoteBloco" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;" placeholder="Ex: A, B, C..." />
                 <small style="color: #666; font-size: 11px;">Bloco onde a unidade está localizada</small>
             </div>
@@ -66,29 +166,6 @@ class TerrenosLotes_MetaBox {
 
 
     <div id="terreno-mapa-container">
-        <!-- Configurações Facebook Pixel -->
-        <div class="terreno-controls" style="margin-bottom: 15px;">
-            <h4 style="margin: 0 0 10px 0; font-size: 14px; color: #23282d;">
-                <span class="dashicons dashicons-facebook" style="vertical-align: middle;"></span>
-                Facebook Pixel
-            </h4>
-            <div class="control-row">
-                <div class="control-group">
-                    <label for="facebook_pixel_id">Pixel ID:</label>
-                    <input type="text" id="facebook_pixel_id" name="facebook_pixel_id"
-                        value="<?php echo esc_attr($facebook_pixel_id); ?>"
-                        placeholder="Ex: 1423368039304251"
-                        style="max-width: 300px;" />
-
-                    <label for="facebook_pixel_token" style="margin-left: 15px;">Access Token:</label>
-                    <input type="text" id="facebook_pixel_token" name="facebook_pixel_token"
-                        value="<?php echo esc_attr($facebook_pixel_token); ?>"
-                        placeholder="Cole o token de acesso aqui"
-                        style="flex: 1;" />
-                </div>
-            </div>
-        </div>
-
         <!-- Controles superiores -->
         <div class="terreno-controls">
             <div class="control-row">

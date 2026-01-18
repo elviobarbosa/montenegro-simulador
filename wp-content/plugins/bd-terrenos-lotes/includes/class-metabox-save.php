@@ -89,7 +89,21 @@ class TerrenosLotes_MetaBoxSave {
             } else {
                 delete_post_meta($post_id, '_facebook_pixel_token');
             }
-            
+
+            // Salvar Logo do Empreendimento
+            if (isset($_POST['logo_empreendimento'])) {
+                $logo_id = absint($_POST['logo_empreendimento']);
+                if ($logo_id > 0) {
+                    update_post_meta($post_id, '_logo_empreendimento', $logo_id);
+                    error_log('Logo do empreendimento salvo: ' . $logo_id);
+                } else {
+                    delete_post_meta($post_id, '_logo_empreendimento');
+                    error_log('Logo do empreendimento removido');
+                }
+            } else {
+                delete_post_meta($post_id, '_logo_empreendimento');
+            }
+
             // Salvar dados dos lotes (mais cuidadoso)
             if (isset($_POST['terreno_lotes_data'])) {
                 $raw = $_POST['terreno_lotes_data'];

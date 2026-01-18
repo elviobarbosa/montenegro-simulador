@@ -787,3 +787,1094 @@
 [16-Jan-2026 10:59:25 UTC] 📦 [CVCRM] Body: {"pagina":1,"registros":30,"total_de_registros":11310,"total_de_paginas":377,"dados":[{"referencia":11837,"referencia_data":"2022-07-22 14:38:33","idempreendimento":6,"idempreendimento_int":"VH5.01.1","nome_empreendimento":"Villa Dourados                          ","idtipo_empreendimento":3,"tipo_empreendimento":"Loteamento","idetapa":18,"idetapa_int":"VH5.01.1.1","etapa":"Geral","idbloco":283,"idbloco_int":"VH5.01.1.1.02.01","bloco":"AA","area_privativa":"150.000000","idunidade":11837,"nome":"6
 [16-Jan-2026 10:59:47 UTC] 💾 [CVCRM] Cache HIT para cvcrm_unidades_emp_26
 [16-Jan-2026 11:00:35 UTC] 💾 [CVCRM] Cache HIT para cvcrm_unidades_emp_26
+[16-Jan-2026 11:10:55 UTC] Scripts frontend carregados com sucesso
+[16-Jan-2026 11:10:55 UTC] === FACEBOOK PIXEL DEBUG ===
+[16-Jan-2026 11:10:55 UTC] Post Type: page
+[16-Jan-2026 11:10:55 UTC] is_singular(terreno): NÃO
+[16-Jan-2026 11:10:55 UTC] Caso 2: Página - Slug: mar-da-villa
+[16-Jan-2026 11:10:55 UTC] Caso 2: Terreno encontrado com mesmo slug - ID: 32
+[16-Jan-2026 11:10:55 UTC] Terreno ID: 32
+[16-Jan-2026 11:10:55 UTC] Pixel ID encontrado: 1423368039304251
+[16-Jan-2026 11:10:55 UTC] Pixel Token encontrado: SIM
+[16-Jan-2026 11:10:55 UTC] PIXEL CARREGADO COM SUCESSO! Terreno: 32 | Pixel: 1423368039304251
+[16-Jan-2026 11:10:56 UTC] 💾 [CVCRM] Cache HIT para cvcrm_empreendimento_26
+[16-Jan-2026 11:13:22 UTC] Scripts frontend carregados com sucesso
+[16-Jan-2026 11:13:22 UTC] === FACEBOOK PIXEL DEBUG ===
+[16-Jan-2026 11:13:22 UTC] Post Type: page
+[16-Jan-2026 11:13:22 UTC] is_singular(terreno): NÃO
+[16-Jan-2026 11:13:22 UTC] Caso 2: Página - Slug: mar-da-villa
+[16-Jan-2026 11:13:22 UTC] Caso 2: Terreno encontrado com mesmo slug - ID: 32
+[16-Jan-2026 11:13:22 UTC] Terreno ID: 32
+[16-Jan-2026 11:13:22 UTC] Pixel ID encontrado: 1423368039304251
+[16-Jan-2026 11:13:22 UTC] Pixel Token encontrado: SIM
+[16-Jan-2026 11:13:22 UTC] PIXEL CARREGADO COM SUCESSO! Terreno: 32 | Pixel: 1423368039304251
+[16-Jan-2026 11:13:23 UTC] 💾 [CVCRM] Cache HIT para cvcrm_empreendimento_26
+[16-Jan-2026 11:13:23 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /Users/elviobarbosa/Sites/montenegro-simulador/wp-content/themes/betadigital/app/ajax.php:103) in /Users/elviobarbosa/Sites/montenegro-simulador/wp-includes/rest-api/class-wp-rest-server.php on line 1896
+[16-Jan-2026 11:14:33 UTC] Scripts frontend carregados com sucesso
+[16-Jan-2026 11:14:33 UTC] === FACEBOOK PIXEL DEBUG ===
+[16-Jan-2026 11:14:33 UTC] Post Type: page
+[16-Jan-2026 11:14:33 UTC] is_singular(terreno): NÃO
+[16-Jan-2026 11:14:33 UTC] Caso 2: Página - Slug: mar-da-villa
+[16-Jan-2026 11:14:33 UTC] Caso 2: Terreno encontrado com mesmo slug - ID: 32
+[16-Jan-2026 11:14:33 UTC] Terreno ID: 32
+[16-Jan-2026 11:14:33 UTC] Pixel ID encontrado: 1423368039304251
+[16-Jan-2026 11:14:33 UTC] Pixel Token encontrado: SIM
+[16-Jan-2026 11:14:33 UTC] PIXEL CARREGADO COM SUCESSO! Terreno: 32 | Pixel: 1423368039304251
+[16-Jan-2026 11:14:34 UTC] 💾 [CVCRM] Cache HIT para cvcrm_empreendimento_26
+[16-Jan-2026 11:22:58 UTC] === TERRENO SAVE INICIADO ===
+[16-Jan-2026 11:22:58 UTC] Post ID: 32
+[16-Jan-2026 11:22:58 UTC] ERRO: Nonce inválido ou ausente
+[16-Jan-2026 11:22:58 UTC] === TERRENO SAVE INICIADO ===
+[16-Jan-2026 11:22:58 UTC] Post ID: 32
+[16-Jan-2026 11:22:58 UTC] Empreendimento id salvo: 26
+[16-Jan-2026 11:22:58 UTC] Endereco salvo: Parque da Liberdade Fortaleza - R. Pedro I, s/n - Centro, Fortaleza - CE, 60035-100, Brazil
+[16-Jan-2026 11:22:58 UTC] Latitude salva: -3.731402
+[16-Jan-2026 11:22:58 UTC] Longitude salva: -38.525813
+[16-Jan-2026 11:22:58 UTC] Zoom salvo: 17
+[16-Jan-2026 11:22:58 UTC] Facebook Pixel ID salvo: 1423368039304251
+[16-Jan-2026 11:22:58 UTC] Facebook Pixel Token salvo
+[16-Jan-2026 11:22:58 UTC] Dados lotes recebidos (raw): [{"id":"72569","coordinates":[{"lat":-3.7318004668517037,"lng":-38.526681224536894},{"lat":-3.731179513577729,"lng":-38.52648810548782},{"lat":-3.7313079867049033,"lng":-38.526160875988005},{"lat":-3....
+[16-Jan-2026 11:22:58 UTC] Lotes salvos com sucesso. Count: 2
+[16-Jan-2026 11:22:58 UTC] === TERRENO SAVE CONCLUÍDO ===
+[16-Jan-2026 11:22:59 UTC] Hook: post.php, Post Type: terreno
+[16-Jan-2026 11:22:59 UTC] Scripts carregados com sucesso
+[16-Jan-2026 11:23:00 UTC] Scripts frontend carregados com sucesso
+[16-Jan-2026 11:23:00 UTC] === FACEBOOK PIXEL DEBUG ===
+[16-Jan-2026 11:23:00 UTC] Post Type: page
+[16-Jan-2026 11:23:00 UTC] is_singular(terreno): NÃO
+[16-Jan-2026 11:23:00 UTC] Caso 2: Página - Slug: mar-da-villa
+[16-Jan-2026 11:23:00 UTC] Caso 2: Terreno encontrado com mesmo slug - ID: 32
+[16-Jan-2026 11:23:00 UTC] Terreno ID: 32
+[16-Jan-2026 11:23:00 UTC] Pixel ID encontrado: 1423368039304251
+[16-Jan-2026 11:23:00 UTC] Pixel Token encontrado: SIM
+[16-Jan-2026 11:23:00 UTC] PIXEL CARREGADO COM SUCESSO! Terreno: 32 | Pixel: 1423368039304251
+[16-Jan-2026 11:23:00 UTC] 💾 [CVCRM] Cache HIT para cvcrm_empreendimento_26
+[16-Jan-2026 11:25:38 UTC] Scripts frontend carregados com sucesso
+[16-Jan-2026 11:25:38 UTC] === FACEBOOK PIXEL DEBUG ===
+[16-Jan-2026 11:25:38 UTC] Post Type: page
+[16-Jan-2026 11:25:38 UTC] is_singular(terreno): NÃO
+[16-Jan-2026 11:25:38 UTC] Caso 2: Página - Slug: mar-da-villa
+[16-Jan-2026 11:25:38 UTC] Caso 2: Terreno encontrado com mesmo slug - ID: 32
+[16-Jan-2026 11:25:38 UTC] Terreno ID: 32
+[16-Jan-2026 11:25:38 UTC] Pixel ID encontrado: 1423368039304251
+[16-Jan-2026 11:25:38 UTC] Pixel Token encontrado: SIM
+[16-Jan-2026 11:25:38 UTC] PIXEL CARREGADO COM SUCESSO! Terreno: 32 | Pixel: 1423368039304251
+[16-Jan-2026 11:26:08 UTC] Scripts frontend carregados com sucesso
+[16-Jan-2026 11:26:08 UTC] === FACEBOOK PIXEL DEBUG ===
+[16-Jan-2026 11:26:08 UTC] Post Type: page
+[16-Jan-2026 11:26:08 UTC] is_singular(terreno): NÃO
+[16-Jan-2026 11:26:08 UTC] Caso 2: Página - Slug: mar-da-villa
+[16-Jan-2026 11:26:08 UTC] Caso 2: Terreno encontrado com mesmo slug - ID: 32
+[16-Jan-2026 11:26:08 UTC] Terreno ID: 32
+[16-Jan-2026 11:26:08 UTC] Pixel ID encontrado: 1423368039304251
+[16-Jan-2026 11:26:08 UTC] Pixel Token encontrado: SIM
+[16-Jan-2026 11:26:08 UTC] PIXEL CARREGADO COM SUCESSO! Terreno: 32 | Pixel: 1423368039304251
+[16-Jan-2026 11:26:09 UTC] 💾 [CVCRM] Cache HIT para cvcrm_empreendimento_26
+[16-Jan-2026 11:26:12 UTC] 🌎 [CVCRM] Consultando URL: https://montenegro.cvcrm.com.br/api/v1/cvdw/unidades?a_partir_referencia=26
+[16-Jan-2026 11:26:13 UTC] [CVCRM] Status: 200
+[16-Jan-2026 11:26:13 UTC] [CVCRM] Body: {"pagina":1,"registros":30,"total_de_registros":11310,"total_de_paginas":377,"dados":[{"referencia":11837,"referencia_data":"2022-07-22 14:38:33","idempreendimento":6,"idempreendimento_int":"VH5.01.1","nome_empreendimento":"Villa Dourados                          ","idtipo_empreendimento":3,"tipo_empreendimento":"Loteamento","idetapa":18,"idetapa_int":"VH5.01.1.1","etapa":"Geral","idbloco":283,"idbloco_int":"VH5.01.1.1.02.01","bloco":"AA","area_privativa":"150.000000","idunidade":11837,"nome":"6
+[16-Jan-2026 11:26:45 UTC] Scripts frontend carregados com sucesso
+[16-Jan-2026 11:26:45 UTC] === FACEBOOK PIXEL DEBUG ===
+[16-Jan-2026 11:26:45 UTC] Post Type: page
+[16-Jan-2026 11:26:45 UTC] is_singular(terreno): NÃO
+[16-Jan-2026 11:26:45 UTC] Caso 2: Página - Slug: mar-da-villa
+[16-Jan-2026 11:26:45 UTC] Caso 2: Terreno encontrado com mesmo slug - ID: 32
+[16-Jan-2026 11:26:45 UTC] Terreno ID: 32
+[16-Jan-2026 11:26:45 UTC] Pixel ID encontrado: 1423368039304251
+[16-Jan-2026 11:26:45 UTC] Pixel Token encontrado: SIM
+[16-Jan-2026 11:26:45 UTC] PIXEL CARREGADO COM SUCESSO! Terreno: 32 | Pixel: 1423368039304251
+[16-Jan-2026 11:26:46 UTC] 💾 [CVCRM] Cache HIT para cvcrm_empreendimento_26
+[16-Jan-2026 11:28:53 UTC] Scripts frontend carregados com sucesso
+[16-Jan-2026 11:28:53 UTC] === FACEBOOK PIXEL DEBUG ===
+[16-Jan-2026 11:28:53 UTC] Post Type: page
+[16-Jan-2026 11:28:53 UTC] is_singular(terreno): NÃO
+[16-Jan-2026 11:28:53 UTC] Caso 2: Página - Slug: mar-da-villa
+[16-Jan-2026 11:28:53 UTC] Caso 2: Terreno encontrado com mesmo slug - ID: 32
+[16-Jan-2026 11:28:53 UTC] Terreno ID: 32
+[16-Jan-2026 11:28:53 UTC] Pixel ID encontrado: 1423368039304251
+[16-Jan-2026 11:28:53 UTC] Pixel Token encontrado: SIM
+[16-Jan-2026 11:28:53 UTC] PIXEL CARREGADO COM SUCESSO! Terreno: 32 | Pixel: 1423368039304251
+[16-Jan-2026 11:28:53 UTC] 💾 [CVCRM] Cache HIT para cvcrm_empreendimento_26
+[16-Jan-2026 11:28:58 UTC] Scripts frontend carregados com sucesso
+[16-Jan-2026 11:28:58 UTC] === FACEBOOK PIXEL DEBUG ===
+[16-Jan-2026 11:28:58 UTC] Post Type: page
+[16-Jan-2026 11:28:58 UTC] is_singular(terreno): NÃO
+[16-Jan-2026 11:28:58 UTC] Caso 2: Página - Slug: mar-da-villa
+[16-Jan-2026 11:28:58 UTC] Caso 2: Terreno encontrado com mesmo slug - ID: 32
+[16-Jan-2026 11:28:58 UTC] Terreno ID: 32
+[16-Jan-2026 11:28:58 UTC] Pixel ID encontrado: 1423368039304251
+[16-Jan-2026 11:28:58 UTC] Pixel Token encontrado: SIM
+[16-Jan-2026 11:28:58 UTC] PIXEL CARREGADO COM SUCESSO! Terreno: 32 | Pixel: 1423368039304251
+[16-Jan-2026 11:28:59 UTC] 💾 [CVCRM] Cache HIT para cvcrm_empreendimento_26
+[16-Jan-2026 11:29:01 UTC] 💾 [CVCRM] Cache HIT para cvcrm_unidades_emp_26
+[16-Jan-2026 11:32:03 UTC] Scripts frontend carregados com sucesso
+[16-Jan-2026 11:32:03 UTC] === FACEBOOK PIXEL DEBUG ===
+[16-Jan-2026 11:32:03 UTC] Post Type: page
+[16-Jan-2026 11:32:03 UTC] is_singular(terreno): NÃO
+[16-Jan-2026 11:32:03 UTC] Caso 2: Página - Slug: mar-da-villa
+[16-Jan-2026 11:32:03 UTC] Caso 2: Terreno encontrado com mesmo slug - ID: 32
+[16-Jan-2026 11:32:03 UTC] Terreno ID: 32
+[16-Jan-2026 11:32:03 UTC] Pixel ID encontrado: 1423368039304251
+[16-Jan-2026 11:32:03 UTC] Pixel Token encontrado: SIM
+[16-Jan-2026 11:32:03 UTC] PIXEL CARREGADO COM SUCESSO! Terreno: 32 | Pixel: 1423368039304251
+[16-Jan-2026 11:32:04 UTC] 💾 [CVCRM] Cache HIT para cvcrm_empreendimento_26
+[16-Jan-2026 11:32:13 UTC] 🌎 [CVCRM] Consultando URL: https://montenegro.cvcrm.com.br/api/v1/cvdw/unidades?a_partir_referencia=26
+[16-Jan-2026 11:32:13 UTC] [CVCRM] Status: 200
+[16-Jan-2026 11:32:13 UTC] [CVCRM] Body: {"pagina":1,"registros":30,"total_de_registros":11310,"total_de_paginas":377,"dados":[{"referencia":11837,"referencia_data":"2022-07-22 14:38:33","idempreendimento":6,"idempreendimento_int":"VH5.01.1","nome_empreendimento":"Villa Dourados                          ","idtipo_empreendimento":3,"tipo_empreendimento":"Loteamento","idetapa":18,"idetapa_int":"VH5.01.1.1","etapa":"Geral","idbloco":283,"idbloco_int":"VH5.01.1.1.02.01","bloco":"AA","area_privativa":"150.000000","idunidade":11837,"nome":"6
+[16-Jan-2026 11:33:03 UTC] Scripts frontend carregados com sucesso
+[16-Jan-2026 11:33:03 UTC] === FACEBOOK PIXEL DEBUG ===
+[16-Jan-2026 11:33:03 UTC] Post Type: page
+[16-Jan-2026 11:33:03 UTC] is_singular(terreno): NÃO
+[16-Jan-2026 11:33:03 UTC] Caso 2: Página - Slug: mar-da-villa
+[16-Jan-2026 11:33:03 UTC] Caso 2: Terreno encontrado com mesmo slug - ID: 32
+[16-Jan-2026 11:33:03 UTC] Terreno ID: 32
+[16-Jan-2026 11:33:03 UTC] Pixel ID encontrado: 1423368039304251
+[16-Jan-2026 11:33:03 UTC] Pixel Token encontrado: SIM
+[16-Jan-2026 11:33:03 UTC] PIXEL CARREGADO COM SUCESSO! Terreno: 32 | Pixel: 1423368039304251
+[16-Jan-2026 11:33:04 UTC] 💾 [CVCRM] Cache HIT para cvcrm_empreendimento_26
+[16-Jan-2026 11:33:30 UTC] 💾 [CVCRM] Cache HIT para cvcrm_unidades_emp_26
+[16-Jan-2026 11:34:11 UTC] Scripts frontend carregados com sucesso
+[16-Jan-2026 11:34:12 UTC] === FACEBOOK PIXEL DEBUG ===
+[16-Jan-2026 11:34:12 UTC] Post Type: page
+[16-Jan-2026 11:34:12 UTC] is_singular(terreno): NÃO
+[16-Jan-2026 11:34:12 UTC] Caso 2: Página - Slug: mar-da-villa
+[16-Jan-2026 11:34:12 UTC] Caso 2: Terreno encontrado com mesmo slug - ID: 32
+[16-Jan-2026 11:34:12 UTC] Terreno ID: 32
+[16-Jan-2026 11:34:12 UTC] Pixel ID encontrado: 1423368039304251
+[16-Jan-2026 11:34:12 UTC] Pixel Token encontrado: SIM
+[16-Jan-2026 11:34:12 UTC] PIXEL CARREGADO COM SUCESSO! Terreno: 32 | Pixel: 1423368039304251
+[16-Jan-2026 11:34:13 UTC] 💾 [CVCRM] Cache HIT para cvcrm_empreendimento_26
+[16-Jan-2026 11:37:18 UTC] Scripts frontend carregados com sucesso
+[16-Jan-2026 11:37:18 UTC] === FACEBOOK PIXEL DEBUG ===
+[16-Jan-2026 11:37:18 UTC] Post Type: page
+[16-Jan-2026 11:37:18 UTC] is_singular(terreno): NÃO
+[16-Jan-2026 11:37:18 UTC] Caso 2: Página - Slug: mar-da-villa
+[16-Jan-2026 11:37:18 UTC] Caso 2: Terreno encontrado com mesmo slug - ID: 32
+[16-Jan-2026 11:37:18 UTC] Terreno ID: 32
+[16-Jan-2026 11:37:18 UTC] Pixel ID encontrado: 1423368039304251
+[16-Jan-2026 11:37:18 UTC] Pixel Token encontrado: SIM
+[16-Jan-2026 11:37:18 UTC] PIXEL CARREGADO COM SUCESSO! Terreno: 32 | Pixel: 1423368039304251
+[16-Jan-2026 11:37:19 UTC] 💾 [CVCRM] Cache HIT para cvcrm_empreendimento_26
+[16-Jan-2026 11:38:47 UTC] Scripts frontend carregados com sucesso
+[16-Jan-2026 11:38:47 UTC] === FACEBOOK PIXEL DEBUG ===
+[16-Jan-2026 11:38:47 UTC] Post Type: page
+[16-Jan-2026 11:38:47 UTC] is_singular(terreno): NÃO
+[16-Jan-2026 11:38:47 UTC] Caso 2: Página - Slug: mar-da-villa
+[16-Jan-2026 11:38:47 UTC] Caso 2: Terreno encontrado com mesmo slug - ID: 32
+[16-Jan-2026 11:38:47 UTC] Terreno ID: 32
+[16-Jan-2026 11:38:47 UTC] Pixel ID encontrado: 1423368039304251
+[16-Jan-2026 11:38:47 UTC] Pixel Token encontrado: SIM
+[16-Jan-2026 11:38:47 UTC] PIXEL CARREGADO COM SUCESSO! Terreno: 32 | Pixel: 1423368039304251
+[16-Jan-2026 11:38:48 UTC] 💾 [CVCRM] Cache HIT para cvcrm_empreendimento_26
+[16-Jan-2026 11:39:23 UTC] Scripts frontend carregados com sucesso
+[16-Jan-2026 11:39:23 UTC] === FACEBOOK PIXEL DEBUG ===
+[16-Jan-2026 11:39:23 UTC] Post Type: page
+[16-Jan-2026 11:39:23 UTC] is_singular(terreno): NÃO
+[16-Jan-2026 11:39:23 UTC] Caso 2: Página - Slug: mar-da-villa
+[16-Jan-2026 11:39:23 UTC] Caso 2: Terreno encontrado com mesmo slug - ID: 32
+[16-Jan-2026 11:39:23 UTC] Terreno ID: 32
+[16-Jan-2026 11:39:23 UTC] Pixel ID encontrado: 1423368039304251
+[16-Jan-2026 11:39:23 UTC] Pixel Token encontrado: SIM
+[16-Jan-2026 11:39:23 UTC] PIXEL CARREGADO COM SUCESSO! Terreno: 32 | Pixel: 1423368039304251
+[16-Jan-2026 11:39:24 UTC] 💾 [CVCRM] Cache HIT para cvcrm_empreendimento_26
+[16-Jan-2026 11:40:27 UTC] Scripts frontend carregados com sucesso
+[16-Jan-2026 11:40:27 UTC] === FACEBOOK PIXEL DEBUG ===
+[16-Jan-2026 11:40:27 UTC] Post Type: page
+[16-Jan-2026 11:40:27 UTC] is_singular(terreno): NÃO
+[16-Jan-2026 11:40:27 UTC] Caso 2: Página - Slug: mar-da-villa
+[16-Jan-2026 11:40:27 UTC] Caso 2: Terreno encontrado com mesmo slug - ID: 32
+[16-Jan-2026 11:40:27 UTC] Terreno ID: 32
+[16-Jan-2026 11:40:27 UTC] Pixel ID encontrado: 1423368039304251
+[16-Jan-2026 11:40:27 UTC] Pixel Token encontrado: SIM
+[16-Jan-2026 11:40:27 UTC] PIXEL CARREGADO COM SUCESSO! Terreno: 32 | Pixel: 1423368039304251
+[16-Jan-2026 11:40:58 UTC] Scripts frontend carregados com sucesso
+[16-Jan-2026 11:40:58 UTC] === FACEBOOK PIXEL DEBUG ===
+[16-Jan-2026 11:40:58 UTC] Post Type: page
+[16-Jan-2026 11:40:58 UTC] is_singular(terreno): NÃO
+[16-Jan-2026 11:40:58 UTC] Caso 2: Página - Slug: mar-da-villa
+[16-Jan-2026 11:40:58 UTC] Caso 2: Terreno encontrado com mesmo slug - ID: 32
+[16-Jan-2026 11:40:58 UTC] Terreno ID: 32
+[16-Jan-2026 11:40:58 UTC] Pixel ID encontrado: 1423368039304251
+[16-Jan-2026 11:40:58 UTC] Pixel Token encontrado: SIM
+[16-Jan-2026 11:40:58 UTC] PIXEL CARREGADO COM SUCESSO! Terreno: 32 | Pixel: 1423368039304251
+[16-Jan-2026 11:42:29 UTC] Scripts frontend carregados com sucesso
+[16-Jan-2026 11:42:29 UTC] === FACEBOOK PIXEL DEBUG ===
+[16-Jan-2026 11:42:29 UTC] Post Type: page
+[16-Jan-2026 11:42:29 UTC] is_singular(terreno): NÃO
+[16-Jan-2026 11:42:29 UTC] Caso 2: Página - Slug: mar-da-villa
+[16-Jan-2026 11:42:29 UTC] Caso 2: Terreno encontrado com mesmo slug - ID: 32
+[16-Jan-2026 11:42:29 UTC] Terreno ID: 32
+[16-Jan-2026 11:42:29 UTC] Pixel ID encontrado: 1423368039304251
+[16-Jan-2026 11:42:29 UTC] Pixel Token encontrado: SIM
+[16-Jan-2026 11:42:29 UTC] PIXEL CARREGADO COM SUCESSO! Terreno: 32 | Pixel: 1423368039304251
+[16-Jan-2026 11:42:30 UTC] 💾 [CVCRM] Cache HIT para cvcrm_empreendimento_26
+[16-Jan-2026 11:42:34 UTC] 🌎 [CVCRM] Consultando URL: https://montenegro.cvcrm.com.br/api/v1/cvdw/unidades?a_partir_referencia=26
+[16-Jan-2026 11:42:35 UTC] [CVCRM] Status: 200
+[16-Jan-2026 11:42:35 UTC] [CVCRM] Body: {"pagina":1,"registros":30,"total_de_registros":11310,"total_de_paginas":377,"dados":[{"referencia":11837,"referencia_data":"2022-07-22 14:38:33","idempreendimento":6,"idempreendimento_int":"VH5.01.1","nome_empreendimento":"Villa Dourados                          ","idtipo_empreendimento":3,"tipo_empreendimento":"Loteamento","idetapa":18,"idetapa_int":"VH5.01.1.1","etapa":"Geral","idbloco":283,"idbloco_int":"VH5.01.1.1.02.01","bloco":"AA","area_privativa":"150.000000","idunidade":11837,"nome":"6
+[16-Jan-2026 11:42:58 UTC] Scripts frontend carregados com sucesso
+[16-Jan-2026 11:42:58 UTC] === FACEBOOK PIXEL DEBUG ===
+[16-Jan-2026 11:42:58 UTC] Post Type: page
+[16-Jan-2026 11:42:58 UTC] is_singular(terreno): NÃO
+[16-Jan-2026 11:42:58 UTC] Caso 2: Página - Slug: mar-da-villa
+[16-Jan-2026 11:42:58 UTC] Caso 2: Terreno encontrado com mesmo slug - ID: 32
+[16-Jan-2026 11:42:58 UTC] Terreno ID: 32
+[16-Jan-2026 11:42:58 UTC] Pixel ID encontrado: 1423368039304251
+[16-Jan-2026 11:42:58 UTC] Pixel Token encontrado: SIM
+[16-Jan-2026 11:42:58 UTC] PIXEL CARREGADO COM SUCESSO! Terreno: 32 | Pixel: 1423368039304251
+[16-Jan-2026 11:42:59 UTC] 💾 [CVCRM] Cache HIT para cvcrm_empreendimento_26
+[16-Jan-2026 11:43:01 UTC] 💾 [CVCRM] Cache HIT para cvcrm_unidades_emp_26
+[16-Jan-2026 11:43:08 UTC] 💾 [CVCRM] Cache HIT para cvcrm_unidades_emp_26
+[16-Jan-2026 11:43:21 UTC] 💾 [CVCRM] Cache HIT para cvcrm_unidades_emp_26
+[16-Jan-2026 11:43:49 UTC] Scripts frontend carregados com sucesso
+[16-Jan-2026 11:43:49 UTC] === FACEBOOK PIXEL DEBUG ===
+[16-Jan-2026 11:43:49 UTC] Post Type: page
+[16-Jan-2026 11:43:49 UTC] is_singular(terreno): NÃO
+[16-Jan-2026 11:43:49 UTC] Caso 2: Página - Slug: mar-da-villa
+[16-Jan-2026 11:43:49 UTC] Caso 2: Terreno encontrado com mesmo slug - ID: 32
+[16-Jan-2026 11:43:49 UTC] Terreno ID: 32
+[16-Jan-2026 11:43:49 UTC] Pixel ID encontrado: 1423368039304251
+[16-Jan-2026 11:43:49 UTC] Pixel Token encontrado: SIM
+[16-Jan-2026 11:43:49 UTC] PIXEL CARREGADO COM SUCESSO! Terreno: 32 | Pixel: 1423368039304251
+[16-Jan-2026 11:43:49 UTC] 💾 [CVCRM] Cache HIT para cvcrm_empreendimento_26
+[16-Jan-2026 11:43:51 UTC] 💾 [CVCRM] Cache HIT para cvcrm_unidades_emp_26
+[16-Jan-2026 11:53:19 UTC] === TERRENO SAVE INICIADO ===
+[16-Jan-2026 11:53:19 UTC] Post ID: 32
+[16-Jan-2026 11:53:19 UTC] ERRO: Nonce inválido ou ausente
+[16-Jan-2026 11:53:20 UTC] === TERRENO SAVE INICIADO ===
+[16-Jan-2026 11:53:20 UTC] Post ID: 32
+[16-Jan-2026 11:53:20 UTC] Empreendimento id salvo: 38
+[16-Jan-2026 11:53:20 UTC] Endereco salvo: Parque da Liberdade Fortaleza - R. Pedro I, s/n - Centro, Fortaleza - CE, 60035-100, Brazil
+[16-Jan-2026 11:53:20 UTC] Latitude salva: -3.731402
+[16-Jan-2026 11:53:20 UTC] Longitude salva: -38.525813
+[16-Jan-2026 11:53:20 UTC] Zoom salvo: 17
+[16-Jan-2026 11:53:20 UTC] Facebook Pixel ID salvo: 1423368039304251
+[16-Jan-2026 11:53:20 UTC] Facebook Pixel Token salvo
+[16-Jan-2026 11:53:20 UTC] Dados lotes recebidos (raw): [{"id":"72714","nome":"40","bloco":"06","coordinates":[{"lat":-3.7312449807269292,"lng":-38.52613851900971},{"lat":-3.731129890209784,"lng":-38.52648184176362},{"lat":-3.7307096758680363,"lng":-38.526...
+[16-Jan-2026 11:53:20 UTC] Lotes salvos com sucesso. Count: 2
+[16-Jan-2026 11:53:20 UTC] === TERRENO SAVE CONCLUÍDO ===
+[16-Jan-2026 11:53:20 UTC] Hook: post.php, Post Type: terreno
+[16-Jan-2026 11:53:20 UTC] Scripts carregados com sucesso
+[16-Jan-2026 11:53:30 UTC] Scripts frontend carregados com sucesso
+[16-Jan-2026 11:53:30 UTC] === FACEBOOK PIXEL DEBUG ===
+[16-Jan-2026 11:53:30 UTC] Post Type: page
+[16-Jan-2026 11:53:30 UTC] is_singular(terreno): NÃO
+[16-Jan-2026 11:53:30 UTC] Caso 2: Página - Slug: mar-da-villa
+[16-Jan-2026 11:53:30 UTC] Caso 2: Terreno encontrado com mesmo slug - ID: 32
+[16-Jan-2026 11:53:30 UTC] Terreno ID: 32
+[16-Jan-2026 11:53:30 UTC] Pixel ID encontrado: 1423368039304251
+[16-Jan-2026 11:53:30 UTC] Pixel Token encontrado: SIM
+[16-Jan-2026 11:53:30 UTC] PIXEL CARREGADO COM SUCESSO! Terreno: 32 | Pixel: 1423368039304251
+[16-Jan-2026 11:53:31 UTC] 🌎 [CVCRM] Consultando URL: https://montenegro.cvcrm.com.br/api/v1/cadastros/empreendimentos/38
+[16-Jan-2026 11:53:33 UTC] [CVCRM] Status: 200
+[16-Jan-2026 11:53:33 UTC] [CVCRM] Body: {"idempreendimento":38,"idempreendimento_int":"RM2.01.2","referencia_externa":null,"nome":"Condominio Ipe Amarelo","matricula":"RM2.01.2","regiao":"Nordeste","cidade":"Fortaleza","estado":"Cear\u00e1","bairro":"Coc\u00f3","endereco_emp":"Rua Doutor Gilberto Studart","numero":"1-920","logradouro":"Rua","cep":"60192105","endereco":"R. Dr. Gilberto Studart, 1-920 - Coc\u00f3, Fortaleza - CE, 60192-105, Brasil","periodo_venda_inicio":null,"area_construida":null,"area_privativa":null,"idempresa":24,"
+[16-Jan-2026 11:53:36 UTC] 🌎 [CVCRM] Consultando URL: https://montenegro.cvcrm.com.br/api/v1/cvdw/unidades?a_partir_referencia=38
+[16-Jan-2026 11:53:38 UTC] [CVCRM] Status: 200
+[16-Jan-2026 11:53:38 UTC] [CVCRM] Body: {"pagina":1,"registros":30,"total_de_registros":11310,"total_de_paginas":377,"dados":[{"referencia":11837,"referencia_data":"2022-07-22 14:38:33","idempreendimento":6,"idempreendimento_int":"VH5.01.1","nome_empreendimento":"Villa Dourados                          ","idtipo_empreendimento":3,"tipo_empreendimento":"Loteamento","idetapa":18,"idetapa_int":"VH5.01.1.1","etapa":"Geral","idbloco":283,"idbloco_int":"VH5.01.1.1.02.01","bloco":"AA","area_privativa":"150.000000","idunidade":11837,"nome":"6
+[16-Jan-2026 11:53:49 UTC] Scripts frontend carregados com sucesso
+[16-Jan-2026 11:53:49 UTC] === FACEBOOK PIXEL DEBUG ===
+[16-Jan-2026 11:53:49 UTC] Post Type: page
+[16-Jan-2026 11:53:49 UTC] is_singular(terreno): NÃO
+[16-Jan-2026 11:53:49 UTC] Caso 2: Página - Slug: mar-da-villa
+[16-Jan-2026 11:53:49 UTC] Caso 2: Terreno encontrado com mesmo slug - ID: 32
+[16-Jan-2026 11:53:49 UTC] Terreno ID: 32
+[16-Jan-2026 11:53:49 UTC] Pixel ID encontrado: 1423368039304251
+[16-Jan-2026 11:53:49 UTC] Pixel Token encontrado: SIM
+[16-Jan-2026 11:53:49 UTC] PIXEL CARREGADO COM SUCESSO! Terreno: 32 | Pixel: 1423368039304251
+[16-Jan-2026 11:53:50 UTC] 💾 [CVCRM] Cache HIT para cvcrm_empreendimento_38
+[16-Jan-2026 11:53:53 UTC] 💾 [CVCRM] Cache HIT para cvcrm_unidades_emp_38
+[16-Jan-2026 11:54:17 UTC] 💾 [CVCRM] Cache HIT para cvcrm_unidades_emp_38
+[16-Jan-2026 11:54:42 UTC] 💾 [CVCRM] Cache HIT para cvcrm_unidades_emp_38
+[16-Jan-2026 12:44:15 UTC] 🌎 [CVCRM] Consultando URL: https://montenegro.cvcrm.com.br/api/v1/cvdw/unidades?a_partir_referencia=38
+[16-Jan-2026 12:44:17 UTC] [CVCRM] Status: 200
+[16-Jan-2026 12:44:17 UTC] [CVCRM] Body: {"pagina":1,"registros":30,"total_de_registros":11310,"total_de_paginas":377,"dados":[{"referencia":11837,"referencia_data":"2022-07-22 14:38:33","idempreendimento":6,"idempreendimento_int":"VH5.01.1","nome_empreendimento":"Villa Dourados                          ","idtipo_empreendimento":3,"tipo_empreendimento":"Loteamento","idetapa":18,"idetapa_int":"VH5.01.1.1","etapa":"Geral","idbloco":283,"idbloco_int":"VH5.01.1.1.02.01","bloco":"AA","area_privativa":"150.000000","idunidade":11837,"nome":"6
+[16-Jan-2026 12:44:20 UTC] Scripts frontend carregados com sucesso
+[16-Jan-2026 12:44:20 UTC] === FACEBOOK PIXEL DEBUG ===
+[16-Jan-2026 12:44:20 UTC] Post Type: page
+[16-Jan-2026 12:44:20 UTC] is_singular(terreno): NÃO
+[16-Jan-2026 12:44:20 UTC] Caso 2: Página - Slug: mar-da-villa
+[16-Jan-2026 12:44:20 UTC] Caso 2: Terreno encontrado com mesmo slug - ID: 32
+[16-Jan-2026 12:44:20 UTC] Terreno ID: 32
+[16-Jan-2026 12:44:20 UTC] Pixel ID encontrado: 1423368039304251
+[16-Jan-2026 12:44:20 UTC] Pixel Token encontrado: SIM
+[16-Jan-2026 12:44:20 UTC] PIXEL CARREGADO COM SUCESSO! Terreno: 32 | Pixel: 1423368039304251
+[16-Jan-2026 12:44:22 UTC] 💾 [CVCRM] Cache HIT para cvcrm_empreendimento_38
+[16-Jan-2026 12:44:25 UTC] 💾 [CVCRM] Cache HIT para cvcrm_unidades_emp_38
+[16-Jan-2026 12:44:36 UTC] Scripts frontend carregados com sucesso
+[16-Jan-2026 12:44:36 UTC] === FACEBOOK PIXEL DEBUG ===
+[16-Jan-2026 12:44:36 UTC] Post Type: page
+[16-Jan-2026 12:44:36 UTC] is_singular(terreno): NÃO
+[16-Jan-2026 12:44:36 UTC] Caso 2: Página - Slug: mar-da-villa
+[16-Jan-2026 12:44:36 UTC] Caso 2: Terreno encontrado com mesmo slug - ID: 32
+[16-Jan-2026 12:44:36 UTC] Terreno ID: 32
+[16-Jan-2026 12:44:36 UTC] Pixel ID encontrado: 1423368039304251
+[16-Jan-2026 12:44:36 UTC] Pixel Token encontrado: SIM
+[16-Jan-2026 12:44:36 UTC] PIXEL CARREGADO COM SUCESSO! Terreno: 32 | Pixel: 1423368039304251
+[16-Jan-2026 12:44:36 UTC] 💾 [CVCRM] Cache HIT para cvcrm_empreendimento_38
+[16-Jan-2026 12:44:40 UTC] 💾 [CVCRM] Cache HIT para cvcrm_unidades_emp_38
+[16-Jan-2026 12:46:39 UTC] Scripts frontend carregados com sucesso
+[16-Jan-2026 12:46:39 UTC] === FACEBOOK PIXEL DEBUG ===
+[16-Jan-2026 12:46:39 UTC] Post Type: page
+[16-Jan-2026 12:46:39 UTC] is_singular(terreno): NÃO
+[16-Jan-2026 12:46:39 UTC] Caso 2: Página - Slug: mar-da-villa
+[16-Jan-2026 12:46:39 UTC] Caso 2: Terreno encontrado com mesmo slug - ID: 32
+[16-Jan-2026 12:46:39 UTC] Terreno ID: 32
+[16-Jan-2026 12:46:39 UTC] Pixel ID encontrado: 1423368039304251
+[16-Jan-2026 12:46:39 UTC] Pixel Token encontrado: SIM
+[16-Jan-2026 12:46:39 UTC] PIXEL CARREGADO COM SUCESSO! Terreno: 32 | Pixel: 1423368039304251
+[16-Jan-2026 12:46:40 UTC] 💾 [CVCRM] Cache HIT para cvcrm_empreendimento_38
+[16-Jan-2026 12:46:42 UTC] 💾 [CVCRM] Cache HIT para cvcrm_unidades_emp_38
+[17-Jan-2026 11:45:12 UTC] Scripts frontend carregados com sucesso
+[17-Jan-2026 11:45:12 UTC] === FACEBOOK PIXEL DEBUG ===
+[17-Jan-2026 11:45:12 UTC] Post Type: page
+[17-Jan-2026 11:45:12 UTC] is_singular(terreno): NÃO
+[17-Jan-2026 11:45:12 UTC] Caso 2: Página - Slug: mar-da-villa
+[17-Jan-2026 11:45:12 UTC] Caso 2: Terreno encontrado com mesmo slug - ID: 32
+[17-Jan-2026 11:45:12 UTC] Terreno ID: 32
+[17-Jan-2026 11:45:12 UTC] Pixel ID encontrado: 1423368039304251
+[17-Jan-2026 11:45:12 UTC] Pixel Token encontrado: SIM
+[17-Jan-2026 11:45:12 UTC] PIXEL CARREGADO COM SUCESSO! Terreno: 32 | Pixel: 1423368039304251
+[17-Jan-2026 11:45:13 UTC] Automatic updates starting...
+[17-Jan-2026 11:45:14 UTC]   Automatic plugin updates starting...
+[17-Jan-2026 11:45:14 UTC]   Automatic plugin updates complete.
+[17-Jan-2026 11:45:14 UTC] 💾 [CVCRM] Cache HIT para cvcrm_empreendimento_38
+[17-Jan-2026 11:45:14 UTC] Automatic updates complete.
+[17-Jan-2026 11:45:17 UTC] 🌎 [CVCRM] Consultando URL: https://montenegro.cvcrm.com.br/api/v1/cvdw/unidades?a_partir_referencia=38
+[17-Jan-2026 11:45:18 UTC] [CVCRM] Status: 200
+[17-Jan-2026 11:45:18 UTC] [CVCRM] Body: {"pagina":1,"registros":30,"total_de_registros":11310,"total_de_paginas":377,"dados":[{"referencia":11837,"referencia_data":"2022-07-22 14:38:33","idempreendimento":6,"idempreendimento_int":"VH5.01.1","nome_empreendimento":"Villa Dourados                          ","idtipo_empreendimento":3,"tipo_empreendimento":"Loteamento","idetapa":18,"idetapa_int":"VH5.01.1.1","etapa":"Geral","idbloco":283,"idbloco_int":"VH5.01.1.1.02.01","bloco":"AA","area_privativa":"150.000000","idunidade":11837,"nome":"6
+[17-Jan-2026 11:46:24 UTC] Scripts frontend carregados com sucesso
+[17-Jan-2026 11:46:24 UTC] === FACEBOOK PIXEL DEBUG ===
+[17-Jan-2026 11:46:24 UTC] Post Type: page
+[17-Jan-2026 11:46:24 UTC] is_singular(terreno): NÃO
+[17-Jan-2026 11:46:24 UTC] Caso 2: Página - Slug: mar-da-villa
+[17-Jan-2026 11:46:24 UTC] Caso 2: Terreno encontrado com mesmo slug - ID: 32
+[17-Jan-2026 11:46:24 UTC] Terreno ID: 32
+[17-Jan-2026 11:46:24 UTC] Pixel ID encontrado: 1423368039304251
+[17-Jan-2026 11:46:24 UTC] Pixel Token encontrado: SIM
+[17-Jan-2026 11:46:24 UTC] PIXEL CARREGADO COM SUCESSO! Terreno: 32 | Pixel: 1423368039304251
+[17-Jan-2026 11:46:25 UTC] 💾 [CVCRM] Cache HIT para cvcrm_empreendimento_38
+[17-Jan-2026 11:46:28 UTC] 💾 [CVCRM] Cache HIT para cvcrm_unidades_emp_38
+[17-Jan-2026 11:58:14 UTC] Scripts frontend carregados com sucesso
+[17-Jan-2026 11:58:14 UTC] === FACEBOOK PIXEL DEBUG ===
+[17-Jan-2026 11:58:14 UTC] Post Type: page
+[17-Jan-2026 11:58:14 UTC] is_singular(terreno): NÃO
+[17-Jan-2026 11:58:14 UTC] Caso 2: Página - Slug: mar-da-villa
+[17-Jan-2026 11:58:14 UTC] Caso 2: Terreno encontrado com mesmo slug - ID: 32
+[17-Jan-2026 11:58:14 UTC] Terreno ID: 32
+[17-Jan-2026 11:58:14 UTC] Pixel ID encontrado: 1423368039304251
+[17-Jan-2026 11:58:14 UTC] Pixel Token encontrado: SIM
+[17-Jan-2026 11:58:14 UTC] PIXEL CARREGADO COM SUCESSO! Terreno: 32 | Pixel: 1423368039304251
+[17-Jan-2026 11:58:15 UTC] 🌎 [CVCRM] Consultando URL: https://montenegro.cvcrm.com.br/api/v1/cadastros/empreendimentos/38
+[17-Jan-2026 11:58:16 UTC] [CVCRM] Status: 200
+[17-Jan-2026 11:58:16 UTC] [CVCRM] Body: {"idempreendimento":38,"idempreendimento_int":"RM2.01.2","referencia_externa":null,"nome":"Condominio Ipe Amarelo","matricula":"RM2.01.2","regiao":"Nordeste","cidade":"Fortaleza","estado":"Cear\u00e1","bairro":"Coc\u00f3","endereco_emp":"Rua Doutor Gilberto Studart","numero":"1-920","logradouro":"Rua","cep":"60192105","endereco":"R. Dr. Gilberto Studart, 1-920 - Coc\u00f3, Fortaleza - CE, 60192-105, Brasil","periodo_venda_inicio":null,"area_construida":null,"area_privativa":null,"idempresa":24,"
+[17-Jan-2026 11:59:01 UTC] Scripts frontend carregados com sucesso
+[17-Jan-2026 11:59:01 UTC] === FACEBOOK PIXEL DEBUG ===
+[17-Jan-2026 11:59:01 UTC] Post Type: page
+[17-Jan-2026 11:59:01 UTC] is_singular(terreno): NÃO
+[17-Jan-2026 11:59:01 UTC] Caso 2: Página - Slug: mar-da-villa
+[17-Jan-2026 11:59:01 UTC] Caso 2: Terreno encontrado com mesmo slug - ID: 32
+[17-Jan-2026 11:59:01 UTC] Terreno ID: 32
+[17-Jan-2026 11:59:01 UTC] Pixel ID encontrado: 1423368039304251
+[17-Jan-2026 11:59:01 UTC] Pixel Token encontrado: SIM
+[17-Jan-2026 11:59:01 UTC] PIXEL CARREGADO COM SUCESSO! Terreno: 32 | Pixel: 1423368039304251
+[17-Jan-2026 11:59:01 UTC] 💾 [CVCRM] Cache HIT para cvcrm_empreendimento_38
+[17-Jan-2026 11:59:01 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /Users/elviobarbosa/Sites/montenegro-simulador/wp-content/themes/betadigital/app/ajax.php:103) in /Users/elviobarbosa/Sites/montenegro-simulador/wp-includes/rest-api/class-wp-rest-server.php on line 1896
+[17-Jan-2026 12:06:20 UTC] Scripts frontend carregados com sucesso
+[17-Jan-2026 12:06:20 UTC] === FACEBOOK PIXEL DEBUG ===
+[17-Jan-2026 12:06:20 UTC] Post Type: page
+[17-Jan-2026 12:06:20 UTC] is_singular(terreno): NÃO
+[17-Jan-2026 12:06:20 UTC] Caso 2: Página - Slug: mar-da-villa
+[17-Jan-2026 12:06:20 UTC] Caso 2: Terreno encontrado com mesmo slug - ID: 32
+[17-Jan-2026 12:06:20 UTC] Terreno ID: 32
+[17-Jan-2026 12:06:20 UTC] Pixel ID encontrado: 1423368039304251
+[17-Jan-2026 12:06:20 UTC] Pixel Token encontrado: SIM
+[17-Jan-2026 12:06:20 UTC] PIXEL CARREGADO COM SUCESSO! Terreno: 32 | Pixel: 1423368039304251
+[17-Jan-2026 12:06:21 UTC] 💾 [CVCRM] Cache HIT para cvcrm_empreendimento_38
+[17-Jan-2026 12:06:23 UTC] 🌎 [CVCRM] Consultando URL: https://montenegro.cvcrm.com.br/api/v1/cvdw/unidades?a_partir_referencia=38
+[17-Jan-2026 12:06:24 UTC] [CVCRM] Status: 200
+[17-Jan-2026 12:06:24 UTC] [CVCRM] Body: {"pagina":1,"registros":30,"total_de_registros":11310,"total_de_paginas":377,"dados":[{"referencia":11837,"referencia_data":"2022-07-22 14:38:33","idempreendimento":6,"idempreendimento_int":"VH5.01.1","nome_empreendimento":"Villa Dourados                          ","idtipo_empreendimento":3,"tipo_empreendimento":"Loteamento","idetapa":18,"idetapa_int":"VH5.01.1.1","etapa":"Geral","idbloco":283,"idbloco_int":"VH5.01.1.1.02.01","bloco":"AA","area_privativa":"150.000000","idunidade":11837,"nome":"6
+[17-Jan-2026 12:09:17 UTC] Scripts frontend carregados com sucesso
+[17-Jan-2026 12:09:17 UTC] === FACEBOOK PIXEL DEBUG ===
+[17-Jan-2026 12:09:17 UTC] Post Type: page
+[17-Jan-2026 12:09:17 UTC] is_singular(terreno): NÃO
+[17-Jan-2026 12:09:17 UTC] Caso 2: Página - Slug: mar-da-villa
+[17-Jan-2026 12:09:17 UTC] Caso 2: Terreno encontrado com mesmo slug - ID: 32
+[17-Jan-2026 12:09:17 UTC] Terreno ID: 32
+[17-Jan-2026 12:09:17 UTC] Pixel ID encontrado: 1423368039304251
+[17-Jan-2026 12:09:17 UTC] Pixel Token encontrado: SIM
+[17-Jan-2026 12:09:17 UTC] PIXEL CARREGADO COM SUCESSO! Terreno: 32 | Pixel: 1423368039304251
+[17-Jan-2026 12:09:18 UTC] 💾 [CVCRM] Cache HIT para cvcrm_empreendimento_38
+[17-Jan-2026 12:09:20 UTC] 💾 [CVCRM] Cache HIT para cvcrm_unidades_emp_38
+[17-Jan-2026 12:21:55 UTC] Scripts frontend carregados com sucesso
+[17-Jan-2026 12:21:55 UTC] === FACEBOOK PIXEL DEBUG ===
+[17-Jan-2026 12:21:55 UTC] Post Type: page
+[17-Jan-2026 12:21:55 UTC] is_singular(terreno): NÃO
+[17-Jan-2026 12:21:55 UTC] Caso 2: Página - Slug: mar-da-villa
+[17-Jan-2026 12:21:55 UTC] Caso 2: Terreno encontrado com mesmo slug - ID: 32
+[17-Jan-2026 12:21:55 UTC] Terreno ID: 32
+[17-Jan-2026 12:21:55 UTC] Pixel ID encontrado: 1423368039304251
+[17-Jan-2026 12:21:55 UTC] Pixel Token encontrado: SIM
+[17-Jan-2026 12:21:55 UTC] PIXEL CARREGADO COM SUCESSO! Terreno: 32 | Pixel: 1423368039304251
+[17-Jan-2026 12:21:55 UTC] 💾 [CVCRM] Cache HIT para cvcrm_empreendimento_38
+[17-Jan-2026 12:21:58 UTC] 🌎 [CVCRM] Consultando URL: https://montenegro.cvcrm.com.br/api/v1/cvdw/unidades?a_partir_referencia=38
+[17-Jan-2026 12:22:00 UTC] [CVCRM] Status: 200
+[17-Jan-2026 12:22:00 UTC] [CVCRM] Body: {"pagina":1,"registros":30,"total_de_registros":11310,"total_de_paginas":377,"dados":[{"referencia":11837,"referencia_data":"2022-07-22 14:38:33","idempreendimento":6,"idempreendimento_int":"VH5.01.1","nome_empreendimento":"Villa Dourados                          ","idtipo_empreendimento":3,"tipo_empreendimento":"Loteamento","idetapa":18,"idetapa_int":"VH5.01.1.1","etapa":"Geral","idbloco":283,"idbloco_int":"VH5.01.1.1.02.01","bloco":"AA","area_privativa":"150.000000","idunidade":11837,"nome":"6
+[17-Jan-2026 12:26:41 UTC] Scripts frontend carregados com sucesso
+[17-Jan-2026 12:26:41 UTC] === FACEBOOK PIXEL DEBUG ===
+[17-Jan-2026 12:26:41 UTC] Post Type: page
+[17-Jan-2026 12:26:41 UTC] is_singular(terreno): NÃO
+[17-Jan-2026 12:26:41 UTC] Caso 2: Página - Slug: mar-da-villa
+[17-Jan-2026 12:26:41 UTC] Caso 2: Terreno encontrado com mesmo slug - ID: 32
+[17-Jan-2026 12:26:41 UTC] Terreno ID: 32
+[17-Jan-2026 12:26:41 UTC] Pixel ID encontrado: 1423368039304251
+[17-Jan-2026 12:26:41 UTC] Pixel Token encontrado: SIM
+[17-Jan-2026 12:26:41 UTC] PIXEL CARREGADO COM SUCESSO! Terreno: 32 | Pixel: 1423368039304251
+[17-Jan-2026 12:26:43 UTC] 💾 [CVCRM] Cache HIT para cvcrm_empreendimento_38
+[17-Jan-2026 12:26:45 UTC] 💾 [CVCRM] Cache HIT para cvcrm_unidades_emp_38
+[17-Jan-2026 12:27:11 UTC] Scripts frontend carregados com sucesso
+[17-Jan-2026 12:27:11 UTC] === FACEBOOK PIXEL DEBUG ===
+[17-Jan-2026 12:27:11 UTC] Post Type: page
+[17-Jan-2026 12:27:11 UTC] is_singular(terreno): NÃO
+[17-Jan-2026 12:27:11 UTC] Caso 2: Página - Slug: mar-da-villa
+[17-Jan-2026 12:27:11 UTC] Caso 2: Terreno encontrado com mesmo slug - ID: 32
+[17-Jan-2026 12:27:11 UTC] Terreno ID: 32
+[17-Jan-2026 12:27:11 UTC] Pixel ID encontrado: 1423368039304251
+[17-Jan-2026 12:27:11 UTC] Pixel Token encontrado: SIM
+[17-Jan-2026 12:27:11 UTC] PIXEL CARREGADO COM SUCESSO! Terreno: 32 | Pixel: 1423368039304251
+[17-Jan-2026 12:27:12 UTC] 💾 [CVCRM] Cache HIT para cvcrm_empreendimento_38
+[17-Jan-2026 12:27:14 UTC] 🌎 [CVCRM] Consultando URL: https://montenegro.cvcrm.com.br/api/v1/cvdw/unidades?a_partir_referencia=38
+[17-Jan-2026 12:27:16 UTC] [CVCRM] Status: 200
+[17-Jan-2026 12:27:16 UTC] [CVCRM] Body: {"pagina":1,"registros":30,"total_de_registros":11310,"total_de_paginas":377,"dados":[{"referencia":11837,"referencia_data":"2022-07-22 14:38:33","idempreendimento":6,"idempreendimento_int":"VH5.01.1","nome_empreendimento":"Villa Dourados                          ","idtipo_empreendimento":3,"tipo_empreendimento":"Loteamento","idetapa":18,"idetapa_int":"VH5.01.1.1","etapa":"Geral","idbloco":283,"idbloco_int":"VH5.01.1.1.02.01","bloco":"AA","area_privativa":"150.000000","idunidade":11837,"nome":"6
+[17-Jan-2026 12:32:06 UTC] Scripts frontend carregados com sucesso
+[17-Jan-2026 12:32:06 UTC] === FACEBOOK PIXEL DEBUG ===
+[17-Jan-2026 12:32:06 UTC] Post Type: page
+[17-Jan-2026 12:32:06 UTC] is_singular(terreno): NÃO
+[17-Jan-2026 12:32:06 UTC] Caso 2: Página - Slug: mar-da-villa
+[17-Jan-2026 12:32:06 UTC] Caso 2: Terreno encontrado com mesmo slug - ID: 32
+[17-Jan-2026 12:32:06 UTC] Terreno ID: 32
+[17-Jan-2026 12:32:06 UTC] Pixel ID encontrado: 1423368039304251
+[17-Jan-2026 12:32:06 UTC] Pixel Token encontrado: SIM
+[17-Jan-2026 12:32:06 UTC] PIXEL CARREGADO COM SUCESSO! Terreno: 32 | Pixel: 1423368039304251
+[17-Jan-2026 12:32:07 UTC] 💾 [CVCRM] Cache HIT para cvcrm_empreendimento_38
+[17-Jan-2026 12:32:09 UTC] 💾 [CVCRM] Cache HIT para cvcrm_unidades_emp_38
+[17-Jan-2026 12:45:09 UTC] Scripts frontend carregados com sucesso
+[17-Jan-2026 12:45:09 UTC] === FACEBOOK PIXEL DEBUG ===
+[17-Jan-2026 12:45:09 UTC] Post Type: page
+[17-Jan-2026 12:45:09 UTC] is_singular(terreno): NÃO
+[17-Jan-2026 12:45:09 UTC] Caso 2: Página - Slug: mar-da-villa
+[17-Jan-2026 12:45:09 UTC] Caso 2: Terreno encontrado com mesmo slug - ID: 32
+[17-Jan-2026 12:45:09 UTC] Terreno ID: 32
+[17-Jan-2026 12:45:09 UTC] Pixel ID encontrado: 1423368039304251
+[17-Jan-2026 12:45:09 UTC] Pixel Token encontrado: SIM
+[17-Jan-2026 12:45:09 UTC] PIXEL CARREGADO COM SUCESSO! Terreno: 32 | Pixel: 1423368039304251
+[17-Jan-2026 12:45:10 UTC] 💾 [CVCRM] Cache HIT para cvcrm_empreendimento_38
+[17-Jan-2026 12:45:10 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /Users/elviobarbosa/Sites/montenegro-simulador/wp-content/themes/betadigital/app/ajax.php:104) in /Users/elviobarbosa/Sites/montenegro-simulador/wp-includes/rest-api/class-wp-rest-server.php on line 1896
+[17-Jan-2026 12:47:24 UTC] Scripts frontend carregados com sucesso
+[17-Jan-2026 12:47:24 UTC] === FACEBOOK PIXEL DEBUG ===
+[17-Jan-2026 12:47:24 UTC] Post Type: page
+[17-Jan-2026 12:47:24 UTC] is_singular(terreno): NÃO
+[17-Jan-2026 12:47:24 UTC] Caso 2: Página - Slug: mar-da-villa
+[17-Jan-2026 12:47:24 UTC] Caso 2: Terreno encontrado com mesmo slug - ID: 32
+[17-Jan-2026 12:47:24 UTC] Terreno ID: 32
+[17-Jan-2026 12:47:24 UTC] Pixel ID encontrado: 1423368039304251
+[17-Jan-2026 12:47:24 UTC] Pixel Token encontrado: SIM
+[17-Jan-2026 12:47:24 UTC] PIXEL CARREGADO COM SUCESSO! Terreno: 32 | Pixel: 1423368039304251
+[17-Jan-2026 12:47:25 UTC] 💾 [CVCRM] Cache HIT para cvcrm_empreendimento_38
+[17-Jan-2026 12:47:28 UTC] 🌎 [CVCRM] Consultando URL: https://montenegro.cvcrm.com.br/api/v1/cvdw/unidades?a_partir_referencia=38
+[17-Jan-2026 12:47:30 UTC] [CVCRM] Status: 200
+[17-Jan-2026 12:47:30 UTC] [CVCRM] Body: {"pagina":1,"registros":30,"total_de_registros":11310,"total_de_paginas":377,"dados":[{"referencia":11837,"referencia_data":"2022-07-22 14:38:33","idempreendimento":6,"idempreendimento_int":"VH5.01.1","nome_empreendimento":"Villa Dourados                          ","idtipo_empreendimento":3,"tipo_empreendimento":"Loteamento","idetapa":18,"idetapa_int":"VH5.01.1.1","etapa":"Geral","idbloco":283,"idbloco_int":"VH5.01.1.1.02.01","bloco":"AA","area_privativa":"150.000000","idunidade":11837,"nome":"6
+[17-Jan-2026 12:49:54 UTC] Scripts frontend carregados com sucesso
+[17-Jan-2026 12:49:54 UTC] === FACEBOOK PIXEL DEBUG ===
+[17-Jan-2026 12:49:54 UTC] Post Type: page
+[17-Jan-2026 12:49:54 UTC] is_singular(terreno): NÃO
+[17-Jan-2026 12:49:54 UTC] Caso 2: Página - Slug: mar-da-villa
+[17-Jan-2026 12:49:54 UTC] Caso 2: Terreno encontrado com mesmo slug - ID: 32
+[17-Jan-2026 12:49:54 UTC] Terreno ID: 32
+[17-Jan-2026 12:49:54 UTC] Pixel ID encontrado: 1423368039304251
+[17-Jan-2026 12:49:54 UTC] Pixel Token encontrado: SIM
+[17-Jan-2026 12:49:54 UTC] PIXEL CARREGADO COM SUCESSO! Terreno: 32 | Pixel: 1423368039304251
+[17-Jan-2026 12:49:54 UTC] 💾 [CVCRM] Cache HIT para cvcrm_empreendimento_38
+[17-Jan-2026 12:49:57 UTC] 💾 [CVCRM] Cache HIT para cvcrm_unidades_emp_38
+[17-Jan-2026 12:52:32 UTC] Scripts frontend carregados com sucesso
+[17-Jan-2026 12:52:32 UTC] === FACEBOOK PIXEL DEBUG ===
+[17-Jan-2026 12:52:32 UTC] Post Type: page
+[17-Jan-2026 12:52:32 UTC] is_singular(terreno): NÃO
+[17-Jan-2026 12:52:32 UTC] Caso 2: Página - Slug: mar-da-villa
+[17-Jan-2026 12:52:32 UTC] Caso 2: Terreno encontrado com mesmo slug - ID: 32
+[17-Jan-2026 12:52:32 UTC] Terreno ID: 32
+[17-Jan-2026 12:52:32 UTC] Pixel ID encontrado: 1423368039304251
+[17-Jan-2026 12:52:32 UTC] Pixel Token encontrado: SIM
+[17-Jan-2026 12:52:32 UTC] PIXEL CARREGADO COM SUCESSO! Terreno: 32 | Pixel: 1423368039304251
+[17-Jan-2026 12:52:33 UTC] 💾 [CVCRM] Cache HIT para cvcrm_empreendimento_38
+[17-Jan-2026 12:52:36 UTC] 🌎 [CVCRM] Consultando URL: https://montenegro.cvcrm.com.br/api/v1/cvdw/unidades?a_partir_referencia=38
+[17-Jan-2026 12:52:38 UTC] [CVCRM] Status: 200
+[17-Jan-2026 12:52:38 UTC] [CVCRM] Body: {"pagina":1,"registros":30,"total_de_registros":11310,"total_de_paginas":377,"dados":[{"referencia":11837,"referencia_data":"2022-07-22 14:38:33","idempreendimento":6,"idempreendimento_int":"VH5.01.1","nome_empreendimento":"Villa Dourados                          ","idtipo_empreendimento":3,"tipo_empreendimento":"Loteamento","idetapa":18,"idetapa_int":"VH5.01.1.1","etapa":"Geral","idbloco":283,"idbloco_int":"VH5.01.1.1.02.01","bloco":"AA","area_privativa":"150.000000","idunidade":11837,"nome":"6
+[17-Jan-2026 12:53:03 UTC] Scripts frontend carregados com sucesso
+[17-Jan-2026 12:53:03 UTC] === FACEBOOK PIXEL DEBUG ===
+[17-Jan-2026 12:53:03 UTC] Post Type: page
+[17-Jan-2026 12:53:03 UTC] is_singular(terreno): NÃO
+[17-Jan-2026 12:53:03 UTC] Caso 2: Página - Slug: mar-da-villa
+[17-Jan-2026 12:53:03 UTC] Caso 2: Terreno encontrado com mesmo slug - ID: 32
+[17-Jan-2026 12:53:03 UTC] Terreno ID: 32
+[17-Jan-2026 12:53:03 UTC] Pixel ID encontrado: 1423368039304251
+[17-Jan-2026 12:53:03 UTC] Pixel Token encontrado: SIM
+[17-Jan-2026 12:53:03 UTC] PIXEL CARREGADO COM SUCESSO! Terreno: 32 | Pixel: 1423368039304251
+[17-Jan-2026 12:53:04 UTC] 💾 [CVCRM] Cache HIT para cvcrm_empreendimento_38
+[17-Jan-2026 12:53:06 UTC] 💾 [CVCRM] Cache HIT para cvcrm_unidades_emp_38
+[17-Jan-2026 12:54:12 UTC] Scripts frontend carregados com sucesso
+[17-Jan-2026 12:54:12 UTC] === FACEBOOK PIXEL DEBUG ===
+[17-Jan-2026 12:54:12 UTC] Post Type: page
+[17-Jan-2026 12:54:12 UTC] is_singular(terreno): NÃO
+[17-Jan-2026 12:54:12 UTC] Caso 2: Página - Slug: mar-da-villa
+[17-Jan-2026 12:54:12 UTC] Caso 2: Terreno encontrado com mesmo slug - ID: 32
+[17-Jan-2026 12:54:12 UTC] Terreno ID: 32
+[17-Jan-2026 12:54:12 UTC] Pixel ID encontrado: 1423368039304251
+[17-Jan-2026 12:54:12 UTC] Pixel Token encontrado: SIM
+[17-Jan-2026 12:54:12 UTC] PIXEL CARREGADO COM SUCESSO! Terreno: 32 | Pixel: 1423368039304251
+[17-Jan-2026 12:54:12 UTC] 💾 [CVCRM] Cache HIT para cvcrm_empreendimento_38
+[17-Jan-2026 12:54:12 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /Users/elviobarbosa/Sites/montenegro-simulador/wp-content/themes/betadigital/app/ajax.php:104) in /Users/elviobarbosa/Sites/montenegro-simulador/wp-includes/rest-api/class-wp-rest-server.php on line 1896
+[17-Jan-2026 12:59:59 UTC] Scripts frontend carregados com sucesso
+[17-Jan-2026 12:59:59 UTC] === FACEBOOK PIXEL DEBUG ===
+[17-Jan-2026 12:59:59 UTC] Post Type: page
+[17-Jan-2026 12:59:59 UTC] is_singular(terreno): NÃO
+[17-Jan-2026 12:59:59 UTC] Caso 2: Página - Slug: mar-da-villa
+[17-Jan-2026 12:59:59 UTC] Caso 2: Terreno encontrado com mesmo slug - ID: 32
+[17-Jan-2026 12:59:59 UTC] Terreno ID: 32
+[17-Jan-2026 12:59:59 UTC] Pixel ID encontrado: 1423368039304251
+[17-Jan-2026 12:59:59 UTC] Pixel Token encontrado: SIM
+[17-Jan-2026 12:59:59 UTC] PIXEL CARREGADO COM SUCESSO! Terreno: 32 | Pixel: 1423368039304251
+[17-Jan-2026 13:00:00 UTC] 💾 [CVCRM] Cache HIT para cvcrm_empreendimento_38
+[17-Jan-2026 13:00:02 UTC] 🌎 [CVCRM] Consultando URL: https://montenegro.cvcrm.com.br/api/v1/cvdw/unidades?a_partir_referencia=38
+[17-Jan-2026 13:00:04 UTC] [CVCRM] Status: 200
+[17-Jan-2026 13:00:04 UTC] [CVCRM] Body: {"pagina":1,"registros":30,"total_de_registros":11310,"total_de_paginas":377,"dados":[{"referencia":11837,"referencia_data":"2022-07-22 14:38:33","idempreendimento":6,"idempreendimento_int":"VH5.01.1","nome_empreendimento":"Villa Dourados                          ","idtipo_empreendimento":3,"tipo_empreendimento":"Loteamento","idetapa":18,"idetapa_int":"VH5.01.1.1","etapa":"Geral","idbloco":283,"idbloco_int":"VH5.01.1.1.02.01","bloco":"AA","area_privativa":"150.000000","idunidade":11837,"nome":"6
+[17-Jan-2026 13:01:07 UTC] Scripts frontend carregados com sucesso
+[17-Jan-2026 13:01:07 UTC] === FACEBOOK PIXEL DEBUG ===
+[17-Jan-2026 13:01:07 UTC] Post Type: page
+[17-Jan-2026 13:01:07 UTC] is_singular(terreno): NÃO
+[17-Jan-2026 13:01:07 UTC] Caso 2: Página - Slug: mar-da-villa
+[17-Jan-2026 13:01:07 UTC] Caso 2: Terreno encontrado com mesmo slug - ID: 32
+[17-Jan-2026 13:01:07 UTC] Terreno ID: 32
+[17-Jan-2026 13:01:07 UTC] Pixel ID encontrado: 1423368039304251
+[17-Jan-2026 13:01:07 UTC] Pixel Token encontrado: SIM
+[17-Jan-2026 13:01:07 UTC] PIXEL CARREGADO COM SUCESSO! Terreno: 32 | Pixel: 1423368039304251
+[17-Jan-2026 13:01:09 UTC] 💾 [CVCRM] Cache HIT para cvcrm_empreendimento_38
+[17-Jan-2026 13:01:09 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /Users/elviobarbosa/Sites/montenegro-simulador/wp-content/themes/betadigital/app/ajax.php:104) in /Users/elviobarbosa/Sites/montenegro-simulador/wp-includes/rest-api/class-wp-rest-server.php on line 1896
+[17-Jan-2026 13:01:43 UTC] Scripts frontend carregados com sucesso
+[17-Jan-2026 13:01:43 UTC] === FACEBOOK PIXEL DEBUG ===
+[17-Jan-2026 13:01:43 UTC] Post Type: page
+[17-Jan-2026 13:01:43 UTC] is_singular(terreno): NÃO
+[17-Jan-2026 13:01:43 UTC] Caso 2: Página - Slug: mar-da-villa
+[17-Jan-2026 13:01:43 UTC] Caso 2: Terreno encontrado com mesmo slug - ID: 32
+[17-Jan-2026 13:01:43 UTC] Terreno ID: 32
+[17-Jan-2026 13:01:43 UTC] Pixel ID encontrado: 1423368039304251
+[17-Jan-2026 13:01:43 UTC] Pixel Token encontrado: SIM
+[17-Jan-2026 13:01:43 UTC] PIXEL CARREGADO COM SUCESSO! Terreno: 32 | Pixel: 1423368039304251
+[17-Jan-2026 13:01:44 UTC] 💾 [CVCRM] Cache HIT para cvcrm_empreendimento_38
+[17-Jan-2026 13:01:56 UTC] Scripts frontend carregados com sucesso
+[17-Jan-2026 13:01:56 UTC] === FACEBOOK PIXEL DEBUG ===
+[17-Jan-2026 13:01:56 UTC] Post Type: page
+[17-Jan-2026 13:01:56 UTC] is_singular(terreno): NÃO
+[17-Jan-2026 13:01:56 UTC] Caso 2: Página - Slug: mar-da-villa
+[17-Jan-2026 13:01:56 UTC] Caso 2: Terreno encontrado com mesmo slug - ID: 32
+[17-Jan-2026 13:01:56 UTC] Terreno ID: 32
+[17-Jan-2026 13:01:56 UTC] Pixel ID encontrado: 1423368039304251
+[17-Jan-2026 13:01:56 UTC] Pixel Token encontrado: SIM
+[17-Jan-2026 13:01:56 UTC] PIXEL CARREGADO COM SUCESSO! Terreno: 32 | Pixel: 1423368039304251
+[17-Jan-2026 13:01:56 UTC] 💾 [CVCRM] Cache HIT para cvcrm_empreendimento_38
+[17-Jan-2026 13:01:58 UTC] 💾 [CVCRM] Cache HIT para cvcrm_unidades_emp_38
+[17-Jan-2026 13:02:24 UTC] Scripts frontend carregados com sucesso
+[17-Jan-2026 13:02:24 UTC] === FACEBOOK PIXEL DEBUG ===
+[17-Jan-2026 13:02:24 UTC] Post Type: page
+[17-Jan-2026 13:02:24 UTC] is_singular(terreno): NÃO
+[17-Jan-2026 13:02:24 UTC] Caso 2: Página - Slug: mar-da-villa
+[17-Jan-2026 13:02:24 UTC] Caso 2: Terreno encontrado com mesmo slug - ID: 32
+[17-Jan-2026 13:02:24 UTC] Terreno ID: 32
+[17-Jan-2026 13:02:24 UTC] Pixel ID encontrado: 1423368039304251
+[17-Jan-2026 13:02:24 UTC] Pixel Token encontrado: SIM
+[17-Jan-2026 13:02:24 UTC] PIXEL CARREGADO COM SUCESSO! Terreno: 32 | Pixel: 1423368039304251
+[17-Jan-2026 13:02:24 UTC] 💾 [CVCRM] Cache HIT para cvcrm_empreendimento_38
+[17-Jan-2026 13:02:26 UTC] 💾 [CVCRM] Cache HIT para cvcrm_unidades_emp_38
+[17-Jan-2026 13:03:22 UTC] Scripts frontend carregados com sucesso
+[17-Jan-2026 13:03:22 UTC] === FACEBOOK PIXEL DEBUG ===
+[17-Jan-2026 13:03:22 UTC] Post Type: page
+[17-Jan-2026 13:03:22 UTC] is_singular(terreno): NÃO
+[17-Jan-2026 13:03:22 UTC] Caso 2: Página - Slug: mar-da-villa
+[17-Jan-2026 13:03:22 UTC] Caso 2: Terreno encontrado com mesmo slug - ID: 32
+[17-Jan-2026 13:03:22 UTC] Terreno ID: 32
+[17-Jan-2026 13:03:22 UTC] Pixel ID encontrado: 1423368039304251
+[17-Jan-2026 13:03:22 UTC] Pixel Token encontrado: SIM
+[17-Jan-2026 13:03:22 UTC] PIXEL CARREGADO COM SUCESSO! Terreno: 32 | Pixel: 1423368039304251
+[17-Jan-2026 13:03:23 UTC] 💾 [CVCRM] Cache HIT para cvcrm_empreendimento_38
+[17-Jan-2026 13:03:25 UTC] 💾 [CVCRM] Cache HIT para cvcrm_unidades_emp_38
+[17-Jan-2026 13:06:58 UTC] Scripts frontend carregados com sucesso
+[17-Jan-2026 13:06:58 UTC] === FACEBOOK PIXEL DEBUG ===
+[17-Jan-2026 13:06:58 UTC] Post Type: page
+[17-Jan-2026 13:06:58 UTC] is_singular(terreno): NÃO
+[17-Jan-2026 13:06:58 UTC] Caso 2: Página - Slug: mar-da-villa
+[17-Jan-2026 13:06:58 UTC] Caso 2: Terreno encontrado com mesmo slug - ID: 32
+[17-Jan-2026 13:06:58 UTC] Terreno ID: 32
+[17-Jan-2026 13:06:58 UTC] Pixel ID encontrado: 1423368039304251
+[17-Jan-2026 13:06:58 UTC] Pixel Token encontrado: SIM
+[17-Jan-2026 13:06:58 UTC] PIXEL CARREGADO COM SUCESSO! Terreno: 32 | Pixel: 1423368039304251
+[17-Jan-2026 13:07:00 UTC] 💾 [CVCRM] Cache HIT para cvcrm_empreendimento_38
+[17-Jan-2026 13:07:56 UTC] 🌎 [CVCRM] Consultando URL: https://montenegro.cvcrm.com.br/api/v1/cvdw/unidades?a_partir_referencia=38
+[17-Jan-2026 13:07:58 UTC] [CVCRM] Status: 200
+[17-Jan-2026 13:07:58 UTC] [CVCRM] Body: {"pagina":1,"registros":30,"total_de_registros":11310,"total_de_paginas":377,"dados":[{"referencia":11837,"referencia_data":"2022-07-22 14:38:33","idempreendimento":6,"idempreendimento_int":"VH5.01.1","nome_empreendimento":"Villa Dourados                          ","idtipo_empreendimento":3,"tipo_empreendimento":"Loteamento","idetapa":18,"idetapa_int":"VH5.01.1.1","etapa":"Geral","idbloco":283,"idbloco_int":"VH5.01.1.1.02.01","bloco":"AA","area_privativa":"150.000000","idunidade":11837,"nome":"6
+[17-Jan-2026 13:08:32 UTC] Scripts frontend carregados com sucesso
+[17-Jan-2026 13:08:32 UTC] === FACEBOOK PIXEL DEBUG ===
+[17-Jan-2026 13:08:32 UTC] Post Type: page
+[17-Jan-2026 13:08:32 UTC] is_singular(terreno): NÃO
+[17-Jan-2026 13:08:32 UTC] Caso 2: Página - Slug: mar-da-villa
+[17-Jan-2026 13:08:32 UTC] Caso 2: Terreno encontrado com mesmo slug - ID: 32
+[17-Jan-2026 13:08:32 UTC] Terreno ID: 32
+[17-Jan-2026 13:08:32 UTC] Pixel ID encontrado: 1423368039304251
+[17-Jan-2026 13:08:32 UTC] Pixel Token encontrado: SIM
+[17-Jan-2026 13:08:32 UTC] PIXEL CARREGADO COM SUCESSO! Terreno: 32 | Pixel: 1423368039304251
+[17-Jan-2026 13:08:34 UTC] 💾 [CVCRM] Cache HIT para cvcrm_empreendimento_38
+[17-Jan-2026 13:08:54 UTC] 💾 [CVCRM] Cache HIT para cvcrm_unidades_emp_38
+[17-Jan-2026 13:10:38 UTC] 💾 [CVCRM] Cache HIT para cvcrm_unidades_emp_38
+[17-Jan-2026 13:12:18 UTC] 💾 [CVCRM] Cache HIT para cvcrm_unidades_emp_38
+[17-Jan-2026 13:13:59 UTC] 🌎 [CVCRM] Consultando URL: https://montenegro.cvcrm.com.br/api/v1/cvdw/unidades?a_partir_referencia=38
+[17-Jan-2026 13:14:01 UTC] [CVCRM] Status: 200
+[17-Jan-2026 13:14:01 UTC] [CVCRM] Body: {"pagina":1,"registros":30,"total_de_registros":11310,"total_de_paginas":377,"dados":[{"referencia":11837,"referencia_data":"2022-07-22 14:38:33","idempreendimento":6,"idempreendimento_int":"VH5.01.1","nome_empreendimento":"Villa Dourados                          ","idtipo_empreendimento":3,"tipo_empreendimento":"Loteamento","idetapa":18,"idetapa_int":"VH5.01.1.1","etapa":"Geral","idbloco":283,"idbloco_int":"VH5.01.1.1.02.01","bloco":"AA","area_privativa":"150.000000","idunidade":11837,"nome":"6
+[17-Jan-2026 13:26:20 UTC] Scripts frontend carregados com sucesso
+[17-Jan-2026 13:26:20 UTC] === FACEBOOK PIXEL DEBUG ===
+[17-Jan-2026 13:26:20 UTC] Post Type: page
+[17-Jan-2026 13:26:20 UTC] is_singular(terreno): NÃO
+[17-Jan-2026 13:26:20 UTC] Caso 2: Página - Slug: mar-da-villa
+[17-Jan-2026 13:26:20 UTC] Caso 2: Terreno encontrado com mesmo slug - ID: 32
+[17-Jan-2026 13:26:20 UTC] Terreno ID: 32
+[17-Jan-2026 13:26:20 UTC] Pixel ID encontrado: 1423368039304251
+[17-Jan-2026 13:26:20 UTC] Pixel Token encontrado: SIM
+[17-Jan-2026 13:26:20 UTC] PIXEL CARREGADO COM SUCESSO! Terreno: 32 | Pixel: 1423368039304251
+[17-Jan-2026 13:26:21 UTC] Automatic updates starting...
+[17-Jan-2026 13:26:22 UTC]   Automatic plugin updates starting...
+[17-Jan-2026 13:26:22 UTC]   Automatic plugin updates complete.
+[17-Jan-2026 13:26:22 UTC] Automatic updates complete.
+[17-Jan-2026 13:26:23 UTC] 💾 [CVCRM] Cache HIT para cvcrm_empreendimento_38
+[17-Jan-2026 13:26:23 UTC] 🌎 [CVCRM] Consultando URL: https://montenegro.cvcrm.com.br/api/v1/comercial/mapadisponibilidade/38
+[17-Jan-2026 13:26:24 UTC] [CVCRM] Status: 200
+[17-Jan-2026 13:26:24 UTC] [CVCRM] Body: {"paginacao":{"pagina":1,"registros":30,"total_de_registros":109,"total_de_paginas":4},"dados":[{"idempreendimento":38,"idempreendimento_int":"RM2.01.2","nome_empreendimento":"Condominio Ipe Amarelo","idetapa":16512,"idetapa_int":"RM2.01.2.1","etapa":"GERAL","idbloco":17994,"idbloco_int":"RM2.01.2.1.02.04","bloco":"04","idunidade":73910,"idunidade_int":"RM2.01.2.109","unidade":"42","situacao":"reservada","data_bloqueio":null,"motivo_bloqueio":null,"documento_bloqueio":null,"possui_reserva_solici
+[17-Jan-2026 13:26:29 UTC] 🌎 [CVCRM] Consultando URL: https://montenegro.cvcrm.com.br/api/v1/cvdw/unidades?a_partir_referencia=38
+[17-Jan-2026 13:26:30 UTC] [CVCRM] Status: 200
+[17-Jan-2026 13:26:30 UTC] [CVCRM] Body: {"pagina":1,"registros":30,"total_de_registros":11310,"total_de_paginas":377,"dados":[{"referencia":11837,"referencia_data":"2022-07-22 14:38:33","idempreendimento":6,"idempreendimento_int":"VH5.01.1","nome_empreendimento":"Villa Dourados                          ","idtipo_empreendimento":3,"tipo_empreendimento":"Loteamento","idetapa":18,"idetapa_int":"VH5.01.1.1","etapa":"Geral","idbloco":283,"idbloco_int":"VH5.01.1.1.02.01","bloco":"AA","area_privativa":"150.000000","idunidade":11837,"nome":"6
+[17-Jan-2026 13:36:52 UTC] Hook: post.php, Post Type: terreno
+[17-Jan-2026 13:36:52 UTC] Scripts carregados com sucesso
+[17-Jan-2026 13:42:18 UTC] === TERRENO SAVE INICIADO ===
+[17-Jan-2026 13:42:18 UTC] Post ID: 32
+[17-Jan-2026 13:42:18 UTC] ERRO: Nonce inválido ou ausente
+[17-Jan-2026 13:42:18 UTC] === TERRENO SAVE INICIADO ===
+[17-Jan-2026 13:42:18 UTC] Post ID: 32
+[17-Jan-2026 13:42:18 UTC] Empreendimento id salvo: 26
+[17-Jan-2026 13:42:18 UTC] Endereco salvo: Parque da Liberdade Fortaleza - R. Pedro I, s/n - Centro, Fortaleza - CE, 60035-100, Brazil
+[17-Jan-2026 13:42:18 UTC] Latitude salva: -3.731402
+[17-Jan-2026 13:42:18 UTC] Longitude salva: -38.525813
+[17-Jan-2026 13:42:18 UTC] Zoom salvo: 17
+[17-Jan-2026 13:42:18 UTC] Facebook Pixel ID salvo: 1423368039304251
+[17-Jan-2026 13:42:18 UTC] Facebook Pixel Token salvo
+[17-Jan-2026 13:42:18 UTC] Dados lotes recebidos (raw): [{"id":"72714","nome":"40","bloco":"06","coordinates":[{"lat":-3.7312449807269292,"lng":-38.52613851900971},{"lat":-3.731129890209784,"lng":-38.52648184176362},{"lat":-3.7307096758680363,"lng":-38.526...
+[17-Jan-2026 13:42:18 UTC] Lotes salvos com sucesso. Count: 2
+[17-Jan-2026 13:42:18 UTC] === TERRENO SAVE CONCLUÍDO ===
+[17-Jan-2026 13:42:19 UTC] Hook: post.php, Post Type: terreno
+[17-Jan-2026 13:42:19 UTC] Scripts carregados com sucesso
+[17-Jan-2026 13:42:22 UTC] Scripts frontend carregados com sucesso
+[17-Jan-2026 13:42:22 UTC] === FACEBOOK PIXEL DEBUG ===
+[17-Jan-2026 13:42:22 UTC] Post Type: page
+[17-Jan-2026 13:42:22 UTC] is_singular(terreno): NÃO
+[17-Jan-2026 13:42:22 UTC] Caso 2: Página - Slug: mar-da-villa
+[17-Jan-2026 13:42:22 UTC] Caso 2: Terreno encontrado com mesmo slug - ID: 32
+[17-Jan-2026 13:42:22 UTC] Terreno ID: 32
+[17-Jan-2026 13:42:22 UTC] Pixel ID encontrado: 1423368039304251
+[17-Jan-2026 13:42:22 UTC] Pixel Token encontrado: SIM
+[17-Jan-2026 13:42:22 UTC] PIXEL CARREGADO COM SUCESSO! Terreno: 32 | Pixel: 1423368039304251
+[17-Jan-2026 13:42:23 UTC] 🌎 [CVCRM] Consultando URL: https://montenegro.cvcrm.com.br/api/v1/comercial/mapadisponibilidade/26
+[17-Jan-2026 13:42:23 UTC] 🌎 [CVCRM] Consultando URL: https://montenegro.cvcrm.com.br/api/v1/cadastros/empreendimentos/26
+[17-Jan-2026 13:42:23 UTC] [CVCRM] Status: 200
+[17-Jan-2026 13:42:23 UTC] [CVCRM] Body: {"paginacao":{"pagina":1,"registros":30,"total_de_registros":696,"total_de_paginas":24},"dados":[{"idempreendimento":26,"idempreendimento_int":"PRU.01.1","nome_empreendimento":"Mar da Villa - Paracuru","idetapa":16510,"idetapa_int":"PRU.01.1.1","etapa":"GERAL","idbloco":17974,"idbloco_int":"PRU.01.1.1.02.14","bloco":"14","idunidade":73153,"idunidade_int":"PRU.01.1.696","unidade":"25","situacao":"bloqueada","data_bloqueio":"2025-05-23 15:38:58","motivo_bloqueio":"Bloqueada via integra\u00e7\u00e3
+[17-Jan-2026 13:42:26 UTC] [CVCRM] Status: 200
+[17-Jan-2026 13:42:26 UTC] [CVCRM] Body: {"idempreendimento":26,"idempreendimento_int":"PRU.01.1","referencia_externa":null,"nome":"Mar da Villa - Paracuru","matricula":"007","regiao":"Nordeste","cidade":"Paracuru","estado":"Cear\u00e1","bairro":"PARACURU","endereco_emp":"Av. Geraldo Cir\u00edaco","numero":"1","logradouro":"Avenida","cep":"62680000","endereco":"Paracuru - CE, 62680-000, Brasil","periodo_venda_inicio":null,"area_construida":null,"area_privativa":null,"idempresa":22,"idempresa_int":"PRU01","nome_empresa":"Paracuru 01 Spe
+[17-Jan-2026 13:42:28 UTC] 🌎 [CVCRM] Consultando URL: https://montenegro.cvcrm.com.br/api/v1/cvdw/unidades?a_partir_referencia=26
+[17-Jan-2026 13:42:29 UTC] [CVCRM] Status: 200
+[17-Jan-2026 13:42:29 UTC] [CVCRM] Body: {"pagina":1,"registros":30,"total_de_registros":11310,"total_de_paginas":377,"dados":[{"referencia":11837,"referencia_data":"2022-07-22 14:38:33","idempreendimento":6,"idempreendimento_int":"VH5.01.1","nome_empreendimento":"Villa Dourados                          ","idtipo_empreendimento":3,"tipo_empreendimento":"Loteamento","idetapa":18,"idetapa_int":"VH5.01.1.1","etapa":"Geral","idbloco":283,"idbloco_int":"VH5.01.1.1.02.01","bloco":"AA","area_privativa":"150.000000","idunidade":11837,"nome":"6
+[17-Jan-2026 13:45:00 UTC] Scripts frontend carregados com sucesso
+[17-Jan-2026 13:45:00 UTC] === FACEBOOK PIXEL DEBUG ===
+[17-Jan-2026 13:45:00 UTC] Post Type: page
+[17-Jan-2026 13:45:00 UTC] is_singular(terreno): NÃO
+[17-Jan-2026 13:45:00 UTC] Caso 2: Página - Slug: mar-da-villa
+[17-Jan-2026 13:45:00 UTC] Caso 2: Terreno encontrado com mesmo slug - ID: 32
+[17-Jan-2026 13:45:00 UTC] Terreno ID: 32
+[17-Jan-2026 13:45:00 UTC] Pixel ID encontrado: 1423368039304251
+[17-Jan-2026 13:45:00 UTC] Pixel Token encontrado: SIM
+[17-Jan-2026 13:45:00 UTC] PIXEL CARREGADO COM SUCESSO! Terreno: 32 | Pixel: 1423368039304251
+[17-Jan-2026 13:45:01 UTC] 💾 [CVCRM] Cache HIT para cvcrm_empreendimento_26
+[17-Jan-2026 13:45:01 UTC] 💾 [CVCRM] Cache HIT para cvcrm_mapa_disponibilidade_26
+[17-Jan-2026 13:47:53 UTC] Scripts frontend carregados com sucesso
+[17-Jan-2026 13:47:53 UTC] === FACEBOOK PIXEL DEBUG ===
+[17-Jan-2026 13:47:53 UTC] Post Type: page
+[17-Jan-2026 13:47:53 UTC] is_singular(terreno): NÃO
+[17-Jan-2026 13:47:53 UTC] Caso 2: Página - Slug: mar-da-villa
+[17-Jan-2026 13:47:53 UTC] Caso 2: Terreno encontrado com mesmo slug - ID: 32
+[17-Jan-2026 13:47:53 UTC] Terreno ID: 32
+[17-Jan-2026 13:47:53 UTC] Pixel ID encontrado: 1423368039304251
+[17-Jan-2026 13:47:53 UTC] Pixel Token encontrado: SIM
+[17-Jan-2026 13:47:53 UTC] PIXEL CARREGADO COM SUCESSO! Terreno: 32 | Pixel: 1423368039304251
+[17-Jan-2026 13:47:53 UTC] 🌎 [CVCRM] Consultando URL: https://montenegro.cvcrm.com.br/api/v1/comercial/mapadisponibilidade/26
+[17-Jan-2026 13:47:53 UTC] 💾 [CVCRM] Cache HIT para cvcrm_empreendimento_26
+[17-Jan-2026 13:47:54 UTC] [CVCRM] Status: 200
+[17-Jan-2026 13:47:54 UTC] [CVCRM] Body: {"paginacao":{"pagina":1,"registros":30,"total_de_registros":696,"total_de_paginas":24},"dados":[{"idempreendimento":26,"idempreendimento_int":"PRU.01.1","nome_empreendimento":"Mar da Villa - Paracuru","idetapa":16510,"idetapa_int":"PRU.01.1.1","etapa":"GERAL","idbloco":17974,"idbloco_int":"PRU.01.1.1.02.14","bloco":"14","idunidade":73153,"idunidade_int":"PRU.01.1.696","unidade":"25","situacao":"bloqueada","data_bloqueio":"2025-05-23 15:38:58","motivo_bloqueio":"Bloqueada via integra\u00e7\u00e3
+[17-Jan-2026 13:49:26 UTC] Scripts frontend carregados com sucesso
+[17-Jan-2026 13:49:26 UTC] === FACEBOOK PIXEL DEBUG ===
+[17-Jan-2026 13:49:26 UTC] Post Type: page
+[17-Jan-2026 13:49:26 UTC] is_singular(terreno): NÃO
+[17-Jan-2026 13:49:26 UTC] Caso 2: Página - Slug: mar-da-villa
+[17-Jan-2026 13:49:26 UTC] Caso 2: Terreno encontrado com mesmo slug - ID: 32
+[17-Jan-2026 13:49:26 UTC] Terreno ID: 32
+[17-Jan-2026 13:49:26 UTC] Pixel ID encontrado: 1423368039304251
+[17-Jan-2026 13:49:26 UTC] Pixel Token encontrado: SIM
+[17-Jan-2026 13:49:26 UTC] PIXEL CARREGADO COM SUCESSO! Terreno: 32 | Pixel: 1423368039304251
+[17-Jan-2026 13:49:27 UTC] 💾 [CVCRM] Cache HIT para cvcrm_mapa_disponibilidade_26
+[17-Jan-2026 13:49:27 UTC] 💾 [CVCRM] Cache HIT para cvcrm_empreendimento_26
+[17-Jan-2026 13:49:27 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /Users/elviobarbosa/Sites/montenegro-simulador/wp-content/themes/betadigital/app/ajax.php:99) in /Users/elviobarbosa/Sites/montenegro-simulador/wp-includes/rest-api/class-wp-rest-server.php on line 1896
+[17-Jan-2026 13:52:07 UTC] === TERRENO SAVE INICIADO ===
+[17-Jan-2026 13:52:07 UTC] Post ID: 32
+[17-Jan-2026 13:52:07 UTC] ERRO: Nonce inválido ou ausente
+[17-Jan-2026 13:52:08 UTC] === TERRENO SAVE INICIADO ===
+[17-Jan-2026 13:52:08 UTC] Post ID: 32
+[17-Jan-2026 13:52:08 UTC] Empreendimento id salvo: 38
+[17-Jan-2026 13:52:08 UTC] Endereco salvo: Parque da Liberdade Fortaleza - R. Pedro I, s/n - Centro, Fortaleza - CE, 60035-100, Brazil
+[17-Jan-2026 13:52:08 UTC] Latitude salva: -3.731402
+[17-Jan-2026 13:52:08 UTC] Longitude salva: -38.525813
+[17-Jan-2026 13:52:08 UTC] Zoom salvo: 17
+[17-Jan-2026 13:52:08 UTC] Facebook Pixel ID salvo: 1423368039304251
+[17-Jan-2026 13:52:08 UTC] Facebook Pixel Token salvo
+[17-Jan-2026 13:52:08 UTC] Dados lotes recebidos (raw): [{"id":"72714","nome":"40","bloco":"06","coordinates":[{"lat":-3.7312449807269292,"lng":-38.52613851900971},{"lat":-3.731129890209784,"lng":-38.52648184176362},{"lat":-3.7307096758680363,"lng":-38.526...
+[17-Jan-2026 13:52:08 UTC] Lotes salvos com sucesso. Count: 2
+[17-Jan-2026 13:52:08 UTC] === TERRENO SAVE CONCLUÍDO ===
+[17-Jan-2026 13:52:08 UTC] Hook: post.php, Post Type: terreno
+[17-Jan-2026 13:52:08 UTC] Scripts carregados com sucesso
+[17-Jan-2026 13:52:09 UTC] Scripts frontend carregados com sucesso
+[17-Jan-2026 13:52:09 UTC] === FACEBOOK PIXEL DEBUG ===
+[17-Jan-2026 13:52:09 UTC] Post Type: page
+[17-Jan-2026 13:52:09 UTC] is_singular(terreno): NÃO
+[17-Jan-2026 13:52:09 UTC] Caso 2: Página - Slug: mar-da-villa
+[17-Jan-2026 13:52:09 UTC] Caso 2: Terreno encontrado com mesmo slug - ID: 32
+[17-Jan-2026 13:52:09 UTC] Terreno ID: 32
+[17-Jan-2026 13:52:09 UTC] Pixel ID encontrado: 1423368039304251
+[17-Jan-2026 13:52:09 UTC] Pixel Token encontrado: SIM
+[17-Jan-2026 13:52:09 UTC] PIXEL CARREGADO COM SUCESSO! Terreno: 32 | Pixel: 1423368039304251
+[17-Jan-2026 13:52:10 UTC] 💾 [CVCRM] Cache HIT para cvcrm_empreendimento_38
+[17-Jan-2026 13:52:10 UTC] 🌎 [CVCRM] Consultando URL: https://montenegro.cvcrm.com.br/api/v1/comercial/mapadisponibilidade/38
+[17-Jan-2026 13:52:10 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /Users/elviobarbosa/Sites/montenegro-simulador/wp-content/themes/betadigital/app/ajax.php:99) in /Users/elviobarbosa/Sites/montenegro-simulador/wp-includes/rest-api/class-wp-rest-server.php on line 1896
+[17-Jan-2026 13:52:11 UTC] [CVCRM] Status: 200
+[17-Jan-2026 13:52:11 UTC] [CVCRM] Body: {"paginacao":{"pagina":1,"registros":30,"total_de_registros":109,"total_de_paginas":4},"dados":[{"idempreendimento":38,"idempreendimento_int":"RM2.01.2","nome_empreendimento":"Condominio Ipe Amarelo","idetapa":16512,"idetapa_int":"RM2.01.2.1","etapa":"GERAL","idbloco":17994,"idbloco_int":"RM2.01.2.1.02.04","bloco":"04","idunidade":73910,"idunidade_int":"RM2.01.2.109","unidade":"42","situacao":"reservada","data_bloqueio":null,"motivo_bloqueio":null,"documento_bloqueio":null,"possui_reserva_solici
+[17-Jan-2026 13:53:54 UTC] Scripts frontend carregados com sucesso
+[17-Jan-2026 13:53:54 UTC] === FACEBOOK PIXEL DEBUG ===
+[17-Jan-2026 13:53:54 UTC] Post Type: page
+[17-Jan-2026 13:53:54 UTC] is_singular(terreno): NÃO
+[17-Jan-2026 13:53:54 UTC] Caso 2: Página - Slug: mar-da-villa
+[17-Jan-2026 13:53:54 UTC] Caso 2: Terreno encontrado com mesmo slug - ID: 32
+[17-Jan-2026 13:53:54 UTC] Terreno ID: 32
+[17-Jan-2026 13:53:54 UTC] Pixel ID encontrado: 1423368039304251
+[17-Jan-2026 13:53:54 UTC] Pixel Token encontrado: SIM
+[17-Jan-2026 13:53:54 UTC] PIXEL CARREGADO COM SUCESSO! Terreno: 32 | Pixel: 1423368039304251
+[17-Jan-2026 13:53:55 UTC] 💾 [CVCRM] Cache HIT para cvcrm_mapa_disponibilidade_38
+[17-Jan-2026 13:53:55 UTC] 💾 [CVCRM] Cache HIT para cvcrm_empreendimento_38
+[17-Jan-2026 13:54:26 UTC] Scripts frontend carregados com sucesso
+[17-Jan-2026 13:54:26 UTC] === FACEBOOK PIXEL DEBUG ===
+[17-Jan-2026 13:54:26 UTC] Post Type: page
+[17-Jan-2026 13:54:26 UTC] is_singular(terreno): NÃO
+[17-Jan-2026 13:54:26 UTC] Caso 2: Página - Slug: mar-da-villa
+[17-Jan-2026 13:54:26 UTC] Caso 2: Terreno encontrado com mesmo slug - ID: 32
+[17-Jan-2026 13:54:26 UTC] Terreno ID: 32
+[17-Jan-2026 13:54:26 UTC] Pixel ID encontrado: 1423368039304251
+[17-Jan-2026 13:54:26 UTC] Pixel Token encontrado: SIM
+[17-Jan-2026 13:54:26 UTC] PIXEL CARREGADO COM SUCESSO! Terreno: 32 | Pixel: 1423368039304251
+[17-Jan-2026 13:54:27 UTC] 💾 [CVCRM] Cache HIT para cvcrm_mapa_disponibilidade_38
+[17-Jan-2026 13:54:27 UTC] 💾 [CVCRM] Cache HIT para cvcrm_empreendimento_38
+[17-Jan-2026 13:55:02 UTC] Scripts frontend carregados com sucesso
+[17-Jan-2026 13:55:02 UTC] === FACEBOOK PIXEL DEBUG ===
+[17-Jan-2026 13:55:02 UTC] Post Type: page
+[17-Jan-2026 13:55:02 UTC] is_singular(terreno): NÃO
+[17-Jan-2026 13:55:02 UTC] Caso 2: Página - Slug: mar-da-villa
+[17-Jan-2026 13:55:02 UTC] Caso 2: Terreno encontrado com mesmo slug - ID: 32
+[17-Jan-2026 13:55:02 UTC] Terreno ID: 32
+[17-Jan-2026 13:55:02 UTC] Pixel ID encontrado: 1423368039304251
+[17-Jan-2026 13:55:02 UTC] Pixel Token encontrado: SIM
+[17-Jan-2026 13:55:02 UTC] PIXEL CARREGADO COM SUCESSO! Terreno: 32 | Pixel: 1423368039304251
+[17-Jan-2026 13:55:03 UTC] 💾 [CVCRM] Cache HIT para cvcrm_mapa_disponibilidade_38
+[17-Jan-2026 13:55:03 UTC] 💾 [CVCRM] Cache HIT para cvcrm_empreendimento_38
+[17-Jan-2026 13:56:43 UTC] Scripts frontend carregados com sucesso
+[17-Jan-2026 13:56:43 UTC] === FACEBOOK PIXEL DEBUG ===
+[17-Jan-2026 13:56:43 UTC] Post Type: page
+[17-Jan-2026 13:56:43 UTC] is_singular(terreno): NÃO
+[17-Jan-2026 13:56:43 UTC] Caso 2: Página - Slug: mar-da-villa
+[17-Jan-2026 13:56:43 UTC] Caso 2: Terreno encontrado com mesmo slug - ID: 32
+[17-Jan-2026 13:56:43 UTC] Terreno ID: 32
+[17-Jan-2026 13:56:43 UTC] Pixel ID encontrado: 1423368039304251
+[17-Jan-2026 13:56:43 UTC] Pixel Token encontrado: SIM
+[17-Jan-2026 13:56:43 UTC] PIXEL CARREGADO COM SUCESSO! Terreno: 32 | Pixel: 1423368039304251
+[17-Jan-2026 13:56:44 UTC] 💾 [CVCRM] Cache HIT para cvcrm_empreendimento_38
+[17-Jan-2026 13:56:44 UTC] 💾 [CVCRM] Cache HIT para cvcrm_mapa_disponibilidade_38
+[17-Jan-2026 14:00:52 UTC] Scripts frontend carregados com sucesso
+[17-Jan-2026 14:00:52 UTC] === FACEBOOK PIXEL DEBUG ===
+[17-Jan-2026 14:00:52 UTC] Post Type: page
+[17-Jan-2026 14:00:52 UTC] is_singular(terreno): NÃO
+[17-Jan-2026 14:00:52 UTC] Caso 2: Página - Slug: mar-da-villa
+[17-Jan-2026 14:00:52 UTC] Caso 2: Terreno encontrado com mesmo slug - ID: 32
+[17-Jan-2026 14:00:52 UTC] Terreno ID: 32
+[17-Jan-2026 14:00:52 UTC] Pixel ID encontrado: 1423368039304251
+[17-Jan-2026 14:00:52 UTC] Pixel Token encontrado: SIM
+[17-Jan-2026 14:00:52 UTC] PIXEL CARREGADO COM SUCESSO! Terreno: 32 | Pixel: 1423368039304251
+[17-Jan-2026 14:00:52 UTC] 🌎 [CVCRM] Consultando URL: https://montenegro.cvcrm.com.br/api/v1/comercial/mapadisponibilidade/38/?=limitePagina=800
+[17-Jan-2026 14:00:52 UTC] 💾 [CVCRM] Cache HIT para cvcrm_empreendimento_38
+[17-Jan-2026 14:00:53 UTC] [CVCRM] Status: 405
+[17-Jan-2026 14:00:53 UTC] [CVCRM] Body: {"error":"Method not allowed. Must be one of: OPTIONS","code":405}
+[17-Jan-2026 14:01:03 UTC] Scripts frontend carregados com sucesso
+[17-Jan-2026 14:01:03 UTC] === FACEBOOK PIXEL DEBUG ===
+[17-Jan-2026 14:01:03 UTC] Post Type: page
+[17-Jan-2026 14:01:03 UTC] is_singular(terreno): NÃO
+[17-Jan-2026 14:01:03 UTC] Caso 2: Página - Slug: mar-da-villa
+[17-Jan-2026 14:01:03 UTC] Caso 2: Terreno encontrado com mesmo slug - ID: 32
+[17-Jan-2026 14:01:03 UTC] Terreno ID: 32
+[17-Jan-2026 14:01:03 UTC] Pixel ID encontrado: 1423368039304251
+[17-Jan-2026 14:01:03 UTC] Pixel Token encontrado: SIM
+[17-Jan-2026 14:01:03 UTC] PIXEL CARREGADO COM SUCESSO! Terreno: 32 | Pixel: 1423368039304251
+[17-Jan-2026 14:01:04 UTC] 🌎 [CVCRM] Consultando URL: https://montenegro.cvcrm.com.br/api/v1/comercial/mapadisponibilidade/38/?=limitePagina=800
+[17-Jan-2026 14:01:04 UTC] 💾 [CVCRM] Cache HIT para cvcrm_empreendimento_38
+[17-Jan-2026 14:01:04 UTC] [CVCRM] Status: 405
+[17-Jan-2026 14:01:04 UTC] [CVCRM] Body: {"error":"Method not allowed. Must be one of: OPTIONS","code":405}
+[17-Jan-2026 14:02:12 UTC] Scripts frontend carregados com sucesso
+[17-Jan-2026 14:02:12 UTC] === FACEBOOK PIXEL DEBUG ===
+[17-Jan-2026 14:02:12 UTC] Post Type: page
+[17-Jan-2026 14:02:12 UTC] is_singular(terreno): NÃO
+[17-Jan-2026 14:02:12 UTC] Caso 2: Página - Slug: mar-da-villa
+[17-Jan-2026 14:02:12 UTC] Caso 2: Terreno encontrado com mesmo slug - ID: 32
+[17-Jan-2026 14:02:12 UTC] Terreno ID: 32
+[17-Jan-2026 14:02:12 UTC] Pixel ID encontrado: 1423368039304251
+[17-Jan-2026 14:02:12 UTC] Pixel Token encontrado: SIM
+[17-Jan-2026 14:02:12 UTC] PIXEL CARREGADO COM SUCESSO! Terreno: 32 | Pixel: 1423368039304251
+[17-Jan-2026 14:02:13 UTC] 💾 [CVCRM] Cache HIT para cvcrm_empreendimento_38
+[17-Jan-2026 14:02:13 UTC] 🌎 [CVCRM] Consultando URL: https://montenegro.cvcrm.com.br/api/v1/comercial/mapadisponibilidade/38/?=limitePagina=50
+[17-Jan-2026 14:02:14 UTC] [CVCRM] Status: 405
+[17-Jan-2026 14:02:14 UTC] [CVCRM] Body: {"error":"Method not allowed. Must be one of: OPTIONS","code":405}
+[17-Jan-2026 14:02:45 UTC] Scripts frontend carregados com sucesso
+[17-Jan-2026 14:02:45 UTC] === FACEBOOK PIXEL DEBUG ===
+[17-Jan-2026 14:02:45 UTC] Post Type: page
+[17-Jan-2026 14:02:45 UTC] is_singular(terreno): NÃO
+[17-Jan-2026 14:02:45 UTC] Caso 2: Página - Slug: mar-da-villa
+[17-Jan-2026 14:02:45 UTC] Caso 2: Terreno encontrado com mesmo slug - ID: 32
+[17-Jan-2026 14:02:45 UTC] Terreno ID: 32
+[17-Jan-2026 14:02:45 UTC] Pixel ID encontrado: 1423368039304251
+[17-Jan-2026 14:02:45 UTC] Pixel Token encontrado: SIM
+[17-Jan-2026 14:02:45 UTC] PIXEL CARREGADO COM SUCESSO! Terreno: 32 | Pixel: 1423368039304251
+[17-Jan-2026 14:02:46 UTC] 🌎 [CVCRM] Consultando URL: https://montenegro.cvcrm.com.br/api/v1/comercial/mapadisponibilidade/38/?limitePagina=50
+[17-Jan-2026 14:02:46 UTC] 💾 [CVCRM] Cache HIT para cvcrm_empreendimento_38
+[17-Jan-2026 14:02:47 UTC] [CVCRM] Status: 405
+[17-Jan-2026 14:02:47 UTC] [CVCRM] Body: {"error":"Method not allowed. Must be one of: OPTIONS","code":405}
+[17-Jan-2026 14:03:50 UTC] Scripts frontend carregados com sucesso
+[17-Jan-2026 14:03:50 UTC] === FACEBOOK PIXEL DEBUG ===
+[17-Jan-2026 14:03:50 UTC] Post Type: page
+[17-Jan-2026 14:03:50 UTC] is_singular(terreno): NÃO
+[17-Jan-2026 14:03:50 UTC] Caso 2: Página - Slug: mar-da-villa
+[17-Jan-2026 14:03:50 UTC] Caso 2: Terreno encontrado com mesmo slug - ID: 32
+[17-Jan-2026 14:03:50 UTC] Terreno ID: 32
+[17-Jan-2026 14:03:50 UTC] Pixel ID encontrado: 1423368039304251
+[17-Jan-2026 14:03:50 UTC] Pixel Token encontrado: SIM
+[17-Jan-2026 14:03:50 UTC] PIXEL CARREGADO COM SUCESSO! Terreno: 32 | Pixel: 1423368039304251
+[17-Jan-2026 14:03:51 UTC] 🌎 [CVCRM] Consultando URL: https://montenegro.cvcrm.com.br/api/v1/comercial/mapadisponibilidade/38
+[17-Jan-2026 14:03:51 UTC] 💾 [CVCRM] Cache HIT para cvcrm_empreendimento_38
+[17-Jan-2026 14:03:52 UTC] [CVCRM] Status: 200
+[17-Jan-2026 14:03:52 UTC] [CVCRM] Body: {"paginacao":{"pagina":1,"registros":30,"total_de_registros":109,"total_de_paginas":4},"dados":[{"idempreendimento":38,"idempreendimento_int":"RM2.01.2","nome_empreendimento":"Condominio Ipe Amarelo","idetapa":16512,"idetapa_int":"RM2.01.2.1","etapa":"GERAL","idbloco":17994,"idbloco_int":"RM2.01.2.1.02.04","bloco":"04","idunidade":73910,"idunidade_int":"RM2.01.2.109","unidade":"42","situacao":"reservada","data_bloqueio":null,"motivo_bloqueio":null,"documento_bloqueio":null,"possui_reserva_solici
+[17-Jan-2026 14:05:44 UTC] Scripts frontend carregados com sucesso
+[17-Jan-2026 14:05:44 UTC] === FACEBOOK PIXEL DEBUG ===
+[17-Jan-2026 14:05:44 UTC] Post Type: page
+[17-Jan-2026 14:05:44 UTC] is_singular(terreno): NÃO
+[17-Jan-2026 14:05:44 UTC] Caso 2: Página - Slug: mar-da-villa
+[17-Jan-2026 14:05:44 UTC] Caso 2: Terreno encontrado com mesmo slug - ID: 32
+[17-Jan-2026 14:05:44 UTC] Terreno ID: 32
+[17-Jan-2026 14:05:44 UTC] Pixel ID encontrado: 1423368039304251
+[17-Jan-2026 14:05:44 UTC] Pixel Token encontrado: SIM
+[17-Jan-2026 14:05:44 UTC] PIXEL CARREGADO COM SUCESSO! Terreno: 32 | Pixel: 1423368039304251
+[17-Jan-2026 14:05:46 UTC] 💾 [CVCRM] Cache HIT para cvcrm_mapa_disponibilidade_38
+[17-Jan-2026 14:05:46 UTC] 💾 [CVCRM] Cache HIT para cvcrm_empreendimento_38
+[17-Jan-2026 14:05:55 UTC] Scripts frontend carregados com sucesso
+[17-Jan-2026 14:05:55 UTC] === FACEBOOK PIXEL DEBUG ===
+[17-Jan-2026 14:05:55 UTC] Post Type: page
+[17-Jan-2026 14:05:55 UTC] is_singular(terreno): NÃO
+[17-Jan-2026 14:05:55 UTC] Caso 2: Página - Slug: mar-da-villa
+[17-Jan-2026 14:05:55 UTC] Caso 2: Terreno encontrado com mesmo slug - ID: 32
+[17-Jan-2026 14:05:55 UTC] Terreno ID: 32
+[17-Jan-2026 14:05:55 UTC] Pixel ID encontrado: 1423368039304251
+[17-Jan-2026 14:05:55 UTC] Pixel Token encontrado: SIM
+[17-Jan-2026 14:05:55 UTC] PIXEL CARREGADO COM SUCESSO! Terreno: 32 | Pixel: 1423368039304251
+[17-Jan-2026 14:05:56 UTC] 💾 [CVCRM] Cache HIT para cvcrm_empreendimento_38
+[17-Jan-2026 14:05:56 UTC] 💾 [CVCRM] Cache HIT para cvcrm_mapa_disponibilidade_38
+[17-Jan-2026 14:11:37 UTC] Scripts frontend carregados com sucesso
+[17-Jan-2026 14:11:37 UTC] === FACEBOOK PIXEL DEBUG ===
+[17-Jan-2026 14:11:37 UTC] Post Type: terreno
+[17-Jan-2026 14:11:37 UTC] is_singular(terreno): SIM
+[17-Jan-2026 14:11:37 UTC] Caso 1: Custom Post Type terreno - ID: 32
+[17-Jan-2026 14:11:37 UTC] Terreno ID: 32
+[17-Jan-2026 14:11:37 UTC] Pixel ID encontrado: 1423368039304251
+[17-Jan-2026 14:11:37 UTC] Pixel Token encontrado: SIM
+[17-Jan-2026 14:11:37 UTC] PIXEL CARREGADO COM SUCESSO! Terreno: 32 | Pixel: 1423368039304251
+[17-Jan-2026 14:11:38 UTC] 💾 [CVCRM] Cache HIT para cvcrm_empreendimento_38
+[17-Jan-2026 14:11:38 UTC] 🌎 [CVCRM] Consultando URL: https://montenegro.cvcrm.com.br/api/v1/comercial/mapadisponibilidade/38/?limitePagina=800&pag=1
+[17-Jan-2026 14:11:39 UTC] [CVCRM] Status: 405
+[17-Jan-2026 14:11:39 UTC] [CVCRM] Body: {"error":"Method not allowed. Must be one of: OPTIONS","code":405}
+[17-Jan-2026 14:13:10 UTC] Scripts frontend carregados com sucesso
+[17-Jan-2026 14:13:10 UTC] === FACEBOOK PIXEL DEBUG ===
+[17-Jan-2026 14:13:10 UTC] Post Type: terreno
+[17-Jan-2026 14:13:10 UTC] is_singular(terreno): SIM
+[17-Jan-2026 14:13:10 UTC] Caso 1: Custom Post Type terreno - ID: 32
+[17-Jan-2026 14:13:10 UTC] Terreno ID: 32
+[17-Jan-2026 14:13:10 UTC] Pixel ID encontrado: 1423368039304251
+[17-Jan-2026 14:13:10 UTC] Pixel Token encontrado: SIM
+[17-Jan-2026 14:13:10 UTC] PIXEL CARREGADO COM SUCESSO! Terreno: 32 | Pixel: 1423368039304251
+[17-Jan-2026 14:13:11 UTC] 🌎 [CVCRM] Consultando URL: https://montenegro.cvcrm.com.br/api/v1/comercial/mapadisponibilidade/38/?limitePagina=800&pag=1
+[17-Jan-2026 14:13:11 UTC] 💾 [CVCRM] Cache HIT para cvcrm_empreendimento_38
+[17-Jan-2026 14:13:12 UTC] [CVCRM] Status: 405
+[17-Jan-2026 14:13:12 UTC] [CVCRM] Body: {"error":"Method not allowed. Must be one of: OPTIONS","code":405}
+[17-Jan-2026 14:18:28 UTC] Scripts frontend carregados com sucesso
+[17-Jan-2026 14:18:28 UTC] === FACEBOOK PIXEL DEBUG ===
+[17-Jan-2026 14:18:28 UTC] Post Type: terreno
+[17-Jan-2026 14:18:28 UTC] is_singular(terreno): SIM
+[17-Jan-2026 14:18:28 UTC] Caso 1: Custom Post Type terreno - ID: 32
+[17-Jan-2026 14:18:28 UTC] Terreno ID: 32
+[17-Jan-2026 14:18:28 UTC] Pixel ID encontrado: 1423368039304251
+[17-Jan-2026 14:18:28 UTC] Pixel Token encontrado: SIM
+[17-Jan-2026 14:18:28 UTC] PIXEL CARREGADO COM SUCESSO! Terreno: 32 | Pixel: 1423368039304251
+[17-Jan-2026 14:18:29 UTC] 💾 [CVCRM] Cache HIT para cvcrm_empreendimento_38
+[17-Jan-2026 20:09:55 UTC] === TERRENO SAVE INICIADO ===
+[17-Jan-2026 20:09:55 UTC] Post ID: 32
+[17-Jan-2026 20:09:55 UTC] ERRO: Nonce inválido ou ausente
+[17-Jan-2026 20:09:55 UTC] === TERRENO SAVE INICIADO ===
+[17-Jan-2026 20:09:55 UTC] Post ID: 32
+[17-Jan-2026 20:09:55 UTC] Empreendimento id salvo: 38
+[17-Jan-2026 20:09:55 UTC] Endereco salvo: Parque da Liberdade Fortaleza - R. Pedro I, s/n - Centro, Fortaleza - CE, 60035-100, Brazil
+[17-Jan-2026 20:09:55 UTC] Latitude salva: -3.731402
+[17-Jan-2026 20:09:55 UTC] Longitude salva: -38.525813
+[17-Jan-2026 20:09:55 UTC] Zoom salvo: 17
+[17-Jan-2026 20:09:55 UTC] Facebook Pixel ID salvo: 1423368039304251
+[17-Jan-2026 20:09:55 UTC] Facebook Pixel Token salvo
+[17-Jan-2026 20:09:55 UTC] Dados lotes recebidos (raw): [{"id":"72714","nome":"40","bloco":"06","coordinates":[{"lat":-3.7312449807269292,"lng":-38.52613851900971},{"lat":-3.731129890209784,"lng":-38.52648184176362},{"lat":-3.7307096758680363,"lng":-38.526...
+[17-Jan-2026 20:09:55 UTC] Lotes salvos com sucesso. Count: 2
+[17-Jan-2026 20:09:55 UTC] === TERRENO SAVE CONCLUÍDO ===
+[17-Jan-2026 20:09:55 UTC] Hook: post.php, Post Type: terreno
+[17-Jan-2026 20:09:55 UTC] Scripts carregados com sucesso
+[17-Jan-2026 20:09:59 UTC] Scripts frontend carregados com sucesso
+[17-Jan-2026 20:09:59 UTC] === FACEBOOK PIXEL DEBUG ===
+[17-Jan-2026 20:09:59 UTC] Post Type: terreno
+[17-Jan-2026 20:09:59 UTC] is_singular(terreno): SIM
+[17-Jan-2026 20:09:59 UTC] Caso 1: Custom Post Type terreno - ID: 32
+[17-Jan-2026 20:09:59 UTC] Terreno ID: 32
+[17-Jan-2026 20:09:59 UTC] Pixel ID encontrado: 1423368039304251
+[17-Jan-2026 20:09:59 UTC] Pixel Token encontrado: SIM
+[17-Jan-2026 20:09:59 UTC] PIXEL CARREGADO COM SUCESSO! Terreno: 32 | Pixel: 1423368039304251
+[17-Jan-2026 20:09:59 UTC] 💾 [CVCRM] Cache HIT para cvcrm_empreendimento_38
+[17-Jan-2026 20:10:05 UTC] 🌎 [CVCRM] Consultando URL: https://montenegro.cvcrm.com.br/api/v1/cvdw/unidades?a_partir_referencia=38
+[17-Jan-2026 20:10:06 UTC] [CVCRM] Status: 200
+[17-Jan-2026 20:10:06 UTC] [CVCRM] Body: {"pagina":1,"registros":30,"total_de_registros":11310,"total_de_paginas":377,"dados":[{"referencia":11837,"referencia_data":"2022-07-22 14:38:33","idempreendimento":6,"idempreendimento_int":"VH5.01.1","nome_empreendimento":"Villa Dourados                          ","idtipo_empreendimento":3,"tipo_empreendimento":"Loteamento","idetapa":18,"idetapa_int":"VH5.01.1.1","etapa":"Geral","idbloco":283,"idbloco_int":"VH5.01.1.1.02.01","bloco":"AA","area_privativa":"150.000000","idunidade":11837,"nome":"6
+[17-Jan-2026 20:16:28 UTC] 🌎 [CVCRM] Consultando URL: https://montenegro.cvcrm.com.br/api/v1/cvdw/unidades?a_partir_referencia=38
+[17-Jan-2026 20:16:29 UTC] [CVCRM] Status: 200
+[17-Jan-2026 20:16:29 UTC] [CVCRM] Body: {"pagina":1,"registros":30,"total_de_registros":11310,"total_de_paginas":377,"dados":[{"referencia":11837,"referencia_data":"2022-07-22 14:38:33","idempreendimento":6,"idempreendimento_int":"VH5.01.1","nome_empreendimento":"Villa Dourados                          ","idtipo_empreendimento":3,"tipo_empreendimento":"Loteamento","idetapa":18,"idetapa_int":"VH5.01.1.1","etapa":"Geral","idbloco":283,"idbloco_int":"VH5.01.1.1.02.01","bloco":"AA","area_privativa":"150.000000","idunidade":11837,"nome":"6
+[17-Jan-2026 20:27:12 UTC] Scripts frontend carregados com sucesso
+[17-Jan-2026 20:27:12 UTC] === FACEBOOK PIXEL DEBUG ===
+[17-Jan-2026 20:27:12 UTC] Post Type: page
+[17-Jan-2026 20:27:12 UTC] is_singular(terreno): NÃO
+[17-Jan-2026 20:27:12 UTC] Caso 2: Página - Slug: mar-da-villa
+[17-Jan-2026 20:27:12 UTC] Caso 2: Terreno encontrado com mesmo slug - ID: 32
+[17-Jan-2026 20:27:12 UTC] Terreno ID: 32
+[17-Jan-2026 20:27:12 UTC] Pixel ID encontrado: 1423368039304251
+[17-Jan-2026 20:27:12 UTC] Pixel Token encontrado: SIM
+[17-Jan-2026 20:27:12 UTC] PIXEL CARREGADO COM SUCESSO! Terreno: 32 | Pixel: 1423368039304251
+[17-Jan-2026 20:27:13 UTC] 💾 [CVCRM] Cache HIT para cvcrm_empreendimento_38
+[17-Jan-2026 20:27:15 UTC] 🌎 [CVCRM] Consultando URL: https://montenegro.cvcrm.com.br/api/v1/cvdw/unidades?a_partir_referencia=38
+[17-Jan-2026 20:27:17 UTC] [CVCRM] Status: 200
+[17-Jan-2026 20:27:17 UTC] [CVCRM] Body: {"pagina":1,"registros":30,"total_de_registros":11310,"total_de_paginas":377,"dados":[{"referencia":11837,"referencia_data":"2022-07-22 14:38:33","idempreendimento":6,"idempreendimento_int":"VH5.01.1","nome_empreendimento":"Villa Dourados                          ","idtipo_empreendimento":3,"tipo_empreendimento":"Loteamento","idetapa":18,"idetapa_int":"VH5.01.1.1","etapa":"Geral","idbloco":283,"idbloco_int":"VH5.01.1.1.02.01","bloco":"AA","area_privativa":"150.000000","idunidade":11837,"nome":"6
+[18-Jan-2026 14:23:45 UTC] Scripts frontend carregados com sucesso
+[18-Jan-2026 14:23:45 UTC] === FACEBOOK PIXEL DEBUG ===
+[18-Jan-2026 14:23:45 UTC] Post Type: page
+[18-Jan-2026 14:23:45 UTC] is_singular(terreno): NÃO
+[18-Jan-2026 14:23:45 UTC] Caso 2: Página - Slug: mar-da-villa
+[18-Jan-2026 14:23:45 UTC] Caso 2: Terreno encontrado com mesmo slug - ID: 32
+[18-Jan-2026 14:23:45 UTC] Terreno ID: 32
+[18-Jan-2026 14:23:45 UTC] Pixel ID encontrado: 1423368039304251
+[18-Jan-2026 14:23:45 UTC] Pixel Token encontrado: SIM
+[18-Jan-2026 14:23:45 UTC] PIXEL CARREGADO COM SUCESSO! Terreno: 32 | Pixel: 1423368039304251
+[18-Jan-2026 14:23:46 UTC] Automatic updates starting...
+[18-Jan-2026 14:23:47 UTC]   Automatic plugin updates starting...
+[18-Jan-2026 14:23:47 UTC]   Automatic plugin updates complete.
+[18-Jan-2026 14:23:48 UTC] 🌎 [CVCRM] Consultando URL: https://montenegro.cvcrm.com.br/api/v1/cadastros/empreendimentos/38
+[18-Jan-2026 14:23:48 UTC] Automatic updates complete.
+[18-Jan-2026 14:23:49 UTC] [CVCRM] Status: 200
+[18-Jan-2026 14:23:49 UTC] [CVCRM] Body: {"idempreendimento":38,"idempreendimento_int":"RM2.01.2","referencia_externa":null,"nome":"Condominio Ipe Amarelo","matricula":"RM2.01.2","regiao":"Nordeste","cidade":"Fortaleza","estado":"Cear\u00e1","bairro":"Coc\u00f3","endereco_emp":"Rua Doutor Gilberto Studart","numero":"1-920","logradouro":"Rua","cep":"60192105","endereco":"R. Dr. Gilberto Studart, 1-920 - Coc\u00f3, Fortaleza - CE, 60192-105, Brasil","periodo_venda_inicio":null,"area_construida":null,"area_privativa":null,"idempresa":24,"
+[18-Jan-2026 14:23:49 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /Users/elviobarbosa/Sites/montenegro-simulador/wp-content/themes/betadigital/app/ajax.php:99) in /Users/elviobarbosa/Sites/montenegro-simulador/wp-includes/rest-api/class-wp-rest-server.php on line 1896
+[18-Jan-2026 14:24:21 UTC] Scripts frontend carregados com sucesso
+[18-Jan-2026 14:24:21 UTC] === FACEBOOK PIXEL DEBUG ===
+[18-Jan-2026 14:24:21 UTC] Post Type: terreno
+[18-Jan-2026 14:24:21 UTC] is_singular(terreno): SIM
+[18-Jan-2026 14:24:21 UTC] Caso 1: Custom Post Type terreno - ID: 32
+[18-Jan-2026 14:24:21 UTC] Terreno ID: 32
+[18-Jan-2026 14:24:21 UTC] Pixel ID encontrado: 1423368039304251
+[18-Jan-2026 14:24:21 UTC] Pixel Token encontrado: SIM
+[18-Jan-2026 14:24:21 UTC] PIXEL CARREGADO COM SUCESSO! Terreno: 32 | Pixel: 1423368039304251
+[18-Jan-2026 14:27:10 UTC] === TERRENO SAVE INICIADO ===
+[18-Jan-2026 14:27:10 UTC] Post ID: 50
+[18-Jan-2026 14:27:10 UTC] ERRO: Nonce inválido ou ausente
+[18-Jan-2026 14:30:11 UTC] Hook: post.php, Post Type: terreno
+[18-Jan-2026 14:30:11 UTC] Scripts carregados com sucesso
+[18-Jan-2026 14:30:26 UTC] === TERRENO SAVE INICIADO ===
+[18-Jan-2026 14:30:26 UTC] Post ID: 32
+[18-Jan-2026 14:30:26 UTC] ERRO: Nonce inválido ou ausente
+[18-Jan-2026 14:30:27 UTC] === TERRENO SAVE INICIADO ===
+[18-Jan-2026 14:30:27 UTC] Post ID: 32
+[18-Jan-2026 14:30:27 UTC] Empreendimento id salvo: 38
+[18-Jan-2026 14:30:27 UTC] Endereco salvo: Parque da Liberdade Fortaleza - R. Pedro I, s/n - Centro, Fortaleza - CE, 60035-100, Brazil
+[18-Jan-2026 14:30:27 UTC] Latitude salva: -3.731402
+[18-Jan-2026 14:30:27 UTC] Longitude salva: -38.525813
+[18-Jan-2026 14:30:27 UTC] Zoom salvo: 17
+[18-Jan-2026 14:30:27 UTC] Facebook Pixel ID salvo: 1423368039304251
+[18-Jan-2026 14:30:27 UTC] Facebook Pixel Token salvo
+[18-Jan-2026 14:30:27 UTC] Logo do empreendimento salvo: 14
+[18-Jan-2026 14:30:27 UTC] Dados lotes recebidos (raw): [{"id":"72714","nome":"40","bloco":"06","coordinates":[{"lat":-3.7312449807269292,"lng":-38.52613851900971},{"lat":-3.731129890209784,"lng":-38.52648184176362},{"lat":-3.7307096758680363,"lng":-38.526...
+[18-Jan-2026 14:30:27 UTC] Lotes salvos com sucesso. Count: 2
+[18-Jan-2026 14:30:27 UTC] === TERRENO SAVE CONCLUÍDO ===
+[18-Jan-2026 14:30:27 UTC] Hook: post.php, Post Type: terreno
+[18-Jan-2026 14:30:27 UTC] Scripts carregados com sucesso
+[18-Jan-2026 14:30:31 UTC] Scripts frontend carregados com sucesso
+[18-Jan-2026 14:30:31 UTC] === FACEBOOK PIXEL DEBUG ===
+[18-Jan-2026 14:30:31 UTC] Post Type: page
+[18-Jan-2026 14:30:31 UTC] is_singular(terreno): NÃO
+[18-Jan-2026 14:30:31 UTC] Caso 2: Página - Slug: mar-da-villa
+[18-Jan-2026 14:30:31 UTC] Caso 2: Terreno encontrado com mesmo slug - ID: 32
+[18-Jan-2026 14:30:31 UTC] Terreno ID: 32
+[18-Jan-2026 14:30:31 UTC] Pixel ID encontrado: 1423368039304251
+[18-Jan-2026 14:30:31 UTC] Pixel Token encontrado: SIM
+[18-Jan-2026 14:30:31 UTC] PIXEL CARREGADO COM SUCESSO! Terreno: 32 | Pixel: 1423368039304251
+[18-Jan-2026 14:30:32 UTC] 💾 [CVCRM] Cache HIT para cvcrm_empreendimento_38
+[18-Jan-2026 14:30:33 UTC] Scripts frontend carregados com sucesso
+[18-Jan-2026 14:30:33 UTC] === FACEBOOK PIXEL DEBUG ===
+[18-Jan-2026 14:30:33 UTC] Post Type: terreno
+[18-Jan-2026 14:30:33 UTC] is_singular(terreno): SIM
+[18-Jan-2026 14:30:33 UTC] Caso 1: Custom Post Type terreno - ID: 32
+[18-Jan-2026 14:30:33 UTC] Terreno ID: 32
+[18-Jan-2026 14:30:33 UTC] Pixel ID encontrado: 1423368039304251
+[18-Jan-2026 14:30:33 UTC] Pixel Token encontrado: SIM
+[18-Jan-2026 14:30:33 UTC] PIXEL CARREGADO COM SUCESSO! Terreno: 32 | Pixel: 1423368039304251
+[18-Jan-2026 14:30:33 UTC] 💾 [CVCRM] Cache HIT para cvcrm_empreendimento_38
+[18-Jan-2026 14:35:53 UTC] Scripts frontend carregados com sucesso
+[18-Jan-2026 14:35:53 UTC] === FACEBOOK PIXEL DEBUG ===
+[18-Jan-2026 14:35:53 UTC] Post Type: terreno
+[18-Jan-2026 14:35:53 UTC] is_singular(terreno): SIM
+[18-Jan-2026 14:35:53 UTC] Caso 1: Custom Post Type terreno - ID: 32
+[18-Jan-2026 14:35:53 UTC] Terreno ID: 32
+[18-Jan-2026 14:35:53 UTC] Pixel ID encontrado: 1423368039304251
+[18-Jan-2026 14:35:53 UTC] Pixel Token encontrado: SIM
+[18-Jan-2026 14:35:53 UTC] PIXEL CARREGADO COM SUCESSO! Terreno: 32 | Pixel: 1423368039304251
+[18-Jan-2026 14:35:54 UTC] 💾 [CVCRM] Cache HIT para cvcrm_empreendimento_38
+[18-Jan-2026 14:40:32 UTC] Hook: post.php, Post Type: terreno
+[18-Jan-2026 14:40:32 UTC] Scripts carregados com sucesso
+[18-Jan-2026 14:41:04 UTC] Hook: post.php, Post Type: terreno
+[18-Jan-2026 14:41:04 UTC] Scripts carregados com sucesso
+[18-Jan-2026 14:41:19 UTC] Hook: post.php, Post Type: terreno
+[18-Jan-2026 14:41:19 UTC] Scripts carregados com sucesso
