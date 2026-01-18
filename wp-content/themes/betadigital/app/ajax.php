@@ -174,45 +174,4 @@ function cvcrm_get_unidades_by_empreendimento($request) {
     return cvcrm_request($url, "cvcrm_unidades_emp_$empreendimento_id", 15, 300);
 }
 
-add_action('rest_api_init', function () {
-    register_rest_route('cvcrm/v1', '/porcentagem-vendida/(?P<id>\d+)', array(
-        'methods' => 'GET',
-        'callback' => 'cvcrm_get_porcentagem_vendida',
-        'permission_callback' => '__return_true'
-    ));
-});
-
-function cvcrm_get_porcentagem_vendida($request) {
-    $id = intval($request['id']);
-    $url = "https://montenegro.cvcrm.com.br/api/v1/comercial/mapadisponibilidade/{$id}/?limitePagina=800&pag=1";
-    $data = cvcrm_request($url, "cvcrm_mapa_disponibilidade_$id", 15, 300);
-
-    if (is_wp_error($data)) {
-        return $data;
-    }
-
-    $lotes = $data['data'] ?? [];
-    $total = count($lotes);
-
-    if ($total === 0) {
-        return array('porcentagem' => 0, 'total' => 0, 'vendidos' => 0);
-    }
-// var_dump($lotes);
-    $vendidos = 0;
-    foreach ($lotes as $lote) {
-        $situacao = strtolower($lote['situacao'] ?? '');
-        if ($situacao === 'reservada') {
-            $vendidos++;
-        }
-    }
-
-    $porcentagem = round(($vendidos / $total) * 100);
-
-    return array(
-        'porcentagem' => $porcentagem,
-        'total' => $total,
-        'vendidos' => $vendidos
-    );
-}
-
 
