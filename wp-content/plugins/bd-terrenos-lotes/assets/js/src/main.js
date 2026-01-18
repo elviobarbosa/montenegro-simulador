@@ -49,6 +49,9 @@ class TerrenoMapApp {
     this.dataPersistence = null;
     this.uiManager = null;
     this.modalManager = null;
+
+    // InfoWindow compartilhada
+    this.infoWindow = null;
   }
 
   /**
@@ -109,10 +112,10 @@ class TerrenoMapApp {
       console.log('Desenho completado, aguardando aplicação...');
     });
 
-    // Polygon clicked
-    this.eventBus.on('polygon:clicked', ({ lote }) => {
+    // Polygon clicked - abre InfoWindow
+    this.eventBus.on('polygon:clicked', ({ lote, polygon, event }) => {
       console.log('Polígono clicado:', lote.nome || lote.id);
-      // Pode abrir info window aqui
+      this.openInfoWindow(lote, polygon, event);
     });
 
     // UI events
@@ -395,6 +398,62 @@ class TerrenoMapApp {
       // Usuário cancelou o modal
       console.log('Edição cancelada');
     }
+  }
+
+  /**
+   * Abre InfoWindow ao clicar no polígono
+   * @param {Object} lote - Dados do lote
+   * @param {google.maps.Polygon} polygon - Polígono clicado
+   * @param {Object} event - Evento do clique
+   */
+  openInfoWindow(lote, polygon, event) {
+    // Fecha InfoWindow existente
+    if (this.infoWindow) {
+      this.infoWindow.close();
+    }
+
+    // Cria conteúdo da InfoWindow
+    const content = `
+      <div style="padding: 10px; min-width: 200px;">
+        <h4 style="margin: 0 0 10px 0; color: #23282d; font-size: 14px;">
+          ${lote.nome || 'Lote sem nome'}
+        </h4>
+        <p style="margin: 5px 0; font-size: 13px; color: #666;">
+          <strong>ID da Unidade:</strong> ${lote.id || '-'}
+        </p>
+        <p style="margin: 5px 0; font-size: 13px; color: #666;">
+          <strong>Quadra:</strong> ${lote.bloco || '-'}
+        </p>
+        <p style="margin: 5px 0; font-size: 13px; color: #666;">
+          <strong>Área:</strong> ${lote.area ? lote.area.toFixed(2) + ' m²' : '-'}
+        </p>
+        <div style="margin-top: 12px; text-align: center;">
+          <button type="button" class="button button-primary" id="infowindow-edit-btn" style="width: 100%;">
+            Editar Lote
+          </button>
+        </div>
+      </div>
+    `;
+
+    // Cria InfoWindow
+    this.infoWindow = new google.maps.InfoWindow({
+      content: content,
+      position: event.latLng
+    });
+
+    // Abre InfoWindow
+    this.infoWindow.open(this.mapManager.getMap());
+
+    // Adiciona listener para o botão de editar após o DOM ser renderizado
+    google.maps.event.addListenerOnce(this.infoWindow, 'domready', () => {
+      const editBtn = document.getElementById('infowindow-edit-btn');
+      if (editBtn) {
+        editBtn.addEventListener('click', () => {
+          this.infoWindow.close();
+          this.openEditModal(lote.id);
+        });
+      }
+    });
   }
 }
 
