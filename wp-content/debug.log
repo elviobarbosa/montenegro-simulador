@@ -1882,3 +1882,25 @@
 [18-Jan-2026 14:47:10 UTC] Scripts carregados com sucesso
 [18-Jan-2026 14:47:39 UTC] Hook: post.php, Post Type: terreno
 [18-Jan-2026 14:47:39 UTC] Scripts carregados com sucesso
+[18-Jan-2026 14:50:20 UTC] Scripts frontend carregados com sucesso
+[18-Jan-2026 14:50:20 UTC] === FACEBOOK PIXEL DEBUG ===
+[18-Jan-2026 14:50:20 UTC] Post Type: terreno
+[18-Jan-2026 14:50:20 UTC] is_singular(terreno): SIM
+[18-Jan-2026 14:50:20 UTC] Caso 1: Custom Post Type terreno - ID: 32
+[18-Jan-2026 14:50:20 UTC] Terreno ID: 32
+[18-Jan-2026 14:50:20 UTC] Pixel ID encontrado: 1423368039304251
+[18-Jan-2026 14:50:20 UTC] Pixel Token encontrado: SIM
+[18-Jan-2026 14:50:20 UTC] PIXEL CARREGADO COM SUCESSO! Terreno: 32 | Pixel: 1423368039304251
+[18-Jan-2026 14:50:21 UTC] 💾 [CVCRM] Cache HIT para cvcrm_empreendimento_38
+[18-Jan-2026 14:50:21 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /Users/elviobarbosa/Sites/montenegro-simulador/wp-content/themes/betadigital/app/ajax.php:99) in /Users/elviobarbosa/Sites/montenegro-simulador/wp-includes/rest-api/class-wp-rest-server.php on line 1896
+[18-Jan-2026 14:50:29 UTC] Scripts frontend carregados com sucesso
+[18-Jan-2026 14:50:29 UTC] === FACEBOOK PIXEL DEBUG ===
+[18-Jan-2026 14:50:29 UTC] Post Type: terreno
+[18-Jan-2026 14:50:29 UTC] is_singular(terreno): SIM
+[18-Jan-2026 14:50:29 UTC] Caso 1: Custom Post Type terreno - ID: 32
+[18-Jan-2026 14:50:29 UTC] Terreno ID: 32
+[18-Jan-2026 14:50:29 UTC] Pixel ID encontrado: 1423368039304251
+[18-Jan-2026 14:50:29 UTC] Pixel Token encontrado: SIM
+[18-Jan-2026 14:50:29 UTC] PIXEL CARREGADO COM SUCESSO! Terreno: 32 | Pixel: 1423368039304251
+[18-Jan-2026 14:50:29 UTC] 💾 [CVCRM] Cache HIT para cvcrm_empreendimento_38
+[18-Jan-2026 14:50:29 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /Users/elviobarbosa/Sites/montenegro-simulador/wp-content/themes/betadigital/app/ajax.php:99) in /Users/elviobarbosa/Sites/montenegro-simulador/wp-includes/rest-api/class-wp-rest-server.php on line 1896
