@@ -96,7 +96,7 @@ function cvcrm_filter_empreendimento($data) {
         'nome' => $data['nome'] ?? '',
         'etapas' => array()
     );
-
+// var_dump($data);
     if (!empty($data['etapas'])) {
         foreach ($data['etapas'] as $etapa) {
             $filtered_etapa = array('blocos' => array());
