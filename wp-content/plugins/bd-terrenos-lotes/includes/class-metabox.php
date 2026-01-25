@@ -303,17 +303,6 @@ class TerrenosLotes_MetaBox {
                     </div>
                 </div>
 
-                <!-- Info dos shapes -->
-                <div style="background: #fff; border: 1px solid #ddd; border-radius: 4px; padding: 10px; margin-bottom: 12px;">
-                    <h4 style="margin: 0 0 8px 0; font-size: 12px;">
-                        <span class="dashicons dashicons-admin-multisite" style="margin-right: 4px;"></span>
-                        Shapes: <span id="totalShapesCount">0</span>
-                    </h4>
-                    <div id="shapesListContainer" style="max-height: 80px; overflow-y: auto; font-size: 11px;">
-                        <!-- Lista de shapes -->
-                    </div>
-                </div>
-
                 <!-- Dica -->
                 <div style="background: #fff8e5; border: 1px solid #f0c36d; border-radius: 4px; padding: 8px; margin-bottom: 15px; font-size: 11px;">
                     <strong>Dica:</strong> Alinhe com as ruas no satélite.
@@ -373,23 +362,8 @@ class TerrenosLotes_MetaBox {
             
             <div class="control-row">
                 <div class="action-group">
-                    <button type="button" id="desenhar_lote" class="button button-primary">
-                        <span class="dashicons dashicons-edit"></span> <span data-js="label_desenhar_lote">Desenhar Novo Lote</span>
-                    </button>
-                    <button type="button" id="aplicar_desenho" class="button button-primary hidden">
-                        <span class="dashicons dashicons-yes"></span> <span data-js="label_desenhar_lote">Aplicar Desenho</span>
-                    </button>
-                    <button type="button" id="cancelar_desenho" class="button button-primary hidden">
-                        <span class="dashicons dashicons-no-alt"></span> <span data-js="label_desenhar_lote">Cancelar</span>
-                    </button>
-                    <button type="button" id="limpar_lotes" class="button">
-                        <span class="dashicons dashicons-trash"></span> Limpar Todos os Lotes
-                    </button>
                     <button type="button" id="toggle_satellite" class="button">
                         <span class="dashicons dashicons-admin-site-alt3"></span> Visualização Satélite
-                    </button>
-                    <button type="button" id="recarregar_poligonos" class="button" style="display: none;">
-                        <span class="dashicons dashicons-update"></span> Debug: Recarregar
                     </button>
                 </div>
                 <div class="status-group">
@@ -405,33 +379,33 @@ class TerrenosLotes_MetaBox {
                 <div id="gmap"></div>
             </div>
             
-            <!-- Lista de lotes lateral -->
+            <!-- Lista de shapes lateral -->
             <div class="lotes-sidebar">
                 <div class="lotes-header">
                     <h4>
                         <span class="dashicons dashicons-admin-multisite"></span>
-                        Lotes Cadastrados
+                        Shapes do SVG
                     </h4>
                     <div class="lotes-counter">
-                        <span id="total-lotes">0</span> lote(s)
+                        <span id="total-shapes">0</span> shape(s)
                     </div>
                 </div>
-                
+
                 <div class="lotes-content">
-                    <div id="lista-lotes-container">
-                        <div class="no-lotes">
+                    <div id="shapes-sidebar-container">
+                        <div class="no-lotes" id="no-shapes-message">
                             <div class="no-lotes-icon">
                                 <span class="dashicons dashicons-admin-multisite"></span>
                             </div>
-                            <p>Nenhum lote cadastrado ainda.</p>
-                            <p class="help-text">Clique em "Desenhar Novo Lote" para começar.</p>
+                            <p>Nenhum shape carregado.</p>
+                            <p class="help-text">Importe um SVG para visualizar os shapes.</p>
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="lotes-footer">
-                    <div class="area-total">
-                        <strong>Área Total: <span id="area-total-value">0 m²</span></strong>
+                    <div class="shapes-info">
+                        <strong>Shapes mapeados: <span id="shapes-mapped-count">0</span></strong>
                     </div>
                 </div>
             </div>
@@ -719,7 +693,75 @@ class TerrenosLotes_MetaBox {
             background: #fff3cd;
             color: #856404;
         }
-        
+
+        /* Shapes na sidebar */
+        .shape-item {
+            background: #fff;
+            border: 1px solid #e1e1e1;
+            padding: 10px;
+            margin-bottom: 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .shape-item:hover {
+            border-color: #0073aa;
+            box-shadow: 0 2px 5px rgba(0, 115, 170, 0.15);
+        }
+
+        .shape-item.shape-mapped {
+            border-left: 3px solid #46b450;
+        }
+
+        .shape-item.shape-unmapped {
+            border-left: 3px solid #dc3232;
+        }
+
+        .shape-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 4px;
+        }
+
+        .shape-color {
+            width: 12px;
+            height: 12px;
+            border-radius: 2px;
+            flex-shrink: 0;
+        }
+
+        .shape-name {
+            font-weight: 600;
+            font-size: 12px;
+            color: #23282d;
+            flex: 1;
+        }
+
+        .shape-points {
+            font-size: 10px;
+            color: #999;
+        }
+
+        .shape-status {
+            font-size: 11px;
+            color: #666;
+        }
+
+        .shape-mapped .shape-status {
+            color: #46b450;
+        }
+
+        .shape-unmapped .shape-status {
+            color: #dc3232;
+        }
+
+        .shapes-info {
+            color: #0073aa;
+            font-size: 13px;
+        }
+
         /* Responsividade */
         @media (max-width: 1200px) {
             .lotes-sidebar {

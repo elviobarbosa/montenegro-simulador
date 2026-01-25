@@ -260,9 +260,10 @@ export class SVGOverlayManager {
       this.customOverlay.updateRotation(this.overlay.rotation);
     }
 
-    // Aplica cores baseado no mapping
+    // Aplica cores baseado no mapping e renderiza shapes na sidebar
     setTimeout(() => {
       this.updateShapeColors();
+      this.renderShapesInSidebar();
     }, 100);
 
     console.log('✓ Overlay SVG carregado dos dados salvos');
@@ -321,7 +322,13 @@ export class SVGOverlayManager {
     if (this.modal) {
       this.isModalOpen = false;
       this.modal.style.display = 'none';
-      if (!keepOverlay) {
+
+      // Verifica se há um SVG salvo nos inputs hidden
+      const svgInput = document.getElementById('terreno_svg_content');
+      const hasSavedSvg = svgInput && svgInput.value;
+
+      // Só remove o overlay se não tiver SVG salvo e keepOverlay for false
+      if (!keepOverlay && !hasSavedSvg) {
         this.removeOverlay();
         this.resetState();
       }
@@ -629,34 +636,94 @@ export class SVGOverlayManager {
   }
 
   /**
-   * Renderiza lista de shapes detectados
+   * Renderiza lista de shapes detectados (na sidebar)
    */
   renderShapesList() {
-    const container = document.getElementById('shapesListContainer');
-    const countEl = document.getElementById('totalShapesCount');
+    // Renderiza na sidebar principal
+    this.renderShapesInSidebar();
+  }
+
+  /**
+   * Renderiza lista de shapes na sidebar principal
+   */
+  renderShapesInSidebar() {
+    const container = document.getElementById('shapes-sidebar-container');
+    const countEl = document.getElementById('total-shapes');
+    const mappedCountEl = document.getElementById('shapes-mapped-count');
+    const noShapesMessage = document.getElementById('no-shapes-message');
 
     if (countEl) countEl.textContent = this.shapes.length;
 
     if (!container) return;
 
     if (this.shapes.length === 0) {
-      container.innerHTML =
-        '<p style="color: #666; margin: 0;">Nenhum shape detectado</p>';
+      if (noShapesMessage) noShapesMessage.style.display = 'block';
       return;
     }
 
+    if (noShapesMessage) noShapesMessage.style.display = 'none';
+
+    // Conta shapes mapeados
+    const mappedCount = Object.keys(this.shapeMapping || {}).length;
+    if (mappedCountEl) mappedCountEl.textContent = mappedCount;
+
     const html = this.shapes
-      .map(
-        (shape) => `
-        <div style="display: inline-block; padding: 4px 8px; margin: 2px; background: #f0f0f0; border-radius: 4px; font-size: 11px;">
-          <span style="display: inline-block; width: 8px; height: 8px; background: ${shape.fill || shape.stroke || '#ccc'}; border-radius: 2px; margin-right: 4px;"></span>
-          ${shape.id} (${shape.points?.length || 0} pts)
-        </div>
-      `,
-      )
+      .map((shape, index) => {
+        const mapping = this.shapeMapping?.[index];
+        const isMapped = !!mapping;
+        const statusClass = isMapped ? 'shape-mapped' : 'shape-unmapped';
+        const statusText = isMapped
+          ? `Quadra ${mapping.bloco} | Lote ${mapping.lote_id}`
+          : 'Não mapeado';
+
+        return `
+          <div class="shape-item ${statusClass}" data-shape-index="${index}">
+            <div class="shape-header">
+              <span class="shape-color" style="background: ${shape.fill || shape.stroke || '#ccc'};"></span>
+              <span class="shape-name">${shape.id || `Shape ${index + 1}`}</span>
+              <span class="shape-points">${shape.points?.length || 0} pts</span>
+            </div>
+            <div class="shape-status">${statusText}</div>
+          </div>
+        `;
+      })
       .join('');
 
     container.innerHTML = html;
+
+    // Adiciona event listeners para hover/click nos shapes
+    this.setupShapeItemListeners();
+  }
+
+  /**
+   * Configura event listeners para os itens de shape na sidebar
+   */
+  setupShapeItemListeners() {
+    const items = document.querySelectorAll('.shape-item');
+    items.forEach((item) => {
+      const index = parseInt(item.dataset.shapeIndex);
+
+      item.addEventListener('mouseenter', () => {
+        this.highlightShape(index);
+      });
+
+      item.addEventListener('mouseleave', () => {
+        this.unhighlightShape(index);
+      });
+
+      item.addEventListener('click', () => {
+        this.eventBus.emit('svg:shape_clicked', { index });
+      });
+    });
+  }
+
+  /**
+   * Remove destaque de um shape
+   */
+  unhighlightShape(index) {
+    if (this.customOverlay) {
+      this.customOverlay.unhighlightShape(index);
+    }
   }
 
   /**
@@ -1135,6 +1202,8 @@ function getCustomSVGOverlayClass() {
       }
 
       // Adiciona ao mapa
+      // z-index maior para ficar ACIMA do Image overlay
+      this.div.style.zIndex = '10';
       const panes = this.getPanes();
       panes.overlayMouseTarget.appendChild(this.div);
     }
@@ -1217,6 +1286,23 @@ function getCustomSVGOverlayClass() {
         shape.style.fill = 'rgba(255, 193, 7, 0.5)';
         shape.style.stroke = '#ffc107';
         shape.style.strokeWidth = '4px';
+      }
+    }
+
+    /**
+     * Remove destaque de um shape específico
+     */
+    unhighlightShape(index) {
+      const svg = this.div?.querySelector('svg');
+      if (!svg) return;
+
+      const shape = svg.querySelector(`[data-shape-index="${index}"]`);
+      if (shape) {
+        this.restoreShapeStyle(shape, index);
+      }
+
+      if (this.selectedShapeIndex === index) {
+        this.selectedShapeIndex = null;
       }
     }
 
@@ -1322,6 +1408,15 @@ function getCustomSVGOverlayClass() {
       });
 
       document.addEventListener('mouseup', () => {
+        if (this.isDragging || this.isResizing) {
+          // Reabilita o drag do mapa
+          const map = this.getMap();
+          if (map) {
+            map.setOptions({ draggable: true });
+          }
+          // Atualiza hidden inputs com a nova posição
+          this.manager.updateHiddenInputs();
+        }
         this.isDragging = false;
         this.isResizing = false;
       });
@@ -1337,7 +1432,10 @@ function getCustomSVGOverlayClass() {
           this.bounds.getNorthEast(),
         ),
       };
+      // Desabilita o drag do mapa enquanto arrasta o overlay
+      this.getMap().setOptions({ draggable: false });
       e.preventDefault();
+      e.stopPropagation();
     }
 
     onDrag(e) {
@@ -1381,7 +1479,10 @@ function getCustomSVGOverlayClass() {
           this.bounds.getNorthEast(),
         ),
       };
+      // Desabilita o drag do mapa enquanto redimensiona
+      this.getMap().setOptions({ draggable: false });
       e.preventDefault();
+      e.stopPropagation();
     }
 
     onResize(e) {

@@ -593,3 +593,251 @@ Stack trace:
 [25-Jan-2026 14:11:08 UTC] Scripts carregados com sucesso
 [25-Jan-2026 14:12:32 UTC] Hook: post.php, Post Type: terreno
 [25-Jan-2026 14:12:32 UTC] Scripts carregados com sucesso
+[25-Jan-2026 14:21:05 UTC] Hook: post.php, Post Type: terreno
+[25-Jan-2026 14:21:05 UTC] Scripts carregados com sucesso
+[25-Jan-2026 14:22:21 UTC] === TERRENO SAVE INICIADO ===
+[25-Jan-2026 14:22:21 UTC] Post ID: 54
+[25-Jan-2026 14:22:21 UTC] ERRO: Nonce inválido ou ausente
+[25-Jan-2026 14:22:22 UTC] === TERRENO SAVE INICIADO ===
+[25-Jan-2026 14:22:22 UTC] Post ID: 54
+[25-Jan-2026 14:22:22 UTC] Empreendimento id salvo: 38
+[25-Jan-2026 14:22:22 UTC] Endereco salvo: 
+[25-Jan-2026 14:22:22 UTC] Latitude salva: -3.7319
+[25-Jan-2026 14:22:22 UTC] Longitude salva: -38.5267
+[25-Jan-2026 14:22:22 UTC] Zoom salvo: 19
+[25-Jan-2026 14:22:22 UTC] Facebook Pixel ID salvo: 
+[25-Jan-2026 14:22:22 UTC] Facebook Pixel Token salvo
+[25-Jan-2026 14:22:22 UTC] Logo do empreendimento removido
+[25-Jan-2026 14:22:22 UTC] Dados lotes recebidos (raw): []...
+[25-Jan-2026 14:22:22 UTC] Lotes salvos com sucesso. Count: 0
+[25-Jan-2026 14:22:22 UTC] SVG Content salvo: 24717 bytes
+[25-Jan-2026 14:22:22 UTC] SVG Bounds salvos
+[25-Jan-2026 14:22:22 UTC] SVG Rotation salvo: 9
+[25-Jan-2026 14:22:22 UTC] Shape Mapping salvo: 3 vínculos
+[25-Jan-2026 14:22:22 UTC] Image URL salva: http://montenegro.simulador/wp-content/uploads/2025/08/VISTA_01_PROJETO_CONDOMINIO_02_10000x5626px_SEM_TEXTOS.png
+[25-Jan-2026 14:22:22 UTC] Image Bounds salvos
+[25-Jan-2026 14:22:22 UTC] Image Rotation salva: 0
+[25-Jan-2026 14:22:22 UTC] Image Opacity salva: 1
+[25-Jan-2026 14:22:22 UTC] === TERRENO SAVE CONCLUÍDO ===
+[25-Jan-2026 14:22:23 UTC] Hook: post.php, Post Type: terreno
+[25-Jan-2026 14:22:23 UTC] Scripts carregados com sucesso
+[25-Jan-2026 14:23:01 UTC] === TERRENO SAVE INICIADO ===
+[25-Jan-2026 14:23:01 UTC] Post ID: 54
+[25-Jan-2026 14:23:01 UTC] ERRO: Nonce inválido ou ausente
+[25-Jan-2026 14:23:02 UTC] === TERRENO SAVE INICIADO ===
+[25-Jan-2026 14:23:02 UTC] Post ID: 54
+[25-Jan-2026 14:23:02 UTC] Empreendimento id salvo: 38
+[25-Jan-2026 14:23:02 UTC] Endereco salvo: 
+[25-Jan-2026 14:23:02 UTC] Latitude salva: -3.7319
+[25-Jan-2026 14:23:02 UTC] Longitude salva: -38.5267
+[25-Jan-2026 14:23:02 UTC] Zoom salvo: 19
+[25-Jan-2026 14:23:02 UTC] Facebook Pixel ID salvo: 
+[25-Jan-2026 14:23:02 UTC] Facebook Pixel Token salvo
+[25-Jan-2026 14:23:02 UTC] Logo do empreendimento removido
+[25-Jan-2026 14:23:02 UTC] Dados lotes recebidos (raw): []...
+[25-Jan-2026 14:23:02 UTC] Lotes salvos com sucesso. Count: 0
+[25-Jan-2026 14:23:02 UTC] SVG Content salvo: 24717 bytes
+[25-Jan-2026 14:23:02 UTC] SVG Bounds salvos
+[25-Jan-2026 14:23:02 UTC] SVG Rotation salvo: 9
+[25-Jan-2026 14:23:02 UTC] Shape Mapping salvo: 3 vínculos
+[25-Jan-2026 14:23:02 UTC] Image URL salva: http://montenegro.simulador/wp-content/uploads/2025/08/VISTA_01_PROJETO_CONDOMINIO_02_10000x5626px_SEM_TEXTOS.png
+[25-Jan-2026 14:23:02 UTC] Image Bounds salvos
+[25-Jan-2026 14:23:02 UTC] Image Rotation salva: 0
+[25-Jan-2026 14:23:02 UTC] Image Opacity salva: 1
+[25-Jan-2026 14:23:02 UTC] === TERRENO SAVE CONCLUÍDO ===
+[25-Jan-2026 14:23:02 UTC] Hook: post.php, Post Type: terreno
+[25-Jan-2026 14:23:02 UTC] Scripts carregados com sucesso
+[25-Jan-2026 14:23:51 UTC] === TERRENO SAVE INICIADO ===
+[25-Jan-2026 14:23:51 UTC] Post ID: 54
+[25-Jan-2026 14:23:51 UTC] ERRO: Nonce inválido ou ausente
+[25-Jan-2026 14:23:52 UTC] === TERRENO SAVE INICIADO ===
+[25-Jan-2026 14:23:52 UTC] Post ID: 54
+[25-Jan-2026 14:23:52 UTC] Empreendimento id salvo: 38
+[25-Jan-2026 14:23:52 UTC] Endereco salvo: 
+[25-Jan-2026 14:23:52 UTC] Latitude salva: -3.7319
+[25-Jan-2026 14:23:52 UTC] Longitude salva: -38.5267
+[25-Jan-2026 14:23:52 UTC] Zoom salvo: 19
+[25-Jan-2026 14:23:52 UTC] Facebook Pixel ID salvo: 
+[25-Jan-2026 14:23:52 UTC] Facebook Pixel Token salvo
+[25-Jan-2026 14:23:52 UTC] Logo do empreendimento removido
+[25-Jan-2026 14:23:52 UTC] Dados lotes recebidos (raw): []...
+[25-Jan-2026 14:23:52 UTC] Lotes salvos com sucesso. Count: 0
+[25-Jan-2026 14:23:52 UTC] SVG Content salvo: 24717 bytes
+[25-Jan-2026 14:23:52 UTC] SVG Bounds salvos
+[25-Jan-2026 14:23:52 UTC] SVG Rotation salvo: 9
+[25-Jan-2026 14:23:52 UTC] Shape Mapping salvo: 3 vínculos
+[25-Jan-2026 14:23:52 UTC] Image URL salva: http://montenegro.simulador/wp-content/uploads/2025/08/VISTA_01_PROJETO_CONDOMINIO_02_10000x5626px_SEM_TEXTOS.png
+[25-Jan-2026 14:23:52 UTC] Image Bounds salvos
+[25-Jan-2026 14:23:52 UTC] Image Rotation salva: 0
+[25-Jan-2026 14:23:52 UTC] Image Opacity salva: 1
+[25-Jan-2026 14:23:52 UTC] === TERRENO SAVE CONCLUÍDO ===
+[25-Jan-2026 14:23:52 UTC] Hook: post.php, Post Type: terreno
+[25-Jan-2026 14:23:52 UTC] Scripts carregados com sucesso
+[25-Jan-2026 14:26:23 UTC] === TERRENO SAVE INICIADO ===
+[25-Jan-2026 14:26:23 UTC] Post ID: 54
+[25-Jan-2026 14:26:23 UTC] ERRO: Nonce inválido ou ausente
+[25-Jan-2026 14:26:24 UTC] === TERRENO SAVE INICIADO ===
+[25-Jan-2026 14:26:24 UTC] Post ID: 54
+[25-Jan-2026 14:26:24 UTC] Empreendimento id salvo: 38
+[25-Jan-2026 14:26:24 UTC] Endereco salvo: 
+[25-Jan-2026 14:26:24 UTC] Latitude salva: -3.7319
+[25-Jan-2026 14:26:24 UTC] Longitude salva: -38.5267
+[25-Jan-2026 14:26:24 UTC] Zoom salvo: 18
+[25-Jan-2026 14:26:24 UTC] Facebook Pixel ID salvo: 
+[25-Jan-2026 14:26:24 UTC] Facebook Pixel Token salvo
+[25-Jan-2026 14:26:24 UTC] Logo do empreendimento removido
+[25-Jan-2026 14:26:24 UTC] Dados lotes recebidos (raw): []...
+[25-Jan-2026 14:26:24 UTC] Lotes salvos com sucesso. Count: 0
+[25-Jan-2026 14:26:24 UTC] SVG Content salvo: 24717 bytes
+[25-Jan-2026 14:26:24 UTC] SVG Bounds salvos
+[25-Jan-2026 14:26:24 UTC] SVG Rotation salvo: 9
+[25-Jan-2026 14:26:24 UTC] Shape Mapping salvo: 3 vínculos
+[25-Jan-2026 14:26:24 UTC] Image URL salva: http://montenegro.simulador/wp-content/uploads/2025/08/VISTA_01_PROJETO_CONDOMINIO_02_10000x5626px_SEM_TEXTOS.png
+[25-Jan-2026 14:26:24 UTC] Image Bounds salvos
+[25-Jan-2026 14:26:24 UTC] Image Rotation salva: 0
+[25-Jan-2026 14:26:24 UTC] Image Opacity salva: 1
+[25-Jan-2026 14:26:24 UTC] === TERRENO SAVE CONCLUÍDO ===
+[25-Jan-2026 14:26:24 UTC] Hook: post.php, Post Type: terreno
+[25-Jan-2026 14:26:24 UTC] Scripts carregados com sucesso
+[25-Jan-2026 14:26:27 UTC] Scripts frontend carregados com sucesso
+[25-Jan-2026 14:26:27 UTC] === FACEBOOK PIXEL DEBUG ===
+[25-Jan-2026 14:26:27 UTC] Post Type: terreno
+[25-Jan-2026 14:26:27 UTC] is_singular(terreno): SIM
+[25-Jan-2026 14:26:27 UTC] Caso 1: Custom Post Type terreno - ID: 54
+[25-Jan-2026 14:26:27 UTC] Terreno ID: 54
+[25-Jan-2026 14:26:27 UTC] Pixel ID encontrado: VAZIO
+[25-Jan-2026 14:26:27 UTC] Pixel Token encontrado: NÃO
+[25-Jan-2026 14:26:27 UTC] PIXEL NÃO CARREGADO: Pixel ID vazio para terreno 54
+[25-Jan-2026 14:26:30 UTC] 💾 [CVCRM] Cache HIT para cvcrm_empreendimento_38
+[25-Jan-2026 14:26:57 UTC] 🌎 [CVCRM] Consultando URL: https://montenegro.cvcrm.com.br/api/v1/cvdw/unidades?a_partir_referencia=38
+[25-Jan-2026 14:26:58 UTC] [CVCRM] Status: 200
+[25-Jan-2026 14:26:58 UTC] [CVCRM] Body: {"pagina":1,"registros":30,"total_de_registros":11310,"total_de_paginas":377,"dados":[{"referencia":11837,"referencia_data":"2022-07-22 14:38:33","idempreendimento":6,"idempreendimento_int":"VH5.01.1","nome_empreendimento":"Villa Dourados                          ","idtipo_empreendimento":3,"tipo_empreendimento":"Loteamento","idetapa":18,"idetapa_int":"VH5.01.1.1","etapa":"Geral","idbloco":283,"idbloco_int":"VH5.01.1.1.02.01","bloco":"AA","area_privativa":"150.000000","idunidade":11837,"nome":"6
+[25-Jan-2026 14:27:04 UTC] 💾 [CVCRM] Cache HIT para cvcrm_unidades_emp_38
+[25-Jan-2026 14:27:12 UTC] 💾 [CVCRM] Cache HIT para cvcrm_unidades_emp_38
+[25-Jan-2026 14:27:37 UTC] Scripts frontend carregados com sucesso
+[25-Jan-2026 14:27:37 UTC] === FACEBOOK PIXEL DEBUG ===
+[25-Jan-2026 14:27:37 UTC] Post Type: terreno
+[25-Jan-2026 14:27:37 UTC] is_singular(terreno): SIM
+[25-Jan-2026 14:27:37 UTC] Caso 1: Custom Post Type terreno - ID: 54
+[25-Jan-2026 14:27:37 UTC] Terreno ID: 54
+[25-Jan-2026 14:27:37 UTC] Pixel ID encontrado: VAZIO
+[25-Jan-2026 14:27:37 UTC] Pixel Token encontrado: NÃO
+[25-Jan-2026 14:27:37 UTC] PIXEL NÃO CARREGADO: Pixel ID vazio para terreno 54
+[25-Jan-2026 14:27:38 UTC] 💾 [CVCRM] Cache HIT para cvcrm_empreendimento_38
+[25-Jan-2026 14:29:59 UTC] Hook: post.php, Post Type: terreno
+[25-Jan-2026 14:29:59 UTC] Scripts carregados com sucesso
+[25-Jan-2026 14:30:25 UTC] === TERRENO SAVE INICIADO ===
+[25-Jan-2026 14:30:25 UTC] Post ID: 54
+[25-Jan-2026 14:30:25 UTC] ERRO: Nonce inválido ou ausente
+[25-Jan-2026 14:30:25 UTC] === TERRENO SAVE INICIADO ===
+[25-Jan-2026 14:30:25 UTC] Post ID: 54
+[25-Jan-2026 14:30:25 UTC] Empreendimento id salvo: 38
+[25-Jan-2026 14:30:25 UTC] Endereco salvo: 
+[25-Jan-2026 14:30:25 UTC] Latitude salva: -3.7319
+[25-Jan-2026 14:30:25 UTC] Longitude salva: -38.5267
+[25-Jan-2026 14:30:25 UTC] Zoom salvo: 18
+[25-Jan-2026 14:30:25 UTC] Facebook Pixel ID salvo: 
+[25-Jan-2026 14:30:25 UTC] Facebook Pixel Token salvo
+[25-Jan-2026 14:30:25 UTC] Logo do empreendimento removido
+[25-Jan-2026 14:30:25 UTC] Dados lotes recebidos (raw): []...
+[25-Jan-2026 14:30:25 UTC] Lotes salvos com sucesso. Count: 0
+[25-Jan-2026 14:30:25 UTC] SVG Content salvo: 24717 bytes
+[25-Jan-2026 14:30:25 UTC] SVG Bounds salvos
+[25-Jan-2026 14:30:25 UTC] SVG Rotation salvo: 9
+[25-Jan-2026 14:30:25 UTC] Shape Mapping salvo: 3 vínculos
+[25-Jan-2026 14:30:25 UTC] Image URL salva: http://montenegro.simulador/wp-content/uploads/2025/08/VISTA_01_PROJETO_CONDOMINIO_02_10000x5626px_SEM_TEXTOS.png
+[25-Jan-2026 14:30:25 UTC] Image Bounds salvos
+[25-Jan-2026 14:30:25 UTC] Image Rotation salva: 0
+[25-Jan-2026 14:30:25 UTC] Image Opacity salva: 1
+[25-Jan-2026 14:30:25 UTC] === TERRENO SAVE CONCLUÍDO ===
+[25-Jan-2026 14:30:25 UTC] Hook: post.php, Post Type: terreno
+[25-Jan-2026 14:30:25 UTC] Scripts carregados com sucesso
+[25-Jan-2026 14:30:27 UTC] Scripts frontend carregados com sucesso
+[25-Jan-2026 14:30:27 UTC] === FACEBOOK PIXEL DEBUG ===
+[25-Jan-2026 14:30:27 UTC] Post Type: terreno
+[25-Jan-2026 14:30:27 UTC] is_singular(terreno): SIM
+[25-Jan-2026 14:30:27 UTC] Caso 1: Custom Post Type terreno - ID: 54
+[25-Jan-2026 14:30:27 UTC] Terreno ID: 54
+[25-Jan-2026 14:30:27 UTC] Pixel ID encontrado: VAZIO
+[25-Jan-2026 14:30:27 UTC] Pixel Token encontrado: NÃO
+[25-Jan-2026 14:30:27 UTC] PIXEL NÃO CARREGADO: Pixel ID vazio para terreno 54
+[25-Jan-2026 14:30:28 UTC] 💾 [CVCRM] Cache HIT para cvcrm_empreendimento_38
+[25-Jan-2026 14:33:22 UTC] Hook: post.php, Post Type: terreno
+[25-Jan-2026 14:33:22 UTC] Scripts carregados com sucesso
+[25-Jan-2026 14:33:47 UTC] === TERRENO SAVE INICIADO ===
+[25-Jan-2026 14:33:47 UTC] Post ID: 54
+[25-Jan-2026 14:33:47 UTC] ERRO: Nonce inválido ou ausente
+[25-Jan-2026 14:33:49 UTC] === TERRENO SAVE INICIADO ===
+[25-Jan-2026 14:33:49 UTC] Post ID: 54
+[25-Jan-2026 14:33:49 UTC] Empreendimento id salvo: 38
+[25-Jan-2026 14:33:49 UTC] Endereco salvo: 
+[25-Jan-2026 14:33:49 UTC] Latitude salva: -3.7319
+[25-Jan-2026 14:33:49 UTC] Longitude salva: -38.5267
+[25-Jan-2026 14:33:49 UTC] Zoom salvo: 18
+[25-Jan-2026 14:33:49 UTC] Facebook Pixel ID salvo: 
+[25-Jan-2026 14:33:49 UTC] Facebook Pixel Token salvo
+[25-Jan-2026 14:33:49 UTC] Logo do empreendimento removido
+[25-Jan-2026 14:33:49 UTC] Dados lotes recebidos (raw): []...
+[25-Jan-2026 14:33:49 UTC] Lotes salvos com sucesso. Count: 0
+[25-Jan-2026 14:33:49 UTC] SVG Content salvo: 24717 bytes
+[25-Jan-2026 14:33:49 UTC] SVG Bounds salvos
+[25-Jan-2026 14:33:49 UTC] SVG Rotation salvo: 9
+[25-Jan-2026 14:33:49 UTC] Shape Mapping salvo: 3 vínculos
+[25-Jan-2026 14:33:49 UTC] Image URL salva: http://montenegro.simulador/wp-content/uploads/2025/08/VISTA_01_PROJETO_CONDOMINIO_02_10000x5626px_SEM_TEXTOS.png
+[25-Jan-2026 14:33:49 UTC] Image Bounds salvos
+[25-Jan-2026 14:33:49 UTC] Image Rotation salva: 0
+[25-Jan-2026 14:33:49 UTC] Image Opacity salva: 1
+[25-Jan-2026 14:33:49 UTC] === TERRENO SAVE CONCLUÍDO ===
+[25-Jan-2026 14:33:50 UTC] Hook: post.php, Post Type: terreno
+[25-Jan-2026 14:33:50 UTC] Scripts carregados com sucesso
+[25-Jan-2026 14:33:57 UTC] Hook: post.php, Post Type: terreno
+[25-Jan-2026 14:33:57 UTC] Scripts carregados com sucesso
+[25-Jan-2026 14:34:01 UTC] Scripts frontend carregados com sucesso
+[25-Jan-2026 14:34:01 UTC] === FACEBOOK PIXEL DEBUG ===
+[25-Jan-2026 14:34:01 UTC] Post Type: terreno
+[25-Jan-2026 14:34:01 UTC] is_singular(terreno): SIM
+[25-Jan-2026 14:34:01 UTC] Caso 1: Custom Post Type terreno - ID: 54
+[25-Jan-2026 14:34:01 UTC] Terreno ID: 54
+[25-Jan-2026 14:34:01 UTC] Pixel ID encontrado: VAZIO
+[25-Jan-2026 14:34:01 UTC] Pixel Token encontrado: NÃO
+[25-Jan-2026 14:34:01 UTC] PIXEL NÃO CARREGADO: Pixel ID vazio para terreno 54
+[25-Jan-2026 14:34:04 UTC] 💾 [CVCRM] Cache HIT para cvcrm_empreendimento_38
+[25-Jan-2026 15:35:31 UTC] WordPress database error Deadlock found when trying to get lock; try restarting transaction for query DELETE FROM `msimulador_options` WHERE `option_name` = '_site_transient_wp_theme_files_patterns-61406d2f565d3cfc6ff7f3837642420d' made by require_once('wp-admin/admin.php'), require_once('wp-load.php'), require_once('wp-config.php'), require_once('wp-settings.php'), do_action('init'), WP_Hook->do_action, WP_Hook->apply_filters, _register_theme_block_patterns, WP_Theme->get_block_patterns, WP_Theme->get_pattern_cache, get_site_transient, delete_site_option, delete_network_option, delete_option
+[25-Jan-2026 15:35:33 UTC] Hook: post.php, Post Type: terreno
+[25-Jan-2026 15:35:33 UTC] Scripts carregados com sucesso
+[25-Jan-2026 15:36:23 UTC] === TERRENO SAVE INICIADO ===
+[25-Jan-2026 15:36:23 UTC] Post ID: 54
+[25-Jan-2026 15:36:23 UTC] ERRO: Nonce inválido ou ausente
+[25-Jan-2026 15:36:24 UTC] === TERRENO SAVE INICIADO ===
+[25-Jan-2026 15:36:24 UTC] Post ID: 54
+[25-Jan-2026 15:36:24 UTC] Empreendimento id salvo: 38
+[25-Jan-2026 15:36:24 UTC] Endereco salvo: 
+[25-Jan-2026 15:36:24 UTC] Latitude salva: -3.7319
+[25-Jan-2026 15:36:24 UTC] Longitude salva: -38.5267
+[25-Jan-2026 15:36:24 UTC] Zoom salvo: 18
+[25-Jan-2026 15:36:24 UTC] Facebook Pixel ID salvo: 
+[25-Jan-2026 15:36:24 UTC] Facebook Pixel Token salvo
+[25-Jan-2026 15:36:24 UTC] Logo do empreendimento removido
+[25-Jan-2026 15:36:24 UTC] Dados lotes recebidos (raw): []...
+[25-Jan-2026 15:36:24 UTC] Lotes salvos com sucesso. Count: 0
+[25-Jan-2026 15:36:24 UTC] SVG Content salvo: 24717 bytes
+[25-Jan-2026 15:36:24 UTC] SVG Bounds salvos
+[25-Jan-2026 15:36:24 UTC] SVG Rotation salvo: 9
+[25-Jan-2026 15:36:24 UTC] Shape Mapping salvo: 3 vínculos
+[25-Jan-2026 15:36:24 UTC] Image URL salva: http://montenegro.simulador/wp-content/uploads/2025/08/VISTA_01_PROJETO_CONDOMINIO_02_10000x5626px_SEM_TEXTOS.png
+[25-Jan-2026 15:36:24 UTC] Image Bounds salvos
+[25-Jan-2026 15:36:24 UTC] Image Rotation salva: 0
+[25-Jan-2026 15:36:24 UTC] Image Opacity salva: 1
+[25-Jan-2026 15:36:24 UTC] === TERRENO SAVE CONCLUÍDO ===
+[25-Jan-2026 15:36:25 UTC] Hook: post.php, Post Type: terreno
+[25-Jan-2026 15:36:25 UTC] Scripts carregados com sucesso
+[25-Jan-2026 15:36:29 UTC] Scripts frontend carregados com sucesso
+[25-Jan-2026 15:36:29 UTC] === FACEBOOK PIXEL DEBUG ===
+[25-Jan-2026 15:36:29 UTC] Post Type: terreno
+[25-Jan-2026 15:36:29 UTC] is_singular(terreno): SIM
+[25-Jan-2026 15:36:29 UTC] Caso 1: Custom Post Type terreno - ID: 54
+[25-Jan-2026 15:36:29 UTC] Terreno ID: 54
+[25-Jan-2026 15:36:29 UTC] Pixel ID encontrado: VAZIO
+[25-Jan-2026 15:36:29 UTC] Pixel Token encontrado: NÃO
+[25-Jan-2026 15:36:29 UTC] PIXEL NÃO CARREGADO: Pixel ID vazio para terreno 54
+[25-Jan-2026 15:36:30 UTC] 💾 [CVCRM] Cache HIT para cvcrm_empreendimento_38

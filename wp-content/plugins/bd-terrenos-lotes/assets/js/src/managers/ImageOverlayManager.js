@@ -900,9 +900,11 @@ function getCustomImageOverlayClass() {
       // Adiciona eventos de drag
       this.addDragListeners();
 
-      // Adiciona ao mapa - USA overlayLayer para ficar ABAIXO dos poligonos
+      // Adiciona ao mapa - USA overlayMouseTarget para receber eventos de mouse
+      // z-index menor para ficar ABAIXO do SVG overlay
+      this.div.style.zIndex = '1';
       const panes = this.getPanes();
-      panes.overlayLayer.appendChild(this.div);
+      panes.overlayMouseTarget.appendChild(this.div);
     }
 
     addResizeHandles() {
@@ -949,6 +951,11 @@ function getCustomImageOverlayClass() {
       document.addEventListener('mouseup', () => {
         if (this.isDragging || this.isResizing) {
           this.manager.updateHiddenInputs();
+          // Reabilita o drag do mapa
+          const map = this.getMap();
+          if (map) {
+            map.setOptions({ draggable: true });
+          }
         }
         this.isDragging = false;
         this.isResizing = false;
@@ -965,7 +972,10 @@ function getCustomImageOverlayClass() {
           this.bounds.getNorthEast(),
         ),
       };
+      // Desabilita o drag do mapa enquanto arrasta o overlay
+      this.getMap().setOptions({ draggable: false });
       e.preventDefault();
+      e.stopPropagation();
     }
 
     onDrag(e) {
@@ -1009,7 +1019,10 @@ function getCustomImageOverlayClass() {
           this.bounds.getNorthEast(),
         ),
       };
+      // Desabilita o drag do mapa enquanto redimensiona
+      this.getMap().setOptions({ draggable: false });
       e.preventDefault();
+      e.stopPropagation();
     }
 
     onResize(e) {
