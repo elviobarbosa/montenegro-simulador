@@ -57,13 +57,13 @@ export class SVGEditorManager {
    */
   createEditorPanel() {
     // Verifica se já existe
-    if (document.getElementById("svgEditorPanel")) {
-      this.editorPanel = document.getElementById("svgEditorPanel");
+    if (document.getElementById('svgEditorPanel')) {
+      this.editorPanel = document.getElementById('svgEditorPanel');
       return;
     }
 
-    const panel = document.createElement("div");
-    panel.id = "svgEditorPanel";
+    const panel = document.createElement('div');
+    panel.id = 'svgEditorPanel';
     panel.innerHTML = `
       <div class="svg-editor-header">
         <h3>
@@ -160,10 +160,10 @@ export class SVGEditorManager {
    * Adiciona estilos CSS do editor
    */
   addStyles() {
-    if (document.getElementById("svgEditorStyles")) return;
+    if (document.getElementById('svgEditorStyles')) return;
 
-    const styles = document.createElement("style");
-    styles.id = "svgEditorStyles";
+    const styles = document.createElement('style');
+    styles.id = 'svgEditorStyles';
     styles.textContent = `
       #svgEditorPanel {
         display: none;
@@ -477,34 +477,34 @@ export class SVGEditorManager {
    */
   loadSavedData() {
     // SVG content
-    const svgInput = document.getElementById("terreno_svg_content");
+    const svgInput = document.getElementById('terreno_svg_content');
     if (svgInput && svgInput.value) {
       this.svgContent = svgInput.value;
     }
 
     // Bounds
-    const boundsInput = document.getElementById("terreno_svg_bounds");
+    const boundsInput = document.getElementById('terreno_svg_bounds');
     if (boundsInput && boundsInput.value) {
       try {
         this.overlay.bounds = JSON.parse(boundsInput.value);
       } catch (e) {
-        console.warn("Erro ao parsear bounds:", e);
+        console.warn('Erro ao parsear bounds:', e);
       }
     }
 
     // Rotation
-    const rotationInput = document.getElementById("terreno_svg_rotation");
+    const rotationInput = document.getElementById('terreno_svg_rotation');
     if (rotationInput && rotationInput.value) {
       this.overlay.rotation = parseFloat(rotationInput.value) || 0;
     }
 
     // Shape mapping
-    const mappingInput = document.getElementById("terreno_shape_mapping");
+    const mappingInput = document.getElementById('terreno_shape_mapping');
     if (mappingInput && mappingInput.value) {
       try {
         this.shapeMapping = JSON.parse(mappingInput.value);
       } catch (e) {
-        console.warn("Erro ao parsear mapping:", e);
+        console.warn('Erro ao parsear mapping:', e);
       }
     }
 
@@ -519,47 +519,53 @@ export class SVGEditorManager {
    */
   setupEventListeners() {
     // Fechar painel
-    document.addEventListener("click", (e) => {
-      if (e.target.classList.contains("svg-editor-close")) {
+    document.addEventListener('click', (e) => {
+      if (e.target.classList.contains('svg-editor-close')) {
         this.closeEditor();
       }
     });
 
     // Modal events
-    document.addEventListener("click", (e) => {
-      if (e.target.id === "modalCancel") {
+    document.addEventListener('click', (e) => {
+      if (e.target.id === 'modalCancel') {
         this.closeModal();
       }
-      if (e.target.id === "modalSave") {
+      if (e.target.id === 'modalSave') {
         this.saveShapeMapping();
       }
-      if (e.target.id === "modalRemove") {
+      if (e.target.id === 'modalRemove') {
         this.removeShapeMapping();
       }
     });
 
     // Limpar todos vínculos
-    document.addEventListener("click", (e) => {
-      if (e.target.id === "svgEditorClearAll" || e.target.closest("#svgEditorClearAll")) {
-        if (confirm("Tem certeza que deseja remover todos os vínculos?")) {
+    document.addEventListener('click', (e) => {
+      if (
+        e.target.id === 'svgEditorClearAll' ||
+        e.target.closest('#svgEditorClearAll')
+      ) {
+        if (confirm('Tem certeza que deseja remover todos os vínculos?')) {
           this.clearAllMappings();
         }
       }
     });
 
     // Salvar configuração
-    document.addEventListener("click", (e) => {
-      if (e.target.id === "svgEditorSave" || e.target.closest("#svgEditorSave")) {
+    document.addEventListener('click', (e) => {
+      if (
+        e.target.id === 'svgEditorSave' ||
+        e.target.closest('#svgEditorSave')
+      ) {
         this.saveConfiguration();
       }
     });
 
     // Eventos do EventBus
-    this.eventBus.on("svg:loaded", (data) => {
+    this.eventBus.on('svg:loaded', (data) => {
       this.onSVGLoaded(data);
     });
 
-    this.eventBus.on("svg:positioned", (data) => {
+    this.eventBus.on('svg:positioned', (data) => {
       this.onSVGPositioned(data);
     });
   }
@@ -569,7 +575,7 @@ export class SVGEditorManager {
    */
   openEditor() {
     this.isEditorActive = true;
-    this.editorPanel.classList.add("active");
+    this.editorPanel.classList.add('active');
   }
 
   /**
@@ -577,7 +583,7 @@ export class SVGEditorManager {
    */
   closeEditor() {
     this.isEditorActive = false;
-    this.editorPanel.classList.remove("active");
+    this.editorPanel.classList.remove('active');
   }
 
   /**
@@ -625,11 +631,11 @@ export class SVGEditorManager {
 
     // Parse SVG
     const parser = new DOMParser();
-    const doc = parser.parseFromString(this.svgContent, "image/svg+xml");
+    const doc = parser.parseFromString(this.svgContent, 'image/svg+xml');
     this.svgElement = doc.documentElement;
 
     // Extrai viewBox
-    const viewBoxAttr = this.svgElement.getAttribute("viewBox");
+    const viewBoxAttr = this.svgElement.getAttribute('viewBox');
     if (viewBoxAttr) {
       const parts = viewBoxAttr.split(/[\s,]+/).map(parseFloat);
       this.viewBox = {
@@ -641,14 +647,14 @@ export class SVGEditorManager {
     }
 
     // Conta shapes
-    const shapeSelectors = "polygon, path, polyline, rect";
+    const shapeSelectors = 'polygon, path, polyline, rect';
     const shapeElements = this.svgElement.querySelectorAll(shapeSelectors);
     this.shapes = Array.from(shapeElements).map((el, index) => ({
       index,
       type: el.tagName.toLowerCase(),
       id: el.id || `shape_${index}`,
-      fill: el.getAttribute("fill") || el.style.fill || "#ccc",
-      stroke: el.getAttribute("stroke") || el.style.stroke || "#000",
+      fill: el.getAttribute('fill') || el.style.fill || '#ccc',
+      stroke: el.getAttribute('stroke') || el.style.stroke || '#000',
     }));
   }
 
@@ -656,7 +662,7 @@ export class SVGEditorManager {
    * Renderiza a lista de shapes no painel
    */
   renderShapesList() {
-    const list = document.getElementById("svgEditorShapesList");
+    const list = document.getElementById('svgEditorShapesList');
     if (!list) return;
 
     if (this.shapes.length === 0) {
@@ -668,28 +674,30 @@ export class SVGEditorManager {
       .map((shape) => {
         const mapping = this.shapeMapping[shape.index];
         const isMapped = !!mapping;
-        const loteInfo = isMapped ? `Lote ${mapping.lote_id} - Bloco ${mapping.bloco}` : "";
+        const loteInfo = isMapped
+          ? `Lote ${mapping.lote_id} - Bloco ${mapping.bloco}`
+          : '';
 
         return `
-        <div class="shape-item ${isMapped ? "mapped" : ""}" data-shape-index="${shape.index}">
+        <div class="shape-item ${isMapped ? 'mapped' : ''}" data-shape-index="${shape.index}">
           <div class="shape-color" style="background: ${shape.fill}; border-color: ${shape.stroke};"></div>
           <div class="shape-info-text">
             <div class="shape-name">${shape.id}</div>
-            ${isMapped ? `<div class="shape-lote">${loteInfo}</div>` : ""}
+            ${isMapped ? `<div class="shape-lote">${loteInfo}</div>` : ''}
           </div>
-          <span class="shape-status ${isMapped ? "mapped" : "unmapped"}">
-            ${isMapped ? "Vinculado" : "Pendente"}
+          <span class="shape-status ${isMapped ? 'mapped' : 'unmapped'}">
+            ${isMapped ? 'Vinculado' : 'Pendente'}
           </span>
         </div>
       `;
       })
-      .join("");
+      .join('');
 
     list.innerHTML = html;
 
     // Adiciona click listeners
-    list.querySelectorAll(".shape-item").forEach((item) => {
-      item.addEventListener("click", () => {
+    list.querySelectorAll('.shape-item').forEach((item) => {
+      item.addEventListener('click', () => {
         const index = parseInt(item.dataset.shapeIndex);
         this.selectShape(index);
       });
@@ -700,21 +708,23 @@ export class SVGEditorManager {
    * Atualiza UI do editor
    */
   updateEditorUI() {
-    const infoEl = document.getElementById("svgEditorInfo");
-    const shapesHeader = document.querySelector(".svg-editor-shapes-header");
-    const actionsEl = document.querySelector(".svg-editor-actions");
+    const infoEl = document.getElementById('svgEditorInfo');
+    const shapesHeader = document.querySelector('.svg-editor-shapes-header');
+    const actionsEl = document.querySelector('.svg-editor-actions');
 
     if (this.shapes.length > 0) {
       // Mostra elementos
-      if (infoEl) infoEl.style.display = "flex";
-      if (shapesHeader) shapesHeader.style.display = "flex";
-      if (actionsEl) actionsEl.style.display = "flex";
+      if (infoEl) infoEl.style.display = 'flex';
+      if (shapesHeader) shapesHeader.style.display = 'flex';
+      if (actionsEl) actionsEl.style.display = 'flex';
 
       // Atualiza contadores
-      document.getElementById("svgEditorShapeCount").textContent = `${this.shapes.length} shapes`;
+      document.getElementById('svgEditorShapeCount').textContent =
+        `${this.shapes.length} shapes`;
 
       const mappedCount = Object.keys(this.shapeMapping).length;
-      document.getElementById("svgEditorMappedCount").textContent = `${mappedCount} vinculados`;
+      document.getElementById('svgEditorMappedCount').textContent =
+        `${mappedCount} vinculados`;
     }
   }
 
@@ -725,10 +735,10 @@ export class SVGEditorManager {
     this.selectedShapeIndex = index;
 
     // Atualiza visual na lista
-    document.querySelectorAll(".shape-item").forEach((item) => {
-      item.classList.remove("selected");
+    document.querySelectorAll('.shape-item').forEach((item) => {
+      item.classList.remove('selected');
       if (parseInt(item.dataset.shapeIndex) === index) {
-        item.classList.add("selected");
+        item.classList.add('selected');
       }
     });
 
@@ -744,43 +754,44 @@ export class SVGEditorManager {
    */
   highlightShapeInOverlay(index) {
     // Emite evento para o overlay
-    this.eventBus.emit("svg:highlight_shape", { index });
+    this.eventBus.emit('svg:highlight_shape', { index });
   }
 
   /**
    * Abre modal de vinculação
    */
   openMappingModal(index) {
-    const modal = document.getElementById("svgEditorModal");
+    const modal = document.getElementById('svgEditorModal');
     if (!modal) return;
 
     const shape = this.shapes.find((s) => s.index === index);
     const mapping = this.shapeMapping[index];
 
     // Preenche informações
-    document.getElementById("modalShapeIndex").textContent = shape?.id || `Shape ${index}`;
+    document.getElementById('modalShapeIndex').textContent =
+      shape?.id || `Shape ${index}`;
 
     // Preenche campos se já tem mapeamento
-    document.getElementById("modalLoteId").value = mapping?.lote_id || "";
-    document.getElementById("modalBloco").value = mapping?.bloco || "";
-    document.getElementById("modalNome").value = mapping?.nome || "";
+    document.getElementById('modalLoteId').value = mapping?.lote_id || '';
+    document.getElementById('modalBloco').value = mapping?.bloco || '';
+    document.getElementById('modalNome').value = mapping?.nome || '';
 
     // Mostra/esconde botão de remover
-    const removeBtn = document.getElementById("modalRemove");
+    const removeBtn = document.getElementById('modalRemove');
     if (removeBtn) {
-      removeBtn.style.display = mapping ? "block" : "none";
+      removeBtn.style.display = mapping ? 'block' : 'none';
     }
 
-    modal.style.display = "flex";
+    modal.style.display = 'flex';
   }
 
   /**
    * Fecha modal
    */
   closeModal() {
-    const modal = document.getElementById("svgEditorModal");
+    const modal = document.getElementById('svgEditorModal');
     if (modal) {
-      modal.style.display = "none";
+      modal.style.display = 'none';
     }
     this.selectedShapeIndex = null;
   }
@@ -789,17 +800,17 @@ export class SVGEditorManager {
    * Salva o mapeamento do shape selecionado
    */
   saveShapeMapping() {
-    const loteId = document.getElementById("modalLoteId").value.trim();
-    const bloco = document.getElementById("modalBloco").value.trim();
-    const nome = document.getElementById("modalNome").value.trim();
+    const loteId = document.getElementById('modalLoteId').value.trim();
+    const bloco = document.getElementById('modalBloco').value.trim();
+    const nome = document.getElementById('modalNome').value.trim();
 
     if (!loteId) {
-      alert("O ID da Unidade é obrigatório");
+      alert('O ID da Unidade é obrigatório');
       return;
     }
 
     if (!bloco) {
-      alert("O Bloco é obrigatório");
+      alert('O Bloco é obrigatório');
       return;
     }
 
@@ -820,7 +831,9 @@ export class SVGEditorManager {
     // Fecha modal
     this.closeModal();
 
-    console.log(`✓ Shape ${this.selectedShapeIndex} vinculado ao lote ${loteId}`);
+    console.log(
+      `✓ Shape ${this.selectedShapeIndex} vinculado ao lote ${loteId}`,
+    );
   }
 
   /**
@@ -853,14 +866,14 @@ export class SVGEditorManager {
     this.updateOverlayColors();
     this.updateHiddenInputs();
 
-    console.log("✓ Todos os vínculos foram removidos");
+    console.log('✓ Todos os vínculos foram removidos');
   }
 
   /**
    * Atualiza cores no overlay baseado no mapeamento
    */
   updateOverlayColors() {
-    this.eventBus.emit("svg:update_colors", {
+    this.eventBus.emit('svg:update_colors', {
       mapping: this.shapeMapping,
     });
   }
@@ -870,46 +883,54 @@ export class SVGEditorManager {
    */
   updateHiddenInputs() {
     // SVG Content
-    let svgInput = document.getElementById("terreno_svg_content");
+    let svgInput = document.getElementById('terreno_svg_content');
     if (!svgInput) {
-      svgInput = document.createElement("input");
-      svgInput.type = "hidden";
-      svgInput.id = "terreno_svg_content";
-      svgInput.name = "terreno_svg_content";
-      document.querySelector("#terreno-mapa-container")?.appendChild(svgInput);
+      svgInput = document.createElement('input');
+      svgInput.type = 'hidden';
+      svgInput.id = 'terreno_svg_content';
+      svgInput.name = 'terreno_svg_content';
+      document.querySelector('#terreno-mapa-container')?.appendChild(svgInput);
     }
-    svgInput.value = this.svgContent || "";
+    svgInput.value = this.svgContent || '';
 
     // Bounds
-    let boundsInput = document.getElementById("terreno_svg_bounds");
+    let boundsInput = document.getElementById('terreno_svg_bounds');
     if (!boundsInput) {
-      boundsInput = document.createElement("input");
-      boundsInput.type = "hidden";
-      boundsInput.id = "terreno_svg_bounds";
-      boundsInput.name = "terreno_svg_bounds";
-      document.querySelector("#terreno-mapa-container")?.appendChild(boundsInput);
+      boundsInput = document.createElement('input');
+      boundsInput.type = 'hidden';
+      boundsInput.id = 'terreno_svg_bounds';
+      boundsInput.name = 'terreno_svg_bounds';
+      document
+        .querySelector('#terreno-mapa-container')
+        ?.appendChild(boundsInput);
     }
-    boundsInput.value = this.overlay.bounds ? JSON.stringify(this.overlay.bounds) : "";
+    boundsInput.value = this.overlay.bounds
+      ? JSON.stringify(this.overlay.bounds)
+      : '';
 
     // Rotation
-    let rotationInput = document.getElementById("terreno_svg_rotation");
+    let rotationInput = document.getElementById('terreno_svg_rotation');
     if (!rotationInput) {
-      rotationInput = document.createElement("input");
-      rotationInput.type = "hidden";
-      rotationInput.id = "terreno_svg_rotation";
-      rotationInput.name = "terreno_svg_rotation";
-      document.querySelector("#terreno-mapa-container")?.appendChild(rotationInput);
+      rotationInput = document.createElement('input');
+      rotationInput.type = 'hidden';
+      rotationInput.id = 'terreno_svg_rotation';
+      rotationInput.name = 'terreno_svg_rotation';
+      document
+        .querySelector('#terreno-mapa-container')
+        ?.appendChild(rotationInput);
     }
     rotationInput.value = this.overlay.rotation || 0;
 
     // Shape mapping
-    let mappingInput = document.getElementById("terreno_shape_mapping");
+    let mappingInput = document.getElementById('terreno_shape_mapping');
     if (!mappingInput) {
-      mappingInput = document.createElement("input");
-      mappingInput.type = "hidden";
-      mappingInput.id = "terreno_shape_mapping";
-      mappingInput.name = "terreno_shape_mapping";
-      document.querySelector("#terreno-mapa-container")?.appendChild(mappingInput);
+      mappingInput = document.createElement('input');
+      mappingInput.type = 'hidden';
+      mappingInput.id = 'terreno_shape_mapping';
+      mappingInput.name = 'terreno_shape_mapping';
+      document
+        .querySelector('#terreno-mapa-container')
+        ?.appendChild(mappingInput);
     }
     mappingInput.value = JSON.stringify(this.shapeMapping);
   }
@@ -921,14 +942,14 @@ export class SVGEditorManager {
     this.updateHiddenInputs();
 
     // Notifica que foi salvo
-    this.eventBus.emit("svg:configuration_saved", {
+    this.eventBus.emit('svg:configuration_saved', {
       svgContent: this.svgContent,
       bounds: this.overlay.bounds,
       rotation: this.overlay.rotation,
       mapping: this.shapeMapping,
     });
 
-    alert("Configuração aplicada! Não esqueça de salvar o post.");
+    alert('Configuração aplicada! Não esqueça de salvar o post.');
     this.closeEditor();
   }
 

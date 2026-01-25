@@ -68,24 +68,24 @@ export class SVGOverlayManager {
    */
   init() {
     // Botão de abrir modal
-    const btnImportar = document.getElementById("btn_importar_svg");
+    const btnImportar = document.getElementById('btn_importar_svg');
     if (btnImportar) {
-      btnImportar.addEventListener("click", () => this.openModal());
+      btnImportar.addEventListener('click', () => this.openModal());
     }
 
     // Botão de ajustar posição do SVG
-    const btnAjustar = document.getElementById("btn_ajustar_svg");
+    const btnAjustar = document.getElementById('btn_ajustar_svg');
     if (btnAjustar) {
-      btnAjustar.addEventListener("click", (e) => {
+      btnAjustar.addEventListener('click', (e) => {
         e.preventDefault();
-        console.log("SVGOverlayManager: ajustar posicao clicado");
+        console.log('SVGOverlayManager: ajustar posicao clicado');
         this.toggleEditMode();
       });
     } else {
       setTimeout(() => {
-        const btn = document.getElementById("btn_ajustar_svg");
+        const btn = document.getElementById('btn_ajustar_svg');
         if (btn) {
-          btn.addEventListener("click", (e) => {
+          btn.addEventListener('click', (e) => {
             e.preventDefault();
             this.toggleEditMode();
           });
@@ -94,46 +94,46 @@ export class SVGOverlayManager {
     }
 
     // Elementos do modal
-    this.modal = document.getElementById("svgImportModal");
+    this.modal = document.getElementById('svgImportModal');
     if (!this.modal) return;
 
     // Botões de fechar/cancelar
     document
-      .getElementById("svgImportClose")
-      ?.addEventListener("click", () => this.closeModal());
+      .getElementById('svgImportClose')
+      ?.addEventListener('click', () => this.closeModal(true));
     document
-      .getElementById("svgImportCancel")
-      ?.addEventListener("click", () => this.closeModal());
+      .getElementById('svgImportCancel')
+      ?.addEventListener('click', () => this.closeModal(true));
 
     // Upload de arquivo
-    document.getElementById("svgSelectFile")?.addEventListener("click", () => {
-      document.getElementById("svgFileInput")?.click();
+    document.getElementById('svgSelectFile')?.addEventListener('click', () => {
+      document.getElementById('svgFileInput')?.click();
     });
 
-    document.getElementById("svgFileInput")?.addEventListener("change", (e) => {
+    document.getElementById('svgFileInput')?.addEventListener('change', (e) => {
       if (e.target.files.length > 0) {
         this.handleFileUpload(e.target.files[0]);
       }
     });
 
     // Drag and drop
-    const dropZone = document.getElementById("svgDropZone");
+    const dropZone = document.getElementById('svgDropZone');
     if (dropZone) {
-      dropZone.addEventListener("dragover", (e) => {
+      dropZone.addEventListener('dragover', (e) => {
         e.preventDefault();
-        dropZone.style.borderColor = "#0073aa";
-        dropZone.style.background = "#f0f7fc";
+        dropZone.style.borderColor = '#0073aa';
+        dropZone.style.background = '#f0f7fc';
       });
 
-      dropZone.addEventListener("dragleave", () => {
-        dropZone.style.borderColor = "#ccc";
-        dropZone.style.background = "transparent";
+      dropZone.addEventListener('dragleave', () => {
+        dropZone.style.borderColor = '#ccc';
+        dropZone.style.background = 'transparent';
       });
 
-      dropZone.addEventListener("drop", (e) => {
+      dropZone.addEventListener('drop', (e) => {
         e.preventDefault();
-        dropZone.style.borderColor = "#ccc";
-        dropZone.style.background = "transparent";
+        dropZone.style.borderColor = '#ccc';
+        dropZone.style.background = 'transparent';
 
         if (e.dataTransfer.files.length > 0) {
           this.handleFileUpload(e.dataTransfer.files[0]);
@@ -142,51 +142,51 @@ export class SVGOverlayManager {
     }
 
     // Controles de transformação
-    document.getElementById("svgRotateLeft")?.addEventListener("click", () => {
-      this.rotateOverlay(-5);
+    document.getElementById('svgRotateLeft')?.addEventListener('click', () => {
+      this.rotateOverlay(-1);
     });
-    document.getElementById("svgRotateRight")?.addEventListener("click", () => {
-      this.rotateOverlay(5);
+    document.getElementById('svgRotateRight')?.addEventListener('click', () => {
+      this.rotateOverlay(1);
     });
-    document.getElementById("svgZoomIn")?.addEventListener("click", () => {
+    document.getElementById('svgZoomIn')?.addEventListener('click', () => {
       this.scaleOverlay(1.1);
     });
-    document.getElementById("svgZoomOut")?.addEventListener("click", () => {
+    document.getElementById('svgZoomOut')?.addEventListener('click', () => {
       this.scaleOverlay(0.9);
     });
     document
-      .getElementById("svgResetTransform")
-      ?.addEventListener("click", () => {
+      .getElementById('svgResetTransform')
+      ?.addEventListener('click', () => {
         this.resetTransform();
       });
 
     // Slider de opacidade
     document
-      .getElementById("svgOpacitySlider")
-      ?.addEventListener("input", (e) => {
+      .getElementById('svgOpacitySlider')
+      ?.addEventListener('input', (e) => {
         this.setOverlayOpacity(e.target.value / 100);
       });
 
     // Slider de rotação
     document
-      .getElementById("svgRotationSlider")
-      ?.addEventListener("input", (e) => {
+      .getElementById('svgRotationSlider')
+      ?.addEventListener('input', (e) => {
         this.setRotation(parseFloat(e.target.value));
       });
 
     // Confirmar importação (agora salva como overlay permanente em vez de converter)
     document
-      .getElementById("svgImportConfirm")
-      ?.addEventListener("click", () => {
+      .getElementById('svgImportConfirm')
+      ?.addEventListener('click', () => {
         this.saveAsOverlay();
       });
 
     // Event listeners do SVGEditorManager
-    this.eventBus.on("svg:highlight_shape", (data) => {
+    this.eventBus.on('svg:highlight_shape', (data) => {
       this.highlightShape(data.index);
     });
 
-    this.eventBus.on("svg:update_colors", (data) => {
+    this.eventBus.on('svg:update_colors', (data) => {
       this.shapeMapping = data.mapping;
       this.updateShapeColors();
     });
@@ -196,10 +196,10 @@ export class SVGOverlayManager {
    * Carrega dados salvos (chamado na inicialização)
    */
   loadSavedOverlay() {
-    const svgInput = document.getElementById("terreno_svg_content");
-    const boundsInput = document.getElementById("terreno_svg_bounds");
-    const rotationInput = document.getElementById("terreno_svg_rotation");
-    const mappingInput = document.getElementById("terreno_shape_mapping");
+    const svgInput = document.getElementById('terreno_svg_content');
+    const boundsInput = document.getElementById('terreno_svg_bounds');
+    const rotationInput = document.getElementById('terreno_svg_rotation');
+    const mappingInput = document.getElementById('terreno_shape_mapping');
 
     if (svgInput?.value) {
       this.svgContent = svgInput.value;
@@ -213,7 +213,7 @@ export class SVGOverlayManager {
           new google.maps.LatLng(bounds.north, bounds.east)
         );
       } catch (e) {
-        console.warn("Erro ao carregar bounds:", e);
+        console.warn('Erro ao carregar bounds:', e);
       }
     }
 
@@ -225,7 +225,7 @@ export class SVGOverlayManager {
       try {
         this.shapeMapping = JSON.parse(mappingInput.value);
       } catch (e) {
-        console.warn("Erro ao carregar mapping:", e);
+        console.warn('Erro ao carregar mapping:', e);
       }
     }
 
@@ -265,7 +265,7 @@ export class SVGOverlayManager {
       this.updateShapeColors();
     }, 100);
 
-    console.log("✓ Overlay SVG carregado dos dados salvos");
+    console.log('✓ Overlay SVG carregado dos dados salvos');
   }
 
   /**
@@ -275,11 +275,11 @@ export class SVGOverlayManager {
     if (!this.svgContent) return;
 
     const parser = new DOMParser();
-    const doc = parser.parseFromString(this.svgContent, "image/svg+xml");
+    const doc = parser.parseFromString(this.svgContent, 'image/svg+xml');
     const svgEl = doc.documentElement;
 
     // Extrai viewBox
-    const viewBoxAttr = svgEl.getAttribute("viewBox");
+    const viewBoxAttr = svgEl.getAttribute('viewBox');
     if (viewBoxAttr) {
       const parts = viewBoxAttr.split(/[\s,]+/).map(parseFloat);
       this.viewBox = {
@@ -291,14 +291,14 @@ export class SVGOverlayManager {
     }
 
     // Extrai shapes
-    const shapeSelectors = "polygon, path, polyline, rect";
+    const shapeSelectors = 'polygon, path, polyline, rect';
     const shapeElements = svgEl.querySelectorAll(shapeSelectors);
     this.shapes = Array.from(shapeElements).map((el, index) => ({
       index,
       type: el.tagName.toLowerCase(),
       id: el.id || `shape_${index}`,
-      fill: el.getAttribute("fill") || "#ccc",
-      stroke: el.getAttribute("stroke") || "#000",
+      fill: el.getAttribute('fill') || '#ccc',
+      stroke: el.getAttribute('stroke') || '#000',
     }));
   }
 
@@ -308,7 +308,7 @@ export class SVGOverlayManager {
   openModal() {
     if (this.modal) {
       this.isModalOpen = true;
-      this.modal.style.display = "block";
+      this.modal.style.display = 'block';
       this.resetState();
     }
   }
@@ -320,7 +320,7 @@ export class SVGOverlayManager {
   closeModal(keepOverlay = false) {
     if (this.modal) {
       this.isModalOpen = false;
-      this.modal.style.display = "none";
+      this.modal.style.display = 'none';
       if (!keepOverlay) {
         this.removeOverlay();
         this.resetState();
@@ -346,34 +346,34 @@ export class SVGOverlayManager {
     };
 
     // Reset UI
-    const step1 = document.getElementById("svgStep1");
-    const step2 = document.getElementById("svgStep2");
-    if (step1) step1.style.display = "block";
-    if (step2) step2.style.display = "none";
+    const step1 = document.getElementById('svgStep1');
+    const step2 = document.getElementById('svgStep2');
+    if (step1) step1.style.display = 'block';
+    if (step2) step2.style.display = 'none';
 
-    const uploadStatus = document.getElementById("svgUploadStatus");
-    if (uploadStatus) uploadStatus.style.display = "none";
+    const uploadStatus = document.getElementById('svgUploadStatus');
+    if (uploadStatus) uploadStatus.style.display = 'none';
 
-    const confirmBtn = document.getElementById("svgImportConfirm");
+    const confirmBtn = document.getElementById('svgImportConfirm');
     if (confirmBtn) confirmBtn.disabled = true;
 
     // Reset sliders
-    const opacitySlider = document.getElementById("svgOpacitySlider");
+    const opacitySlider = document.getElementById('svgOpacitySlider');
     if (opacitySlider) opacitySlider.value = 70;
 
-    const rotationSlider = document.getElementById("svgRotationSlider");
+    const rotationSlider = document.getElementById('svgRotationSlider');
     if (rotationSlider) rotationSlider.value = 0;
 
-    const rotationValue = document.getElementById("svgRotationValue");
-    if (rotationValue) rotationValue.textContent = "0°";
+    const rotationValue = document.getElementById('svgRotationValue');
+    if (rotationValue) rotationValue.textContent = '0°';
   }
 
   /**
    * Processa o upload do arquivo SVG
    */
   async handleFileUpload(file) {
-    if (!file.name.endsWith(".svg")) {
-      alert("Por favor, selecione um arquivo SVG válido.");
+    if (!file.name.endsWith('.svg')) {
+      alert('Por favor, selecione um arquivo SVG válido.');
       return;
     }
 
@@ -391,22 +391,22 @@ export class SVGOverlayManager {
   async processSVG(fileName) {
     try {
       // Mostra loading
-      const uploadStatus = document.getElementById("svgUploadStatus");
-      const fileNameEl = document.getElementById("svgFileName");
-      const shapeCountEl = document.getElementById("svgShapeCount");
+      const uploadStatus = document.getElementById('svgUploadStatus');
+      const fileNameEl = document.getElementById('svgFileName');
+      const shapeCountEl = document.getElementById('svgShapeCount');
 
-      if (uploadStatus) uploadStatus.style.display = "block";
+      if (uploadStatus) uploadStatus.style.display = 'block';
       if (fileNameEl) fileNameEl.textContent = `Processando ${fileName}...`;
-      if (shapeCountEl) shapeCountEl.textContent = "";
+      if (shapeCountEl) shapeCountEl.textContent = '';
 
       // Envia para o backend processar
       const formData = new FormData();
-      formData.append("action", "terreno_parse_svg");
-      formData.append("nonce", terreno_ajax.nonce);
-      formData.append("svg_content", this.svgContent);
+      formData.append('action', 'terreno_parse_svg');
+      formData.append('nonce', terreno_ajax.nonce);
+      formData.append('svg_content', this.svgContent);
 
       const response = await fetch(terreno_ajax.ajax_url, {
-        method: "POST",
+        method: 'POST',
         body: formData,
       });
 
@@ -422,16 +422,16 @@ export class SVGOverlayManager {
           shapeCountEl.textContent = `${this.shapes.length} shapes encontrados`;
 
         // Mostra step 2
-        const step1 = document.getElementById("svgStep1");
-        const step2 = document.getElementById("svgStep2");
-        if (step1) step1.style.display = "none";
-        if (step2) step2.style.display = "block";
+        const step1 = document.getElementById('svgStep1');
+        const step2 = document.getElementById('svgStep2');
+        if (step1) step1.style.display = 'none';
+        if (step2) step2.style.display = 'block';
 
         // Cria o overlay no mapa
         this.createMapOverlay();
 
         // Habilita botão de confirmar
-        const confirmBtn = document.getElementById("svgImportConfirm");
+        const confirmBtn = document.getElementById('svgImportConfirm');
         if (confirmBtn) confirmBtn.disabled = false;
 
         // Renderiza lista de shapes
@@ -440,14 +440,14 @@ export class SVGOverlayManager {
         console.log(`✓ SVG processado: ${this.shapes.length} shapes`);
       } else {
         alert(
-          "Erro ao processar SVG: " +
-            (result.data?.message || "Erro desconhecido"),
+          'Erro ao processar SVG: ' +
+            (result.data?.message || 'Erro desconhecido'),
         );
-        if (uploadStatus) uploadStatus.style.display = "none";
+        if (uploadStatus) uploadStatus.style.display = 'none';
       }
     } catch (error) {
-      console.error("Erro ao processar SVG:", error);
-      alert("Erro ao processar SVG. Verifique o console para detalhes.");
+      console.error('Erro ao processar SVG:', error);
+      alert('Erro ao processar SVG. Verifique o console para detalhes.');
     }
   }
 
@@ -519,8 +519,8 @@ export class SVGOverlayManager {
     this.overlay.rotation = this.overlay.rotation % 360;
     this.updateOverlayTransform();
 
-    const rotationSlider = document.getElementById("svgRotationSlider");
-    const rotationValue = document.getElementById("svgRotationValue");
+    const rotationSlider = document.getElementById('svgRotationSlider');
+    const rotationValue = document.getElementById('svgRotationValue');
     if (rotationSlider) rotationSlider.value = this.overlay.rotation;
     if (rotationValue) {
       rotationValue.textContent = `${Math.round(this.overlay.rotation)}°`;
@@ -536,7 +536,7 @@ export class SVGOverlayManager {
 
     if (!this.isModalOpen) return;
 
-    const rotationValue = document.getElementById("svgRotationValue");
+    const rotationValue = document.getElementById('svgRotationValue');
     if (rotationValue) rotationValue.textContent = `${Math.round(degrees)}°`;
   }
 
@@ -622,18 +622,18 @@ export class SVGOverlayManager {
     this.updateOverlayTransform();
     this.createMapOverlay(); // Recria na posição inicial
 
-    const rotationSlider = document.getElementById("svgRotationSlider");
-    const rotationValue = document.getElementById("svgRotationValue");
+    const rotationSlider = document.getElementById('svgRotationSlider');
+    const rotationValue = document.getElementById('svgRotationValue');
     if (rotationSlider) rotationSlider.value = 0;
-    if (rotationValue) rotationValue.textContent = "0°";
+    if (rotationValue) rotationValue.textContent = '0°';
   }
 
   /**
    * Renderiza lista de shapes detectados
    */
   renderShapesList() {
-    const container = document.getElementById("shapesListContainer");
-    const countEl = document.getElementById("totalShapesCount");
+    const container = document.getElementById('shapesListContainer');
+    const countEl = document.getElementById('totalShapesCount');
 
     if (countEl) countEl.textContent = this.shapes.length;
 
@@ -649,12 +649,12 @@ export class SVGOverlayManager {
       .map(
         (shape) => `
         <div style="display: inline-block; padding: 4px 8px; margin: 2px; background: #f0f0f0; border-radius: 4px; font-size: 11px;">
-          <span style="display: inline-block; width: 8px; height: 8px; background: ${shape.fill || shape.stroke || "#ccc"}; border-radius: 2px; margin-right: 4px;"></span>
+          <span style="display: inline-block; width: 8px; height: 8px; background: ${shape.fill || shape.stroke || '#ccc'}; border-radius: 2px; margin-right: 4px;"></span>
           ${shape.id} (${shape.points?.length || 0} pts)
         </div>
       `,
       )
-      .join("");
+      .join('');
 
     container.innerHTML = html;
   }
@@ -689,13 +689,13 @@ export class SVGOverlayManager {
   saveAsOverlay() {
     try {
       if (!this.svgContent) {
-        alert("Nenhum SVG carregado.");
+        alert('Nenhum SVG carregado.');
         return;
       }
 
       // Se não tem bounds, tenta criar o overlay primeiro
       if (!this.overlay.bounds) {
-        console.log("Bounds não encontrados, criando overlay...");
+        console.log('Bounds não encontrados, criando overlay...');
         this.createMapOverlay();
 
         // Aguarda um pouco para o overlay ser criado
@@ -703,7 +703,7 @@ export class SVGOverlayManager {
           if (this.overlay.bounds) {
             this.completeSaveOverlay();
           } else {
-            alert("Erro: não foi possível posicionar o SVG no mapa. Tente novamente.");
+            alert('Erro: não foi possível posicionar o SVG no mapa. Tente novamente.');
           }
         }, 100);
         return;
@@ -712,8 +712,8 @@ export class SVGOverlayManager {
       this.completeSaveOverlay();
 
     } catch (error) {
-      console.error("Erro ao salvar overlay:", error);
-      alert("Erro ao salvar overlay: " + error.message);
+      console.error('Erro ao salvar overlay:', error);
+      alert('Erro ao salvar overlay: ' + error.message);
     }
   }
 
@@ -723,8 +723,8 @@ export class SVGOverlayManager {
   completeSaveOverlay() {
     // Verifica novamente para segurança
     if (!this.overlay.bounds) {
-      console.error("Bounds ainda é null após criação do overlay");
-      alert("Erro ao posicionar SVG. Recarregue a página e tente novamente.");
+      console.error('Bounds ainda é null após criação do overlay');
+      alert('Erro ao posicionar SVG. Recarregue a página e tente novamente.');
       return;
     }
 
@@ -740,13 +740,13 @@ export class SVGOverlayManager {
     };
 
     // Emite evento para o SVGEditorManager processar
-    this.eventBus.emit("svg:loaded", {
+    this.eventBus.emit('svg:loaded', {
       svgContent: this.svgContent,
       shapes: this.shapes,
       viewBox: this.viewBox,
     });
 
-    this.eventBus.emit("svg:positioned", {
+    this.eventBus.emit('svg:positioned', {
       bounds: boundsData,
       rotation: this.overlay.rotation,
       center: this.overlay.center,
@@ -758,7 +758,7 @@ export class SVGOverlayManager {
     // Ativa modo de edição no overlay
     this.enableEditorMode();
 
-    console.log("✓ SVG salvo como overlay permanente");
+    console.log('✓ SVG salvo como overlay permanente');
     console.log(`  Shapes: ${this.shapes.length}`);
     console.log(`  Bounds: N=${boundsData.north}, S=${boundsData.south}, E=${boundsData.east}, W=${boundsData.west}`);
     console.log(`  Rotação: ${this.overlay.rotation}°`);
@@ -768,27 +768,27 @@ export class SVGOverlayManager {
    * Atualiza inputs hidden com dados do overlay
    */
   updateHiddenInputs() {
-    const container = document.querySelector("#terreno-mapa-container");
+    const container = document.querySelector('#terreno-mapa-container');
     if (!container) return;
 
     // SVG Content
-    let svgInput = document.getElementById("terreno_svg_content");
+    let svgInput = document.getElementById('terreno_svg_content');
     if (!svgInput) {
-      svgInput = document.createElement("input");
-      svgInput.type = "hidden";
-      svgInput.id = "terreno_svg_content";
-      svgInput.name = "terreno_svg_content";
+      svgInput = document.createElement('input');
+      svgInput.type = 'hidden';
+      svgInput.id = 'terreno_svg_content';
+      svgInput.name = 'terreno_svg_content';
       container.appendChild(svgInput);
     }
-    svgInput.value = this.svgContent || "";
+    svgInput.value = this.svgContent || '';
 
     // Bounds
-    let boundsInput = document.getElementById("terreno_svg_bounds");
+    let boundsInput = document.getElementById('terreno_svg_bounds');
     if (!boundsInput) {
-      boundsInput = document.createElement("input");
-      boundsInput.type = "hidden";
-      boundsInput.id = "terreno_svg_bounds";
-      boundsInput.name = "terreno_svg_bounds";
+      boundsInput = document.createElement('input');
+      boundsInput.type = 'hidden';
+      boundsInput.id = 'terreno_svg_bounds';
+      boundsInput.name = 'terreno_svg_bounds';
       container.appendChild(boundsInput);
     }
     if (this.overlay.bounds) {
@@ -801,12 +801,12 @@ export class SVGOverlayManager {
     }
 
     // Rotation
-    let rotationInput = document.getElementById("terreno_svg_rotation");
+    let rotationInput = document.getElementById('terreno_svg_rotation');
     if (!rotationInput) {
-      rotationInput = document.createElement("input");
-      rotationInput.type = "hidden";
-      rotationInput.id = "terreno_svg_rotation";
-      rotationInput.name = "terreno_svg_rotation";
+      rotationInput = document.createElement('input');
+      rotationInput.type = 'hidden';
+      rotationInput.id = 'terreno_svg_rotation';
+      rotationInput.name = 'terreno_svg_rotation';
       container.appendChild(rotationInput);
     }
     rotationInput.value = this.overlay.rotation || 0;
@@ -837,7 +837,7 @@ export class SVGOverlayManager {
    */
   toggleEditMode() {
     if (!this.svgContent || !this.customOverlay) {
-      alert("Nenhum SVG carregado. Importe um SVG primeiro.");
+      alert('Nenhum SVG carregado. Importe um SVG primeiro.');
       return;
     }
 
@@ -852,19 +852,19 @@ export class SVGOverlayManager {
     if (!this.modal) return;
 
     this.isModalOpen = true;
-    this.modal.style.display = "block";
+    this.modal.style.display = 'block';
 
     // Esconde step 1 (upload) e mostra step 2 (controles)
-    const step1 = document.getElementById("svgStep1");
-    const step2 = document.getElementById("svgStep2");
-    if (step1) step1.style.display = "none";
-    if (step2) step2.style.display = "block";
+    const step1 = document.getElementById('svgStep1');
+    const step2 = document.getElementById('svgStep2');
+    if (step1) step1.style.display = 'none';
+    if (step2) step2.style.display = 'block';
 
     // Habilita botão de confirmar
-    const confirmBtn = document.getElementById("svgImportConfirm");
+    const confirmBtn = document.getElementById('svgImportConfirm');
     if (confirmBtn) {
       confirmBtn.disabled = false;
-      confirmBtn.textContent = "Salvar Ajustes";
+      confirmBtn.textContent = 'Salvar Ajustes';
     }
 
     // Ativa modo de posicionamento no overlay (não editor)
@@ -873,12 +873,12 @@ export class SVGOverlayManager {
     }
 
     // Atualiza sliders com valores atuais
-    const rotationSlider = document.getElementById("svgRotationSlider");
-    const rotationValue = document.getElementById("svgRotationValue");
+    const rotationSlider = document.getElementById('svgRotationSlider');
+    const rotationValue = document.getElementById('svgRotationValue');
     if (rotationSlider) rotationSlider.value = this.overlay.rotation || 0;
     if (rotationValue) rotationValue.textContent = `${Math.round(this.overlay.rotation || 0)}°`;
 
-    console.log("SVG: Modo de ajuste ativado");
+    console.log('SVG: Modo de ajuste ativado');
   }
 
   /**
@@ -907,21 +907,21 @@ export class SVGOverlayManager {
   async finalizeImport() {
     try {
       if (!this.shapes || this.shapes.length === 0) {
-        alert("Nenhum shape para importar.");
+        alert('Nenhum shape para importar.');
         return;
       }
 
       if (!this.overlay.bounds) {
-        alert("Posicione o SVG no mapa primeiro.");
+        alert('Posicione o SVG no mapa primeiro.');
         return;
       }
 
-      console.log("Iniciando conversão de shapes para polígonos...");
+      console.log('Iniciando conversão de shapes para polígonos...');
       const ne = this.overlay.bounds.getNorthEast();
       const sw = this.overlay.bounds.getSouthWest();
       console.log(`Bounds: N=${ne.lat()}, S=${sw.lat()}, E=${ne.lng()}, W=${sw.lng()}`);
-      console.log("Rotação:", this.overlay.rotation);
-      console.log("ViewBox:", this.viewBox);
+      console.log('Rotação:', this.overlay.rotation);
+      console.log('ViewBox:', this.viewBox);
 
       const importedLotes = [];
 
@@ -938,11 +938,11 @@ export class SVGOverlayManager {
         const lote = {
           id: `imported_${Date.now()}_${index}`,
           nome: shape.id || `Lote ${index + 1}`,
-          bloco: "",
+          bloco: '',
           coordinates: coordinates,
           area: this.calculateArea(coordinates),
           color: shape.fill || this.generateRandomColor(),
-          status: "disponivel",
+          status: 'disponivel',
           created_at: new Date().toISOString(),
         };
 
@@ -958,7 +958,7 @@ export class SVGOverlayManager {
       });
 
       // Atualiza UI
-      this.eventBus.emit("lotes:imported", { count: importedLotes.length });
+      this.eventBus.emit('lotes:imported', { count: importedLotes.length });
 
       // Remove overlay e fecha modal
       this.removeOverlay();
@@ -971,8 +971,8 @@ export class SVGOverlayManager {
 
       alert(`✓ ${importedLotes.length} lotes importados com sucesso!`);
     } catch (error) {
-      console.error("Erro ao importar lotes:", error);
-      alert("Erro ao importar lotes: " + error.message);
+      console.error('Erro ao importar lotes:', error);
+      alert('Erro ao importar lotes: ' + error.message);
     }
   }
 
@@ -1048,16 +1048,16 @@ export class SVGOverlayManager {
    */
   generateRandomColor() {
     const colors = [
-      "#FF6B6B",
-      "#4ECDC4",
-      "#45B7D1",
-      "#FFA07A",
-      "#98D8C8",
-      "#F06292",
-      "#AED581",
-      "#FFD54F",
-      "#4DB6AC",
-      "#7986CB",
+      '#FF6B6B',
+      '#4ECDC4',
+      '#45B7D1',
+      '#FFA07A',
+      '#98D8C8',
+      '#F06292',
+      '#AED581',
+      '#FFD54F',
+      '#4DB6AC',
+      '#7986CB',
     ];
     return colors[Math.floor(Math.random() * colors.length)];
   }
@@ -1095,29 +1095,29 @@ function getCustomSVGOverlayClass() {
 
     onAdd() {
       // Cria container do overlay
-      this.div = document.createElement("div");
-      this.div.style.position = "absolute";
-      this.div.style.cursor = this.isEditorMode ? "crosshair" : "move";
+      this.div = document.createElement('div');
+      this.div.style.position = 'absolute';
+      this.div.style.cursor = this.isEditorMode ? 'crosshair' : 'move';
       this.div.innerHTML = this.svgContent;
 
       // Adiciona classe para o modo editor
       if (this.isEditorMode) {
-        this.div.classList.add("svg-editor-overlay");
+        this.div.classList.add('svg-editor-overlay');
       }
 
       // Estiliza o SVG
-      const svg = this.div.querySelector("svg");
+      const svg = this.div.querySelector('svg');
       if (svg) {
-        svg.style.width = "100%";
-        svg.style.height = "100%";
+        svg.style.width = '100%';
+        svg.style.height = '100%';
         svg.style.opacity = this.opacity;
         // Em modo editor, SVG é clicável
-        svg.style.pointerEvents = this.isEditorMode ? "auto" : "none";
+        svg.style.pointerEvents = this.isEditorMode ? 'auto' : 'none';
       }
 
       // Adiciona borda para visualização
-      this.div.style.border = "2px dashed #0073aa";
-      this.div.style.boxSizing = "border-box";
+      this.div.style.border = '2px dashed #0073aa';
+      this.div.style.boxSizing = 'border-box';
 
       // Adiciona handles de resize nos cantos (apenas fora do modo editor)
       if (!this.isEditorMode) {
@@ -1143,35 +1143,35 @@ function getCustomSVGOverlayClass() {
      * Adiciona listeners de clique em cada shape do SVG
      */
     addShapeClickListeners() {
-      const svg = this.div.querySelector("svg");
+      const svg = this.div.querySelector('svg');
       if (!svg) return;
 
-      const shapes = svg.querySelectorAll("polygon, path, polyline, rect");
+      const shapes = svg.querySelectorAll('polygon, path, polyline, rect');
       shapes.forEach((shape, index) => {
         // Torna o shape clicável
-        shape.style.cursor = "pointer";
-        shape.style.pointerEvents = "auto";
+        shape.style.cursor = 'pointer';
+        shape.style.pointerEvents = 'auto';
         shape.dataset.shapeIndex = index;
 
         // Hover effect
-        shape.addEventListener("mouseenter", () => {
+        shape.addEventListener('mouseenter', () => {
           if (this.selectedShapeIndex !== index) {
-            shape.style.fill = "rgba(0, 115, 170, 0.5)";
-            shape.style.stroke = "#0073aa";
-            shape.style.strokeWidth = "3px";
+            shape.style.fill = 'rgba(0, 115, 170, 0.5)';
+            shape.style.stroke = '#0073aa';
+            shape.style.strokeWidth = '3px';
           }
         });
 
-        shape.addEventListener("mouseleave", () => {
+        shape.addEventListener('mouseleave', () => {
           if (this.selectedShapeIndex !== index) {
             this.restoreShapeStyle(shape, index);
           }
         });
 
         // Click - emite evento para o editor
-        shape.addEventListener("click", (e) => {
+        shape.addEventListener('click', (e) => {
           e.stopPropagation();
-          this.manager.eventBus.emit("svg:shape_clicked", { index, shape });
+          this.manager.eventBus.emit('svg:shape_clicked', { index, shape });
         });
       });
     }
@@ -1183,14 +1183,14 @@ function getCustomSVGOverlayClass() {
       const mapping = this.shapeMapping[index];
       if (mapping) {
         // Shape mapeado - verde
-        shape.style.fill = "rgba(40, 167, 69, 0.4)";
-        shape.style.stroke = "#28a745";
-        shape.style.strokeWidth = "2px";
+        shape.style.fill = 'rgba(40, 167, 69, 0.4)';
+        shape.style.stroke = '#28a745';
+        shape.style.strokeWidth = '2px';
       } else {
         // Shape não mapeado - estilo original ou cinza
-        shape.style.fill = "rgba(200, 200, 200, 0.3)";
-        shape.style.stroke = "#666";
-        shape.style.strokeWidth = "2px";
+        shape.style.fill = 'rgba(200, 200, 200, 0.3)';
+        shape.style.stroke = '#666';
+        shape.style.strokeWidth = '2px';
       }
     }
 
@@ -1198,7 +1198,7 @@ function getCustomSVGOverlayClass() {
      * Destaca um shape específico
      */
     highlightShape(index) {
-      const svg = this.div?.querySelector("svg");
+      const svg = this.div?.querySelector('svg');
       if (!svg) return;
 
       // Remove destaque anterior
@@ -1214,9 +1214,9 @@ function getCustomSVGOverlayClass() {
       // Aplica destaque no novo shape
       const shape = svg.querySelector(`[data-shape-index="${index}"]`);
       if (shape) {
-        shape.style.fill = "rgba(255, 193, 7, 0.5)";
-        shape.style.stroke = "#ffc107";
-        shape.style.strokeWidth = "4px";
+        shape.style.fill = 'rgba(255, 193, 7, 0.5)';
+        shape.style.stroke = '#ffc107';
+        shape.style.strokeWidth = '4px';
       }
     }
 
@@ -1226,10 +1226,10 @@ function getCustomSVGOverlayClass() {
     updateShapeColors(mapping) {
       this.shapeMapping = mapping || {};
 
-      const svg = this.div?.querySelector("svg");
+      const svg = this.div?.querySelector('svg');
       if (!svg) return;
 
-      const shapes = svg.querySelectorAll("polygon, path, polyline, rect");
+      const shapes = svg.querySelectorAll('polygon, path, polyline, rect');
       shapes.forEach((shape, index) => {
         if (this.selectedShapeIndex !== index) {
           this.restoreShapeStyle(shape, index);
@@ -1243,16 +1243,16 @@ function getCustomSVGOverlayClass() {
     enableEditorMode() {
       this.isEditorMode = true;
       if (this.div) {
-        this.div.style.cursor = "crosshair";
-        this.div.classList.add("svg-editor-overlay");
+        this.div.style.cursor = 'crosshair';
+        this.div.classList.add('svg-editor-overlay');
 
-        const svg = this.div.querySelector("svg");
+        const svg = this.div.querySelector('svg');
         if (svg) {
-          svg.style.pointerEvents = "auto";
+          svg.style.pointerEvents = 'auto';
         }
 
         // Remove handles de resize
-        this.div.querySelectorAll(".svg-resize-handle").forEach(h => h.remove());
+        this.div.querySelectorAll('.svg-resize-handle').forEach(h => h.remove());
 
         // Adiciona listeners de clique
         this.addShapeClickListeners();
@@ -1265,12 +1265,12 @@ function getCustomSVGOverlayClass() {
     disableEditorMode() {
       this.isEditorMode = false;
       if (this.div) {
-        this.div.style.cursor = "move";
-        this.div.classList.remove("svg-editor-overlay");
+        this.div.style.cursor = 'move';
+        this.div.classList.remove('svg-editor-overlay');
 
-        const svg = this.div.querySelector("svg");
+        const svg = this.div.querySelector('svg');
         if (svg) {
-          svg.style.pointerEvents = "none";
+          svg.style.pointerEvents = 'none';
         }
 
         // Adiciona handles de resize
@@ -1280,9 +1280,9 @@ function getCustomSVGOverlayClass() {
     }
 
     addResizeHandles() {
-      const corners = ["nw", "ne", "sw", "se"];
+      const corners = ['nw', 'ne', 'sw', 'se'];
       corners.forEach((corner) => {
-        const handle = document.createElement("div");
+        const handle = document.createElement('div');
         handle.className = `svg-resize-handle svg-resize-${corner}`;
         handle.style.cssText = `
         position: absolute;
@@ -1296,12 +1296,12 @@ function getCustomSVGOverlayClass() {
       `;
 
         // Posiciona os handles
-        if (corner.includes("n")) handle.style.top = "-6px";
-        if (corner.includes("s")) handle.style.bottom = "-6px";
-        if (corner.includes("w")) handle.style.left = "-6px";
-        if (corner.includes("e")) handle.style.right = "-6px";
+        if (corner.includes('n')) handle.style.top = '-6px';
+        if (corner.includes('s')) handle.style.bottom = '-6px';
+        if (corner.includes('w')) handle.style.left = '-6px';
+        if (corner.includes('e')) handle.style.right = '-6px';
 
-        handle.addEventListener("mousedown", (e) => {
+        handle.addEventListener('mousedown', (e) => {
           e.stopPropagation();
           this.startResize(e, corner);
         });
@@ -1311,17 +1311,17 @@ function getCustomSVGOverlayClass() {
     }
 
     addDragListeners() {
-      this.div.addEventListener("mousedown", (e) => {
-        if (e.target.classList.contains("svg-resize-handle")) return;
+      this.div.addEventListener('mousedown', (e) => {
+        if (e.target.classList.contains('svg-resize-handle')) return;
         this.startDrag(e);
       });
 
-      document.addEventListener("mousemove", (e) => {
+      document.addEventListener('mousemove', (e) => {
         if (this.isDragging) this.onDrag(e);
         if (this.isResizing) this.onResize(e);
       });
 
-      document.addEventListener("mouseup", () => {
+      document.addEventListener('mouseup', () => {
         this.isDragging = false;
         this.isResizing = false;
       });
@@ -1401,28 +1401,28 @@ function getCustomSVGOverlayClass() {
       const dy = e.clientY - this.resizeStart.y;
 
       // Ajusta baseado no corner sendo arrastado
-      if (this.resizeCorner.includes("e")) {
+      if (this.resizeCorner.includes('e')) {
         newNE = projection.fromDivPixelToLatLng(
           new google.maps.Point(nePoint.x + dx, nePoint.y),
         );
       }
-      if (this.resizeCorner.includes("w")) {
+      if (this.resizeCorner.includes('w')) {
         newSW = projection.fromDivPixelToLatLng(
           new google.maps.Point(swPoint.x + dx, swPoint.y),
         );
       }
-      if (this.resizeCorner.includes("n")) {
+      if (this.resizeCorner.includes('n')) {
         newNE = projection.fromDivPixelToLatLng(
           new google.maps.Point(
-            this.resizeCorner.includes("e") ? nePoint.x + dx : nePoint.x,
+            this.resizeCorner.includes('e') ? nePoint.x + dx : nePoint.x,
             nePoint.y + dy,
           ),
         );
       }
-      if (this.resizeCorner.includes("s")) {
+      if (this.resizeCorner.includes('s')) {
         newSW = projection.fromDivPixelToLatLng(
           new google.maps.Point(
-            this.resizeCorner.includes("w") ? swPoint.x + dx : swPoint.x,
+            this.resizeCorner.includes('w') ? swPoint.x + dx : swPoint.x,
             swPoint.y + dy,
           ),
         );
@@ -1452,14 +1452,14 @@ function getCustomSVGOverlayClass() {
       const width = ne.x - sw.x;
       const height = sw.y - ne.y;
 
-      this.div.style.left = sw.x + "px";
-      this.div.style.top = ne.y + "px";
-      this.div.style.width = width + "px";
-      this.div.style.height = height + "px";
+      this.div.style.left = sw.x + 'px';
+      this.div.style.top = ne.y + 'px';
+      this.div.style.width = width + 'px';
+      this.div.style.height = height + 'px';
 
       // Aplica rotação
       this.div.style.transform = `rotate(${this.rotation}deg)`;
-      this.div.style.transformOrigin = "center center";
+      this.div.style.transformOrigin = 'center center';
     }
 
     updateBounds(bounds) {
@@ -1475,7 +1475,7 @@ function getCustomSVGOverlayClass() {
     setOpacity(opacity) {
       this.opacity = opacity;
       if (this.div) {
-        const svg = this.div.querySelector("svg");
+        const svg = this.div.querySelector('svg');
         if (svg) {
           svg.style.opacity = opacity;
         }

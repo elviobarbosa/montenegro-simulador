@@ -44,52 +44,52 @@ export class SVGImportManager {
    */
   init() {
     // Botão de abrir modal
-    const btnImportar = document.getElementById("btn_importar_svg");
+    const btnImportar = document.getElementById('btn_importar_svg');
     if (btnImportar) {
-      btnImportar.addEventListener("click", () => this.openModal());
+      btnImportar.addEventListener('click', () => this.openModal());
     }
 
     // Elementos do modal
-    this.modal = document.getElementById("svgImportModal");
+    this.modal = document.getElementById('svgImportModal');
     if (!this.modal) return;
 
     // Botões de fechar/cancelar
     document
-      .getElementById("svgImportClose")
-      ?.addEventListener("click", () => this.closeModal());
+      .getElementById('svgImportClose')
+      ?.addEventListener('click', () => this.closeModal());
     document
-      .getElementById("svgImportCancel")
-      ?.addEventListener("click", () => this.closeModal());
+      .getElementById('svgImportCancel')
+      ?.addEventListener('click', () => this.closeModal());
 
     // Upload de arquivo
-    document.getElementById("svgSelectFile")?.addEventListener("click", () => {
-      document.getElementById("svgFileInput")?.click();
+    document.getElementById('svgSelectFile')?.addEventListener('click', () => {
+      document.getElementById('svgFileInput')?.click();
     });
 
-    document.getElementById("svgFileInput")?.addEventListener("change", (e) => {
+    document.getElementById('svgFileInput')?.addEventListener('change', (e) => {
       if (e.target.files.length > 0) {
         this.handleFileUpload(e.target.files[0]);
       }
     });
 
     // Drag and drop
-    const dropZone = document.getElementById("svgDropZone");
+    const dropZone = document.getElementById('svgDropZone');
     if (dropZone) {
-      dropZone.addEventListener("dragover", (e) => {
+      dropZone.addEventListener('dragover', (e) => {
         e.preventDefault();
-        dropZone.style.borderColor = "#0073aa";
-        dropZone.style.background = "#f0f7fc";
+        dropZone.style.borderColor = '#0073aa';
+        dropZone.style.background = '#f0f7fc';
       });
 
-      dropZone.addEventListener("dragleave", () => {
-        dropZone.style.borderColor = "#ccc";
-        dropZone.style.background = "transparent";
+      dropZone.addEventListener('dragleave', () => {
+        dropZone.style.borderColor = '#ccc';
+        dropZone.style.background = 'transparent';
       });
 
-      dropZone.addEventListener("drop", (e) => {
+      dropZone.addEventListener('drop', (e) => {
         e.preventDefault();
-        dropZone.style.borderColor = "#ccc";
-        dropZone.style.background = "transparent";
+        dropZone.style.borderColor = '#ccc';
+        dropZone.style.background = 'transparent';
 
         if (e.dataTransfer.files.length > 0) {
           this.handleFileUpload(e.dataTransfer.files[0]);
@@ -99,20 +99,20 @@ export class SVGImportManager {
 
     // Reset calibração
     document
-      .getElementById("resetCalibration")
-      ?.addEventListener("click", () => {
+      .getElementById('resetCalibration')
+      ?.addEventListener('click', () => {
         this.resetCalibration();
       });
 
     // Confirmar importação
     document
-      .getElementById("svgImportConfirm")
-      ?.addEventListener("click", () => {
+      .getElementById('svgImportConfirm')
+      ?.addEventListener('click', () => {
         this.importShapes();
       });
 
     // Container do preview
-    this.previewContainer = document.getElementById("svgPreviewContainer");
+    this.previewContainer = document.getElementById('svgPreviewContainer');
   }
 
   /**
@@ -120,7 +120,7 @@ export class SVGImportManager {
    */
   openModal() {
     if (this.modal) {
-      this.modal.style.display = "block";
+      this.modal.style.display = 'block';
       this.resetState();
     }
   }
@@ -130,7 +130,7 @@ export class SVGImportManager {
    */
   closeModal() {
     if (this.modal) {
-      this.modal.style.display = "none";
+      this.modal.style.display = 'none';
       this.resetState();
     }
   }
@@ -145,13 +145,13 @@ export class SVGImportManager {
     this.resetCalibration();
 
     // Reset UI
-    document.getElementById("svgStep1").style.display = "block";
-    document.getElementById("svgStep2").style.display = "none";
-    document.getElementById("svgUploadStatus").style.display = "none";
-    document.getElementById("svgImportConfirm").disabled = true;
+    document.getElementById('svgStep1').style.display = 'block';
+    document.getElementById('svgStep2').style.display = 'none';
+    document.getElementById('svgUploadStatus').style.display = 'none';
+    document.getElementById('svgImportConfirm').disabled = true;
 
     if (this.previewContainer) {
-      this.previewContainer.innerHTML = "";
+      this.previewContainer.innerHTML = '';
     }
 
     // Limpa mini mapa
@@ -172,23 +172,23 @@ export class SVGImportManager {
     };
 
     // Atualiza UI
-    const point1Svg = document.getElementById("point1Svg");
-    const point1Geo = document.getElementById("point1Geo");
-    const point2Svg = document.getElementById("point2Svg");
-    const point2Geo = document.getElementById("point2Geo");
-    const svgPreviewHint = document.getElementById("svgPreviewHint");
-    const svgMapHint = document.getElementById("svgMapHint");
-    const svgImportConfirm = document.getElementById("svgImportConfirm");
+    const point1Svg = document.getElementById('point1Svg');
+    const point1Geo = document.getElementById('point1Geo');
+    const point2Svg = document.getElementById('point2Svg');
+    const point2Geo = document.getElementById('point2Geo');
+    const svgPreviewHint = document.getElementById('svgPreviewHint');
+    const svgMapHint = document.getElementById('svgMapHint');
+    const svgImportConfirm = document.getElementById('svgImportConfirm');
 
-    if (point1Svg) point1Svg.textContent = "-";
-    if (point1Geo) point1Geo.textContent = "-";
-    if (point2Svg) point2Svg.textContent = "-";
-    if (point2Geo) point2Geo.textContent = "-";
+    if (point1Svg) point1Svg.textContent = '-';
+    if (point1Geo) point1Geo.textContent = '-';
+    if (point2Svg) point2Svg.textContent = '-';
+    if (point2Geo) point2Geo.textContent = '-';
 
     if (svgPreviewHint)
-      svgPreviewHint.textContent = "Clique em um ponto de referência no SVG";
+      svgPreviewHint.textContent = 'Clique em um ponto de referência no SVG';
     if (svgMapHint)
-      svgMapHint.textContent = "Clique no mapa para indicar a posição real";
+      svgMapHint.textContent = 'Clique no mapa para indicar a posição real';
 
     if (svgImportConfirm) svgImportConfirm.disabled = true;
 
@@ -198,7 +198,7 @@ export class SVGImportManager {
 
     // Remove marcadores do SVG
     const svgMarkers = this.previewContainer?.querySelectorAll(
-      ".svg-calibration-marker",
+      '.svg-calibration-marker',
     );
     svgMarkers?.forEach((m) => m.remove());
   }
@@ -207,8 +207,8 @@ export class SVGImportManager {
    * Processa o upload do arquivo SVG
    */
   async handleFileUpload(file) {
-    if (!file.name.endsWith(".svg")) {
-      alert("Por favor, selecione um arquivo SVG válido.");
+    if (!file.name.endsWith('.svg')) {
+      alert('Por favor, selecione um arquivo SVG válido.');
       return;
     }
 
@@ -227,22 +227,22 @@ export class SVGImportManager {
   async processSVG(fileName) {
     try {
       // Mostra loading
-      const uploadStatus = document.getElementById("svgUploadStatus");
-      const fileNameEl = document.getElementById("svgFileName");
-      const shapeCountEl = document.getElementById("svgShapeCount");
+      const uploadStatus = document.getElementById('svgUploadStatus');
+      const fileNameEl = document.getElementById('svgFileName');
+      const shapeCountEl = document.getElementById('svgShapeCount');
 
-      if (uploadStatus) uploadStatus.style.display = "block";
+      if (uploadStatus) uploadStatus.style.display = 'block';
       if (fileNameEl) fileNameEl.textContent = `Processando ${fileName}...`;
-      if (shapeCountEl) shapeCountEl.textContent = "";
+      if (shapeCountEl) shapeCountEl.textContent = '';
 
       // Envia para o backend processar
       const formData = new FormData();
-      formData.append("action", "terreno_parse_svg");
-      formData.append("nonce", terreno_ajax.nonce);
-      formData.append("svg_content", this.svgContent);
+      formData.append('action', 'terreno_parse_svg');
+      formData.append('nonce', terreno_ajax.nonce);
+      formData.append('svg_content', this.svgContent);
 
       const response = await fetch(terreno_ajax.ajax_url, {
-        method: "POST",
+        method: 'POST',
         body: formData,
       });
 
@@ -258,10 +258,10 @@ export class SVGImportManager {
           shapeCountEl.textContent = `${this.shapes.length} shapes encontrados`;
 
         // Mostra step 2
-        const step1 = document.getElementById("svgStep1");
-        const step2 = document.getElementById("svgStep2");
-        if (step1) step1.style.display = "none";
-        if (step2) step2.style.display = "block";
+        const step1 = document.getElementById('svgStep1');
+        const step2 = document.getElementById('svgStep2');
+        if (step1) step1.style.display = 'none';
+        if (step2) step2.style.display = 'block';
 
         // Renderiza preview
         this.renderPreview();
@@ -275,15 +275,15 @@ export class SVGImportManager {
         console.log(`✓ SVG processado: ${this.shapes.length} shapes`);
       } else {
         alert(
-          "Erro ao processar SVG: " +
-            (result.data?.message || "Erro desconhecido"),
+          'Erro ao processar SVG: ' +
+            (result.data?.message || 'Erro desconhecido'),
         );
-        document.getElementById("svgUploadStatus").style.display = "none";
+        document.getElementById('svgUploadStatus').style.display = 'none';
       }
     } catch (error) {
-      console.error("Erro ao processar SVG:", error);
-      alert("Erro ao processar SVG. Verifique o console para detalhes.");
-      document.getElementById("svgUploadStatus").style.display = "none";
+      console.error('Erro ao processar SVG:', error);
+      alert('Erro ao processar SVG. Verifique o console para detalhes.');
+      document.getElementById('svgUploadStatus').style.display = 'none';
     }
   }
 
@@ -297,29 +297,29 @@ export class SVGImportManager {
     this.previewContainer.innerHTML = this.svgContent;
 
     // Ajusta o SVG para caber no container
-    const svg = this.previewContainer.querySelector("svg");
+    const svg = this.previewContainer.querySelector('svg');
     if (svg) {
-      svg.style.width = "100%";
-      svg.style.height = "100%";
-      svg.style.maxWidth = "100%";
-      svg.style.maxHeight = "100%";
+      svg.style.width = '100%';
+      svg.style.height = '100%';
+      svg.style.maxWidth = '100%';
+      svg.style.maxHeight = '100%';
 
       // Adiciona listener de clique para calibração
-      svg.addEventListener("click", (e) => this.handleSVGClick(e));
+      svg.addEventListener('click', (e) => this.handleSVGClick(e));
 
       // Highlight nos shapes ao hover
       this.shapes.forEach((shape, index) => {
         const element =
           svg.querySelector(`#${shape.id}`) ||
-          svg.querySelectorAll("path, polygon, polyline, rect")[index];
+          svg.querySelectorAll('path, polygon, polyline, rect')[index];
 
         if (element) {
-          element.style.cursor = "pointer";
-          element.addEventListener("mouseenter", () => {
-            element.style.opacity = "0.7";
+          element.style.cursor = 'pointer';
+          element.addEventListener('mouseenter', () => {
+            element.style.opacity = '0.7';
           });
-          element.addEventListener("mouseleave", () => {
-            element.style.opacity = "1";
+          element.addEventListener('mouseleave', () => {
+            element.style.opacity = '1';
           });
         }
       });
@@ -330,7 +330,7 @@ export class SVGImportManager {
    * Inicializa o mini mapa para calibração
    */
   initCalibrationMap() {
-    const mapContainer = document.getElementById("svgCalibrationMap");
+    const mapContainer = document.getElementById('svgCalibrationMap');
     if (!mapContainer || !this.map) return;
 
     // Usa as mesmas coordenadas do mapa principal
@@ -344,14 +344,14 @@ export class SVGImportManager {
     });
 
     // Adiciona listener de clique
-    this.calibrationMap.addListener("click", (e) => this.handleMapClick(e));
+    this.calibrationMap.addListener('click', (e) => this.handleMapClick(e));
   }
 
   /**
    * Handler de clique no SVG
    */
   handleSVGClick(e) {
-    const svg = this.previewContainer?.querySelector("svg");
+    const svg = this.previewContainer?.querySelector('svg');
     if (!svg) return;
 
     // Calcula posição relativa ao SVG
@@ -362,9 +362,9 @@ export class SVGImportManager {
     // Converte para coordenadas do viewBox
     const svgPoint = this.screenToSVG(x, y, rect.width, rect.height);
 
-    const point1Svg = document.getElementById("point1Svg");
-    const point2Svg = document.getElementById("point2Svg");
-    const svgPreviewHint = document.getElementById("svgPreviewHint");
+    const point1Svg = document.getElementById('point1Svg');
+    const point2Svg = document.getElementById('point2Svg');
+    const svgPreviewHint = document.getElementById('svgPreviewHint');
 
     if (this.calibration.currentPoint === 1) {
       this.calibration.point1.svg = svgPoint;
@@ -372,20 +372,20 @@ export class SVGImportManager {
         point1Svg.textContent = `(${svgPoint.x.toFixed(1)}, ${svgPoint.y.toFixed(1)})`;
 
       // Adiciona marcador visual
-      this.addSVGMarker(x, y, "#0073aa", "1");
+      this.addSVGMarker(x, y, '#0073aa', '1');
 
       if (svgPreviewHint)
-        svgPreviewHint.textContent = "Agora clique no mapa para o Ponto 1";
+        svgPreviewHint.textContent = 'Agora clique no mapa para o Ponto 1';
     } else {
       this.calibration.point2.svg = svgPoint;
       if (point2Svg)
         point2Svg.textContent = `(${svgPoint.x.toFixed(1)}, ${svgPoint.y.toFixed(1)})`;
 
       // Adiciona marcador visual
-      this.addSVGMarker(x, y, "#d63638", "2");
+      this.addSVGMarker(x, y, '#d63638', '2');
 
       if (svgPreviewHint)
-        svgPreviewHint.textContent = "Agora clique no mapa para o Ponto 2";
+        svgPreviewHint.textContent = 'Agora clique no mapa para o Ponto 2';
     }
   }
 
@@ -396,11 +396,11 @@ export class SVGImportManager {
     const latLng = e.latLng;
     const geo = { lat: latLng.lat(), lng: latLng.lng() };
 
-    const point1Geo = document.getElementById("point1Geo");
-    const point2Geo = document.getElementById("point2Geo");
-    const svgMapHint = document.getElementById("svgMapHint");
-    const svgPreviewHint = document.getElementById("svgPreviewHint");
-    const svgImportConfirm = document.getElementById("svgImportConfirm");
+    const point1Geo = document.getElementById('point1Geo');
+    const point2Geo = document.getElementById('point2Geo');
+    const svgMapHint = document.getElementById('svgMapHint');
+    const svgPreviewHint = document.getElementById('svgPreviewHint');
+    const svgImportConfirm = document.getElementById('svgImportConfirm');
 
     if (this.calibration.currentPoint === 1 && this.calibration.point1.svg) {
       this.calibration.point1.geo = geo;
@@ -408,14 +408,14 @@ export class SVGImportManager {
         point1Geo.textContent = `(${geo.lat.toFixed(6)}, ${geo.lng.toFixed(6)})`;
 
       // Adiciona marcador no mapa
-      this.addMapMarker(latLng, "#0073aa", "1");
+      this.addMapMarker(latLng, '#0073aa', '1');
 
       // Avança para ponto 2
       this.calibration.currentPoint = 2;
-      if (svgMapHint) svgMapHint.textContent = "Clique no SVG para o Ponto 2";
+      if (svgMapHint) svgMapHint.textContent = 'Clique no SVG para o Ponto 2';
       if (svgPreviewHint)
         svgPreviewHint.textContent =
-          "Clique em outro ponto de referência no SVG";
+          'Clique em outro ponto de referência no SVG';
     } else if (
       this.calibration.currentPoint === 2 &&
       this.calibration.point2.svg
@@ -425,14 +425,14 @@ export class SVGImportManager {
         point2Geo.textContent = `(${geo.lat.toFixed(6)}, ${geo.lng.toFixed(6)})`;
 
       // Adiciona marcador no mapa
-      this.addMapMarker(latLng, "#d63638", "2");
+      this.addMapMarker(latLng, '#d63638', '2');
 
       // Calibração completa
-      if (svgMapHint) svgMapHint.textContent = "✓ Calibração completa!";
-      if (svgPreviewHint) svgPreviewHint.textContent = "✓ Calibração completa!";
+      if (svgMapHint) svgMapHint.textContent = '✓ Calibração completa!';
+      if (svgPreviewHint) svgPreviewHint.textContent = '✓ Calibração completa!';
       if (svgImportConfirm) svgImportConfirm.disabled = false;
 
-      console.log("✓ Calibração completa:", this.calibration);
+      console.log('✓ Calibração completa:', this.calibration);
     }
   }
 
@@ -457,8 +457,8 @@ export class SVGImportManager {
    * Adiciona marcador visual no SVG
    */
   addSVGMarker(x, y, color, label) {
-    const marker = document.createElement("div");
-    marker.className = "svg-calibration-marker";
+    const marker = document.createElement('div');
+    marker.className = 'svg-calibration-marker';
     marker.style.cssText = `
       position: absolute;
       left: ${x - 12}px;
@@ -490,15 +490,15 @@ export class SVGImportManager {
       map: this.calibrationMap,
       label: {
         text: label,
-        color: "white",
-        fontWeight: "bold",
+        color: 'white',
+        fontWeight: 'bold',
       },
       icon: {
         path: google.maps.SymbolPath.CIRCLE,
         scale: 12,
         fillColor: color,
         fillOpacity: 1,
-        strokeColor: "white",
+        strokeColor: 'white',
         strokeWeight: 2,
       },
     });
@@ -509,8 +509,8 @@ export class SVGImportManager {
    * Renderiza lista de shapes detectados
    */
   renderShapesList() {
-    const container = document.getElementById("shapesListContainer");
-    const countEl = document.getElementById("totalShapesCount");
+    const container = document.getElementById('shapesListContainer');
+    const countEl = document.getElementById('totalShapesCount');
 
     if (!container) return;
 
@@ -526,12 +526,12 @@ export class SVGImportManager {
       .map(
         (shape, index) => `
       <div style="display: inline-block; padding: 4px 8px; margin: 2px; background: #f0f0f0; border-radius: 4px; font-size: 12px;">
-        <span style="display: inline-block; width: 10px; height: 10px; background: ${shape.fill || shape.stroke || "#ccc"}; border-radius: 2px; margin-right: 4px;"></span>
+        <span style="display: inline-block; width: 10px; height: 10px; background: ${shape.fill || shape.stroke || '#ccc'}; border-radius: 2px; margin-right: 4px;"></span>
         ${shape.id} (${shape.points?.length || 0} pts)
       </div>
     `,
       )
-      .join("");
+      .join('');
 
     container.innerHTML = html;
   }
@@ -569,7 +569,7 @@ export class SVGImportManager {
     const dLat = lat2 - lat1;
 
     const denominator = dx * dx + dy * dy;
-    if (denominator === 0) throw new Error("Pontos do SVG são idênticos.");
+    if (denominator === 0) throw new Error('Pontos do SVG são idênticos.');
 
     // Coeficientes para transformação de similaridade
     const a = (dx * dLon + dy * dLat) / denominator;
@@ -603,7 +603,7 @@ export class SVGImportManager {
     try {
       // Calcula transformação
       const transform = this.calculateTransform();
-      console.log("Transformação calculada:", transform);
+      console.log('Transformação calculada:', transform);
 
       const importedLotes = [];
 
@@ -620,11 +620,11 @@ export class SVGImportManager {
         const lote = {
           id: `imported_${Date.now()}_${index}`,
           nome: shape.id || `Lote ${index + 1}`,
-          bloco: "",
+          bloco: '',
           coordinates: coordinates,
           area: this.calculateArea(coordinates),
           color: shape.fill || this.generateRandomColor(),
-          status: "disponivel",
+          status: 'disponivel',
           created_at: new Date().toISOString(),
         };
 
@@ -643,7 +643,7 @@ export class SVGImportManager {
       });
 
       // Atualiza UI
-      this.eventBus.emit("lotes:imported", { count: importedLotes.length });
+      this.eventBus.emit('lotes:imported', { count: importedLotes.length });
 
       // Fecha modal
       this.closeModal();
@@ -655,8 +655,8 @@ export class SVGImportManager {
 
       alert(`✓ ${importedLotes.length} lotes importados com sucesso!`);
     } catch (error) {
-      console.error("Erro ao importar lotes:", error);
-      alert("Erro ao importar lotes: " + error.message);
+      console.error('Erro ao importar lotes:', error);
+      alert('Erro ao importar lotes: ' + error.message);
     }
   }
 
@@ -692,16 +692,16 @@ export class SVGImportManager {
    */
   generateRandomColor() {
     const colors = [
-      "#FF6B6B",
-      "#4ECDC4",
-      "#45B7D1",
-      "#FFA07A",
-      "#98D8C8",
-      "#F06292",
-      "#AED581",
-      "#FFD54F",
-      "#4DB6AC",
-      "#7986CB",
+      '#FF6B6B',
+      '#4ECDC4',
+      '#45B7D1',
+      '#FFA07A',
+      '#98D8C8',
+      '#F06292',
+      '#AED581',
+      '#FFD54F',
+      '#4DB6AC',
+      '#7986CB',
     ];
     return colors[Math.floor(Math.random() * colors.length)];
   }

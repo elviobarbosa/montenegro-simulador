@@ -269,13 +269,13 @@ class TerrenosLotes_MetaBox {
                             Rotação: <span id="svgRotationValue">0°</span>
                         </label>
                         <div style="display: flex; align-items: center; gap: 6px;">
-                            <button type="button" class="button button-small" id="svgRotateLeft" title="-5°">
-                                <span class="dashicons dashicons-image-rotate-left" style="font-size: 16px;"></span>
+                            <button type="button" class="button button-small" id="svgRotateLeft" title="-1°">
+                                &#8634;
                             </button>
                             <input type="range" id="svgRotationSlider" min="-180" max="180" value="0"
                                    style="flex: 1; margin: 0;">
-                            <button type="button" class="button button-small" id="svgRotateRight" title="+5°">
-                                <span class="dashicons dashicons-image-rotate-right" style="font-size: 16px;"></span>
+                            <button type="button" class="button button-small" id="svgRotateRight" title="+1°">
+                                &#8635;
                             </button>
                         </div>
                     </div>

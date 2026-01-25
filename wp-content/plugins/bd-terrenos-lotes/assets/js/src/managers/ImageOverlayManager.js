@@ -33,7 +33,7 @@ export class ImageOverlayManager {
 
     // Elementos DOM
     this.controlPanel = null;
-    console.log("ImageOverlayManager: construtor");
+    console.log('ImageOverlayManager: construtor');
     this.init();
   }
 
@@ -41,30 +41,30 @@ export class ImageOverlayManager {
    * Inicializa os event listeners
    */
   init() {
-    console.log("ImageOverlayManager: init()");
+    console.log('ImageOverlayManager: init()');
 
     // Botão de importar imagem
-    const btnImportar = document.getElementById("btn_importar_planta");
+    const btnImportar = document.getElementById('btn_importar_planta');
     console.log(
-      "ImageOverlayManager: btn_importar_planta encontrado?",
+      'ImageOverlayManager: btn_importar_planta encontrado?',
       !!btnImportar,
     );
 
     if (btnImportar) {
-      btnImportar.addEventListener("click", (e) => {
+      btnImportar.addEventListener('click', (e) => {
         e.preventDefault();
-        console.log("ImageOverlayManager: botao clicado");
+        console.log('ImageOverlayManager: botao clicado');
         this.openMediaLibrary();
       });
     } else {
       // Tenta novamente após um delay (DOM pode não estar pronto)
       setTimeout(() => {
-        const btn = document.getElementById("btn_importar_planta");
+        const btn = document.getElementById('btn_importar_planta');
         if (btn) {
-          console.log("ImageOverlayManager: btn encontrado no retry");
-          btn.addEventListener("click", (e) => {
+          console.log('ImageOverlayManager: btn encontrado no retry');
+          btn.addEventListener('click', (e) => {
             e.preventDefault();
-            console.log("ImageOverlayManager: botao clicado (retry)");
+            console.log('ImageOverlayManager: botao clicado (retry)');
             this.openMediaLibrary();
           });
         }
@@ -72,24 +72,24 @@ export class ImageOverlayManager {
     }
 
     // Botão de remover imagem
-    const btnRemover = document.getElementById("btn_remover_planta");
+    const btnRemover = document.getElementById('btn_remover_planta');
     if (btnRemover) {
-      btnRemover.addEventListener("click", () => this.removeOverlay());
+      btnRemover.addEventListener('click', () => this.removeOverlay());
     }
 
     // Botão de ajustar posição
-    const btnAjustar = document.getElementById("btn_ajustar_planta");
+    const btnAjustar = document.getElementById('btn_ajustar_planta');
     if (btnAjustar) {
-      btnAjustar.addEventListener("click", (e) => {
+      btnAjustar.addEventListener('click', (e) => {
         e.preventDefault();
-        console.log("ImageOverlayManager: ajustar posicao clicado");
+        console.log('ImageOverlayManager: ajustar posicao clicado');
         this.toggleEditMode();
       });
     } else {
       setTimeout(() => {
-        const btn = document.getElementById("btn_ajustar_planta");
+        const btn = document.getElementById('btn_ajustar_planta');
         if (btn) {
-          btn.addEventListener("click", (e) => {
+          btn.addEventListener('click', (e) => {
             e.preventDefault();
             this.toggleEditMode();
           });
@@ -106,7 +106,7 @@ export class ImageOverlayManager {
    */
   toggleEditMode() {
     if (!this.imageUrl) {
-      alert("Nenhuma imagem carregada. Selecione uma imagem primeiro.");
+      alert('Nenhuma imagem carregada. Selecione uma imagem primeiro.');
       return;
     }
 
@@ -121,8 +121,8 @@ export class ImageOverlayManager {
    * Cria o painel de controles para a imagem
    */
   createControlPanel() {
-    this.controlPanel = document.createElement("div");
-    this.controlPanel.id = "imageOverlayControls";
+    this.controlPanel = document.createElement('div');
+    this.controlPanel.id = 'imageOverlayControls';
     this.controlPanel.innerHTML = `
       <div class="image-overlay-header">
         <span>Planta Humanizada</span>
@@ -141,9 +141,9 @@ export class ImageOverlayManager {
           <div class="control-group">
             <label>Rotacao</label>
             <div class="rotation-controls">
-              <button type="button" id="imageRotateLeft" title="Rotacionar -5">&#8634;</button>
+              <button type="button" id="imageRotateLeft" title="Rotacionar -1">&#8634;</button>
               <input type="range" id="imageRotationSlider" min="-180" max="180" value="0" />
-              <button type="button" id="imageRotateRight" title="Rotacionar +5">&#8635;</button>
+              <button type="button" id="imageRotateRight" title="Rotacionar +1">&#8635;</button>
             </div>
             <span id="imageRotationValue">0</span>
           </div>
@@ -173,10 +173,10 @@ export class ImageOverlayManager {
    * Adiciona estilos CSS do painel de controle
    */
   addControlPanelStyles() {
-    if (document.getElementById("imageOverlayStyles")) return;
+    if (document.getElementById('imageOverlayStyles')) return;
 
-    const style = document.createElement("style");
-    style.id = "imageOverlayStyles";
+    const style = document.createElement('style');
+    style.id = 'imageOverlayStyles';
     style.textContent = `
       #imageOverlayControls {
         position: fixed;
@@ -292,59 +292,59 @@ export class ImageOverlayManager {
   setupControlListeners() {
     // Fechar painel
     document
-      .getElementById("imageControlsClose")
-      ?.addEventListener("click", () => {
+      .getElementById('imageControlsClose')
+      ?.addEventListener('click', () => {
         this.hideControls();
       });
 
     // Opacidade
     document
-      .getElementById("imageOpacitySlider")
-      ?.addEventListener("input", (e) => {
+      .getElementById('imageOpacitySlider')
+      ?.addEventListener('input', (e) => {
         const opacity = e.target.value / 100;
         this.setOverlayOpacity(opacity);
-        document.getElementById("imageOpacityValue").textContent =
+        document.getElementById('imageOpacityValue').textContent =
           `${e.target.value}%`;
       });
 
     // Rotacao
     document
-      .getElementById("imageRotationSlider")
-      ?.addEventListener("input", (e) => {
+      .getElementById('imageRotationSlider')
+      ?.addEventListener('input', (e) => {
         this.setRotation(parseFloat(e.target.value));
-        document.getElementById("imageRotationValue").textContent =
+        document.getElementById('imageRotationValue').textContent =
           `${e.target.value}`;
       });
 
     document
-      .getElementById("imageRotateLeft")
-      ?.addEventListener("click", () => {
-        this.rotateOverlay(-5);
+      .getElementById('imageRotateLeft')
+      ?.addEventListener('click', () => {
+        this.rotateOverlay(-1);
       });
 
     document
-      .getElementById("imageRotateRight")
-      ?.addEventListener("click", () => {
-        this.rotateOverlay(5);
+      .getElementById('imageRotateRight')
+      ?.addEventListener('click', () => {
+        this.rotateOverlay(1);
       });
 
     // Escala
-    document.getElementById("imageZoomIn")?.addEventListener("click", () => {
+    document.getElementById('imageZoomIn')?.addEventListener('click', () => {
       this.scaleOverlay(1.1);
     });
 
-    document.getElementById("imageZoomOut")?.addEventListener("click", () => {
+    document.getElementById('imageZoomOut')?.addEventListener('click', () => {
       this.scaleOverlay(0.9);
     });
 
     document
-      .getElementById("imageResetScale")
-      ?.addEventListener("click", () => {
+      .getElementById('imageResetScale')
+      ?.addEventListener('click', () => {
         this.resetTransform();
       });
 
     // Remover
-    document.getElementById("imageRemoveBtn")?.addEventListener("click", () => {
+    document.getElementById('imageRemoveBtn')?.addEventListener('click', () => {
       this.removeOverlay();
     });
   }
@@ -353,31 +353,31 @@ export class ImageOverlayManager {
    * Abre a Media Library do WordPress
    */
   openMediaLibrary() {
-    console.log("ImageOverlayManager: openMediaLibrary()");
+    console.log('ImageOverlayManager: openMediaLibrary()');
     console.log(
-      "ImageOverlayManager: wp disponivel?",
-      typeof wp !== "undefined",
+      'ImageOverlayManager: wp disponivel?',
+      typeof wp !== 'undefined',
     );
     console.log(
-      "ImageOverlayManager: wp.media disponivel?",
-      typeof wp !== "undefined" && typeof wp.media !== "undefined",
+      'ImageOverlayManager: wp.media disponivel?',
+      typeof wp !== 'undefined' && typeof wp.media !== 'undefined',
     );
 
-    if (typeof wp === "undefined" || typeof wp.media === "undefined") {
-      alert("Media Library nao disponivel. Recarregue a pagina.");
-      console.error("ImageOverlayManager: wp.media nao disponivel");
+    if (typeof wp === 'undefined' || typeof wp.media === 'undefined') {
+      alert('Media Library nao disponivel. Recarregue a pagina.');
+      console.error('ImageOverlayManager: wp.media nao disponivel');
       return;
     }
 
     const frame = wp.media({
-      title: "Selecionar Planta Humanizada",
-      button: { text: "Usar esta imagem" },
+      title: 'Selecionar Planta Humanizada',
+      button: { text: 'Usar esta imagem' },
       multiple: false,
-      library: { type: "image" },
+      library: { type: 'image' },
     });
 
-    frame.on("select", () => {
-      const attachment = frame.state().get("selection").first().toJSON();
+    frame.on('select', () => {
+      const attachment = frame.state().get('selection').first().toJSON();
       this.handleImageSelect(attachment.url);
     });
 
@@ -391,7 +391,7 @@ export class ImageOverlayManager {
     this.imageUrl = imageUrl;
 
     // Atualiza preview
-    const preview = document.getElementById("imageOverlayPreview");
+    const preview = document.getElementById('imageOverlayPreview');
     if (preview) {
       preview.src = imageUrl;
     }
@@ -408,14 +408,14 @@ export class ImageOverlayManager {
     // Atualiza hidden inputs
     this.updateHiddenInputs();
 
-    console.log("Planta humanizada carregada:", imageUrl);
+    console.log('Planta humanizada carregada:', imageUrl);
   }
 
   /**
    * Atualiza estado do botão de ajustar posição
    */
   updateAjustarButton(hasImage) {
-    const btnAjustar = document.getElementById("btn_ajustar_planta");
+    const btnAjustar = document.getElementById('btn_ajustar_planta');
     if (btnAjustar) {
       btnAjustar.disabled = !hasImage;
     }
@@ -487,7 +487,7 @@ export class ImageOverlayManager {
     };
 
     img.onerror = () => {
-      console.error("Erro ao carregar imagem para calcular dimensões");
+      console.error('Erro ao carregar imagem para calcular dimensões');
       // Fallback: usa dimensões quadradas
       this.createMapOverlayFallback();
     };
@@ -536,7 +536,7 @@ export class ImageOverlayManager {
    */
   showControls() {
     this.isControlsVisible = true;
-    this.controlPanel?.classList.add("active");
+    this.controlPanel?.classList.add('active');
   }
 
   /**
@@ -544,7 +544,7 @@ export class ImageOverlayManager {
    */
   hideControls() {
     this.isControlsVisible = false;
-    this.controlPanel?.classList.remove("active");
+    this.controlPanel?.classList.remove('active');
   }
 
   /**
@@ -565,9 +565,9 @@ export class ImageOverlayManager {
     };
 
     // Limpa preview
-    const preview = document.getElementById("imageOverlayPreview");
+    const preview = document.getElementById('imageOverlayPreview');
     if (preview) {
-      preview.src = "";
+      preview.src = '';
     }
 
     // Esconde controles
@@ -579,7 +579,7 @@ export class ImageOverlayManager {
     // Limpa hidden inputs
     this.clearHiddenInputs();
 
-    console.log("Planta humanizada removida");
+    console.log('Planta humanizada removida');
   }
 
   /**
@@ -605,8 +605,8 @@ export class ImageOverlayManager {
     this.updateOverlayTransform();
 
     // Atualiza slider
-    const slider = document.getElementById("imageRotationSlider");
-    const value = document.getElementById("imageRotationValue");
+    const slider = document.getElementById('imageRotationSlider');
+    const value = document.getElementById('imageRotationValue');
     if (slider) slider.value = this.overlay.rotation;
     if (value) value.textContent = `${Math.round(this.overlay.rotation)}`;
 
@@ -657,10 +657,10 @@ export class ImageOverlayManager {
     this.createMapOverlay();
 
     // Reseta sliders
-    const rotationSlider = document.getElementById("imageRotationSlider");
-    const rotationValue = document.getElementById("imageRotationValue");
+    const rotationSlider = document.getElementById('imageRotationSlider');
+    const rotationValue = document.getElementById('imageRotationValue');
     if (rotationSlider) rotationSlider.value = 0;
-    if (rotationValue) rotationValue.textContent = "0";
+    if (rotationValue) rotationValue.textContent = '0';
 
     this.updateHiddenInputs();
   }
@@ -678,16 +678,16 @@ export class ImageOverlayManager {
    * Carrega dados salvos (chamado na inicializacao)
    */
   loadSavedOverlay() {
-    const imageUrlInput = document.getElementById("terreno_image_url");
-    const boundsInput = document.getElementById("terreno_image_bounds");
-    const rotationInput = document.getElementById("terreno_image_rotation");
-    const opacityInput = document.getElementById("terreno_image_opacity");
+    const imageUrlInput = document.getElementById('terreno_image_url');
+    const boundsInput = document.getElementById('terreno_image_bounds');
+    const rotationInput = document.getElementById('terreno_image_rotation');
+    const opacityInput = document.getElementById('terreno_image_opacity');
 
     if (imageUrlInput?.value) {
       this.imageUrl = imageUrlInput.value;
 
       // Atualiza preview
-      const preview = document.getElementById("imageOverlayPreview");
+      const preview = document.getElementById('imageOverlayPreview');
       if (preview) {
         preview.src = this.imageUrl;
       }
@@ -705,7 +705,7 @@ export class ImageOverlayManager {
           lng: (bounds.east + bounds.west) / 2,
         };
       } catch (e) {
-        console.warn("Erro ao carregar bounds da imagem:", e);
+        console.warn('Erro ao carregar bounds da imagem:', e);
       }
     }
 
@@ -752,10 +752,10 @@ export class ImageOverlayManager {
     }
 
     // Atualiza sliders
-    const rotationSlider = document.getElementById("imageRotationSlider");
-    const rotationValue = document.getElementById("imageRotationValue");
-    const opacitySlider = document.getElementById("imageOpacitySlider");
-    const opacityValue = document.getElementById("imageOpacityValue");
+    const rotationSlider = document.getElementById('imageRotationSlider');
+    const rotationValue = document.getElementById('imageRotationValue');
+    const opacitySlider = document.getElementById('imageOpacitySlider');
+    const opacityValue = document.getElementById('imageOpacityValue');
 
     if (rotationSlider) rotationSlider.value = this.overlay.rotation;
     if (rotationValue)
@@ -764,34 +764,34 @@ export class ImageOverlayManager {
     if (opacityValue)
       opacityValue.textContent = `${Math.round(this.overlay.opacity * 100)}%`;
 
-    console.log("Overlay de imagem carregado dos dados salvos");
+    console.log('Overlay de imagem carregado dos dados salvos');
   }
 
   /**
    * Atualiza inputs hidden com dados do overlay
    */
   updateHiddenInputs() {
-    const container = document.querySelector("#terreno-mapa-container");
+    const container = document.querySelector('#terreno-mapa-container');
     if (!container) return;
 
     // Image URL
-    let urlInput = document.getElementById("terreno_image_url");
+    let urlInput = document.getElementById('terreno_image_url');
     if (!urlInput) {
-      urlInput = document.createElement("input");
-      urlInput.type = "hidden";
-      urlInput.id = "terreno_image_url";
-      urlInput.name = "terreno_image_url";
+      urlInput = document.createElement('input');
+      urlInput.type = 'hidden';
+      urlInput.id = 'terreno_image_url';
+      urlInput.name = 'terreno_image_url';
       container.appendChild(urlInput);
     }
-    urlInput.value = this.imageUrl || "";
+    urlInput.value = this.imageUrl || '';
 
     // Bounds
-    let boundsInput = document.getElementById("terreno_image_bounds");
+    let boundsInput = document.getElementById('terreno_image_bounds');
     if (!boundsInput) {
-      boundsInput = document.createElement("input");
-      boundsInput.type = "hidden";
-      boundsInput.id = "terreno_image_bounds";
-      boundsInput.name = "terreno_image_bounds";
+      boundsInput = document.createElement('input');
+      boundsInput.type = 'hidden';
+      boundsInput.id = 'terreno_image_bounds';
+      boundsInput.name = 'terreno_image_bounds';
       container.appendChild(boundsInput);
     }
     if (this.overlay.bounds) {
@@ -804,23 +804,23 @@ export class ImageOverlayManager {
     }
 
     // Rotation
-    let rotationInput = document.getElementById("terreno_image_rotation");
+    let rotationInput = document.getElementById('terreno_image_rotation');
     if (!rotationInput) {
-      rotationInput = document.createElement("input");
-      rotationInput.type = "hidden";
-      rotationInput.id = "terreno_image_rotation";
-      rotationInput.name = "terreno_image_rotation";
+      rotationInput = document.createElement('input');
+      rotationInput.type = 'hidden';
+      rotationInput.id = 'terreno_image_rotation';
+      rotationInput.name = 'terreno_image_rotation';
       container.appendChild(rotationInput);
     }
     rotationInput.value = this.overlay.rotation || 0;
 
     // Opacity
-    let opacityInput = document.getElementById("terreno_image_opacity");
+    let opacityInput = document.getElementById('terreno_image_opacity');
     if (!opacityInput) {
-      opacityInput = document.createElement("input");
-      opacityInput.type = "hidden";
-      opacityInput.id = "terreno_image_opacity";
-      opacityInput.name = "terreno_image_opacity";
+      opacityInput = document.createElement('input');
+      opacityInput.type = 'hidden';
+      opacityInput.id = 'terreno_image_opacity';
+      opacityInput.name = 'terreno_image_opacity';
       container.appendChild(opacityInput);
     }
     opacityInput.value = this.overlay.opacity || 0.7;
@@ -831,16 +831,16 @@ export class ImageOverlayManager {
    */
   clearHiddenInputs() {
     const inputs = [
-      "terreno_image_url",
-      "terreno_image_bounds",
-      "terreno_image_rotation",
-      "terreno_image_opacity",
+      'terreno_image_url',
+      'terreno_image_bounds',
+      'terreno_image_rotation',
+      'terreno_image_opacity',
     ];
 
     inputs.forEach((id) => {
       const input = document.getElementById(id);
       if (input) {
-        input.value = "";
+        input.value = '';
       }
     });
   }
@@ -875,24 +875,24 @@ function getCustomImageOverlayClass() {
 
     onAdd() {
       // Cria container do overlay
-      this.div = document.createElement("div");
-      this.div.style.position = "absolute";
-      this.div.style.cursor = "move";
+      this.div = document.createElement('div');
+      this.div.style.position = 'absolute';
+      this.div.style.cursor = 'move';
 
       // Cria elemento de imagem
-      this.img = document.createElement("img");
+      this.img = document.createElement('img');
       this.img.src = this.imageUrl;
-      this.img.style.width = "100%";
-      this.img.style.height = "100%";
+      this.img.style.width = '100%';
+      this.img.style.height = '100%';
       this.img.style.opacity = this.opacity;
-      this.img.style.pointerEvents = "none";
-      this.img.style.objectFit = "contain";
+      this.img.style.pointerEvents = 'none';
+      this.img.style.objectFit = 'contain';
 
       this.div.appendChild(this.img);
 
       // Adiciona borda para visualizacao
-      this.div.style.border = "2px dashed #28a745";
-      this.div.style.boxSizing = "border-box";
+      this.div.style.border = '2px dashed #28a745';
+      this.div.style.boxSizing = 'border-box';
 
       // Adiciona handles de resize nos cantos
       this.addResizeHandles();
@@ -906,9 +906,9 @@ function getCustomImageOverlayClass() {
     }
 
     addResizeHandles() {
-      const corners = ["nw", "ne", "sw", "se"];
+      const corners = ['nw', 'ne', 'sw', 'se'];
       corners.forEach((corner) => {
-        const handle = document.createElement("div");
+        const handle = document.createElement('div');
         handle.className = `image-resize-handle image-resize-${corner}`;
         handle.style.cssText = `
           position: absolute;
@@ -921,12 +921,12 @@ function getCustomImageOverlayClass() {
           z-index: 1000;
         `;
 
-        if (corner.includes("n")) handle.style.top = "-7px";
-        if (corner.includes("s")) handle.style.bottom = "-7px";
-        if (corner.includes("w")) handle.style.left = "-7px";
-        if (corner.includes("e")) handle.style.right = "-7px";
+        if (corner.includes('n')) handle.style.top = '-7px';
+        if (corner.includes('s')) handle.style.bottom = '-7px';
+        if (corner.includes('w')) handle.style.left = '-7px';
+        if (corner.includes('e')) handle.style.right = '-7px';
 
-        handle.addEventListener("mousedown", (e) => {
+        handle.addEventListener('mousedown', (e) => {
           e.stopPropagation();
           this.startResize(e, corner);
         });
@@ -936,17 +936,17 @@ function getCustomImageOverlayClass() {
     }
 
     addDragListeners() {
-      this.div.addEventListener("mousedown", (e) => {
-        if (e.target.classList.contains("image-resize-handle")) return;
+      this.div.addEventListener('mousedown', (e) => {
+        if (e.target.classList.contains('image-resize-handle')) return;
         this.startDrag(e);
       });
 
-      document.addEventListener("mousemove", (e) => {
+      document.addEventListener('mousemove', (e) => {
         if (this.isDragging) this.onDrag(e);
         if (this.isResizing) this.onResize(e);
       });
 
-      document.addEventListener("mouseup", () => {
+      document.addEventListener('mouseup', () => {
         if (this.isDragging || this.isResizing) {
           this.manager.updateHiddenInputs();
         }
@@ -1028,28 +1028,28 @@ function getCustomImageOverlayClass() {
       const dx = e.clientX - this.resizeStart.x;
       const dy = e.clientY - this.resizeStart.y;
 
-      if (this.resizeCorner.includes("e")) {
+      if (this.resizeCorner.includes('e')) {
         newNE = projection.fromDivPixelToLatLng(
           new google.maps.Point(nePoint.x + dx, nePoint.y),
         );
       }
-      if (this.resizeCorner.includes("w")) {
+      if (this.resizeCorner.includes('w')) {
         newSW = projection.fromDivPixelToLatLng(
           new google.maps.Point(swPoint.x + dx, swPoint.y),
         );
       }
-      if (this.resizeCorner.includes("n")) {
+      if (this.resizeCorner.includes('n')) {
         newNE = projection.fromDivPixelToLatLng(
           new google.maps.Point(
-            this.resizeCorner.includes("e") ? nePoint.x + dx : nePoint.x,
+            this.resizeCorner.includes('e') ? nePoint.x + dx : nePoint.x,
             nePoint.y + dy,
           ),
         );
       }
-      if (this.resizeCorner.includes("s")) {
+      if (this.resizeCorner.includes('s')) {
         newSW = projection.fromDivPixelToLatLng(
           new google.maps.Point(
-            this.resizeCorner.includes("w") ? swPoint.x + dx : swPoint.x,
+            this.resizeCorner.includes('w') ? swPoint.x + dx : swPoint.x,
             swPoint.y + dy,
           ),
         );
@@ -1079,14 +1079,14 @@ function getCustomImageOverlayClass() {
       const width = ne.x - sw.x;
       const height = sw.y - ne.y;
 
-      this.div.style.left = sw.x + "px";
-      this.div.style.top = ne.y + "px";
-      this.div.style.width = width + "px";
-      this.div.style.height = height + "px";
+      this.div.style.left = sw.x + 'px';
+      this.div.style.top = ne.y + 'px';
+      this.div.style.width = width + 'px';
+      this.div.style.height = height + 'px';
 
       // Aplica rotacao
       this.div.style.transform = `rotate(${this.rotation}deg)`;
-      this.div.style.transformOrigin = "center center";
+      this.div.style.transformOrigin = 'center center';
     }
 
     updateBounds(bounds) {

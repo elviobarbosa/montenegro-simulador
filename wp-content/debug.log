@@ -484,3 +484,112 @@ Stack trace:
 [25-Jan-2026 13:26:30 UTC] === TERRENO SAVE CONCLUÍDO ===
 [25-Jan-2026 13:26:30 UTC] Hook: post.php, Post Type: terreno
 [25-Jan-2026 13:26:30 UTC] Scripts carregados com sucesso
+[25-Jan-2026 13:30:27 UTC] Scripts frontend carregados com sucesso
+[25-Jan-2026 13:30:27 UTC] === FACEBOOK PIXEL DEBUG ===
+[25-Jan-2026 13:30:27 UTC] Post Type: terreno
+[25-Jan-2026 13:30:27 UTC] is_singular(terreno): SIM
+[25-Jan-2026 13:30:27 UTC] Caso 1: Custom Post Type terreno - ID: 54
+[25-Jan-2026 13:30:27 UTC] Terreno ID: 54
+[25-Jan-2026 13:30:27 UTC] Pixel ID encontrado: VAZIO
+[25-Jan-2026 13:30:27 UTC] Pixel Token encontrado: NÃO
+[25-Jan-2026 13:30:27 UTC] PIXEL NÃO CARREGADO: Pixel ID vazio para terreno 54
+[25-Jan-2026 13:30:30 UTC] 💾 [CVCRM] Cache HIT para cvcrm_empreendimento_38
+[25-Jan-2026 13:31:21 UTC] Hook: post.php, Post Type: terreno
+[25-Jan-2026 13:31:21 UTC] Scripts carregados com sucesso
+[25-Jan-2026 13:31:45 UTC] Hook: post.php, Post Type: terreno
+[25-Jan-2026 13:31:45 UTC] Scripts carregados com sucesso
+[25-Jan-2026 13:32:29 UTC] === TERRENO SAVE INICIADO ===
+[25-Jan-2026 13:32:29 UTC] Post ID: 54
+[25-Jan-2026 13:32:29 UTC] ERRO: Nonce inválido ou ausente
+[25-Jan-2026 13:32:30 UTC] === TERRENO SAVE INICIADO ===
+[25-Jan-2026 13:32:30 UTC] Post ID: 54
+[25-Jan-2026 13:32:30 UTC] Empreendimento id salvo: 38
+[25-Jan-2026 13:32:30 UTC] Endereco salvo: 
+[25-Jan-2026 13:32:30 UTC] Latitude salva: -3.7319
+[25-Jan-2026 13:32:30 UTC] Longitude salva: -38.5267
+[25-Jan-2026 13:32:30 UTC] Zoom salvo: 19
+[25-Jan-2026 13:32:30 UTC] Facebook Pixel ID salvo: 
+[25-Jan-2026 13:32:30 UTC] Facebook Pixel Token salvo
+[25-Jan-2026 13:32:30 UTC] Logo do empreendimento removido
+[25-Jan-2026 13:32:30 UTC] Dados lotes recebidos (raw): []...
+[25-Jan-2026 13:32:30 UTC] Lotes salvos com sucesso. Count: 0
+[25-Jan-2026 13:32:30 UTC] SVG Content salvo: 24717 bytes
+[25-Jan-2026 13:32:30 UTC] SVG Bounds salvos
+[25-Jan-2026 13:32:30 UTC] SVG Rotation salvo: 9
+[25-Jan-2026 13:32:30 UTC] Shape Mapping salvo: 1 vínculos
+[25-Jan-2026 13:32:30 UTC] Image URL salva: http://montenegro.simulador/wp-content/uploads/2025/08/VISTA_01_PROJETO_CONDOMINIO_02_10000x5626px_SEM_TEXTOS.png
+[25-Jan-2026 13:32:30 UTC] Image Bounds salvos
+[25-Jan-2026 13:32:30 UTC] Image Rotation salva: 0
+[25-Jan-2026 13:32:30 UTC] Image Opacity salva: 1
+[25-Jan-2026 13:32:30 UTC] === TERRENO SAVE CONCLUÍDO ===
+[25-Jan-2026 13:32:30 UTC] Hook: post.php, Post Type: terreno
+[25-Jan-2026 13:32:30 UTC] Scripts carregados com sucesso
+[25-Jan-2026 13:32:32 UTC] Scripts frontend carregados com sucesso
+[25-Jan-2026 13:32:32 UTC] === FACEBOOK PIXEL DEBUG ===
+[25-Jan-2026 13:32:32 UTC] Post Type: terreno
+[25-Jan-2026 13:32:32 UTC] is_singular(terreno): SIM
+[25-Jan-2026 13:32:32 UTC] Caso 1: Custom Post Type terreno - ID: 54
+[25-Jan-2026 13:32:32 UTC] Terreno ID: 54
+[25-Jan-2026 13:32:32 UTC] Pixel ID encontrado: VAZIO
+[25-Jan-2026 13:32:32 UTC] Pixel Token encontrado: NÃO
+[25-Jan-2026 13:32:32 UTC] PIXEL NÃO CARREGADO: Pixel ID vazio para terreno 54
+[25-Jan-2026 13:32:33 UTC] 💾 [CVCRM] Cache HIT para cvcrm_empreendimento_38
+[25-Jan-2026 13:32:36 UTC] 🌎 [CVCRM] Consultando URL: https://montenegro.cvcrm.com.br/api/v1/cvdw/unidades?a_partir_referencia=38
+[25-Jan-2026 13:32:38 UTC] [CVCRM] Status: 200
+[25-Jan-2026 13:32:38 UTC] [CVCRM] Body: {"pagina":1,"registros":30,"total_de_registros":11310,"total_de_paginas":377,"dados":[{"referencia":11837,"referencia_data":"2022-07-22 14:38:33","idempreendimento":6,"idempreendimento_int":"VH5.01.1","nome_empreendimento":"Villa Dourados                          ","idtipo_empreendimento":3,"tipo_empreendimento":"Loteamento","idetapa":18,"idetapa_int":"VH5.01.1.1","etapa":"Geral","idbloco":283,"idbloco_int":"VH5.01.1.1.02.01","bloco":"AA","area_privativa":"150.000000","idunidade":11837,"nome":"6
+[25-Jan-2026 13:33:28 UTC] === TERRENO SAVE INICIADO ===
+[25-Jan-2026 13:33:28 UTC] Post ID: 54
+[25-Jan-2026 13:33:28 UTC] ERRO: Nonce inválido ou ausente
+[25-Jan-2026 13:33:29 UTC] === TERRENO SAVE INICIADO ===
+[25-Jan-2026 13:33:29 UTC] Post ID: 54
+[25-Jan-2026 13:33:29 UTC] Empreendimento id salvo: 38
+[25-Jan-2026 13:33:29 UTC] Endereco salvo: 
+[25-Jan-2026 13:33:29 UTC] Latitude salva: -3.7319
+[25-Jan-2026 13:33:29 UTC] Longitude salva: -38.5267
+[25-Jan-2026 13:33:29 UTC] Zoom salvo: 19
+[25-Jan-2026 13:33:29 UTC] Facebook Pixel ID salvo: 
+[25-Jan-2026 13:33:29 UTC] Facebook Pixel Token salvo
+[25-Jan-2026 13:33:29 UTC] Logo do empreendimento removido
+[25-Jan-2026 13:33:29 UTC] Dados lotes recebidos (raw): []...
+[25-Jan-2026 13:33:29 UTC] Lotes salvos com sucesso. Count: 0
+[25-Jan-2026 13:33:29 UTC] SVG Content salvo: 24717 bytes
+[25-Jan-2026 13:33:29 UTC] SVG Bounds salvos
+[25-Jan-2026 13:33:29 UTC] SVG Rotation salvo: 9
+[25-Jan-2026 13:33:29 UTC] Shape Mapping salvo: 2 vínculos
+[25-Jan-2026 13:33:29 UTC] Image URL salva: http://montenegro.simulador/wp-content/uploads/2025/08/VISTA_01_PROJETO_CONDOMINIO_02_10000x5626px_SEM_TEXTOS.png
+[25-Jan-2026 13:33:29 UTC] Image Bounds salvos
+[25-Jan-2026 13:33:29 UTC] Image Rotation salva: 0
+[25-Jan-2026 13:33:29 UTC] Image Opacity salva: 1
+[25-Jan-2026 13:33:29 UTC] === TERRENO SAVE CONCLUÍDO ===
+[25-Jan-2026 13:33:29 UTC] Hook: post.php, Post Type: terreno
+[25-Jan-2026 13:33:29 UTC] Scripts carregados com sucesso
+[25-Jan-2026 13:33:31 UTC] Scripts frontend carregados com sucesso
+[25-Jan-2026 13:33:31 UTC] === FACEBOOK PIXEL DEBUG ===
+[25-Jan-2026 13:33:31 UTC] Post Type: terreno
+[25-Jan-2026 13:33:31 UTC] is_singular(terreno): SIM
+[25-Jan-2026 13:33:31 UTC] Caso 1: Custom Post Type terreno - ID: 54
+[25-Jan-2026 13:33:31 UTC] Terreno ID: 54
+[25-Jan-2026 13:33:31 UTC] Pixel ID encontrado: VAZIO
+[25-Jan-2026 13:33:31 UTC] Pixel Token encontrado: NÃO
+[25-Jan-2026 13:33:31 UTC] PIXEL NÃO CARREGADO: Pixel ID vazio para terreno 54
+[25-Jan-2026 13:33:35 UTC] 💾 [CVCRM] Cache HIT para cvcrm_empreendimento_38
+[25-Jan-2026 13:33:37 UTC] 💾 [CVCRM] Cache HIT para cvcrm_unidades_emp_38
+[25-Jan-2026 13:33:50 UTC] 💾 [CVCRM] Cache HIT para cvcrm_unidades_emp_38
+[25-Jan-2026 13:33:52 UTC] 💾 [CVCRM] Cache HIT para cvcrm_unidades_emp_38
+[25-Jan-2026 13:33:55 UTC] 💾 [CVCRM] Cache HIT para cvcrm_unidades_emp_38
+[25-Jan-2026 13:34:01 UTC] 💾 [CVCRM] Cache HIT para cvcrm_unidades_emp_38
+[25-Jan-2026 13:34:18 UTC] 💾 [CVCRM] Cache HIT para cvcrm_unidades_emp_38
+[25-Jan-2026 13:38:04 UTC] Hook: post.php, Post Type: terreno
+[25-Jan-2026 13:38:04 UTC] Scripts carregados com sucesso
+[25-Jan-2026 13:52:12 UTC] Hook: post.php, Post Type: terreno
+[25-Jan-2026 13:52:12 UTC] Scripts carregados com sucesso
+[25-Jan-2026 14:01:05 UTC] Hook: post.php, Post Type: terreno
+[25-Jan-2026 14:01:05 UTC] Scripts carregados com sucesso
+[25-Jan-2026 14:09:37 UTC] Hook: post.php, Post Type: terreno
+[25-Jan-2026 14:09:37 UTC] Scripts carregados com sucesso
+[25-Jan-2026 14:09:46 UTC] Hook: post.php, Post Type: terreno
+[25-Jan-2026 14:09:46 UTC] Scripts carregados com sucesso
+[25-Jan-2026 14:11:08 UTC] Hook: post.php, Post Type: terreno
+[25-Jan-2026 14:11:08 UTC] Scripts carregados com sucesso
+[25-Jan-2026 14:12:32 UTC] Hook: post.php, Post Type: terreno
+[25-Jan-2026 14:12:32 UTC] Scripts carregados com sucesso
