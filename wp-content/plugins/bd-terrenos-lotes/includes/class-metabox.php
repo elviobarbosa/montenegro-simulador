@@ -71,6 +71,22 @@ class TerrenosLotes_MetaBox {
             style="width: 100%;" />
     </div>
 
+    <hr style="margin: 20px 0;">
+
+    <!-- Importar SVG -->
+    <div style="margin-bottom: 15px;">
+        <label style="display: block; margin-bottom: 5px; font-weight: 600;">
+            Importar Lotes de SVG
+        </label>
+        <p style="font-size: 12px; color: #666; margin-bottom: 10px;">
+            Importe lotes a partir de um arquivo SVG da planta do loteamento.
+        </p>
+        <button type="button" class="button button-primary" id="btn_importar_svg" style="width: 100%;">
+            <span class="dashicons dashicons-upload" style="margin-top: 3px;"></span>
+            Importar SVG
+        </button>
+    </div>
+
     <script>
     jQuery(document).ready(function($) {
         var logoMediaUploader;
@@ -131,7 +147,13 @@ class TerrenosLotes_MetaBox {
     $lotes_data = get_post_meta($post->ID, '_terreno_lotes', true);
     $zoom = get_post_meta($post->ID, '_terreno_zoom', true) ?: '18';
     $empreendimento_id = get_post_meta($post->ID, '_empreendimento_id', true);
-    
+
+    // Dados do SVG Overlay
+    $svg_content = get_post_meta($post->ID, '_terreno_svg_content', true);
+    $svg_bounds = get_post_meta($post->ID, '_terreno_svg_bounds', true);
+    $svg_rotation = get_post_meta($post->ID, '_terreno_svg_rotation', true);
+    $shape_mapping = get_post_meta($post->ID, '_terreno_shape_mapping', true);
+
     ?>
 
     <!-- Modal de Edição de Lote -->
@@ -164,6 +186,115 @@ class TerrenosLotes_MetaBox {
     </div>
     <!-- Fim Modal -->
 
+    <!-- Painel Lateral de Importação de SVG -->
+    <div id="svgImportModal" style="display:none; position:fixed; top:32px; right:0; width:320px; height:calc(100vh - 32px); background:white; z-index: 9999; overflow-y: auto; box-shadow: -4px 0 20px rgba(0,0,0,0.2); border-left: 1px solid #ddd;">
+        <div style="padding: 20px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                <h3 style="margin: 0; color: #23282d; font-size: 16px;">Importar SVG</h3>
+                <button type="button" class="button" id="svgImportClose" style="padding: 0 8px;">&times;</button>
+            </div>
+
+            <!-- Step 1: Upload -->
+            <div id="svgStep1">
+                <div style="border: 2px dashed #ccc; border-radius: 8px; padding: 25px; text-align: center; margin-bottom: 15px;" id="svgDropZone">
+                    <span class="dashicons dashicons-upload" style="font-size: 36px; color: #ccc; display: block; margin-bottom: 8px;"></span>
+                    <p style="margin: 0 0 8px 0; font-size: 13px;">Arraste um arquivo SVG aqui ou</p>
+                    <input type="file" id="svgFileInput" accept=".svg" style="display: none;">
+                    <button type="button" class="button button-primary" id="svgSelectFile">Selecionar Arquivo</button>
+                </div>
+                <div id="svgUploadStatus" style="display: none; padding: 8px; background: #f0f0f0; border-radius: 4px; margin-bottom: 15px; font-size: 12px;">
+                    <span id="svgFileName"></span>
+                    <span id="svgShapeCount" style="float: right;"></span>
+                </div>
+            </div>
+
+            <!-- Step 2: Controles de Posicionamento -->
+            <div id="svgStep2" style="display: none;">
+                <!-- Instruções -->
+                <div style="background: #e7f5ff; border: 1px solid #0073aa; border-radius: 4px; padding: 10px; margin-bottom: 15px;">
+                    <h4 style="margin: 0 0 8px 0; color: #0073aa; font-size: 13px;">
+                        <span class="dashicons dashicons-info" style="margin-right: 5px;"></span>
+                        Como posicionar
+                    </h4>
+                    <ul style="margin: 0; padding-left: 18px; font-size: 12px; color: #333;">
+                        <li><strong>Arrastar:</strong> Clique e arraste para mover</li>
+                        <li><strong>Redimensionar:</strong> Arraste os cantos</li>
+                        <li><strong>Rotacionar:</strong> Use o slider abaixo</li>
+                    </ul>
+                </div>
+
+                <!-- Controles de Transformação -->
+                <div style="background: #f5f5f5; padding: 12px; border-radius: 4px; margin-bottom: 15px;">
+                    <h4 style="margin: 0 0 12px 0; font-size: 13px;">Controles</h4>
+
+                    <!-- Rotação -->
+                    <div style="margin-bottom: 12px;">
+                        <label style="display: block; margin-bottom: 4px; font-weight: 600; font-size: 12px;">
+                            Rotação: <span id="svgRotationValue">0°</span>
+                        </label>
+                        <div style="display: flex; align-items: center; gap: 6px;">
+                            <button type="button" class="button button-small" id="svgRotateLeft" title="-5°">
+                                <span class="dashicons dashicons-image-rotate-left" style="font-size: 16px;"></span>
+                            </button>
+                            <input type="range" id="svgRotationSlider" min="-180" max="180" value="0"
+                                   style="flex: 1; margin: 0;">
+                            <button type="button" class="button button-small" id="svgRotateRight" title="+5°">
+                                <span class="dashicons dashicons-image-rotate-right" style="font-size: 16px;"></span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Opacidade -->
+                    <div style="margin-bottom: 12px;">
+                        <label style="display: block; margin-bottom: 4px; font-weight: 600; font-size: 12px;">
+                            Opacidade
+                        </label>
+                        <input type="range" id="svgOpacitySlider" min="10" max="100" value="70"
+                               style="width: 100%;">
+                    </div>
+
+                    <!-- Zoom + Reset -->
+                    <div style="display: flex; gap: 6px;">
+                        <button type="button" class="button button-small" id="svgZoomOut" title="Diminuir">
+                            <span class="dashicons dashicons-minus" style="font-size: 16px;"></span>
+                        </button>
+                        <button type="button" class="button button-small" id="svgZoomIn" title="Aumentar">
+                            <span class="dashicons dashicons-plus" style="font-size: 16px;"></span>
+                        </button>
+                        <button type="button" class="button button-small" id="svgResetTransform" style="flex: 1;" title="Resetar">
+                            <span class="dashicons dashicons-image-rotate" style="font-size: 16px;"></span> Resetar
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Info dos shapes -->
+                <div style="background: #fff; border: 1px solid #ddd; border-radius: 4px; padding: 10px; margin-bottom: 12px;">
+                    <h4 style="margin: 0 0 8px 0; font-size: 12px;">
+                        <span class="dashicons dashicons-admin-multisite" style="margin-right: 4px;"></span>
+                        Shapes: <span id="totalShapesCount">0</span>
+                    </h4>
+                    <div id="shapesListContainer" style="max-height: 80px; overflow-y: auto; font-size: 11px;">
+                        <!-- Lista de shapes -->
+                    </div>
+                </div>
+
+                <!-- Dica -->
+                <div style="background: #fff8e5; border: 1px solid #f0c36d; border-radius: 4px; padding: 8px; margin-bottom: 15px; font-size: 11px;">
+                    <strong>Dica:</strong> Alinhe com as ruas no satélite.
+                </div>
+            </div>
+
+            <!-- Botões de ação -->
+            <div style="display: flex; gap: 8px; justify-content: flex-end; border-top: 1px solid #ddd; padding-top: 15px; margin-top: 10px;">
+                <button type="button" class="button" id="svgImportCancel">Cancelar</button>
+                <button type="button" class="button button-primary" id="svgImportConfirm" disabled>
+                    <span class="dashicons dashicons-yes" style="font-size: 16px;"></span>
+                    Importar
+                </button>
+            </div>
+        </div>
+    </div>
+    <!-- Fim Modal SVG -->
 
     <div id="terreno-mapa-container">
         <!-- Controles superiores -->
@@ -270,8 +401,18 @@ class TerrenosLotes_MetaBox {
             </div>
         </div>
         
-        <input type="hidden" id="terreno_lotes_data" name="terreno_lotes_data" 
+        <input type="hidden" id="terreno_lotes_data" name="terreno_lotes_data"
                value='<?php echo esc_attr( $lotes_data ? wp_json_encode( json_decode($lotes_data, true) ) : "[]" ); ?>' />
+
+        <!-- Dados do SVG Overlay -->
+        <input type="hidden" id="terreno_svg_content" name="terreno_svg_content"
+               value="<?php echo esc_attr($svg_content); ?>" />
+        <input type="hidden" id="terreno_svg_bounds" name="terreno_svg_bounds"
+               value="<?php echo esc_attr($svg_bounds); ?>" />
+        <input type="hidden" id="terreno_svg_rotation" name="terreno_svg_rotation"
+               value="<?php echo esc_attr($svg_rotation); ?>" />
+        <input type="hidden" id="terreno_shape_mapping" name="terreno_shape_mapping"
+               value='<?php echo esc_attr($shape_mapping); ?>' />
     </div>
     
     <style>

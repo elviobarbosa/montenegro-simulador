@@ -16,6 +16,8 @@ require_once __DIR__ . '/includes/class-enqueue.php';
 require_once __DIR__ . '/includes/class-lote-info.php';
 require_once __DIR__ . '/includes/class-settings-page.php';
 require_once __DIR__ . '/includes/class-facebook-pixel.php';
+require_once __DIR__ . '/includes/class-svg-importer.php';
+require_once __DIR__ . '/includes/class-ajax-handlers.php';
 
 new TerrenosLotes_CPT();
 new TerrenosLotes_MetaBox();
@@ -24,6 +26,7 @@ new TerrenosLotes_Enqueue();
 new TerrenosLotes_LoteInfo();
 new TerrenosLotes_SettingsPage();
 new TerrenosLotes_FacebookPixel();
+new TerrenosLotes_AjaxHandlers();
 
 function get_terreno_lotes($post_id) {
     $lotes_data = get_post_meta($post_id, '_terreno_lotes', true);
@@ -47,6 +50,15 @@ function terreno_mapa_shortcode($atts) {
     $zoom = $atts['zoom'] ?: get_post_meta($post_id, '_terreno_zoom', true) ?: '18';
     $empreendimento_id = get_post_meta($post_id, '_empreendimento_id', true);
     $api_key = get_option('terreno_google_maps_api_key', '');
+
+    // Dados do SVG Overlay
+    $svg_content = get_post_meta($post_id, '_terreno_svg_content', true);
+    $svg_bounds = get_post_meta($post_id, '_terreno_svg_bounds', true);
+    $svg_rotation = get_post_meta($post_id, '_terreno_svg_rotation', true) ?: '0';
+    $shape_mapping = get_post_meta($post_id, '_terreno_shape_mapping', true);
+
+    // Verifica se deve usar SVG overlay ou polígonos tradicionais
+    $use_svg_overlay = !empty($svg_content) && !empty($svg_bounds) && !empty($shape_mapping);
     
     if (!$latitude || !$longitude || !$api_key ) {
         return '<p>Mapa não disponível. Verifique a configuração.</p>';
@@ -68,6 +80,15 @@ function terreno_mapa_shortcode($atts) {
     <script>
     const terrenoForm = <?php echo json_encode($form_html); ?>;
     let empreedimentosData = [];
+
+    // Configuração do SVG Overlay
+    const svgOverlayConfig = {
+        enabled: <?php echo $use_svg_overlay ? 'true' : 'false'; ?>,
+        content: <?php echo $use_svg_overlay ? json_encode($svg_content) : 'null'; ?>,
+        bounds: <?php echo $use_svg_overlay && $svg_bounds ? $svg_bounds : 'null'; ?>,
+        rotation: <?php echo floatval($svg_rotation); ?>,
+        mapping: <?php echo $use_svg_overlay && $shape_mapping ? $shape_mapping : '{}'; ?>
+    };
 
     async function loadEmpreendimentos(id) {
         try {
@@ -363,21 +384,277 @@ function terreno_mapa_shortcode($atts) {
 
         const { etapas } = empreedimentosData;
         const { blocos } = etapas[0];
-        
+
         var mapOptions = {
             center: { lat: <?php echo $latitude; ?>, lng: <?php echo $longitude; ?> },
             zoom: <?php echo $zoom; ?>,
-            mapTypeId: google.maps.MapTypeId.ROADMAP
+            mapTypeId: google.maps.MapTypeId.SATELLITE
         };
-        
+
         var map = new google.maps.Map(document.getElementById('<?php echo $map_id; ?>'), mapOptions);
-        
-        var marker = new google.maps.Marker({
-            position: { lat: <?php echo $latitude; ?>, lng: <?php echo $longitude; ?> },
-            map: map,
-            title: 'Localização do Terreno'
+
+        // InfoWindow compartilhada
+        var infoWindow = new google.maps.InfoWindow();
+
+        // Verifica se deve usar SVG Overlay
+        if (svgOverlayConfig.enabled && svgOverlayConfig.content && svgOverlayConfig.bounds) {
+            console.log('Usando SVG Overlay');
+            initSVGOverlay(map, blocos, infoWindow);
+        } else {
+            console.log('Usando polígonos tradicionais');
+            initPolygons(map, blocos, infoWindow);
+        }
+    }
+
+    /**
+     * Inicializa SVG Overlay sobre o mapa
+     */
+    function initSVGOverlay(map, blocos, infoWindow) {
+        // Cria Custom Overlay para o SVG
+        class SVGMapOverlay extends google.maps.OverlayView {
+            constructor(bounds, svgContent, rotation) {
+                super();
+                this.bounds = bounds;
+                this.svgContent = svgContent;
+                this.rotation = rotation;
+                this.div = null;
+            }
+
+            onAdd() {
+                this.div = document.createElement('div');
+                this.div.style.position = 'absolute';
+                this.div.innerHTML = this.svgContent;
+                this.div.className = 'svg-map-overlay';
+
+                const svg = this.div.querySelector('svg');
+                if (svg) {
+                    svg.style.width = '100%';
+                    svg.style.height = '100%';
+                    svg.style.pointerEvents = 'auto';
+                }
+
+                // Aplica cores baseadas no status das unidades
+                this.applyShapeColors(blocos);
+
+                // Adiciona eventos de clique nos shapes
+                this.addShapeListeners(blocos, infoWindow, map);
+
+                const panes = this.getPanes();
+                panes.overlayMouseTarget.appendChild(this.div);
+            }
+
+            draw() {
+                const projection = this.getProjection();
+                if (!projection || !this.div) return;
+
+                const sw = projection.fromLatLngToDivPixel(
+                    new google.maps.LatLng(this.bounds.south, this.bounds.west)
+                );
+                const ne = projection.fromLatLngToDivPixel(
+                    new google.maps.LatLng(this.bounds.north, this.bounds.east)
+                );
+
+                if (!sw || !ne) return;
+
+                this.div.style.left = sw.x + 'px';
+                this.div.style.top = ne.y + 'px';
+                this.div.style.width = (ne.x - sw.x) + 'px';
+                this.div.style.height = (sw.y - ne.y) + 'px';
+                this.div.style.transform = `rotate(${this.rotation}deg)`;
+                this.div.style.transformOrigin = 'center center';
+            }
+
+            applyShapeColors(blocos) {
+                const svg = this.div.querySelector('svg');
+                if (!svg) return;
+
+                const shapes = svg.querySelectorAll('polygon, path, polyline, rect');
+                shapes.forEach((shape, index) => {
+                    const mappingData = svgOverlayConfig.mapping[index];
+                    if (!mappingData) {
+                        // Shape não mapeado - semi-transparente
+                        shape.style.fill = 'rgba(200, 200, 200, 0.2)';
+                        shape.style.stroke = '#999';
+                        shape.style.strokeWidth = '1px';
+                        return;
+                    }
+
+                    // Busca dados da unidade
+                    const unidade = findUnidade(blocos, mappingData.bloco, mappingData.lote_id);
+                    if (!unidade || !unidade.situacao) {
+                        shape.style.fill = 'rgba(200, 200, 200, 0.3)';
+                        shape.style.stroke = '#666';
+                        return;
+                    }
+
+                    const disponivel = unidade.situacao.situacao_mapa_disponibilidade === 1;
+                    shape.style.fill = disponivel ? 'rgba(90, 163, 129, 0.5)' : 'rgba(255, 0, 0, 0.5)';
+                    shape.style.stroke = disponivel ? '#5aa381' : '#FF0000';
+                    shape.style.strokeWidth = '2px';
+                    shape.style.cursor = 'pointer';
+                    shape.dataset.shapeIndex = index;
+                    shape.dataset.loteId = mappingData.lote_id;
+                    shape.dataset.bloco = mappingData.bloco;
+                });
+            }
+
+            addShapeListeners(blocos, infoWindow, map) {
+                const svg = this.div.querySelector('svg');
+                if (!svg) return;
+
+                const shapes = svg.querySelectorAll('polygon, path, polyline, rect');
+                shapes.forEach((shape, index) => {
+                    const mappingData = svgOverlayConfig.mapping[index];
+                    if (!mappingData) return;
+
+                    // Hover
+                    shape.addEventListener('mouseenter', () => {
+                        const currentFill = shape.style.fill;
+                        shape.dataset.originalFill = currentFill;
+                        shape.style.fillOpacity = '0.7';
+                        shape.style.strokeWidth = '3px';
+                    });
+
+                    shape.addEventListener('mouseleave', () => {
+                        shape.style.fillOpacity = '0.5';
+                        shape.style.strokeWidth = '2px';
+                    });
+
+                    // Click
+                    shape.addEventListener('click', async (e) => {
+                        e.stopPropagation();
+
+                        const unidade = findUnidade(blocos, mappingData.bloco, mappingData.lote_id);
+                        if (!unidade) {
+                            console.warn('Unidade não encontrada:', mappingData);
+                            return;
+                        }
+
+                        // Calcula posição do clique no mapa
+                        const rect = shape.getBoundingClientRect();
+                        const mapDiv = map.getDiv();
+                        const mapRect = mapDiv.getBoundingClientRect();
+
+                        // Centro do shape
+                        const centerX = rect.left + rect.width / 2 - mapRect.left;
+                        const centerY = rect.top + rect.height / 2 - mapRect.top;
+
+                        // Converte para LatLng
+                        const projection = this.getProjection();
+                        const point = new google.maps.Point(centerX + parseFloat(this.div.style.left), centerY + parseFloat(this.div.style.top));
+                        const latLng = projection.fromDivPixelToLatLng(point);
+
+                        // Abre InfoWindow
+                        handleShapeClick(unidade, mappingData, latLng, infoWindow, map);
+                    });
+                });
+            }
+
+            onRemove() {
+                if (this.div) {
+                    this.div.parentNode.removeChild(this.div);
+                    this.div = null;
+                }
+            }
+        }
+
+        // Cria e adiciona o overlay
+        const overlay = new SVGMapOverlay(
+            svgOverlayConfig.bounds,
+            svgOverlayConfig.content,
+            svgOverlayConfig.rotation
+        );
+        overlay.setMap(map);
+    }
+
+    /**
+     * Handler para clique no shape do SVG
+     */
+    async function handleShapeClick(unidade, mappingData, latLng, infoWindow, map) {
+        // Mostra loading
+        infoWindow.setContent('<div class="info-window-step2" style="text-align:center;padding:20px;">Carregando...</div>');
+        infoWindow.setPosition(latLng);
+        infoWindow.open(map);
+
+        // Busca valor atualizado
+        const valorApi = await loadUnidadeValor(<?php echo $empreendimento_id; ?>, unidade.idunidade);
+        if (valorApi !== null) {
+            unidade.valor = valorApi;
+        }
+
+        // Mostra simulador
+        const values = {
+            id: mappingData.lote_id,
+            bloco: mappingData.bloco,
+            price: unidade.valor ?? 150000
+        };
+        infoWindow.setContent(infoWindowTemplateStep2(unidade));
+
+        google.maps.event.addListenerOnce(infoWindow, "domready", function () {
+            const btnWapp = document.querySelector('[data-js="send-wapp"]');
+            const btnEmail = document.querySelector('[data-js="send-email"]');
+            const slider = new NumberSlider(document.querySelector(".info-window-step2"), values);
+
+            const simulacao = slider.getValues();
+
+            const send = (isWapp = false) => {
+                infoWindow.setContent(terrenoForm);
+
+                google.maps.event.addListenerOnce(infoWindow, "domready", function () {
+                    const formEl = document.querySelector('.gm-style-iw .wpcf7 form');
+                    if (formEl && typeof wpcf7 !== "undefined") {
+                        formEl.addEventListener("keyup", (e) => {
+                            if (e.target.matches("input[type=tel]")) {
+                                let value = e.target.value.replace(/\D/g, "");
+                                value = value.replace(/^(\d{2})(\d)/g, "($1) $2");
+                                value = value.replace(/(\d)(\d{4})$/, "$1-$2");
+                                e.target.value = value;
+                            }
+                        });
+
+                        document.addEventListener('wpcf7mailsent', function(event) {
+                            const data = event.detail.inputs;
+                            const phone = data.find(f => f.name === 'whatsapp')?.value;
+                            const nome = data.find(f => f.name === 'your-name')?.value;
+
+                            let mensagem = `Olá! ${nome}. Aqui estão os dados da simulação:\n\n`;
+                            mensagem += `Empreendimento: ${empreedimentosData.nome || ''}\n`;
+                            mensagem += `Quadra: ${unidade.idbloco || ''}\n`;
+                            mensagem += `Lote: ${unidade.nome}\n\n`;
+                            mensagem += `--------------------------\n\n`;
+                            mensagem += `Valor do Lote: ${Number(simulacao.preco).toLocaleString("pt-BR",{style:"currency",currency:"BRL"})}\n`;
+                            mensagem += `Entrada: ${simulacao.entrada.toLocaleString("pt-BR",{style:"currency",currency:"BRL"})}\n`;
+                            mensagem += `Valor Financiado: ${simulacao.financiado.toLocaleString("pt-BR",{style:"currency",currency:"BRL"})}\n`;
+                            mensagem += `Balão Anual (20%): ${simulacao.valorBalao.toLocaleString("pt-BR",{style:"currency",currency:"BRL"})} x ${simulacao.qtdBaloes}\n`;
+                            mensagem += `Qtd. Parcelas: ${simulacao.parcelas}\n`;
+                            mensagem += `Valor da Parcela Mensal: ${simulacao.valorParcela.toLocaleString("pt-BR",{style:"currency",currency:"BRL"})}\n`;
+
+                            const url = `https://wa.me/55${phone.replace(/\D/g, "")}?text=${encodeURIComponent(mensagem)}`;
+                            if (isWapp) window.open(url, '_blank');
+                        }, { once: true });
+
+                        formEl.reset();
+                        formEl.querySelectorAll('.wpcf7-not-valid-tip').forEach(el => el.remove());
+                        formEl.querySelectorAll('.wpcf7-response-output').forEach(el => el.innerHTML = '');
+                        wpcf7.init(formEl);
+                    }
+                });
+            };
+
+            if (btnEmail) {
+                btnEmail.addEventListener("click", () => send(false));
+            }
+
+            if (btnWapp) {
+                btnWapp.addEventListener("click", () => send(true));
+            }
         });
-        
+    }
+
+    /**
+     * Inicializa polígonos tradicionais (modo legado)
+     */
+    function initPolygons(map, blocos, infoWindow) {
         <?php if ($lotes_data): ?>
         var lotes = <?php echo $lotes_data; ?>;
         console.log(lotes);
@@ -516,7 +793,7 @@ function terreno_mapa_shortcode($atts) {
         });
         <?php endif; ?>
     }
-    
+
     if (typeof google !== 'undefined') {
         initTerrenoMap<?php echo $post_id; ?>();
     } 

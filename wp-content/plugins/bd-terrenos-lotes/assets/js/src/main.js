@@ -14,6 +14,8 @@ import { DrawingManager } from './managers/DrawingManager';
 import { PolygonManager } from './managers/PolygonManager';
 import { GeocodeManager } from './managers/GeocodeManager';
 import { DataPersistence } from './managers/DataPersistence';
+import { SVGOverlayManager } from './managers/SVGOverlayManager';
+import { SVGEditorManager } from './managers/SVGEditorManager';
 
 // Services
 import { CoordinatesService } from './services/CoordinatesService';
@@ -49,6 +51,8 @@ class TerrenoMapApp {
     this.dataPersistence = null;
     this.uiManager = null;
     this.modalManager = null;
+    this.svgImportManager = null;
+    this.svgEditorManager = null;
 
     // InfoWindow compartilhada
     this.infoWindow = null;
@@ -78,6 +82,23 @@ class TerrenoMapApp {
       this.dataPersistence = new DataPersistence('terreno_lotes_data', this.stateManager, this.eventBus);
       this.uiManager = new UIManager(this.stateManager, this.eventBus);
       this.modalManager = new ModalManager();
+      this.svgImportManager = new SVGOverlayManager(
+        map,
+        this.stateManager,
+        this.eventBus,
+        this.polygonManager,
+        this.dataPersistence
+      );
+
+      // Inicializa editor de SVG para vincular shapes aos lotes
+      this.svgEditorManager = new SVGEditorManager(
+        map,
+        this.stateManager,
+        this.eventBus
+      );
+
+      // Carrega overlay SVG salvo (se existir)
+      this.svgImportManager.loadSavedOverlay();
 
       // Carrega dados salvos
       const lotesData = this.dataPersistence.load();
@@ -135,6 +156,28 @@ class TerrenoMapApp {
     // Data events
     this.eventBus.on('data:saved', () => {
       console.log('✓ Dados salvos com sucesso');
+    });
+
+    // SVG Import events
+    this.eventBus.on('lotes:imported', ({ count }) => {
+      console.log(`✓ ${count} lotes importados do SVG`);
+      // Atualiza a lista de lotes na UI
+      this.uiManager.renderLotesList(this.stateManager.getState('lotesData'));
+    });
+
+    // SVG Editor events - clique em shape no overlay
+    this.eventBus.on('svg:shape_clicked', ({ index }) => {
+      console.log(`Shape ${index} clicado no overlay`);
+      // Abre o editor e seleciona o shape
+      if (this.svgEditorManager) {
+        this.svgEditorManager.openEditor();
+        this.svgEditorManager.selectShape(index);
+      }
+    });
+
+    // SVG configuração salva
+    this.eventBus.on('svg:configuration_saved', (data) => {
+      console.log('✓ Configuração SVG salva:', data);
     });
   }
 
