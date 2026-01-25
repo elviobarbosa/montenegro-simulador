@@ -28,6 +28,7 @@ class TerrenosLotes_MetaBox {
     $facebook_pixel_id = get_post_meta($post->ID, '_facebook_pixel_id', true);
     $facebook_pixel_token = get_post_meta($post->ID, '_facebook_pixel_token', true);
     $logo_empreendimento = get_post_meta($post->ID, '_logo_empreendimento', true);
+    $tabela_preco_id = get_post_meta($post->ID, '_tabela_preco_id', true);
 
     // Dados da Planta Humanizada
     $image_url = get_post_meta($post->ID, '_terreno_image_url', true);
@@ -35,6 +36,21 @@ class TerrenosLotes_MetaBox {
     // Dados do SVG
     $svg_content = get_post_meta($post->ID, '_terreno_svg_content', true);
     ?>
+    <!-- Código da Tabela de Preços -->
+    <div style="margin-bottom: 20px;">
+        <label for="tabela_preco_id" style="display: block; margin-bottom: 5px; font-weight: 600;">
+            Código da Tabela de Preços
+        </label>
+        <input type="text" id="tabela_preco_id" name="tabela_preco_id"
+            value="<?php echo esc_attr($tabela_preco_id); ?>"
+            placeholder="Ex: 252"
+            style="width: 100%;" />
+        <p style="font-size: 11px; color: #666; margin-top: 5px;">
+            ID da tabela de preços do CV CRM para buscar valores das unidades.
+        </p>
+    </div>
+    <hr style="margin: 20px 0;">
+
     <!-- Logo do Empreendimento -->
     <div style="margin-bottom: 20px;">
         <label style="display: block; margin-bottom: 5px; font-weight: 600;">

@@ -49,6 +49,7 @@ function terreno_mapa_shortcode($atts) {
     $lotes_data = get_post_meta($post_id, '_terreno_lotes', true);
     $zoom = $atts['zoom'] ?: get_post_meta($post_id, '_terreno_zoom', true) ?: '18';
     $empreendimento_id = get_post_meta($post_id, '_empreendimento_id', true);
+    $tabela_preco_id = get_post_meta($post_id, '_tabela_preco_id', true);
     $api_key = get_option('terreno_google_maps_api_key', '');
 
     // Dados do SVG Overlay
@@ -90,6 +91,15 @@ function terreno_mapa_shortcode($atts) {
     const terrenoForm = <?php echo json_encode($form_html); ?>;
     let empreedimentosData = [];
 
+    // Configuração da Tabela de Preços
+    const tabelaPrecoConfig = {
+        idEmpreendimento: <?php echo $empreendimento_id ? intval($empreendimento_id) : 'null'; ?>,
+        idTabela: <?php echo $tabela_preco_id ? intval($tabela_preco_id) : 'null'; ?>
+    };
+
+    // Cache dos dados da tabela de preços
+    let tabelaPrecoCache = null;
+
     // Configuração do SVG Overlay
     const svgOverlayConfig = {
         enabled: <?php echo $use_svg_overlay ? 'true' : 'false'; ?>,
@@ -125,7 +135,69 @@ function terreno_mapa_shortcode($atts) {
         }
     }
 
-    async function loadUnidadeValor(empreendimentoId, idunidade) {
+    /**
+     * Carrega os dados da tabela de preços (com cache)
+     * Endpoint: /wp-json/cvcrm/v1/tabelas/{idEmpreendimento}/{idTabela}
+     */
+    async function loadTabelaPreco() {
+        // Retorna cache se já carregou
+        if (tabelaPrecoCache !== null) {
+            return tabelaPrecoCache;
+        }
+
+        // Verifica se tem configuração de tabela
+        if (!tabelaPrecoConfig.idEmpreendimento || !tabelaPrecoConfig.idTabela) {
+            console.warn('Configuração de tabela de preços não encontrada');
+            return null;
+        }
+
+        try {
+            const res = await fetch(`/wp-json/cvcrm/v1/tabelas/${tabelaPrecoConfig.idEmpreendimento}/${tabelaPrecoConfig.idTabela}`);
+            if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+            const data = await res.json();
+
+            // Armazena no cache
+            tabelaPrecoCache = data;
+            console.log('Tabela de preços carregada e cacheada:', data?.unidades?.length || 0, 'unidades');
+            return data;
+        } catch (err) {
+            console.error('Erro ao carregar tabela de preços:', err);
+            return null;
+        }
+    }
+
+    /**
+     * Busca dados de uma unidade na tabela de preços (usa cache)
+     * Retorna: { bloco, unidade, area_privativa, valor_total }
+     */
+    async function getUnidadeFromTabela(bloco, unidade) {
+        const tabela = await loadTabelaPreco();
+        if (!tabela || !tabela.unidades) {
+            return null;
+        }
+
+        // Busca a unidade pelo bloco e número da unidade
+        const unidadeData = tabela.unidades.find(u =>
+            String(u.bloco) === String(bloco) &&
+            (String(u.unidade) === String(unidade) || String(u.idunidade) === String(unidade))
+        );
+
+        return unidadeData || null;
+    }
+
+    /**
+     * Carrega valor da unidade - agora usa tabela de preços com cache
+     */
+    async function loadUnidadeValor(empreendimentoId, idunidade, bloco = null) {
+        // Primeiro tenta buscar na tabela de preços (com cache)
+        if (tabelaPrecoConfig.idTabela && bloco) {
+            const unidadeTabela = await getUnidadeFromTabela(bloco, idunidade);
+            if (unidadeTabela && unidadeTabela.valor_total) {
+                return parseFloat(unidadeTabela.valor_total);
+            }
+        }
+
+        // Fallback: busca no endpoint antigo de unidades
         try {
             const res = await fetch(`/wp-json/cvcrm/v1/unidades/${empreendimentoId}`);
             if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
@@ -142,6 +214,24 @@ function terreno_mapa_shortcode($atts) {
             console.error('Erro ao carregar valor da unidade:', err);
             return null;
         }
+    }
+
+    /**
+     * Busca dados completos da unidade na tabela de preços
+     * Retorna: { bloco, unidade, area_privativa, valor_total }
+     */
+    async function getUnidadeDadosCompletos(bloco, idunidade) {
+        const unidadeTabela = await getUnidadeFromTabela(bloco, idunidade);
+        if (unidadeTabela) {
+            return {
+                bloco: unidadeTabela.bloco,
+                unidade: unidadeTabela.unidade,
+                area_privativa: unidadeTabela.area_privativa,
+                valor_total: unidadeTabela.valor_total,
+                situacao: unidadeTabela.situacao
+            };
+        }
+        return null;
     }
 
     function calcularPorcentagemVendida(data) {
@@ -673,10 +763,22 @@ function terreno_mapa_shortcode($atts) {
         infoWindow.setPosition(latLng);
         infoWindow.open(map);
 
-        // Busca valor atualizado
-        const valorApi = await loadUnidadeValor(<?php echo $empreendimento_id; ?>, unidade.idunidade);
-        if (valorApi !== null) {
-            unidade.valor = valorApi;
+        // Busca dados da tabela de preços (com cache)
+        const dadosTabela = await getUnidadeDadosCompletos(mappingData.bloco, mappingData.lote_id);
+        if (dadosTabela) {
+            // Atualiza unidade com dados da tabela
+            if (dadosTabela.valor_total) {
+                unidade.valor = parseFloat(dadosTabela.valor_total);
+            }
+            if (dadosTabela.area_privativa) {
+                unidade.area_privativa = dadosTabela.area_privativa;
+            }
+        } else {
+            // Fallback: busca no endpoint antigo
+            const valorApi = await loadUnidadeValor(<?php echo $empreendimento_id; ?>, unidade.idunidade, mappingData.bloco);
+            if (valorApi !== null) {
+                unidade.valor = valorApi;
+            }
         }
 
         // Mostra simulador
@@ -795,10 +897,22 @@ function terreno_mapa_shortcode($atts) {
                     infoWindow.setPosition(event.latLng);
                     infoWindow.open(map);
 
-                    // Buscar valor atualizado da API de unidades
-                    const valorApi = await loadUnidadeValor(<?php echo $empreendimento_id; ?>, unidade.idunidade);
-                    if (valorApi !== null) {
-                        unidade.valor = valorApi;
+                    // Busca dados da tabela de preços (com cache)
+                    const dadosTabela = await getUnidadeDadosCompletos(lote.bloco, lote.id);
+                    if (dadosTabela) {
+                        // Atualiza unidade com dados da tabela
+                        if (dadosTabela.valor_total) {
+                            unidade.valor = parseFloat(dadosTabela.valor_total);
+                        }
+                        if (dadosTabela.area_privativa) {
+                            unidade.area_privativa = dadosTabela.area_privativa;
+                        }
+                    } else {
+                        // Fallback: busca no endpoint antigo
+                        const valorApi = await loadUnidadeValor(<?php echo $empreendimento_id; ?>, unidade.idunidade, lote.bloco);
+                        if (valorApi !== null) {
+                            unidade.valor = valorApi;
+                        }
                     }
 
                     // Ir direto para o simulador (step 2)

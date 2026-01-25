@@ -44,6 +44,13 @@ class TerrenosLotes_MetaBoxSave {
                 error_log('Empreendimento id salvo: ' . $empreendimento_id);
             }
 
+            // Salvar código da tabela de preços
+            if (isset($_POST['tabela_preco_id'])) {
+                $tabela_preco_id = sanitize_text_field($_POST['tabela_preco_id']);
+                update_post_meta($post_id, '_tabela_preco_id', $tabela_preco_id);
+                error_log('Tabela de preços ID salvo: ' . $tabela_preco_id);
+            }
+
             // Salvar endereço
             if (isset($_POST['terreno_endereco'])) {
                 $endereco = sanitize_text_field($_POST['terreno_endereco']);

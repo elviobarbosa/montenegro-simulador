@@ -174,4 +174,60 @@ function cvcrm_get_unidades_by_empreendimento($request) {
     return cvcrm_request($url, "cvcrm_unidades_emp_$empreendimento_id", 15, 300);
 }
 
+// Endpoint para tabela de preços
+add_action('rest_api_init', function () {
+    register_rest_route('cvcrm/v1', '/tabelas/(?P<empreendimento_id>\d+)/(?P<tabela_id>\d+)', array(
+        'methods' => 'GET',
+        'callback' => 'cvcrm_get_tabela_preco',
+        'permission_callback' => '__return_true'
+    ));
+});
+
+/**
+ * Busca tabela de preços do CV CRM
+ * Endpoint: /wp-json/cvcrm/v1/tabelas/{idEmpreendimento}/{idTabela}
+ * Retorna: { empreendimento, idtabela, tabela, unidades: [{bloco, unidade, area_privativa, valor_total, situacao}] }
+ */
+function cvcrm_get_tabela_preco($request) {
+    $empreendimento_id = intval($request['empreendimento_id']);
+    $tabela_id = intval($request['tabela_id']);
+    $url = "https://montenegro.cvcrm.com.br/api/v1/cadastros/empreendimentos/{$empreendimento_id}/tabelasdepreco/{$tabela_id}";
+
+    // Cache por 5 minutos (300 segundos)
+    $data = cvcrm_request($url, "cvcrm_tabela_preco_{$empreendimento_id}_{$tabela_id}", 15, 300);
+
+    if (is_wp_error($data)) {
+        return $data;
+    }
+
+    return cvcrm_filter_tabela_preco($data);
+}
+
+/**
+ * Filtra dados da tabela de preços para retornar apenas campos necessários
+ */
+function cvcrm_filter_tabela_preco($data) {
+    $filtered = array(
+        'empreendimento' => $data['empreendimento'] ?? '',
+        'idempreendimento' => $data['idempreendimento'] ?? null,
+        'idtabela' => $data['idtabela'] ?? null,
+        'tabela' => $data['tabela'] ?? '',
+        'unidades' => array()
+    );
+
+    if (!empty($data['unidades'])) {
+        foreach ($data['unidades'] as $unidade) {
+            $filtered['unidades'][] = array(
+                'bloco' => $unidade['bloco'] ?? '',
+                'unidade' => $unidade['unidade'] ?? '',
+                'idunidade' => $unidade['idunidade'] ?? null,
+                'area_privativa' => $unidade['area_privativa'] ?? null,
+                'valor_total' => $unidade['valor_total'] ?? null,
+                'situacao' => $unidade['situacao'] ?? ''
+            );
+        }
+    }
+
+    return $filtered;
+}
 
