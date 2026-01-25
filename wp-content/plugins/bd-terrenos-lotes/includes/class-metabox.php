@@ -28,6 +28,12 @@ class TerrenosLotes_MetaBox {
     $facebook_pixel_id = get_post_meta($post->ID, '_facebook_pixel_id', true);
     $facebook_pixel_token = get_post_meta($post->ID, '_facebook_pixel_token', true);
     $logo_empreendimento = get_post_meta($post->ID, '_logo_empreendimento', true);
+
+    // Dados da Planta Humanizada
+    $image_url = get_post_meta($post->ID, '_terreno_image_url', true);
+
+    // Dados do SVG
+    $svg_content = get_post_meta($post->ID, '_terreno_svg_content', true);
     ?>
     <!-- Logo do Empreendimento -->
     <div style="margin-bottom: 20px;">
@@ -73,6 +79,26 @@ class TerrenosLotes_MetaBox {
 
     <hr style="margin: 20px 0;">
 
+    <!-- Planta Humanizada -->
+    <div style="margin-bottom: 15px;">
+        <label style="display: block; margin-bottom: 5px; font-weight: 600;">
+            Planta Humanizada
+        </label>
+        <p style="font-size: 12px; color: #666; margin-bottom: 10px;">
+            Adicione uma imagem de planta humanizada como overlay no mapa.
+        </p>
+        <button type="button" class="button button-primary" id="btn_importar_planta" style="width: 100%; margin-bottom: 5px;">
+            <span class="dashicons dashicons-format-image" style="margin-top: 3px;"></span>
+            Selecionar Imagem
+        </button>
+        <button type="button" class="button" id="btn_ajustar_planta" style="width: 100%;" <?php echo empty($image_url) ? 'disabled' : ''; ?>>
+            <span class="dashicons dashicons-move" style="margin-top: 3px;"></span>
+            Ajustar Posicao
+        </button>
+    </div>
+
+    <hr style="margin: 20px 0;">
+
     <!-- Importar SVG -->
     <div style="margin-bottom: 15px;">
         <label style="display: block; margin-bottom: 5px; font-weight: 600;">
@@ -81,9 +107,13 @@ class TerrenosLotes_MetaBox {
         <p style="font-size: 12px; color: #666; margin-bottom: 10px;">
             Importe lotes a partir de um arquivo SVG da planta do loteamento.
         </p>
-        <button type="button" class="button button-primary" id="btn_importar_svg" style="width: 100%;">
+        <button type="button" class="button button-primary" id="btn_importar_svg" style="width: 100%; margin-bottom: 5px;">
             <span class="dashicons dashicons-upload" style="margin-top: 3px;"></span>
             Importar SVG
+        </button>
+        <button type="button" class="button" id="btn_ajustar_svg" style="width: 100%;" <?php echo empty($svg_content) ? 'disabled' : ''; ?>>
+            <span class="dashicons dashicons-move" style="margin-top: 3px;"></span>
+            Ajustar Posicao
         </button>
     </div>
 
@@ -153,6 +183,12 @@ class TerrenosLotes_MetaBox {
     $svg_bounds = get_post_meta($post->ID, '_terreno_svg_bounds', true);
     $svg_rotation = get_post_meta($post->ID, '_terreno_svg_rotation', true);
     $shape_mapping = get_post_meta($post->ID, '_terreno_shape_mapping', true);
+
+    // Dados da Planta Humanizada (Image Overlay)
+    $image_url = get_post_meta($post->ID, '_terreno_image_url', true);
+    $image_bounds = get_post_meta($post->ID, '_terreno_image_bounds', true);
+    $image_rotation = get_post_meta($post->ID, '_terreno_image_rotation', true);
+    $image_opacity = get_post_meta($post->ID, '_terreno_image_opacity', true);
 
     ?>
 
@@ -413,6 +449,16 @@ class TerrenosLotes_MetaBox {
                value="<?php echo esc_attr($svg_rotation); ?>" />
         <input type="hidden" id="terreno_shape_mapping" name="terreno_shape_mapping"
                value='<?php echo esc_attr($shape_mapping); ?>' />
+
+        <!-- Dados da Planta Humanizada (Image Overlay) -->
+        <input type="hidden" id="terreno_image_url" name="terreno_image_url"
+               value="<?php echo esc_attr($image_url); ?>" />
+        <input type="hidden" id="terreno_image_bounds" name="terreno_image_bounds"
+               value="<?php echo esc_attr($image_bounds); ?>" />
+        <input type="hidden" id="terreno_image_rotation" name="terreno_image_rotation"
+               value="<?php echo esc_attr($image_rotation); ?>" />
+        <input type="hidden" id="terreno_image_opacity" name="terreno_image_opacity"
+               value="<?php echo esc_attr($image_opacity); ?>" />
     </div>
     
     <style>

@@ -73,6 +73,26 @@ export class SVGOverlayManager {
       btnImportar.addEventListener("click", () => this.openModal());
     }
 
+    // Botão de ajustar posição do SVG
+    const btnAjustar = document.getElementById("btn_ajustar_svg");
+    if (btnAjustar) {
+      btnAjustar.addEventListener("click", (e) => {
+        e.preventDefault();
+        console.log("SVGOverlayManager: ajustar posicao clicado");
+        this.toggleEditMode();
+      });
+    } else {
+      setTimeout(() => {
+        const btn = document.getElementById("btn_ajustar_svg");
+        if (btn) {
+          btn.addEventListener("click", (e) => {
+            e.preventDefault();
+            this.toggleEditMode();
+          });
+        }
+      }, 500);
+    }
+
     // Elementos do modal
     this.modal = document.getElementById("svgImportModal");
     if (!this.modal) return;
@@ -295,13 +315,16 @@ export class SVGOverlayManager {
 
   /**
    * Fecha o modal
+   * @param {boolean} keepOverlay - Se true, mantém o overlay no mapa (usado ao salvar)
    */
-  closeModal() {
+  closeModal(keepOverlay = false) {
     if (this.modal) {
       this.isModalOpen = false;
       this.modal.style.display = "none";
-      this.removeOverlay();
-      this.resetState();
+      if (!keepOverlay) {
+        this.removeOverlay();
+        this.resetState();
+      }
     }
   }
 
@@ -670,47 +693,75 @@ export class SVGOverlayManager {
         return;
       }
 
+      // Se não tem bounds, tenta criar o overlay primeiro
       if (!this.overlay.bounds) {
-        alert("Posicione o SVG no mapa primeiro.");
+        console.log("Bounds não encontrados, criando overlay...");
+        this.createMapOverlay();
+
+        // Aguarda um pouco para o overlay ser criado
+        setTimeout(() => {
+          if (this.overlay.bounds) {
+            this.completeSaveOverlay();
+          } else {
+            alert("Erro: não foi possível posicionar o SVG no mapa. Tente novamente.");
+          }
+        }, 100);
         return;
       }
 
-      // Salva os dados nos inputs hidden
-      this.updateHiddenInputs();
-
-      // Emite evento para o SVGEditorManager processar
-      this.eventBus.emit("svg:loaded", {
-        svgContent: this.svgContent,
-        shapes: this.shapes,
-        viewBox: this.viewBox,
-      });
-
-      this.eventBus.emit("svg:positioned", {
-        bounds: {
-          north: this.overlay.bounds.getNorthEast().lat(),
-          south: this.overlay.bounds.getSouthWest().lat(),
-          east: this.overlay.bounds.getNorthEast().lng(),
-          west: this.overlay.bounds.getSouthWest().lng(),
-        },
-        rotation: this.overlay.rotation,
-        center: this.overlay.center,
-      });
-
-      // Fecha o modal de importação
-      this.closeModal();
-
-      // Ativa modo de edição no overlay
-      this.enableEditorMode();
-
-      console.log("✓ SVG salvo como overlay permanente");
-      console.log(`  Shapes: ${this.shapes.length}`);
-      console.log(`  Bounds: ${this.overlay.bounds.toString()}`);
-      console.log(`  Rotação: ${this.overlay.rotation}°`);
+      this.completeSaveOverlay();
 
     } catch (error) {
       console.error("Erro ao salvar overlay:", error);
       alert("Erro ao salvar overlay: " + error.message);
     }
+  }
+
+  /**
+   * Completa o salvamento do overlay após garantir que bounds existe
+   */
+  completeSaveOverlay() {
+    // Verifica novamente para segurança
+    if (!this.overlay.bounds) {
+      console.error("Bounds ainda é null após criação do overlay");
+      alert("Erro ao posicionar SVG. Recarregue a página e tente novamente.");
+      return;
+    }
+
+    // Salva os dados nos inputs hidden
+    this.updateHiddenInputs();
+
+    // Captura os valores dos bounds antes de emitir eventos
+    const boundsData = {
+      north: this.overlay.bounds.getNorthEast().lat(),
+      south: this.overlay.bounds.getSouthWest().lat(),
+      east: this.overlay.bounds.getNorthEast().lng(),
+      west: this.overlay.bounds.getSouthWest().lng(),
+    };
+
+    // Emite evento para o SVGEditorManager processar
+    this.eventBus.emit("svg:loaded", {
+      svgContent: this.svgContent,
+      shapes: this.shapes,
+      viewBox: this.viewBox,
+    });
+
+    this.eventBus.emit("svg:positioned", {
+      bounds: boundsData,
+      rotation: this.overlay.rotation,
+      center: this.overlay.center,
+    });
+
+    // Fecha o modal de importação (mantém o overlay no mapa)
+    this.closeModal(true);
+
+    // Ativa modo de edição no overlay
+    this.enableEditorMode();
+
+    console.log("✓ SVG salvo como overlay permanente");
+    console.log(`  Shapes: ${this.shapes.length}`);
+    console.log(`  Bounds: N=${boundsData.north}, S=${boundsData.south}, E=${boundsData.east}, W=${boundsData.west}`);
+    console.log(`  Rotação: ${this.overlay.rotation}°`);
   }
 
   /**
@@ -782,6 +833,55 @@ export class SVGOverlayManager {
   }
 
   /**
+   * Alterna modo de edição/posicionamento do SVG
+   */
+  toggleEditMode() {
+    if (!this.svgContent || !this.customOverlay) {
+      alert("Nenhum SVG carregado. Importe um SVG primeiro.");
+      return;
+    }
+
+    // Abre o modal com os controles
+    this.openModalForAdjustment();
+  }
+
+  /**
+   * Abre modal apenas para ajuste (sem upload)
+   */
+  openModalForAdjustment() {
+    if (!this.modal) return;
+
+    this.isModalOpen = true;
+    this.modal.style.display = "block";
+
+    // Esconde step 1 (upload) e mostra step 2 (controles)
+    const step1 = document.getElementById("svgStep1");
+    const step2 = document.getElementById("svgStep2");
+    if (step1) step1.style.display = "none";
+    if (step2) step2.style.display = "block";
+
+    // Habilita botão de confirmar
+    const confirmBtn = document.getElementById("svgImportConfirm");
+    if (confirmBtn) {
+      confirmBtn.disabled = false;
+      confirmBtn.textContent = "Salvar Ajustes";
+    }
+
+    // Ativa modo de posicionamento no overlay (não editor)
+    if (this.customOverlay) {
+      this.customOverlay.disableEditorMode();
+    }
+
+    // Atualiza sliders com valores atuais
+    const rotationSlider = document.getElementById("svgRotationSlider");
+    const rotationValue = document.getElementById("svgRotationValue");
+    if (rotationSlider) rotationSlider.value = this.overlay.rotation || 0;
+    if (rotationValue) rotationValue.textContent = `${Math.round(this.overlay.rotation || 0)}°`;
+
+    console.log("SVG: Modo de ajuste ativado");
+  }
+
+  /**
    * Destaca um shape específico no overlay
    */
   highlightShape(index) {
@@ -817,7 +917,9 @@ export class SVGOverlayManager {
       }
 
       console.log("Iniciando conversão de shapes para polígonos...");
-      console.log("Bounds:", this.overlay.bounds.toString());
+      const ne = this.overlay.bounds.getNorthEast();
+      const sw = this.overlay.bounds.getSouthWest();
+      console.log(`Bounds: N=${ne.lat()}, S=${sw.lat()}, E=${ne.lng()}, W=${sw.lng()}`);
       console.log("Rotação:", this.overlay.rotation);
       console.log("ViewBox:", this.viewBox);
 

@@ -16,6 +16,7 @@ import { GeocodeManager } from './managers/GeocodeManager';
 import { DataPersistence } from './managers/DataPersistence';
 import { SVGOverlayManager } from './managers/SVGOverlayManager';
 import { SVGEditorManager } from './managers/SVGEditorManager';
+import { ImageOverlayManager } from './managers/ImageOverlayManager';
 
 // Services
 import { CoordinatesService } from './services/CoordinatesService';
@@ -53,6 +54,7 @@ class TerrenoMapApp {
     this.modalManager = null;
     this.svgImportManager = null;
     this.svgEditorManager = null;
+    this.imageOverlayManager = null;
 
     // InfoWindow compartilhada
     this.infoWindow = null;
@@ -97,8 +99,18 @@ class TerrenoMapApp {
         this.eventBus
       );
 
+      // Inicializa manager de planta humanizada (image overlay)
+      this.imageOverlayManager = new ImageOverlayManager(
+        map,
+        this.stateManager,
+        this.eventBus
+      );
+
       // Carrega overlay SVG salvo (se existir)
       this.svgImportManager.loadSavedOverlay();
+
+      // Carrega overlay de imagem salvo (se existir)
+      this.imageOverlayManager.loadSavedOverlay();
 
       // Carrega dados salvos
       const lotesData = this.dataPersistence.load();

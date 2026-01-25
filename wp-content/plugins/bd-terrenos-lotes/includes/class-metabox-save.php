@@ -181,6 +181,51 @@ class TerrenosLotes_MetaBoxSave {
                 }
             }
 
+            // ========================================
+            // Salvar dados da Planta Humanizada (Image Overlay)
+            // ========================================
+
+            // Image URL
+            if (isset($_POST['terreno_image_url'])) {
+                $image_url = esc_url_raw(wp_unslash($_POST['terreno_image_url']));
+                if (!empty($image_url)) {
+                    update_post_meta($post_id, '_terreno_image_url', $image_url);
+                    error_log('Image URL salva: ' . $image_url);
+                } else {
+                    delete_post_meta($post_id, '_terreno_image_url');
+                }
+            }
+
+            // Image Bounds (JSON com coordenadas)
+            if (isset($_POST['terreno_image_bounds'])) {
+                $image_bounds = wp_unslash($_POST['terreno_image_bounds']);
+                if (!empty($image_bounds)) {
+                    $decoded_bounds = json_decode($image_bounds, true);
+                    if (json_last_error() === JSON_ERROR_NONE) {
+                        update_post_meta($post_id, '_terreno_image_bounds', $image_bounds);
+                        error_log('Image Bounds salvos');
+                    }
+                } else {
+                    delete_post_meta($post_id, '_terreno_image_bounds');
+                }
+            }
+
+            // Image Rotation
+            if (isset($_POST['terreno_image_rotation'])) {
+                $image_rotation = floatval($_POST['terreno_image_rotation']);
+                update_post_meta($post_id, '_terreno_image_rotation', $image_rotation);
+                error_log('Image Rotation salva: ' . $image_rotation);
+            }
+
+            // Image Opacity
+            if (isset($_POST['terreno_image_opacity'])) {
+                $image_opacity = floatval($_POST['terreno_image_opacity']);
+                if ($image_opacity < 0) $image_opacity = 0;
+                if ($image_opacity > 1) $image_opacity = 1;
+                update_post_meta($post_id, '_terreno_image_opacity', $image_opacity);
+                error_log('Image Opacity salva: ' . $image_opacity);
+            }
+
             error_log('=== TERRENO SAVE CONCLUÍDO ===');
             
         } catch (Exception $e) {

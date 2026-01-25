@@ -59,6 +59,15 @@ function terreno_mapa_shortcode($atts) {
 
     // Verifica se deve usar SVG overlay ou polígonos tradicionais
     $use_svg_overlay = !empty($svg_content) && !empty($svg_bounds) && !empty($shape_mapping);
+
+    // Dados da Planta Humanizada (Image Overlay)
+    $image_url = get_post_meta($post_id, '_terreno_image_url', true);
+    $image_bounds = get_post_meta($post_id, '_terreno_image_bounds', true);
+    $image_rotation = get_post_meta($post_id, '_terreno_image_rotation', true) ?: '0';
+    $image_opacity = get_post_meta($post_id, '_terreno_image_opacity', true) ?: '0.7';
+
+    // Verifica se deve usar Image Overlay (planta humanizada)
+    $use_image_overlay = !empty($image_url) && !empty($image_bounds);
     
     if (!$latitude || !$longitude || !$api_key ) {
         return '<p>Mapa não disponível. Verifique a configuração.</p>';
@@ -88,6 +97,15 @@ function terreno_mapa_shortcode($atts) {
         bounds: <?php echo $use_svg_overlay && $svg_bounds ? $svg_bounds : 'null'; ?>,
         rotation: <?php echo floatval($svg_rotation); ?>,
         mapping: <?php echo $use_svg_overlay && $shape_mapping ? $shape_mapping : '{}'; ?>
+    };
+
+    // Configuração da Planta Humanizada (Image Overlay)
+    const imageOverlayConfig = {
+        enabled: <?php echo $use_image_overlay ? 'true' : 'false'; ?>,
+        url: <?php echo $use_image_overlay ? json_encode($image_url) : 'null'; ?>,
+        bounds: <?php echo $use_image_overlay && $image_bounds ? $image_bounds : 'null'; ?>,
+        rotation: <?php echo floatval($image_rotation); ?>,
+        opacity: <?php echo floatval($image_opacity); ?>
     };
 
     async function loadEmpreendimentos(id) {
@@ -396,6 +414,12 @@ function terreno_mapa_shortcode($atts) {
         // InfoWindow compartilhada
         var infoWindow = new google.maps.InfoWindow();
 
+        // Inicializa Image Overlay (planta humanizada) - sempre abaixo dos polígonos/SVG
+        if (imageOverlayConfig.enabled && imageOverlayConfig.url && imageOverlayConfig.bounds) {
+            console.log('Carregando Planta Humanizada');
+            initImageOverlay(map);
+        }
+
         // Verifica se deve usar SVG Overlay
         if (svgOverlayConfig.enabled && svgOverlayConfig.content && svgOverlayConfig.bounds) {
             console.log('Usando SVG Overlay');
@@ -404,6 +428,79 @@ function terreno_mapa_shortcode($atts) {
             console.log('Usando polígonos tradicionais');
             initPolygons(map, blocos, infoWindow);
         }
+    }
+
+    /**
+     * Inicializa Image Overlay (planta humanizada) sobre o mapa
+     */
+    function initImageOverlay(map) {
+        class ImageMapOverlay extends google.maps.OverlayView {
+            constructor(bounds, imageUrl, rotation, opacity) {
+                super();
+                this.bounds = bounds;
+                this.imageUrl = imageUrl;
+                this.rotation = rotation;
+                this.opacity = opacity;
+                this.div = null;
+            }
+
+            onAdd() {
+                this.div = document.createElement('div');
+                this.div.style.position = 'absolute';
+                this.div.style.pointerEvents = 'none';
+
+                const img = document.createElement('img');
+                img.src = this.imageUrl;
+                img.style.width = '100%';
+                img.style.height = '100%';
+                img.style.opacity = this.opacity;
+                img.style.objectFit = 'contain';
+                img.style.pointerEvents = 'none';
+
+                this.div.appendChild(img);
+
+                // Adiciona ao pane de overlay (abaixo do overlayMouseTarget onde ficam os polígonos)
+                const panes = this.getPanes();
+                panes.overlayLayer.appendChild(this.div);
+            }
+
+            draw() {
+                const projection = this.getProjection();
+                if (!projection || !this.div) return;
+
+                const sw = projection.fromLatLngToDivPixel(
+                    new google.maps.LatLng(this.bounds.south, this.bounds.west)
+                );
+                const ne = projection.fromLatLngToDivPixel(
+                    new google.maps.LatLng(this.bounds.north, this.bounds.east)
+                );
+
+                if (!sw || !ne) return;
+
+                this.div.style.left = sw.x + 'px';
+                this.div.style.top = ne.y + 'px';
+                this.div.style.width = (ne.x - sw.x) + 'px';
+                this.div.style.height = (sw.y - ne.y) + 'px';
+                this.div.style.transform = `rotate(${this.rotation}deg)`;
+                this.div.style.transformOrigin = 'center center';
+            }
+
+            onRemove() {
+                if (this.div) {
+                    this.div.parentNode.removeChild(this.div);
+                    this.div = null;
+                }
+            }
+        }
+
+        // Cria e adiciona o overlay da planta humanizada
+        const overlay = new ImageMapOverlay(
+            imageOverlayConfig.bounds,
+            imageOverlayConfig.url,
+            imageOverlayConfig.rotation,
+            imageOverlayConfig.opacity
+        );
+        overlay.setMap(map);
     }
 
     /**
