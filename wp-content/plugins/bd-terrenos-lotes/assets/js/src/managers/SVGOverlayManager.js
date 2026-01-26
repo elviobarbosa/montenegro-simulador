@@ -93,6 +93,15 @@ export class SVGOverlayManager {
       }, 500);
     }
 
+    // Botão de remover SVG
+    const btnRemover = document.getElementById('btn_remover_svg');
+    if (btnRemover) {
+      btnRemover.addEventListener('click', (e) => {
+        e.preventDefault();
+        this.confirmAndRemoveSvg();
+      });
+    }
+
     // Elementos do modal
     this.modal = document.getElementById('svgImportModal');
     if (!this.modal) return;
@@ -516,6 +525,76 @@ export class SVGOverlayManager {
       this.customOverlay.setMap(null);
       this.customOverlay = null;
     }
+  }
+
+  /**
+   * Confirma e remove completamente o SVG e todos os dados relacionados
+   */
+  confirmAndRemoveSvg() {
+    if (!confirm('Tem certeza que deseja remover o SVG? Esta ação irá remover o overlay e todos os mapeamentos de shapes. Você precisará salvar o post para confirmar a remoção.')) {
+      return;
+    }
+
+    // Remove o overlay do mapa
+    this.removeOverlay();
+
+    // Reseta o estado interno
+    this.svgContent = null;
+    this.svgElement = null;
+    this.shapes = [];
+    this.viewBox = null;
+    this.shapeMapping = {};
+    this.overlay = {
+      bounds: null,
+      rotation: 0,
+      scale: 1,
+      center: null,
+      width: 400,
+      height: 400,
+    };
+
+    // Limpa os inputs hidden
+    const svgInput = document.getElementById('terreno_svg_content');
+    const boundsInput = document.getElementById('terreno_svg_bounds');
+    const rotationInput = document.getElementById('terreno_svg_rotation');
+    const mappingInput = document.getElementById('terreno_shape_mapping');
+
+    if (svgInput) svgInput.value = '';
+    if (boundsInput) boundsInput.value = '';
+    if (rotationInput) rotationInput.value = '';
+    if (mappingInput) mappingInput.value = '';
+
+    // Atualiza a sidebar de shapes
+    const container = document.getElementById('shapes-sidebar-container');
+    const countEl = document.getElementById('total-shapes');
+    const mappedCountEl = document.getElementById('shapes-mapped-count');
+
+    if (countEl) countEl.textContent = '0';
+    if (mappedCountEl) mappedCountEl.textContent = '0';
+    if (container) {
+      container.innerHTML = `
+        <div class="no-lotes" id="no-shapes-message">
+          <div class="no-lotes-icon">
+            <span class="dashicons dashicons-admin-multisite"></span>
+          </div>
+          <p>Nenhum shape carregado.</p>
+          <p class="help-text">Importe um SVG para visualizar os shapes.</p>
+        </div>
+      `;
+    }
+
+    // Desabilita botões de ajustar e remove botão de remover
+    const btnAjustar = document.getElementById('btn_ajustar_svg');
+    const btnRemover = document.getElementById('btn_remover_svg');
+
+    if (btnAjustar) btnAjustar.disabled = true;
+    if (btnRemover) btnRemover.remove();
+
+    // Emite evento para outros managers
+    this.eventBus.emit('svg:removed', {});
+
+    console.log('✓ SVG removido. Salve o post para confirmar a remoção.');
+    alert('SVG removido. Salve o post para confirmar a remoção.');
   }
 
   /**

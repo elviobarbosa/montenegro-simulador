@@ -127,10 +127,16 @@ class TerrenosLotes_MetaBox {
             <span class="dashicons dashicons-upload" style="margin-top: 3px;"></span>
             Importar SVG
         </button>
-        <button type="button" class="button" id="btn_ajustar_svg" style="width: 100%;" <?php echo empty($svg_content) ? 'disabled' : ''; ?>>
+        <button type="button" class="button" id="btn_ajustar_svg" style="width: 100%; margin-bottom: 5px;" <?php echo empty($svg_content) ? 'disabled' : ''; ?>>
             <span class="dashicons dashicons-move" style="margin-top: 3px;"></span>
             Ajustar Posicao
         </button>
+        <?php if (!empty($svg_content)): ?>
+        <button type="button" class="button" id="btn_remover_svg" style="width: 100%; color: #b32d2e; border-color: #b32d2e;">
+            <span class="dashicons dashicons-trash" style="margin-top: 3px;"></span>
+            Remover SVG
+        </button>
+        <?php endif; ?>
     </div>
 
     <script>

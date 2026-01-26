@@ -750,6 +750,23 @@ function terreno_mapa_shortcode($atts) {
             svgOverlayConfig.rotation
         );
         overlay.setMap(map);
+
+        // Centraliza o mapa nos bounds do SVG
+        if (svgOverlayConfig.bounds) {
+            const svgBounds = new google.maps.LatLngBounds(
+                new google.maps.LatLng(svgOverlayConfig.bounds.south, svgOverlayConfig.bounds.west),
+                new google.maps.LatLng(svgOverlayConfig.bounds.north, svgOverlayConfig.bounds.east)
+            );
+            map.fitBounds(svgBounds);
+
+            // Ajusta zoom se necessário (fitBounds pode deixar muito afastado)
+            google.maps.event.addListenerOnce(map, 'bounds_changed', function() {
+                const currentZoom = map.getZoom();
+                if (currentZoom > 19) {
+                    map.setZoom(19);
+                }
+            });
+        }
     }
 
     /**
