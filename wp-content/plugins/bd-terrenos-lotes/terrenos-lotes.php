@@ -717,19 +717,17 @@ function terreno_mapa_shortcode($atts) {
                             return;
                         }
 
-                        // Calcula posição do clique no mapa
-                        const rect = shape.getBoundingClientRect();
+                        // Usa a posição do clique diretamente
                         const mapDiv = map.getDiv();
                         const mapRect = mapDiv.getBoundingClientRect();
 
-                        // Centro do shape
-                        const centerX = rect.left + rect.width / 2 - mapRect.left;
-                        const centerY = rect.top + rect.height / 2 - mapRect.top;
+                        // Posição do clique relativa ao container do mapa
+                        const x = e.clientX - mapRect.left;
+                        const y = e.clientY - mapRect.top;
 
-                        // Converte para LatLng
+                        // Converte para LatLng usando a projection do overlay
                         const projection = this.getProjection();
-                        const point = new google.maps.Point(centerX + parseFloat(this.div.style.left), centerY + parseFloat(this.div.style.top));
-                        const latLng = projection.fromDivPixelToLatLng(point);
+                        const latLng = projection.fromContainerPixelToLatLng(new google.maps.Point(x, y));
 
                         // Abre InfoWindow
                         handleShapeClick(unidade, mappingData, latLng, infoWindow, map);
