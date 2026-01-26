@@ -231,6 +231,11 @@ class TerrenoMapApp {
       this.searchAddress();
     });
 
+    // Botão Ir para Coordenadas
+    DOMHelper.addEventListener('ir_para_coordenadas', 'click', () => {
+      this.goToCoordinates();
+    });
+
     // Sync inputs com mapa
     this.eventBus.on('map:zoom_changed', (zoom) => {
       DOMHelper.setValue('terreno_zoom', zoom);
@@ -387,6 +392,36 @@ class TerrenoMapApp {
     } catch (error) {
       alert('Erro ao buscar endereço: ' + error.message);
     }
+  }
+
+  /**
+   * Move o mapa para as coordenadas digitadas
+   */
+  goToCoordinates() {
+    const lat = parseFloat(DOMHelper.getValue('terreno_latitude'));
+    const lng = parseFloat(DOMHelper.getValue('terreno_longitude'));
+    const zoom = parseInt(DOMHelper.getValue('terreno_zoom')) || 18;
+
+    if (isNaN(lat) || isNaN(lng)) {
+      alert('Por favor, digite coordenadas válidas de latitude e longitude.');
+      return;
+    }
+
+    if (lat < -90 || lat > 90) {
+      alert('Latitude deve estar entre -90 e 90.');
+      return;
+    }
+
+    if (lng < -180 || lng > 180) {
+      alert('Longitude deve estar entre -180 e 180.');
+      return;
+    }
+
+    // Atualiza mapa
+    this.mapManager.updateCenter(lat, lng);
+    this.mapManager.updateZoom(zoom);
+
+    console.log(`✓ Mapa movido para: ${lat}, ${lng} (zoom: ${zoom})`);
   }
 
   /**

@@ -360,18 +360,23 @@ class TerrenosLotes_MetaBox {
                 <div class="coordinate-group">
                     <div class="coordinate-item">
                         <label for="terreno_latitude">Latitude:</label>
-                        <input type="text" id="terreno_latitude" name="terreno_latitude" 
+                        <input type="text" id="terreno_latitude" name="terreno_latitude"
                                value="<?php echo esc_attr($latitude); ?>" />
                     </div>
                     <div class="coordinate-item">
                         <label for="terreno_longitude">Longitude:</label>
-                        <input type="text" id="terreno_longitude" name="terreno_longitude" 
+                        <input type="text" id="terreno_longitude" name="terreno_longitude"
                                value="<?php echo esc_attr($longitude); ?>" />
                     </div>
                     <div class="coordinate-item">
                         <label for="terreno_zoom">Zoom:</label>
-                        <input type="number" id="terreno_zoom" name="terreno_zoom" 
+                        <input type="number" id="terreno_zoom" name="terreno_zoom"
                                value="<?php echo esc_attr($zoom); ?>" min="1" max="20" />
+                    </div>
+                    <div class="coordinate-item" style="align-self: flex-end;">
+                        <button type="button" id="ir_para_coordenadas" class="button button-primary">
+                            <span class="dashicons dashicons-location" style="margin-top: 3px;"></span> Ir para coordenadas
+                        </button>
                     </div>
                 </div>
             </div>
