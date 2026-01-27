@@ -207,16 +207,17 @@ function cvcrm_get_tabela_preco($request) {
  * Filtra dados da tabela de preços para retornar apenas campos necessários
  */
 function cvcrm_filter_tabela_preco($data) {
+    $new_data = $data[0];
     $filtered = array(
-        'empreendimento' => $data['empreendimento'] ?? '',
-        'idempreendimento' => $data['idempreendimento'] ?? null,
-        'idtabela' => $data['idtabela'] ?? null,
-        'tabela' => $data['tabela'] ?? '',
-        'unidades' => array()
+        'empreendimento' => $new_data['empreendimento'] ?? '',
+        'idempreendimento' => $new_data['idempreendimento'] ?? null,
+        'idtabela' => $new_data['idtabela'] ?? null,
+        'tabela' => $new_data['tabela'] ?? '',
+        'unidades' => $new_data['unidades'] ?? array()
     );
 
-    if (!empty($data['unidades'])) {
-        foreach ($data['unidades'] as $unidade) {
+    if (!empty($new_data['unidades'])) {
+        foreach ($new_data['unidades'] as $unidade) {
             $filtered['unidades'][] = array(
                 'bloco' => $unidade['bloco'] ?? '',
                 'unidade' => $unidade['unidade'] ?? '',
