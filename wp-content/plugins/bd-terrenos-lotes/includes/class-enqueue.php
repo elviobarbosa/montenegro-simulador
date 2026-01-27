@@ -12,6 +12,9 @@ class TerrenosLotes_Enqueue {
         error_log('Hook: ' . $hook . ', Post Type: ' . $post_type);
         
         if (('post-new.php' == $hook || 'post.php' == $hook) && 'terreno' == $post_type) {
+            // Enqueue media para o upload de logo
+            wp_enqueue_media();
+
             $api_key = get_option('terreno_google_maps_api_key', '');
             
             if (!empty($api_key)) {
@@ -59,21 +62,31 @@ class TerrenosLotes_Enqueue {
     }
 
     public function enqueue_frontend() {
-        
+
         global $post;
         if (is_singular()) {
             $api_key = get_option('terreno_google_maps_api_key', '');
-            
+
             if (!empty($api_key)) {
                 wp_enqueue_script(
-                    'google-maps-api-frontend', 
-                    "https://maps.googleapis.com/maps/api/js?key={$api_key}&libraries=geometry,drawing", 
-                    array(), 
-                    null, 
+                    'google-maps-api-frontend',
+                    "https://maps.googleapis.com/maps/api/js?key={$api_key}&libraries=geometry,drawing",
+                    array(),
+                    null,
                     true
                 );
-                
+
                 error_log('Scripts frontend carregados com sucesso');
+            }
+
+            // CSS para página do simulador
+            if (is_singular('terreno')) {
+                wp_enqueue_style(
+                    'terreno-simulador-page',
+                    plugin_dir_url(dirname(__FILE__)) . 'assets/css/simulador-page.css',
+                    array(),
+                    '1.0.0'
+                );
             }
         }
     }

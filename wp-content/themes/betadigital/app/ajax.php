@@ -1,6 +1,4 @@
 <?php
-
-
 add_action('rest_api_init', function () {
     register_rest_route('cvcrm/v1', '/empreendimentos/(?P<id>\d+)', array(
         'methods' => 'GET',
@@ -52,7 +50,7 @@ function cvcrm_request($endpoint, $cache_key, $timeout = 15, $cache_ttl = 300) {
   ));
 
   if (is_wp_error($response)) {
-      error_log("❌ [CVCRM] Erro WP: " . $response->get_error_message());
+      error_log("[CVCRM] Erro WP: " . $response->get_error_message());
       return new WP_Error('cvcrm_error', 'Erro na comunicação com CVCRM', array('status' => 500));
   }
 
@@ -60,8 +58,8 @@ function cvcrm_request($endpoint, $cache_key, $timeout = 15, $cache_ttl = 300) {
   $body = wp_remote_retrieve_body($response);
 
   if (defined('WP_DEBUG') && WP_DEBUG) {
-      error_log("📡 [CVCRM] Status: $status_code");
-      error_log("📦 [CVCRM] Body: " . substr($body, 0, 500));
+      error_log("[CVCRM] Status: $status_code");
+      error_log("[CVCRM] Body: " . substr($body, 0, 500));
   }
 
   if ($status_code >= 400) {
@@ -84,14 +82,153 @@ function cvcrm_get_simulacoes($request) {
 function cvcrm_get_empreendimento_by_id($request) {
     $id = intval($request['id']);
     $url = "https://montenegro.cvcrm.com.br/api/v1/cadastros/empreendimentos/{$id}";
-    return cvcrm_request($url, "cvcrm_empreendimento_$id", 15, 86400);
+    $data = cvcrm_request($url, "cvcrm_empreendimento_$id", 15, 86400);
+
+    if (is_wp_error($data)) {
+        return $data;
+    }
+
+    return cvcrm_filter_empreendimento($data);
+}
+
+function cvcrm_filter_empreendimento($data) {
+    $filtered = array(
+        'nome' => $data['nome'] ?? '',
+        'etapas' => array()
+    );
+// var_dump($data);
+    if (!empty($data['etapas'])) {
+        foreach ($data['etapas'] as $etapa) {
+            $filtered_etapa = array('blocos' => array());
+
+            if (!empty($etapa['blocos'])) {
+                foreach ($etapa['blocos'] as $bloco) {
+                    $filtered_bloco = array(
+                        'idbloco' => $bloco['nome'] ?? '',
+                        'unidades' => array()
+                    );
+
+                    if (!empty($bloco['unidades'])) {
+                        foreach ($bloco['unidades'] as $unidade) {
+                            $filtered_bloco['unidades'][] = array(
+                                'nome' => $unidade['nome'] ?? '',
+                                'idunidade' => $unidade['idunidade'] ?? null,
+                                'valor' => $unidade['valor'] ?? null,
+                                'area_privativa' => $unidade['area_privativa'] ?? null,
+                                'situacao' => array(
+                                    'situacao_mapa_disponibilidade' => $unidade['situacao']['situacao_mapa_disponibilidade'] ?? null
+                                )
+                            );
+                        }
+                    }
+
+                    $filtered_etapa['blocos'][] = $filtered_bloco;
+                }
+            }
+
+            $filtered['etapas'][] = $filtered_etapa;
+        }
+    }
+
+    return $filtered;
 }
 
 function cvcrm_get_unidade($request) {
-  $id = intval($request['id']);
-  $empreendimento = intval($request['empreendimento']);
-  $url = "https://montenegro.cvcrm.com.br/api/v1/cadastros/empreendimentos/{$empreendimento}/unidades/{$id}"; 
-  return cvcrm_request($url, "cvcrm_unidade_$id", 15, 86400);
+    $id = intval($request['id']);
+    $empreendimento = intval($request['empreendimento']);
+    $url = "https://montenegro.cvcrm.com.br/api/v1/cadastros/empreendimentos/{$empreendimento}/unidades/{$id}";
+    $data = cvcrm_request($url, "cvcrm_unidade_$id", 15, 86400);
+
+    if (is_wp_error($data)) {
+        return $data;
+    }
+
+    return cvcrm_filter_unidade($data);
 }
 
+function cvcrm_filter_unidade($data) {
+    return($data);
+    return array(
+        'idunidade' => $data['idunidade'] ?? null,
+        'idunidade_int' => $data['idunidade_int'] ?? null,
+        'idbloco' => $data['idbloco'] ?? null,
+        'valor' => $data['valor'] ?? null,
+        'area_privativa' => $data['area_privativa'] ?? null,
+        'situacao' => array(
+            'situacao_mapa_disponibilidade' => $data['situacao']['situacao_mapa_disponibilidade'] ?? null
+        )
+    );
+}
+
+add_action('rest_api_init', function () {
+    register_rest_route('cvcrm/v1', '/unidades/(?P<empreendimento_id>\d+)', array(
+        'methods' => 'GET',
+        'callback' => 'cvcrm_get_unidades_by_empreendimento',
+        'permission_callback' => '__return_true'
+    ));
+});
+
+function cvcrm_get_unidades_by_empreendimento($request) {
+    $empreendimento_id = intval($request['empreendimento_id']);
+    $url = "https://montenegro.cvcrm.com.br/api/v1/cvdw/unidades?a_partir_referencia={$empreendimento_id}";
+    return cvcrm_request($url, "cvcrm_unidades_emp_$empreendimento_id", 15, 300);
+}
+
+// Endpoint para tabela de preços
+add_action('rest_api_init', function () {
+    register_rest_route('cvcrm/v1', '/tabelas/(?P<empreendimento_id>\d+)/(?P<tabela_id>\d+)', array(
+        'methods' => 'GET',
+        'callback' => 'cvcrm_get_tabela_preco',
+        'permission_callback' => '__return_true'
+    ));
+});
+
+/**
+ * Busca tabela de preços do CV CRM
+ * Endpoint: /wp-json/cvcrm/v1/tabelas/{idEmpreendimento}/{idTabela}
+ * Retorna: { empreendimento, idtabela, tabela, unidades: [{bloco, unidade, area_privativa, valor_total, situacao}] }
+ */
+function cvcrm_get_tabela_preco($request) {
+    $empreendimento_id = intval($request['empreendimento_id']);
+    $tabela_id = intval($request['tabela_id']);
+    $url = "https://montenegro.cvcrm.com.br/api/v1/cadastros/empreendimentos/{$empreendimento_id}/tabelasdepreco/{$tabela_id}";
+
+    // Cache por 5 minutos (300 segundos)
+    $data = cvcrm_request($url, "cvcrm_tabela_preco_{$empreendimento_id}_{$tabela_id}", 15, 300);
+
+    if (is_wp_error($data)) {
+        return $data;
+    }
+
+    return cvcrm_filter_tabela_preco($data);
+}
+
+/**
+ * Filtra dados da tabela de preços para retornar apenas campos necessários
+ */
+function cvcrm_filter_tabela_preco($data) {
+    $new_data = $data[0];
+    $filtered = array(
+        'empreendimento' => $new_data['empreendimento'] ?? '',
+        'idempreendimento' => $new_data['idempreendimento'] ?? null,
+        'idtabela' => $new_data['idtabela'] ?? null,
+        'tabela' => $new_data['tabela'] ?? '',
+        'unidades' => $new_data['unidades'] ?? array()
+    );
+
+    if (!empty($new_data['unidades'])) {
+        foreach ($new_data['unidades'] as $unidade) {
+            $filtered['unidades'][] = array(
+                'bloco' => $unidade['bloco'] ?? '',
+                'unidade' => $unidade['unidade'] ?? '',
+                'idunidade' => $unidade['idunidade'] ?? null,
+                'area_privativa' => $unidade['area_privativa'] ?? null,
+                'valor_total' => $unidade['valor_total'] ?? null,
+                'situacao' => $unidade['situacao'] ?? ''
+            );
+        }
+    }
+
+    return $filtered;
+}
 

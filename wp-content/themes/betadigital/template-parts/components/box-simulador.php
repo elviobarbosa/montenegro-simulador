@@ -1,5 +1,5 @@
 <?php
-$image_id = get_post_meta(get_the_ID(), 'marca_empreendimento', true);
+$image_id = get_post_meta(get_the_ID(), '_logo_empreendimento', true);
 $feature_image = get_the_post_thumbnail( get_the_ID(), 'full' );
 ?>
 <div class="box-simulador">
@@ -9,7 +9,7 @@ $feature_image = get_the_post_thumbnail( get_the_ID(), 'full' );
       <span>Vendido</span>
     </div>
 
-    <div class="box-simulador__percentagem">
+    <div class="box-simulador__percentagem" data-js="porcentagem_vendida">
       <div>
           <strong>00%</strong>
           <span>VENDIDO</span>

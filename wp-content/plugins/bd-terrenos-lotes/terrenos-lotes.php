@@ -16,6 +16,8 @@ require_once __DIR__ . '/includes/class-enqueue.php';
 require_once __DIR__ . '/includes/class-lote-info.php';
 require_once __DIR__ . '/includes/class-settings-page.php';
 require_once __DIR__ . '/includes/class-facebook-pixel.php';
+require_once __DIR__ . '/includes/class-svg-importer.php';
+require_once __DIR__ . '/includes/class-ajax-handlers.php';
 
 new TerrenosLotes_CPT();
 new TerrenosLotes_MetaBox();
@@ -24,6 +26,7 @@ new TerrenosLotes_Enqueue();
 new TerrenosLotes_LoteInfo();
 new TerrenosLotes_SettingsPage();
 new TerrenosLotes_FacebookPixel();
+new TerrenosLotes_AjaxHandlers();
 
 function get_terreno_lotes($post_id) {
     $lotes_data = get_post_meta($post_id, '_terreno_lotes', true);
@@ -46,7 +49,26 @@ function terreno_mapa_shortcode($atts) {
     $lotes_data = get_post_meta($post_id, '_terreno_lotes', true);
     $zoom = $atts['zoom'] ?: get_post_meta($post_id, '_terreno_zoom', true) ?: '18';
     $empreendimento_id = get_post_meta($post_id, '_empreendimento_id', true);
+    $tabela_preco_id = get_post_meta($post_id, '_tabela_preco_id', true);
     $api_key = get_option('terreno_google_maps_api_key', '');
+
+    // Dados do SVG Overlay
+    $svg_content = get_post_meta($post_id, '_terreno_svg_content', true);
+    $svg_bounds = get_post_meta($post_id, '_terreno_svg_bounds', true);
+    $svg_rotation = get_post_meta($post_id, '_terreno_svg_rotation', true) ?: '0';
+    $shape_mapping = get_post_meta($post_id, '_terreno_shape_mapping', true);
+
+    // Verifica se deve usar SVG overlay ou polígonos tradicionais
+    $use_svg_overlay = !empty($svg_content) && !empty($svg_bounds) && !empty($shape_mapping);
+
+    // Dados da Planta Humanizada (Image Overlay)
+    $image_url = get_post_meta($post_id, '_terreno_image_url', true);
+    $image_bounds = get_post_meta($post_id, '_terreno_image_bounds', true);
+    $image_rotation = get_post_meta($post_id, '_terreno_image_rotation', true) ?: '0';
+    $image_opacity = get_post_meta($post_id, '_terreno_image_opacity', true) ?: '0.7';
+
+    // Verifica se deve usar Image Overlay (planta humanizada)
+    $use_image_overlay = !empty($image_url) && !empty($image_bounds);
     
     if (!$latitude || !$longitude || !$api_key ) {
         return '<p>Mapa não disponível. Verifique a configuração.</p>';
@@ -69,12 +91,39 @@ function terreno_mapa_shortcode($atts) {
     const terrenoForm = <?php echo json_encode($form_html); ?>;
     let empreedimentosData = [];
 
+    // Configuração da Tabela de Preços
+    const tabelaPrecoConfig = {
+        idEmpreendimento: <?php echo $empreendimento_id ? intval($empreendimento_id) : 'null'; ?>,
+        idTabela: <?php echo $tabela_preco_id ? intval($tabela_preco_id) : 'null'; ?>
+    };
+
+    // Cache dos dados da tabela de preços
+    let tabelaPrecoCache = null;
+
+    // Configuração do SVG Overlay
+    const svgOverlayConfig = {
+        enabled: <?php echo $use_svg_overlay ? 'true' : 'false'; ?>,
+        content: <?php echo $use_svg_overlay ? json_encode($svg_content) : 'null'; ?>,
+        bounds: <?php echo $use_svg_overlay && $svg_bounds ? $svg_bounds : 'null'; ?>,
+        rotation: <?php echo floatval($svg_rotation); ?>,
+        mapping: <?php echo $use_svg_overlay && $shape_mapping ? $shape_mapping : '{}'; ?>
+    };
+
+    // Configuração da Planta Humanizada (Image Overlay)
+    const imageOverlayConfig = {
+        enabled: <?php echo $use_image_overlay ? 'true' : 'false'; ?>,
+        url: <?php echo $use_image_overlay ? json_encode($image_url) : 'null'; ?>,
+        bounds: <?php echo $use_image_overlay && $image_bounds ? $image_bounds : 'null'; ?>,
+        rotation: <?php echo floatval($image_rotation); ?>,
+        opacity: <?php echo floatval($image_opacity); ?>
+    };
+
     async function loadEmpreendimentos(id) {
         try {
             const res = await fetch(`/wp-json/cvcrm/v1/empreendimentos/${id}?limite_dados_unidade=60`);
             if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
             const data = await res.json();
-            
+
             return data;
         } catch (err) {
             console.error('Erro ao carregar empreendimento:', err);
@@ -83,6 +132,137 @@ function terreno_mapa_shortcode($atts) {
                 container.innerHTML = "<p>Erro ao carregar empreendimento.</p>";
             }
             throw err;
+        }
+    }
+
+    /**
+     * Carrega os dados da tabela de preços (com cache)
+     * Endpoint: /wp-json/cvcrm/v1/tabelas/{idEmpreendimento}/{idTabela}
+     */
+    async function loadTabelaPreco() {
+        // Retorna cache se já carregou
+        if (tabelaPrecoCache !== null) {
+            return tabelaPrecoCache;
+        }
+
+        // Verifica se tem configuração de tabela
+        if (!tabelaPrecoConfig.idEmpreendimento || !tabelaPrecoConfig.idTabela) {
+            console.warn('Configuração de tabela de preços não encontrada');
+            return null;
+        }
+
+        try {
+            const res = await fetch(`/wp-json/cvcrm/v1/tabelas/${tabelaPrecoConfig.idEmpreendimento}/${tabelaPrecoConfig.idTabela}`);
+            if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+            const data = await res.json();
+
+            // Armazena no cache
+            tabelaPrecoCache = data;
+            console.log('Tabela de preços carregada e cacheada:', data?.unidades?.length || 0, 'unidades');
+            return data;
+        } catch (err) {
+            console.error('Erro ao carregar tabela de preços:', err);
+            return null;
+        }
+    }
+
+    /**
+     * Busca dados de uma unidade na tabela de preços (usa cache)
+     * Retorna: { bloco, unidade, area_privativa, valor_total }
+     */
+    async function getUnidadeFromTabela(bloco, unidade) {
+        const tabela = await loadTabelaPreco();
+        if (!tabela || !tabela.unidades) {
+            return null;
+        }
+
+        // Busca a unidade pelo bloco e número da unidade
+        const unidadeData = tabela.unidades.find(u =>
+            String(u.bloco) === String(bloco) &&
+            (String(u.unidade) === String(unidade) || String(u.idunidade) === String(unidade))
+        );
+
+        return unidadeData || null;
+    }
+
+    /**
+     * Carrega valor da unidade - agora usa tabela de preços com cache
+     */
+    async function loadUnidadeValor(empreendimentoId, idunidade, bloco = null) {
+        // Primeiro tenta buscar na tabela de preços (com cache)
+        if (tabelaPrecoConfig.idTabela && bloco) {
+            const unidadeTabela = await getUnidadeFromTabela(bloco, idunidade);
+            if (unidadeTabela && unidadeTabela.valor_total) {
+                return parseFloat(unidadeTabela.valor_total);
+            }
+        }
+
+        // Fallback: busca no endpoint antigo de unidades
+        try {
+            const res = await fetch(`/wp-json/cvcrm/v1/unidades/${empreendimentoId}`);
+            if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+            const data = await res.json();
+
+            if (data && data.dados && Array.isArray(data.dados)) {
+                const unidade = data.dados.find(u => String(u.idunidade) === String(idunidade) || String(u.idunidade_int) === String(idunidade));
+                if (unidade && unidade.valor) {
+                    return parseFloat(unidade.valor);
+                }
+            }
+            return null;
+        } catch (err) {
+            console.error('Erro ao carregar valor da unidade:', err);
+            return null;
+        }
+    }
+
+    /**
+     * Busca dados completos da unidade na tabela de preços
+     * Retorna: { bloco, unidade, area_privativa, valor_total }
+     */
+    async function getUnidadeDadosCompletos(bloco, idunidade) {
+        const unidadeTabela = await getUnidadeFromTabela(bloco, idunidade);
+        if (unidadeTabela) {
+            return {
+                bloco: unidadeTabela.bloco,
+                unidade: unidadeTabela.unidade,
+                area_privativa: unidadeTabela.area_privativa,
+                valor_total: unidadeTabela.valor_total,
+                situacao: unidadeTabela.situacao
+            };
+        }
+        return null;
+    }
+
+    function calcularPorcentagemVendida(data) {
+        if (!data || !data.etapas) return;
+
+        let total = 0;
+        let vendidos = 0;
+
+        data.etapas.forEach(etapa => {
+            if (etapa.blocos) {
+                etapa.blocos.forEach(bloco => {
+                    if (bloco.unidades) {
+                        bloco.unidades.forEach(unidade => {
+                            total++;
+                            if (unidade.situacao && unidade.situacao.situacao_mapa_disponibilidade !== 1) {
+                                vendidos++;
+                            }
+                        });
+                    }
+                });
+            }
+        });
+
+        const porcentagem = total > 0 ? Math.round((vendidos / total) * 100) : 0;
+
+        const el = document.querySelector('[data-js="porcentagem_vendida"]');
+        if (el) {
+            const strong = el.querySelector('strong');
+            if (strong) {
+                strong.textContent = `${porcentagem}%`;
+            }
         }
     }
 
@@ -98,6 +278,7 @@ function terreno_mapa_shortcode($atts) {
         loadEmpreendimentos(<?php echo $empreendimento_id ?>)
         .then(data => {
             empreedimentosData = data;
+            calcularPorcentagemVendida(data);
             waitForGoogleMaps<?php echo $post_id; ?>();
         })
         .catch(err => {
@@ -144,7 +325,7 @@ function terreno_mapa_shortcode($atts) {
         }
 
         const { situacao } = lote;
-        const disponivel = (!situacao.bloqueada && situacao.vendida === null);
+        const disponivel = (situacao.situacao_mapa_disponibilidade === 1);
         const statusBadge = `
         <span class="status-badge ${disponivel ? 'status-badge--disponivel' : 'status-badge--indisponivel'}">
         ${disponivel ? 'Disponível' : 'Indisponível'}
@@ -155,7 +336,7 @@ function terreno_mapa_shortcode($atts) {
         return `
             <div class="info-window-step1">
                 <div class="info-window-step1__header">
-                    Bloco ${lote.idbloco} | Lote ${lote.idunidade}
+                    Quadra ${lote.idbloco} | Lote ${lote.nome}
                     <div class="info-window-step1__status">
                         ${statusBadge}
                     </div>
@@ -203,50 +384,59 @@ function terreno_mapa_shortcode($atts) {
     function infoWindowTemplateStep2(lote) {
         console.log(`STEP2`, lote)
 
-        // Validação defensiva
         if (!lote) {
             return '<div class="info-window-step2">Dados do lote indisponíveis</div>';
         }
 
         const price = lote.valor ?? 150000;
         const entradaMin = price * 0.1;
-        const entradaMed = (price + entradaMin) / 2;
+        const entradaInicial = entradaMin; // Começa no mínimo (10%)
 
-        const parcelasMin = 1;
-        const parcelasMax = 132;
-        const parcelasMed = Math.round((parcelasMax + parcelasMin) / 2);
+        const parcelasMin = 12;  // 1 ano
+        const parcelasMax = 144; // 12 anos
+        const parcelasInicial = 72; // 6 anos
 
-        const financiado = price - entradaMed;
-        const valorParcela = financiado / parcelasMed;
+        const financiado = price - entradaInicial;
+        const qtdAnos = Math.ceil(parcelasInicial / 12);
+        const totalBaloes = financiado * 0.2 * qtdAnos; // 20% por ano
+        const valorBalao = financiado * 0.2;
+        const restanteParaMensais = financiado - totalBaloes;
+        const valorParcela = restanteParaMensais / parcelasInicial;
+
+        const { situacao } = lote;
+        const disponivel = (situacao && situacao.situacao_mapa_disponibilidade === 1);
+        const statusBadge = `
+        <span class="status-badge ${disponivel ? 'status-badge--disponivel' : 'status-badge--indisponivel'}">
+        ${disponivel ? 'Disponível' : 'Indisponível'}
+        </span>`;
 
         return `
             <div class="info-window-step2">
+                <div class="info-window-step2__status">
+                    ${statusBadge}
+                </div>
                 <div class="info-window-step1__header">
-                    <div>Bloco ${lote.idbloco} | Lote ${lote.idunidade}</div>
-                    <div>${price.toLocaleString("pt-BR",{style:"currency",currency:"BRL"})}</div>
+                    <div>Bloco ${lote.idbloco} | Lote ${lote.nome} | ${formatDecimal(lote.area_privativa)} m²</div>
+                    <div>${formatCurrency(price)}</div>
                 </div>
 
                 <!-- Entrada -->
                 <div class="simulador" data-js="entrada-slider">
-                    
-                    <div class="label">Entrada (<span data-js="porcentagem">50%</span>)</div>
+                    <div class="label">Entrada (<span data-js="porcentagem">10%</span>)</div>
                     <div class="simulador__valor-display" data-js="valor-display">
-                        ${entradaMed.toLocaleString("pt-BR",{style:"currency",currency:"BRL"})}
+                        ${formatCurrency(entradaInicial)}
                     </div>
-                   
                     <div class="simulador__slider-wrapper">
-                        <input type="range" min="${entradaMin}" max="${price}" value="${entradaMed}" class="simulador__slider">
+                        <input type="range" min="${entradaMin}" max="${price}" value="${entradaInicial}" class="simulador__slider">
                     </div>
                 </div>
 
                 <!-- Parcelas -->
                 <div class="simulador" data-js="parcelas-slider">
-                    
-                    <div class="label">Qtd. de parcelas</div>
-                    <div class="simulador__valor-display" data-js="valor-display">${parcelasMed}</div>
-                   
+                    <div class="label">Prazo (<span data-js="anos">${qtdAnos} anos</span>)</div>
+                    <div class="simulador__valor-display" data-js="valor-display">${parcelasInicial} parcelas</div>
                     <div class="simulador__slider-wrapper">
-                        <input type="range" min="${parcelasMin}" max="${parcelasMax}" value="${parcelasMed}" class="simulador__slider">
+                        <input type="range" min="${parcelasMin}" max="${parcelasMax}" step="12" value="${parcelasInicial}" class="simulador__slider">
                     </div>
                 </div>
 
@@ -254,73 +444,43 @@ function terreno_mapa_shortcode($atts) {
                 <div class="simulador valor-financiado">
                     <div class="label">Valor financiado</div>
                     <div class="simulador__valor-display" data-js="valor-financiado">
-                        ${financiado.toLocaleString("pt-BR",{style:"currency",currency:"BRL"})}
+                        ${formatCurrency(financiado)}
+                    </div>
+                </div>
+
+                <!-- Balão anual -->
+                <div class="simulador valor-balao">
+                    <div class="label">Balão anual (20%)</div>
+                    <div class="simulador__valor-display" data-js="valor-balao">
+                        ${formatCurrency(valorBalao)} x ${qtdAnos}
                     </div>
                 </div>
 
                 <!-- Valor da parcela -->
                 <div class="valor-parcela">
-                    <div class="label">Valor da parcela</div>
+                    <div class="label">Valor da parcela mensal</div>
                     <div class="simulador__valor-display" data-js="valor-parcela">
-                        ${valorParcela.toLocaleString("pt-BR",{style:"currency",currency:"BRL"})}
+                        ${formatCurrency(valorParcela)}
                     </div>
                 </div>
 
                 <button class="button button--secondary button--normal" data-js="send-wapp">ENVIAR POR WHATSAPP</button>
                 <button class="button button--primary button--normal" data-js="send-email">ENVIAR POR EMAIL</button>
-                <span class="disclaimer">Essa simulação apresenta uma estimativa de valores conforme suas seleções, não equivale à contratação de um financimanto.</span>
+                <span class="disclaimer">Essa simulação apresenta uma estimativa de valores conforme suas seleções, não equivale à contratação de um financiamento.</span>
             </div>
         `;
     }
 
-    // async function loadSimulacoes() {
-    //     try {
-    //         const res = await fetch(`/wp-json/cvcrm/v1/simulacoes`);
-    //         const data = await res.json();
-
-    //         if (!Array.isArray(data)) {
-    //             console.error("<Nenhuma simulação encontrada.");
-    //             return;
-    //         }
-
-    //         console.log(data)
-    //     } catch (err) {
-    //         console.error("Erro ao carregar simulações.");
-    //     }
-    // }
-
-    // async function loadUnidade(empreendimento, id) {
-    //     loading = true;
-    //     try {
-    //         const res = await fetch(`/wp-json/cvcrm/v1/unidade/${empreendimento}/${id}`);
-    //         const data = await res.json();
-    //         loading = false;
-    //         console.log(data, loading)
-    //     } catch (err) {
-    //         loading = false;
-    //         container.innerHTML = "<p>Erro ao carregar empreendimento.</p>";
-    //     }
-    // }
-
-    // async function loadEmpreendimentos(id) {
-    //     loading = true;
-    //     try {
-    //         const res = await fetch(`/wp-json/cvcrm/v1/empreendimentos/${id}`);
-    //         const data = await res.json();
-    //         loading = false;
-    //         console.log(data, loading)
-    //     } catch (err) {
-    //         loading = false;
-    //         container.innerHTML = "<p>Erro ao carregar empreendimento.</p>";
-    //     }
-    // }
-
     function findUnidade(result, idBloco, idUnidade) {
-        const bloco = result.find((b) => b.idbloco === Number(idBloco));
+        const bloco = result.find((b) => Number(b.idbloco) === Number(idBloco));
         if (!bloco) return null;
-
         const unidade = bloco.unidades.find((u) => u.idunidade === Number(idUnidade));
-        return unidade || null;
+        const unidadeResult = {
+            ...unidade,
+            idbloco: idBloco
+        };
+        
+        return unidadeResult || null;
     }
 
 
@@ -332,21 +492,383 @@ function terreno_mapa_shortcode($atts) {
 
         const { etapas } = empreedimentosData;
         const { blocos } = etapas[0];
-        
+
         var mapOptions = {
             center: { lat: <?php echo $latitude; ?>, lng: <?php echo $longitude; ?> },
             zoom: <?php echo $zoom; ?>,
-            mapTypeId: google.maps.MapTypeId.ROADMAP
+            mapTypeId: google.maps.MapTypeId.SATELLITE
         };
-        
+
         var map = new google.maps.Map(document.getElementById('<?php echo $map_id; ?>'), mapOptions);
-        
-        var marker = new google.maps.Marker({
-            position: { lat: <?php echo $latitude; ?>, lng: <?php echo $longitude; ?> },
-            map: map,
-            title: 'Localização do Terreno'
+
+        // InfoWindow compartilhada
+        var infoWindow = new google.maps.InfoWindow();
+
+        // Inicializa Image Overlay (planta humanizada) - sempre abaixo dos polígonos/SVG
+        if (imageOverlayConfig.enabled && imageOverlayConfig.url && imageOverlayConfig.bounds) {
+            console.log('Carregando Planta Humanizada');
+            initImageOverlay(map);
+        }
+
+        // Verifica se deve usar SVG Overlay
+        if (svgOverlayConfig.enabled && svgOverlayConfig.content && svgOverlayConfig.bounds) {
+            console.log('Usando SVG Overlay');
+            initSVGOverlay(map, blocos, infoWindow);
+        } else {
+            console.log('Usando polígonos tradicionais');
+            initPolygons(map, blocos, infoWindow);
+        }
+    }
+
+    /**
+     * Inicializa Image Overlay (planta humanizada) sobre o mapa
+     */
+    function initImageOverlay(map) {
+        class ImageMapOverlay extends google.maps.OverlayView {
+            constructor(bounds, imageUrl, rotation, opacity) {
+                super();
+                this.bounds = bounds;
+                this.imageUrl = imageUrl;
+                this.rotation = rotation;
+                this.opacity = opacity;
+                this.div = null;
+            }
+
+            onAdd() {
+                this.div = document.createElement('div');
+                this.div.style.position = 'absolute';
+                this.div.style.pointerEvents = 'none';
+
+                const img = document.createElement('img');
+                img.src = this.imageUrl;
+                img.style.width = '100%';
+                img.style.height = '100%';
+                img.style.opacity = this.opacity;
+                img.style.objectFit = 'contain';
+                img.style.pointerEvents = 'none';
+
+                this.div.appendChild(img);
+
+                // Adiciona ao pane de overlay (abaixo do overlayMouseTarget onde ficam os polígonos)
+                const panes = this.getPanes();
+                panes.overlayLayer.appendChild(this.div);
+            }
+
+            draw() {
+                const projection = this.getProjection();
+                if (!projection || !this.div) return;
+
+                const sw = projection.fromLatLngToDivPixel(
+                    new google.maps.LatLng(this.bounds.south, this.bounds.west)
+                );
+                const ne = projection.fromLatLngToDivPixel(
+                    new google.maps.LatLng(this.bounds.north, this.bounds.east)
+                );
+
+                if (!sw || !ne) return;
+
+                this.div.style.left = sw.x + 'px';
+                this.div.style.top = ne.y + 'px';
+                this.div.style.width = (ne.x - sw.x) + 'px';
+                this.div.style.height = (sw.y - ne.y) + 'px';
+                this.div.style.transform = `rotate(${this.rotation}deg)`;
+                this.div.style.transformOrigin = 'center center';
+            }
+
+            onRemove() {
+                if (this.div) {
+                    this.div.parentNode.removeChild(this.div);
+                    this.div = null;
+                }
+            }
+        }
+
+        // Cria e adiciona o overlay da planta humanizada
+        const overlay = new ImageMapOverlay(
+            imageOverlayConfig.bounds,
+            imageOverlayConfig.url,
+            imageOverlayConfig.rotation,
+            imageOverlayConfig.opacity
+        );
+        overlay.setMap(map);
+    }
+
+    /**
+     * Inicializa SVG Overlay sobre o mapa
+     */
+    function initSVGOverlay(map, blocos, infoWindow) {
+        // Cria Custom Overlay para o SVG
+        class SVGMapOverlay extends google.maps.OverlayView {
+            constructor(bounds, svgContent, rotation) {
+                super();
+                this.bounds = bounds;
+                this.svgContent = svgContent;
+                this.rotation = rotation;
+                this.div = null;
+            }
+
+            onAdd() {
+                this.div = document.createElement('div');
+                this.div.style.position = 'absolute';
+                this.div.innerHTML = this.svgContent;
+                this.div.className = 'svg-map-overlay';
+
+                const svg = this.div.querySelector('svg');
+                if (svg) {
+                    svg.style.width = '100%';
+                    svg.style.height = '100%';
+                    svg.style.pointerEvents = 'auto';
+                }
+
+                // Aplica cores baseadas no status das unidades
+                this.applyShapeColors(blocos);
+
+                // Adiciona eventos de clique nos shapes
+                this.addShapeListeners(blocos, infoWindow, map);
+
+                const panes = this.getPanes();
+                panes.overlayMouseTarget.appendChild(this.div);
+            }
+
+            draw() {
+                const projection = this.getProjection();
+                if (!projection || !this.div) return;
+
+                const sw = projection.fromLatLngToDivPixel(
+                    new google.maps.LatLng(this.bounds.south, this.bounds.west)
+                );
+                const ne = projection.fromLatLngToDivPixel(
+                    new google.maps.LatLng(this.bounds.north, this.bounds.east)
+                );
+
+                if (!sw || !ne) return;
+
+                this.div.style.left = sw.x + 'px';
+                this.div.style.top = ne.y + 'px';
+                this.div.style.width = (ne.x - sw.x) + 'px';
+                this.div.style.height = (sw.y - ne.y) + 'px';
+                this.div.style.transform = `rotate(${this.rotation}deg)`;
+                this.div.style.transformOrigin = 'center center';
+            }
+
+            applyShapeColors(blocos) {
+                const svg = this.div.querySelector('svg');
+                if (!svg) return;
+
+                const shapes = svg.querySelectorAll('polygon, path, polyline, rect');
+                shapes.forEach((shape, index) => {
+                    const mappingData = svgOverlayConfig.mapping[index];
+                    if (!mappingData) {
+                        // Shape não mapeado - semi-transparente
+                        shape.style.fill = 'rgba(200, 200, 200, 0.2)';
+                        shape.style.stroke = '#999';
+                        shape.style.strokeWidth = '1px';
+                        return;
+                    }
+
+                    // Busca dados da unidade
+                    const unidade = findUnidade(blocos, mappingData.bloco, mappingData.lote_id);
+                    if (!unidade || !unidade.situacao) {
+                        shape.style.fill = 'rgba(200, 200, 200, 0.3)';
+                        shape.style.stroke = '#666';
+                        return;
+                    }
+
+                    const disponivel = unidade.situacao.situacao_mapa_disponibilidade === 1;
+                    shape.style.fill = disponivel ? 'rgba(20, 210, 121, 0.5)' : 'rgba(255, 0, 0, 0.5)';
+                    shape.style.stroke = disponivel ? '#14d279' : '#FF0000';
+                    shape.style.strokeWidth = '2px';
+                    shape.style.cursor = 'pointer';
+                    shape.dataset.shapeIndex = index;
+                    shape.dataset.loteId = mappingData.lote_id;
+                    shape.dataset.bloco = mappingData.bloco;
+                });
+            }
+
+            addShapeListeners(blocos, infoWindow, map) {
+                const svg = this.div.querySelector('svg');
+                if (!svg) return;
+
+                const shapes = svg.querySelectorAll('polygon, path, polyline, rect');
+                shapes.forEach((shape, index) => {
+                    const mappingData = svgOverlayConfig.mapping[index];
+                    if (!mappingData) return;
+
+                    // Hover
+                    shape.addEventListener('mouseenter', () => {
+                        const currentFill = shape.style.fill;
+                        shape.dataset.originalFill = currentFill;
+                        shape.style.fillOpacity = '0.7';
+                        shape.style.strokeWidth = '3px';
+                    });
+
+                    shape.addEventListener('mouseleave', () => {
+                        shape.style.fillOpacity = '0.5';
+                        shape.style.strokeWidth = '2px';
+                    });
+
+                    // Click
+                    shape.addEventListener('click', async (e) => {
+                        e.stopPropagation();
+
+                        const unidade = findUnidade(blocos, mappingData.bloco, mappingData.lote_id);
+                        if (!unidade) {
+                            console.warn('Unidade não encontrada:', mappingData);
+                            return;
+                        }
+
+                        // Usa a posição do clique diretamente
+                        const mapDiv = map.getDiv();
+                        const mapRect = mapDiv.getBoundingClientRect();
+
+                        // Posição do clique relativa ao container do mapa
+                        const x = e.clientX - mapRect.left;
+                        const y = e.clientY - mapRect.top;
+
+                        // Converte para LatLng usando a projection do overlay
+                        const projection = this.getProjection();
+                        const latLng = projection.fromContainerPixelToLatLng(new google.maps.Point(x, y));
+
+                        // Abre InfoWindow
+                        handleShapeClick(unidade, mappingData, latLng, infoWindow, map);
+                    });
+                });
+            }
+
+            onRemove() {
+                if (this.div) {
+                    this.div.parentNode.removeChild(this.div);
+                    this.div = null;
+                }
+            }
+        }
+
+        // Cria e adiciona o overlay
+        const overlay = new SVGMapOverlay(
+            svgOverlayConfig.bounds,
+            svgOverlayConfig.content,
+            svgOverlayConfig.rotation
+        );
+        overlay.setMap(map);
+
+        // Centraliza o mapa nos bounds do SVG
+        if (svgOverlayConfig.bounds) {
+            const svgBounds = new google.maps.LatLngBounds(
+                new google.maps.LatLng(svgOverlayConfig.bounds.south, svgOverlayConfig.bounds.west),
+                new google.maps.LatLng(svgOverlayConfig.bounds.north, svgOverlayConfig.bounds.east)
+            );
+            map.fitBounds(svgBounds);
+
+            // Ajusta zoom se necessário (fitBounds pode deixar muito afastado)
+            google.maps.event.addListenerOnce(map, 'bounds_changed', function() {
+                const currentZoom = map.getZoom();
+                if (currentZoom > 19) {
+                    map.setZoom(19);
+                }
+            });
+        }
+    }
+
+    /**
+     * Handler para clique no shape do SVG
+     */
+    async function handleShapeClick(unidade, mappingData, latLng, infoWindow, map) {
+        // Mostra loading
+        infoWindow.setContent('<div class="info-window-step2" style="text-align:center;padding:20px;">Carregando...</div>');
+        infoWindow.setPosition(latLng);
+        infoWindow.open(map);
+
+        // Busca dados da tabela de preços (com cache)
+        const dadosTabela = await getUnidadeDadosCompletos(mappingData.bloco, mappingData.lote_id);
+        if (dadosTabela) {
+            // Atualiza unidade com dados da tabela
+            if (dadosTabela.valor_total) {
+                unidade.valor = parseFloat(dadosTabela.valor_total);
+            }
+            if (dadosTabela.area_privativa) {
+                unidade.area_privativa = dadosTabela.area_privativa;
+            }
+        } else {
+            // Fallback: busca no endpoint antigo
+            const valorApi = await loadUnidadeValor(<?php echo $empreendimento_id; ?>, unidade.idunidade, mappingData.bloco);
+            if (valorApi !== null) {
+                unidade.valor = valorApi;
+            }
+        }
+
+        // Mostra simulador
+        const values = {
+            id: mappingData.lote_id,
+            bloco: mappingData.bloco,
+            price: unidade.valor ?? 150000
+        };
+        infoWindow.setContent(infoWindowTemplateStep2(unidade));
+
+        google.maps.event.addListenerOnce(infoWindow, "domready", function () {
+            const btnWapp = document.querySelector('[data-js="send-wapp"]');
+            const btnEmail = document.querySelector('[data-js="send-email"]');
+            const slider = new NumberSlider(document.querySelector(".info-window-step2"), values);
+
+            const simulacao = slider.getValues();
+
+            const send = (isWapp = false) => {
+                infoWindow.setContent(terrenoForm);
+
+                google.maps.event.addListenerOnce(infoWindow, "domready", function () {
+                    const formEl = document.querySelector('.gm-style-iw .wpcf7 form');
+                    if (formEl && typeof wpcf7 !== "undefined") {
+                        formEl.addEventListener("keyup", (e) => {
+                            if (e.target.matches("input[type=tel]")) {
+                                let value = e.target.value.replace(/\D/g, "");
+                                value = value.replace(/^(\d{2})(\d)/g, "($1) $2");
+                                value = value.replace(/(\d)(\d{4})$/, "$1-$2");
+                                e.target.value = value;
+                            }
+                        });
+
+                        document.addEventListener('wpcf7mailsent', function(event) {
+                            const data = event.detail.inputs;
+                            const phone = data.find(f => f.name === 'whatsapp')?.value;
+                            const nome = data.find(f => f.name === 'your-name')?.value;
+
+                            let mensagem = `Olá! ${nome}. Aqui estão os dados da simulação:\n\n`;
+                            mensagem += `Empreendimento: ${empreedimentosData.nome || ''}\n`;
+                            mensagem += `Quadra: ${unidade.idbloco || ''}\n`;
+                            mensagem += `Lote: ${unidade.nome}\n\n`;
+                            mensagem += `--------------------------\n\n`;
+                            mensagem += `Valor do Lote: ${Number(simulacao.preco).toLocaleString("pt-BR",{style:"currency",currency:"BRL"})}\n`;
+                            mensagem += `Entrada: ${simulacao.entrada.toLocaleString("pt-BR",{style:"currency",currency:"BRL"})}\n`;
+                            mensagem += `Valor Financiado: ${simulacao.financiado.toLocaleString("pt-BR",{style:"currency",currency:"BRL"})}\n`;
+                            mensagem += `Balão Anual (20%): ${simulacao.valorBalao.toLocaleString("pt-BR",{style:"currency",currency:"BRL"})} x ${simulacao.qtdBaloes}\n`;
+                            mensagem += `Qtd. Parcelas: ${simulacao.parcelas}\n`;
+                            mensagem += `Valor da Parcela Mensal: ${simulacao.valorParcela.toLocaleString("pt-BR",{style:"currency",currency:"BRL"})}\n`;
+
+                            const url = `https://wa.me/55${phone.replace(/\D/g, "")}?text=${encodeURIComponent(mensagem)}`;
+                            if (isWapp) window.open(url, '_blank');
+                        }, { once: true });
+
+                        formEl.reset();
+                        formEl.querySelectorAll('.wpcf7-not-valid-tip').forEach(el => el.remove());
+                        formEl.querySelectorAll('.wpcf7-response-output').forEach(el => el.innerHTML = '');
+                        wpcf7.init(formEl);
+                    }
+                });
+            };
+
+            if (btnEmail) {
+                btnEmail.addEventListener("click", () => send(false));
+            }
+
+            if (btnWapp) {
+                btnWapp.addEventListener("click", () => send(true));
+            }
         });
-        
+    }
+
+    /**
+     * Inicializa polígonos tradicionais (modo legado)
+     */
+    function initPolygons(map, blocos, infoWindow) {
         <?php if ($lotes_data): ?>
         var lotes = <?php echo $lotes_data; ?>;
         console.log(lotes);
@@ -358,7 +880,7 @@ function terreno_mapa_shortcode($atts) {
                 });
 
                 const unidade = findUnidade(blocos, lote.bloco, lote.id);
-
+                console.log(unidade);
                 // Validação defensiva: verifica se unidade existe antes de acessar propriedades
                 if (!unidade) {
                     console.warn(`Unidade não encontrada para bloco ${lote.bloco}, lote ${lote.id}`);
@@ -366,8 +888,8 @@ function terreno_mapa_shortcode($atts) {
                 }
 
                 const { situacao } = unidade;
-                const disponivel = (!situacao.bloqueada && situacao.vendida === null);
-                const color = disponivel ? '#5aa381' : '#FF0000';
+                const disponivel = (situacao.situacao_mapa_disponibilidade === 1);
+                const color = disponivel ? '#14d279' : '#FF0000';
                 console.log(`BLOCOS`, empreedimentosData)
                 
                 var polygon = new google.maps.Polygon({
@@ -385,78 +907,93 @@ function terreno_mapa_shortcode($atts) {
                 });
                 
                 polygon.addListener('click', async function(event) {
-                    infoWindow.setContent(infoWindowTemplate(unidade));
+                    // Mostrar loading enquanto busca o valor
+                    infoWindow.setContent('<div class="info-window-step2" style="text-align:center;padding:20px;">Carregando...</div>');
                     infoWindow.setPosition(event.latLng);
-                    infoWindow.open(map);        
+                    infoWindow.open(map);
+
+                    // Busca dados da tabela de preços (com cache)
+                    const dadosTabela = await getUnidadeDadosCompletos(lote.bloco, lote.id);
+                    if (dadosTabela) {
+                        // Atualiza unidade com dados da tabela
+                        if (dadosTabela.valor_total) {
+                            unidade.valor = parseFloat(dadosTabela.valor_total);
+                        }
+                        if (dadosTabela.area_privativa) {
+                            unidade.area_privativa = dadosTabela.area_privativa;
+                        }
+                    } else {
+                        // Fallback: busca no endpoint antigo
+                        const valorApi = await loadUnidadeValor(<?php echo $empreendimento_id; ?>, unidade.idunidade, lote.bloco);
+                        if (valorApi !== null) {
+                            unidade.valor = valorApi;
+                        }
+                    }
+
+                    // Ir direto para o simulador (step 2)
+                    const values = {
+                        ...lote,
+                        price: unidade.valor ?? 150000
+                    };
+                    infoWindow.setContent(infoWindowTemplateStep2(unidade));
 
                     google.maps.event.addListenerOnce(infoWindow, "domready", function () {
-                        const btnStart = document.querySelector('[data-js="start"]');
-                        if (btnStart) {
-                            btnStart.addEventListener("click", function() {
-                                const values = {
-                                    ...lote, 
-                                    price:  unidade.valor ?? 150000
-                                };
-                                infoWindow.setContent(infoWindowTemplateStep2(unidade));
+                        const btnWapp = document.querySelector('[data-js="send-wapp"]');
+                        const btnEmail = document.querySelector('[data-js="send-email"]');
+                        const slider = new NumberSlider(document.querySelector(".info-window-step2"), values);
 
-                                google.maps.event.addListenerOnce(infoWindow, "domready", function () {
-                                    const btnWapp = document.querySelector('[data-js="send-wapp"]');
-                                    const btnEmail = document.querySelector('[data-js="send-email"]');
-                                    const slider = new NumberSlider(document.querySelector(".info-window-step2"), values);
-                                    
-                                    const simulacao = slider.getValues();
+                        const simulacao = slider.getValues();
 
-                                    const send = (isWapp = false) => {
-                                        infoWindow.setContent(terrenoForm);
+                        const send = (isWapp = false) => {
+                            infoWindow.setContent(terrenoForm);
 
-                                        google.maps.event.addListenerOnce(infoWindow, "domready", function () {
-                                            const formEl = document.querySelector('.gm-style-iw .wpcf7 form'); 
-                                            if (formEl && typeof wpcf7 !== "undefined") {
-                                                formEl.addEventListener("keyup", (e) => {
-                                                    if (e.target.matches("input[type=tel]")) {
-                                                        let value = e.target.value.replace(/\D/g, "");
-                                                        value = value.replace(/^(\d{2})(\d)/g, "($1) $2");
-                                                        value = value.replace(/(\d)(\d{4})$/, "$1-$2");
-                                                        e.target.value = value;
-                                                    }
-                                                });
+                            google.maps.event.addListenerOnce(infoWindow, "domready", function () {
+                                const formEl = document.querySelector('.gm-style-iw .wpcf7 form');
+                                if (formEl && typeof wpcf7 !== "undefined") {
+                                    formEl.addEventListener("keyup", (e) => {
+                                        if (e.target.matches("input[type=tel]")) {
+                                            let value = e.target.value.replace(/\D/g, "");
+                                            value = value.replace(/^(\d{2})(\d)/g, "($1) $2");
+                                            value = value.replace(/(\d)(\d{4})$/, "$1-$2");
+                                            e.target.value = value;
+                                        }
+                                    });
 
-                                                document.addEventListener('wpcf7mailsent', function(event) {
-                                                    const data = event.detail.inputs;
-                                                    const phone = data.find(f => f.name === 'whatsapp')?.value;
-                                                    const nome = data.find(f => f.name === 'your-name')?.value;
+                                    document.addEventListener('wpcf7mailsent', function(event) {
+                                        const data = event.detail.inputs;
+                                        const phone = data.find(f => f.name === 'whatsapp')?.value;
+                                        const nome = data.find(f => f.name === 'your-name')?.value;
 
-                                                    let mensagem = `Olá! ${nome}. Aqui estão os dados da simulação:\n\n`;
-                                                    mensagem += `Empreendimento: ${empreedimentosData.nome || ''}\n`;
-                                                    mensagem += `Bloco: ${unidade.idbloco || ''}\n`;
-                                                    mensagem += `Lote: ${unidade.idunidade}\n\n`;
-                                                    mensagem += `--------------------------\n\n`;
-                                                    mensagem += `Valor do Lote: ${simulacao.preco.toLocaleString("pt-BR",{style:"currency",currency:"BRL"})}\n`;
-                                                    mensagem += `Entrada: ${simulacao.entrada.toLocaleString("pt-BR",{style:"currency",currency:"BRL"})}\n`;
-                                                    mensagem += `Qtd. Parcelas: ${simulacao.parcelas}\n`;
-                                                    mensagem += `Valor da Parcela: ${simulacao.valorParcela.toLocaleString("pt-BR",{style:"currency",currency:"BRL"})}\n`;
+                                        let mensagem = `Olá! ${nome}. Aqui estão os dados da simulação:\n\n`;
+                                        mensagem += `Empreendimento: ${empreedimentosData.nome || ''}\n`;
+                                        mensagem += `Quadra: ${unidade.idbloco || ''}\n`;
+                                        mensagem += `Lote: ${unidade.nome}\n\n`;
+                                        mensagem += `--------------------------\n\n`;
+                                        mensagem += `Valor do Lote: ${Number(simulacao.preco).toLocaleString("pt-BR",{style:"currency",currency:"BRL"})}\n`;
+                                        mensagem += `Entrada: ${simulacao.entrada.toLocaleString("pt-BR",{style:"currency",currency:"BRL"})}\n`;
+                                        mensagem += `Valor Financiado: ${simulacao.financiado.toLocaleString("pt-BR",{style:"currency",currency:"BRL"})}\n`;
+                                        mensagem += `Balão Anual (20%): ${simulacao.valorBalao.toLocaleString("pt-BR",{style:"currency",currency:"BRL"})} x ${simulacao.qtdBaloes}\n`;
+                                        mensagem += `Qtd. Parcelas: ${simulacao.parcelas}\n`;
+                                        mensagem += `Valor da Parcela Mensal: ${simulacao.valorParcela.toLocaleString("pt-BR",{style:"currency",currency:"BRL"})}\n`;
 
-                                                    const url = `https://wa.me/55${phone.replace(/\D/g, "")}?text=${encodeURIComponent(mensagem)}`;
-                                                    if (isWapp) window.open(url, '_blank');
-                                                }, { once: true });
+                                        const url = `https://wa.me/55${phone.replace(/\D/g, "")}?text=${encodeURIComponent(mensagem)}`;
+                                        if (isWapp) window.open(url, '_blank');
+                                    }, { once: true });
 
-                                                formEl.reset();
-                                                formEl.querySelectorAll('.wpcf7-not-valid-tip').forEach(el => el.remove());
-                                                formEl.querySelectorAll('.wpcf7-response-output').forEach(el => el.innerHTML = '');
-                                                wpcf7.init(formEl);
-                                            }
-                                        });
-                                    };
-
-                                    if (btnEmail) {
-                                        btnEmail.addEventListener("click", () => send(false));
-                                    }
-
-                                    if (btnWapp) {
-                                        btnWapp.addEventListener("click", () => send(true));
-                                    }
-                                });
+                                    formEl.reset();
+                                    formEl.querySelectorAll('.wpcf7-not-valid-tip').forEach(el => el.remove());
+                                    formEl.querySelectorAll('.wpcf7-response-output').forEach(el => el.innerHTML = '');
+                                    wpcf7.init(formEl);
+                                }
                             });
+                        };
+
+                        if (btnEmail) {
+                            btnEmail.addEventListener("click", () => send(false));
+                        }
+
+                        if (btnWapp) {
+                            btnWapp.addEventListener("click", () => send(true));
                         }
                     });
                         
@@ -482,7 +1019,7 @@ function terreno_mapa_shortcode($atts) {
         });
         <?php endif; ?>
     }
-    
+
     if (typeof google !== 'undefined') {
         initTerrenoMap<?php echo $post_id; ?>();
     } 
@@ -498,9 +1035,11 @@ function terreno_mapa_shortcode($atts) {
                 entrada: 0,
                 parcelas: 0,
                 valorParcela: 0,
+                valorBalao: 0,
+                qtdBaloes: 0,
                 financiado: 0
             };
-            
+
             this.init();
         }
 
@@ -511,9 +1050,13 @@ function terreno_mapa_shortcode($atts) {
 
             const parcelasSlider = this.root.querySelector("[data-js=parcelas-slider] input");
             const parcelasDisplay = this.root.querySelector("[data-js=parcelas-slider] [data-js=valor-display]");
+            const anosDisplay = this.root.querySelector("[data-js=parcelas-slider] [data-js=anos]");
 
             const financiadoDisplay = this.root.querySelector("[data-js=valor-financiado]");
+            const balaoDisplay = this.root.querySelector("[data-js=valor-balao]");
             const parcelaDisplay = this.root.querySelector("[data-js=valor-parcela]");
+
+            const formatCurrency = (valor) => valor.toLocaleString("pt-BR", {style: "currency", currency: "BRL"});
 
             const updateSliderStyle = (slider) => {
                 const min = Number(slider.min);
@@ -526,22 +1069,44 @@ function terreno_mapa_shortcode($atts) {
             const update = () => {
                 const entrada = Number(entradaSlider.value);
                 const parcelas = Number(parcelasSlider.value);
+                const qtdAnos = Math.ceil(parcelas / 12);
 
-                entradaDisplay.innerHTML = entrada.toLocaleString("pt-BR",{style:"currency",currency:"BRL"});
+                // Atualiza entrada
+                entradaDisplay.innerHTML = formatCurrency(entrada);
                 entradaPct.innerHTML = Math.floor((entrada / this.lote.price) * 100) + "%";
                 updateSliderStyle(entradaSlider);
 
-                parcelasDisplay.innerHTML = parcelas;
+                // Atualiza parcelas
+                parcelasDisplay.innerHTML = `${parcelas} parcelas`;
+                anosDisplay.innerHTML = `${qtdAnos} ano${qtdAnos > 1 ? "s" : ""}`;
                 updateSliderStyle(parcelasSlider);
 
+                // Cálculo do financiamento
                 const financiado = this.lote.price - entrada;
-                financiadoDisplay.innerHTML = financiado.toLocaleString("pt-BR",{style:"currency",currency:"BRL"});
 
-                const valorParcela = financiado / parcelas;
-                parcelaDisplay.innerHTML = valorParcela.toLocaleString("pt-BR",{style:"currency",currency:"BRL"});
+                // 👉 20% do TOTAL financiado para balões
+                const totalBaloes = financiado * 0.2;
+                const valorBalao = totalBaloes / qtdAnos;
 
-                this.values = { preco: this.lote.price, entrada, parcelas, valorParcela, financiado };
+                // 👉 restante vai para parcelas mensais
+                const restanteParaMensais = financiado - totalBaloes;
+                const valorParcela = restanteParaMensais / parcelas;
+
+                financiadoDisplay.innerHTML = formatCurrency(financiado);
+                balaoDisplay.innerHTML = `${formatCurrency(valorBalao)} x ${qtdAnos}`;
+                parcelaDisplay.innerHTML = formatCurrency(valorParcela);
+
+                this.values = {
+                    preco: this.lote.price,
+                    entrada,
+                    parcelas,
+                    valorParcela,
+                    valorBalao,
+                    qtdBaloes: qtdAnos,
+                    financiado
+                };
             };
+
 
             update();
 

@@ -82,7 +82,7 @@ export class ColorGenerator {
    */
   static fromStatus(status) {
     const statusColors = {
-      'disponivel': '#4ECDC4',  // Turquesa (disponível)
+      'disponivel': '#14d279',  // Verde (disponível)
       'vendido': '#FF6B6B',      // Vermelho (vendido)
       'reservado': '#FFD54F'     // Amarelo (reservado)
     };

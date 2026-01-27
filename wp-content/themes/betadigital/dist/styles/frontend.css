@@ -1674,7 +1674,7 @@ input[type=submit] {
   background-color: var(--wp--preset--color--vivid-green-cyan);
 }
 .box-simulador__status span:nth-of-type(2)::before {
-  background-color: var(--wp--preset--color--gray-500);
+  background-color: red;
 }
 @media (max-width: 992px) {
   .box-simulador__logo {
@@ -1828,7 +1828,7 @@ input[type=submit] {
 }
 @media (min-width: 992px) {
   .simulador {
-    grid-template-columns: 70% auto;
+    grid-template-columns: 60% auto;
   }
 }
 @media (max-width: 992px) {

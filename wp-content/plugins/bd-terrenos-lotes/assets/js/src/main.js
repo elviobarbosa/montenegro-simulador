@@ -14,6 +14,9 @@ import { DrawingManager } from './managers/DrawingManager';
 import { PolygonManager } from './managers/PolygonManager';
 import { GeocodeManager } from './managers/GeocodeManager';
 import { DataPersistence } from './managers/DataPersistence';
+import { SVGOverlayManager } from './managers/SVGOverlayManager';
+import { SVGEditorManager } from './managers/SVGEditorManager';
+import { ImageOverlayManager } from './managers/ImageOverlayManager';
 
 // Services
 import { CoordinatesService } from './services/CoordinatesService';
@@ -49,6 +52,12 @@ class TerrenoMapApp {
     this.dataPersistence = null;
     this.uiManager = null;
     this.modalManager = null;
+    this.svgImportManager = null;
+    this.svgEditorManager = null;
+    this.imageOverlayManager = null;
+
+    // InfoWindow compartilhada
+    this.infoWindow = null;
   }
 
   /**
@@ -75,6 +84,33 @@ class TerrenoMapApp {
       this.dataPersistence = new DataPersistence('terreno_lotes_data', this.stateManager, this.eventBus);
       this.uiManager = new UIManager(this.stateManager, this.eventBus);
       this.modalManager = new ModalManager();
+      this.svgImportManager = new SVGOverlayManager(
+        map,
+        this.stateManager,
+        this.eventBus,
+        this.polygonManager,
+        this.dataPersistence
+      );
+
+      // Inicializa editor de SVG para vincular shapes aos lotes
+      this.svgEditorManager = new SVGEditorManager(
+        map,
+        this.stateManager,
+        this.eventBus
+      );
+
+      // Inicializa manager de planta humanizada (image overlay)
+      this.imageOverlayManager = new ImageOverlayManager(
+        map,
+        this.stateManager,
+        this.eventBus
+      );
+
+      // Carrega overlay SVG salvo (se existir)
+      this.svgImportManager.loadSavedOverlay();
+
+      // Carrega overlay de imagem salvo (se existir)
+      this.imageOverlayManager.loadSavedOverlay();
 
       // Carrega dados salvos
       const lotesData = this.dataPersistence.load();
@@ -109,10 +145,10 @@ class TerrenoMapApp {
       console.log('Desenho completado, aguardando aplicação...');
     });
 
-    // Polygon clicked
-    this.eventBus.on('polygon:clicked', ({ lote }) => {
+    // Polygon clicked - abre InfoWindow
+    this.eventBus.on('polygon:clicked', ({ lote, polygon, event }) => {
       console.log('Polígono clicado:', lote.nome || lote.id);
-      // Pode abrir info window aqui
+      this.openInfoWindow(lote, polygon, event);
     });
 
     // UI events
@@ -132,6 +168,28 @@ class TerrenoMapApp {
     // Data events
     this.eventBus.on('data:saved', () => {
       console.log('✓ Dados salvos com sucesso');
+    });
+
+    // SVG Import events
+    this.eventBus.on('lotes:imported', ({ count }) => {
+      console.log(`✓ ${count} lotes importados do SVG`);
+      // Atualiza a lista de lotes na UI
+      this.uiManager.renderLotesList(this.stateManager.getState('lotesData'));
+    });
+
+    // SVG Editor events - clique em shape no overlay
+    this.eventBus.on('svg:shape_clicked', ({ index }) => {
+      console.log(`Shape ${index} clicado no overlay`);
+      // Abre o editor e seleciona o shape
+      if (this.svgEditorManager) {
+        this.svgEditorManager.openEditor();
+        this.svgEditorManager.selectShape(index);
+      }
+    });
+
+    // SVG configuração salva
+    this.eventBus.on('svg:configuration_saved', (data) => {
+      console.log('✓ Configuração SVG salva:', data);
     });
   }
 
@@ -171,6 +229,11 @@ class TerrenoMapApp {
     // Botão Buscar Endereço
     DOMHelper.addEventListener('buscar_endereco', 'click', () => {
       this.searchAddress();
+    });
+
+    // Botão Ir para Coordenadas
+    DOMHelper.addEventListener('ir_para_coordenadas', 'click', () => {
+      this.goToCoordinates();
     });
 
     // Sync inputs com mapa
@@ -332,6 +395,36 @@ class TerrenoMapApp {
   }
 
   /**
+   * Move o mapa para as coordenadas digitadas
+   */
+  goToCoordinates() {
+    const lat = parseFloat(DOMHelper.getValue('terreno_latitude'));
+    const lng = parseFloat(DOMHelper.getValue('terreno_longitude'));
+    const zoom = parseInt(DOMHelper.getValue('terreno_zoom')) || 18;
+
+    if (isNaN(lat) || isNaN(lng)) {
+      alert('Por favor, digite coordenadas válidas de latitude e longitude.');
+      return;
+    }
+
+    if (lat < -90 || lat > 90) {
+      alert('Latitude deve estar entre -90 e 90.');
+      return;
+    }
+
+    if (lng < -180 || lng > 180) {
+      alert('Longitude deve estar entre -180 e 180.');
+      return;
+    }
+
+    // Atualiza mapa
+    this.mapManager.updateCenter(lat, lng);
+    this.mapManager.updateZoom(zoom);
+
+    console.log(`✓ Mapa movido para: ${lat}, ${lng} (zoom: ${zoom})`);
+  }
+
+  /**
    * Abre modal de edição
    */
   async openEditModal(loteId) {
@@ -395,6 +488,62 @@ class TerrenoMapApp {
       // Usuário cancelou o modal
       console.log('Edição cancelada');
     }
+  }
+
+  /**
+   * Abre InfoWindow ao clicar no polígono
+   * @param {Object} lote - Dados do lote
+   * @param {google.maps.Polygon} polygon - Polígono clicado
+   * @param {Object} event - Evento do clique
+   */
+  openInfoWindow(lote, polygon, event) {
+    // Fecha InfoWindow existente
+    if (this.infoWindow) {
+      this.infoWindow.close();
+    }
+
+    // Cria conteúdo da InfoWindow
+    const content = `
+      <div style="padding: 10px; min-width: 200px;">
+        <h4 style="margin: 0 0 10px 0; color: #23282d; font-size: 14px;">
+          ${lote.nome || 'Lote sem nome'}
+        </h4>
+        <p style="margin: 5px 0; font-size: 13px; color: #666;">
+          <strong>ID da Unidade:</strong> ${lote.id || '-'}
+        </p>
+        <p style="margin: 5px 0; font-size: 13px; color: #666;">
+          <strong>Quadra:</strong> ${lote.bloco || '-'}
+        </p>
+        <p style="margin: 5px 0; font-size: 13px; color: #666;">
+          <strong>Área:</strong> ${lote.area ? lote.area.toFixed(2) + ' m²' : '-'}
+        </p>
+        <div style="margin-top: 12px; text-align: center;">
+          <button type="button" class="button button-primary" id="infowindow-edit-btn" style="width: 100%;">
+            Editar Lote
+          </button>
+        </div>
+      </div>
+    `;
+
+    // Cria InfoWindow
+    this.infoWindow = new google.maps.InfoWindow({
+      content: content,
+      position: event.latLng
+    });
+
+    // Abre InfoWindow
+    this.infoWindow.open(this.mapManager.getMap());
+
+    // Adiciona listener para o botão de editar após o DOM ser renderizado
+    google.maps.event.addListenerOnce(this.infoWindow, 'domready', () => {
+      const editBtn = document.getElementById('infowindow-edit-btn');
+      if (editBtn) {
+        editBtn.addEventListener('click', () => {
+          this.infoWindow.close();
+          this.openEditModal(lote.id);
+        });
+      }
+    });
   }
 }
 

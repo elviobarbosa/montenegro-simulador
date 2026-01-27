@@ -13,6 +13,177 @@ class TerrenosLotes_MetaBox {
       'normal',
       'high'
     );
+
+    add_meta_box(
+      'terreno_sidebar',
+      'Configurações',
+      array($this, 'sidebar_meta_box_callback'),
+      'terreno',
+      'side',
+      'default'
+    );
+  }
+
+  public function sidebar_meta_box_callback($post) {
+    $facebook_pixel_id = get_post_meta($post->ID, '_facebook_pixel_id', true);
+    $facebook_pixel_token = get_post_meta($post->ID, '_facebook_pixel_token', true);
+    $logo_empreendimento = get_post_meta($post->ID, '_logo_empreendimento', true);
+    $tabela_preco_id = get_post_meta($post->ID, '_tabela_preco_id', true);
+
+    // Dados da Planta Humanizada
+    $image_url = get_post_meta($post->ID, '_terreno_image_url', true);
+
+    // Dados do SVG
+    $svg_content = get_post_meta($post->ID, '_terreno_svg_content', true);
+    ?>
+    <!-- Código da Tabela de Preços -->
+    <div style="margin-bottom: 20px;">
+        <label for="tabela_preco_id" style="display: block; margin-bottom: 5px; font-weight: 600;">
+            Código da Tabela de Preços
+        </label>
+        <input type="text" id="tabela_preco_id" name="tabela_preco_id"
+            value="<?php echo esc_attr($tabela_preco_id); ?>"
+            placeholder="Ex: 252"
+            style="width: 100%;" />
+        <p style="font-size: 11px; color: #666; margin-top: 5px;">
+            ID da tabela de preços do CV CRM para buscar valores das unidades.
+        </p>
+    </div>
+    <hr style="margin: 20px 0;">
+
+    <!-- Logo do Empreendimento -->
+    <div style="margin-bottom: 20px;">
+        <label style="display: block; margin-bottom: 5px; font-weight: 600;">
+            Logo do Empreendimento
+        </label>
+        <div id="logo_empreendimento_preview" style="margin-bottom: 10px;">
+            <?php if ($logo_empreendimento): ?>
+                <?php echo wp_get_attachment_image($logo_empreendimento, 'medium', false, ['style' => 'max-width: 100%; height: auto;']); ?>
+            <?php endif; ?>
+        </div>
+        <input type="hidden" id="logo_empreendimento" name="logo_empreendimento" value="<?php echo esc_attr($logo_empreendimento); ?>" />
+        <button type="button" class="button" id="logo_empreendimento_button" style="width: 100%;">
+            <?php echo $logo_empreendimento ? 'Alterar Logo' : 'Selecionar Logo'; ?>
+        </button>
+        <?php if ($logo_empreendimento): ?>
+            <button type="button" class="button" id="logo_empreendimento_remove" style="width: 100%; margin-top: 5px;">
+                Remover Logo
+            </button>
+        <?php endif; ?>
+    </div>
+<hr>
+    <!-- Facebook Pixel -->
+    <div style="margin-bottom: 15px;">
+        <label for="facebook_pixel_id" style="display: block; margin-bottom: 5px; font-weight: 600;">
+            Facebook Pixel ID
+        </label>
+        <input type="text" id="facebook_pixel_id" name="facebook_pixel_id"
+            value="<?php echo esc_attr($facebook_pixel_id); ?>"
+            placeholder="Ex: 1423368039304251"
+            style="width: 100%;" />
+    </div>
+
+    <div style="margin-bottom: 15px;">
+        <label for="facebook_pixel_token" style="display: block; margin-bottom: 5px; font-weight: 600;">
+            Facebook Access Token
+        </label>
+        <input type="text" id="facebook_pixel_token" name="facebook_pixel_token"
+            value="<?php echo esc_attr($facebook_pixel_token); ?>"
+            placeholder="Cole o token aqui"
+            style="width: 100%;" />
+    </div>
+
+    <hr style="margin: 20px 0;">
+
+    <!-- Planta Humanizada -->
+    <div style="margin-bottom: 15px;">
+        <label style="display: block; margin-bottom: 5px; font-weight: 600;">
+            Planta Humanizada
+        </label>
+        <p style="font-size: 12px; color: #666; margin-bottom: 10px;">
+            Adicione uma imagem de planta humanizada como overlay no mapa.
+        </p>
+        <button type="button" class="button button-primary" id="btn_importar_planta" style="width: 100%; margin-bottom: 5px;">
+            <span class="dashicons dashicons-format-image" style="margin-top: 3px;"></span>
+            Selecionar Imagem
+        </button>
+        <button type="button" class="button" id="btn_ajustar_planta" style="width: 100%;" <?php echo empty($image_url) ? 'disabled' : ''; ?>>
+            <span class="dashicons dashicons-move" style="margin-top: 3px;"></span>
+            Ajustar Posição
+        </button>
+    </div>
+
+    <hr style="margin: 20px 0;">
+
+    <!-- Importar SVG -->
+    <div style="margin-bottom: 15px;">
+        <label style="display: block; margin-bottom: 5px; font-weight: 600;">
+            Importar Lotes de SVG
+        </label>
+        <p style="font-size: 12px; color: #666; margin-bottom: 10px;">
+            Importe lotes a partir de um arquivo SVG da planta do loteamento.
+        </p>
+        <?php if (empty($svg_content)): ?>
+        <button type="button" class="button button-primary" id="btn_importar_svg" style="width: 100%; margin-bottom: 5px;">
+            <span class="dashicons dashicons-upload" style="margin-top: 3px;"></span>
+            Importar SVG
+        </button>
+        <?php else: ?>
+        <button type="button" class="button" id="btn_ajustar_svg" style="width: 100%; margin-bottom: 5px;">
+            <span class="dashicons dashicons-move" style="margin-top: 3px;"></span>
+            Ajustar Posição
+        </button>
+        <button type="button" class="button" id="btn_remover_svg" style="width: 100%; color: #b32d2e; border-color: #b32d2e;">
+            <span class="dashicons dashicons-trash" style="margin-top: 3px;"></span>
+            Remover SVG
+        </button>
+        <?php endif; ?>
+    </div>
+
+    <script>
+    jQuery(document).ready(function($) {
+        var logoMediaUploader;
+
+        $('#logo_empreendimento_button').on('click', function(e) {
+            e.preventDefault();
+
+            if (logoMediaUploader) {
+                logoMediaUploader.open();
+                return;
+            }
+
+            logoMediaUploader = wp.media({
+                title: 'Selecionar Logo do Empreendimento',
+                button: {
+                    text: 'Usar esta imagem'
+                },
+                multiple: false
+            });
+
+            logoMediaUploader.on('select', function() {
+                var attachment = logoMediaUploader.state().get('selection').first().toJSON();
+                $('#logo_empreendimento').val(attachment.id);
+                $('#logo_empreendimento_preview').html('<img src="' + attachment.url + '" style="max-width: 100%; height: auto;">');
+                $('#logo_empreendimento_button').text('Alterar Logo');
+
+                if ($('#logo_empreendimento_remove').length === 0) {
+                    $('#logo_empreendimento_button').after('<button type="button" class="button" id="logo_empreendimento_remove" style="width: 100%; margin-top: 5px;">Remover Logo</button>');
+                }
+            });
+
+            logoMediaUploader.open();
+        });
+
+        $(document).on('click', '#logo_empreendimento_remove', function(e) {
+            e.preventDefault();
+            $('#logo_empreendimento').val('');
+            $('#logo_empreendimento_preview').html('');
+            $('#logo_empreendimento_button').text('Selecionar Logo');
+            $(this).remove();
+        });
+    });
+    </script>
+    <?php
   }
 
   public function mapa_meta_box_callback($post) {
@@ -29,9 +200,19 @@ class TerrenosLotes_MetaBox {
     $lotes_data = get_post_meta($post->ID, '_terreno_lotes', true);
     $zoom = get_post_meta($post->ID, '_terreno_zoom', true) ?: '18';
     $empreendimento_id = get_post_meta($post->ID, '_empreendimento_id', true);
-    $facebook_pixel_id = get_post_meta($post->ID, '_facebook_pixel_id', true);
-    $facebook_pixel_token = get_post_meta($post->ID, '_facebook_pixel_token', true);
-    
+
+    // Dados do SVG Overlay
+    $svg_content = get_post_meta($post->ID, '_terreno_svg_content', true);
+    $svg_bounds = get_post_meta($post->ID, '_terreno_svg_bounds', true);
+    $svg_rotation = get_post_meta($post->ID, '_terreno_svg_rotation', true);
+    $shape_mapping = get_post_meta($post->ID, '_terreno_shape_mapping', true);
+
+    // Dados da Planta Humanizada (Image Overlay)
+    $image_url = get_post_meta($post->ID, '_terreno_image_url', true);
+    $image_bounds = get_post_meta($post->ID, '_terreno_image_bounds', true);
+    $image_rotation = get_post_meta($post->ID, '_terreno_image_rotation', true);
+    $image_opacity = get_post_meta($post->ID, '_terreno_image_opacity', true);
+
     ?>
 
     <!-- Modal de Edição de Lote -->
@@ -46,7 +227,7 @@ class TerrenosLotes_MetaBox {
             </div>
 
             <div style="margin-bottom: 15px;">
-                <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #23282d;">Bloco: <span style="color: red;">*</span></label>
+                <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #23282d;">Quadra: <span style="color: red;">*</span></label>
                 <input type="text" id="editLoteBloco" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;" placeholder="Ex: A, B, C..." />
                 <small style="color: #666; font-size: 11px;">Bloco onde a unidade está localizada</small>
             </div>
@@ -64,31 +245,106 @@ class TerrenosLotes_MetaBox {
     </div>
     <!-- Fim Modal -->
 
+    <!-- Painel Lateral de Importação de SVG -->
+    <div id="svgImportModal" style="display:none; position:fixed; top:32px; right:0; width:320px; height:calc(100vh - 32px); background:white; z-index: 9999; overflow-y: auto; box-shadow: -4px 0 20px rgba(0,0,0,0.2); border-left: 1px solid #ddd;">
+        <div style="padding: 20px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                <h3 style="margin: 0; color: #23282d; font-size: 16px;">Importar SVG</h3>
+                <button type="button" class="button" id="svgImportClose" style="padding: 0 8px;">&times;</button>
+            </div>
 
-    <div id="terreno-mapa-container">
-        <!-- Configurações Facebook Pixel -->
-        <div class="terreno-controls" style="margin-bottom: 15px;">
-            <h4 style="margin: 0 0 10px 0; font-size: 14px; color: #23282d;">
-                <span class="dashicons dashicons-facebook" style="vertical-align: middle;"></span>
-                Facebook Pixel
-            </h4>
-            <div class="control-row">
-                <div class="control-group">
-                    <label for="facebook_pixel_id">Pixel ID:</label>
-                    <input type="text" id="facebook_pixel_id" name="facebook_pixel_id"
-                        value="<?php echo esc_attr($facebook_pixel_id); ?>"
-                        placeholder="Ex: 1423368039304251"
-                        style="max-width: 300px;" />
-
-                    <label for="facebook_pixel_token" style="margin-left: 15px;">Access Token:</label>
-                    <input type="text" id="facebook_pixel_token" name="facebook_pixel_token"
-                        value="<?php echo esc_attr($facebook_pixel_token); ?>"
-                        placeholder="Cole o token de acesso aqui"
-                        style="flex: 1;" />
+            <!-- Step 1: Upload -->
+            <div id="svgStep1">
+                <div style="border: 2px dashed #ccc; border-radius: 8px; padding: 25px; text-align: center; margin-bottom: 15px;" id="svgDropZone">
+                    <span class="dashicons dashicons-upload" style="font-size: 36px; color: #ccc; display: block; margin-bottom: 8px;"></span>
+                    <p style="margin: 0 0 8px 0; font-size: 13px;">Arraste um arquivo SVG aqui ou</p>
+                    <input type="file" id="svgFileInput" accept=".svg" style="display: none;">
+                    <button type="button" class="button button-primary" id="svgSelectFile">Selecionar Arquivo</button>
+                </div>
+                <div id="svgUploadStatus" style="display: none; padding: 8px; background: #f0f0f0; border-radius: 4px; margin-bottom: 15px; font-size: 12px;">
+                    <span id="svgFileName"></span>
+                    <span id="svgShapeCount" style="float: right;"></span>
                 </div>
             </div>
-        </div>
 
+            <!-- Step 2: Controles de Posicionamento -->
+            <div id="svgStep2" style="display: none;">
+                <!-- Instruções -->
+                <div style="background: #e7f5ff; border: 1px solid #0073aa; border-radius: 4px; padding: 10px; margin-bottom: 15px;">
+                    <h4 style="margin: 0 0 8px 0; color: #0073aa; font-size: 13px;">
+                        <span class="dashicons dashicons-info" style="margin-right: 5px;"></span>
+                        Como posicionar
+                    </h4>
+                    <ul style="margin: 0; padding-left: 18px; font-size: 12px; color: #333;">
+                        <li><strong>Arrastar:</strong> Clique e arraste para mover</li>
+                        <li><strong>Redimensionar:</strong> Arraste os cantos</li>
+                        <li><strong>Rotacionar:</strong> Use o slider abaixo</li>
+                    </ul>
+                </div>
+
+                <!-- Controles de Transformação -->
+                <div style="background: #f5f5f5; padding: 12px; border-radius: 4px; margin-bottom: 15px;">
+                    <h4 style="margin: 0 0 12px 0; font-size: 13px;">Controles</h4>
+
+                    <!-- Rotação -->
+                    <div style="margin-bottom: 12px;">
+                        <label style="display: block; margin-bottom: 4px; font-weight: 600; font-size: 12px;">
+                            Rotação: <span id="svgRotationValue">0°</span>
+                        </label>
+                        <div style="display: flex; align-items: center; gap: 6px;">
+                            <button type="button" class="button button-small" id="svgRotateLeft" title="-1°">
+                                &#8634;
+                            </button>
+                            <input type="range" id="svgRotationSlider" min="-180" max="180" value="0"
+                                   style="flex: 1; margin: 0;">
+                            <button type="button" class="button button-small" id="svgRotateRight" title="+1°">
+                                &#8635;
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Opacidade -->
+                    <div style="margin-bottom: 12px;">
+                        <label style="display: block; margin-bottom: 4px; font-weight: 600; font-size: 12px;">
+                            Opacidade
+                        </label>
+                        <input type="range" id="svgOpacitySlider" min="10" max="100" value="70"
+                               style="width: 100%;">
+                    </div>
+
+                    <!-- Zoom + Reset -->
+                    <div style="display: flex; gap: 6px;">
+                        <button type="button" class="button button-small" id="svgZoomOut" title="Diminuir">
+                            <span class="dashicons dashicons-minus" style="font-size: 16px;"></span>
+                        </button>
+                        <button type="button" class="button button-small" id="svgZoomIn" title="Aumentar">
+                            <span class="dashicons dashicons-plus" style="font-size: 16px;"></span>
+                        </button>
+                        <button type="button" class="button button-small" id="svgResetTransform" style="flex: 1;" title="Resetar">
+                            <span class="dashicons dashicons-image-rotate" style="font-size: 16px;"></span> Resetar
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Dica -->
+                <div style="background: #fff8e5; border: 1px solid #f0c36d; border-radius: 4px; padding: 8px; margin-bottom: 15px; font-size: 11px;">
+                    <strong>Dica:</strong> Alinhe com as ruas no satélite.
+                </div>
+            </div>
+
+            <!-- Botões de ação -->
+            <div style="display: flex; gap: 8px; justify-content: flex-end; border-top: 1px solid #ddd; padding-top: 15px; margin-top: 10px;">
+                <button type="button" class="button" id="svgImportCancel">Cancelar</button>
+                <button type="button" class="button button-primary" id="svgImportConfirm" disabled>
+                    <span class="dashicons dashicons-yes" style="font-size: 16px;"></span>
+                    Importar
+                </button>
+            </div>
+        </div>
+    </div>
+    <!-- Fim Modal SVG -->
+
+    <div id="terreno-mapa-container">
         <!-- Controles superiores -->
         <div class="terreno-controls">
             <div class="control-row">
@@ -111,41 +367,31 @@ class TerrenosLotes_MetaBox {
                 <div class="coordinate-group">
                     <div class="coordinate-item">
                         <label for="terreno_latitude">Latitude:</label>
-                        <input type="text" id="terreno_latitude" name="terreno_latitude" 
+                        <input type="text" id="terreno_latitude" name="terreno_latitude"
                                value="<?php echo esc_attr($latitude); ?>" />
                     </div>
                     <div class="coordinate-item">
                         <label for="terreno_longitude">Longitude:</label>
-                        <input type="text" id="terreno_longitude" name="terreno_longitude" 
+                        <input type="text" id="terreno_longitude" name="terreno_longitude"
                                value="<?php echo esc_attr($longitude); ?>" />
                     </div>
                     <div class="coordinate-item">
                         <label for="terreno_zoom">Zoom:</label>
-                        <input type="number" id="terreno_zoom" name="terreno_zoom" 
+                        <input type="number" id="terreno_zoom" name="terreno_zoom"
                                value="<?php echo esc_attr($zoom); ?>" min="1" max="20" />
+                    </div>
+                    <div class="coordinate-item" style="align-self: flex-end;">
+                        <button type="button" id="ir_para_coordenadas" class="button button-primary">
+                            <span class="dashicons dashicons-location" style="margin-top: 3px;"></span> Ir para coordenadas
+                        </button>
                     </div>
                 </div>
             </div>
             
             <div class="control-row">
                 <div class="action-group">
-                    <button type="button" id="desenhar_lote" class="button button-primary">
-                        <span class="dashicons dashicons-edit"></span> <span data-js="label_desenhar_lote">Desenhar Novo Lote</span>
-                    </button>
-                    <button type="button" id="aplicar_desenho" class="button button-primary hidden">
-                        <span class="dashicons dashicons-yes"></span> <span data-js="label_desenhar_lote">Aplicar Desenho</span>
-                    </button>
-                    <button type="button" id="cancelar_desenho" class="button button-primary hidden">
-                        <span class="dashicons dashicons-no-alt"></span> <span data-js="label_desenhar_lote">Cancelar</span>
-                    </button>
-                    <button type="button" id="limpar_lotes" class="button">
-                        <span class="dashicons dashicons-trash"></span> Limpar Todos os Lotes
-                    </button>
                     <button type="button" id="toggle_satellite" class="button">
                         <span class="dashicons dashicons-admin-site-alt3"></span> Visualização Satélite
-                    </button>
-                    <button type="button" id="recarregar_poligonos" class="button" style="display: none;">
-                        <span class="dashicons dashicons-update"></span> Debug: Recarregar
                     </button>
                 </div>
                 <div class="status-group">
@@ -161,40 +407,60 @@ class TerrenosLotes_MetaBox {
                 <div id="gmap"></div>
             </div>
             
-            <!-- Lista de lotes lateral -->
+            <!-- Lista de shapes lateral -->
             <div class="lotes-sidebar">
                 <div class="lotes-header">
                     <h4>
                         <span class="dashicons dashicons-admin-multisite"></span>
-                        Lotes Cadastrados
+                        Shapes do SVG
                     </h4>
                     <div class="lotes-counter">
-                        <span id="total-lotes">0</span> lote(s)
+                        <span id="total-shapes">0</span> shape(s)
                     </div>
                 </div>
-                
+
                 <div class="lotes-content">
-                    <div id="lista-lotes-container">
-                        <div class="no-lotes">
+                    <div id="shapes-sidebar-container">
+                        <div class="no-lotes" id="no-shapes-message">
                             <div class="no-lotes-icon">
                                 <span class="dashicons dashicons-admin-multisite"></span>
                             </div>
-                            <p>Nenhum lote cadastrado ainda.</p>
-                            <p class="help-text">Clique em "Desenhar Novo Lote" para começar.</p>
+                            <p>Nenhum shape carregado.</p>
+                            <p class="help-text">Importe um SVG para visualizar os shapes.</p>
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="lotes-footer">
-                    <div class="area-total">
-                        <strong>Área Total: <span id="area-total-value">0 m²</span></strong>
+                    <div class="shapes-info">
+                        <strong>Shapes mapeados: <span id="shapes-mapped-count">0</span></strong>
                     </div>
                 </div>
             </div>
         </div>
         
-        <input type="hidden" id="terreno_lotes_data" name="terreno_lotes_data" 
+        <input type="hidden" id="terreno_lotes_data" name="terreno_lotes_data"
                value='<?php echo esc_attr( $lotes_data ? wp_json_encode( json_decode($lotes_data, true) ) : "[]" ); ?>' />
+
+        <!-- Dados do SVG Overlay -->
+        <input type="hidden" id="terreno_svg_content" name="terreno_svg_content"
+               value="<?php echo esc_attr($svg_content); ?>" />
+        <input type="hidden" id="terreno_svg_bounds" name="terreno_svg_bounds"
+               value="<?php echo esc_attr($svg_bounds); ?>" />
+        <input type="hidden" id="terreno_svg_rotation" name="terreno_svg_rotation"
+               value="<?php echo esc_attr($svg_rotation); ?>" />
+        <input type="hidden" id="terreno_shape_mapping" name="terreno_shape_mapping"
+               value='<?php echo esc_attr($shape_mapping); ?>' />
+
+        <!-- Dados da Planta Humanizada (Image Overlay) -->
+        <input type="hidden" id="terreno_image_url" name="terreno_image_url"
+               value="<?php echo esc_attr($image_url); ?>" />
+        <input type="hidden" id="terreno_image_bounds" name="terreno_image_bounds"
+               value="<?php echo esc_attr($image_bounds); ?>" />
+        <input type="hidden" id="terreno_image_rotation" name="terreno_image_rotation"
+               value="<?php echo esc_attr($image_rotation); ?>" />
+        <input type="hidden" id="terreno_image_opacity" name="terreno_image_opacity"
+               value="<?php echo esc_attr($image_opacity); ?>" />
     </div>
     
     <style>
@@ -455,7 +721,99 @@ class TerrenosLotes_MetaBox {
             background: #fff3cd;
             color: #856404;
         }
-        
+
+        /* Shapes na sidebar */
+        .shape-item {
+            background: #fff;
+            border: 1px solid #e1e1e1;
+            padding: 10px;
+            margin-bottom: 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .shape-item:hover {
+            border-color: #0073aa;
+            box-shadow: 0 2px 5px rgba(0, 115, 170, 0.15);
+        }
+
+        .shape-item.shape-mapped {
+            border-left: 3px solid #46b450;
+        }
+
+        .shape-item.shape-unmapped {
+            border-left: 3px solid #dc3232;
+        }
+
+        .shape-header {
+            gap: 8px;
+            margin-bottom: 4px;
+        }
+
+        .shape-color {
+            width: 12px;
+            height: 12px;
+            border-radius: 2px;
+            flex-shrink: 0;
+        }
+
+        .shape-name {
+            font-weight: 600;
+            font-size: 12px;
+            color: #23282d;
+            flex: 1;
+        }
+
+        .shape-points {
+            font-size: 10px;
+            color: #999;
+        }
+
+        .shape-status {
+            font-size: 11px;
+            color: #666;
+        }
+
+        .shape-mapped .shape-status {
+            color: #46b450;
+        }
+
+        .shape-unmapped .shape-status {
+            color: #dc3232;
+        }
+
+        .shapes-info {
+            color: #0073aa;
+            font-size: 13px;
+        }
+
+        /* Botões de ação dos shapes */
+        .shape-actions {
+            display: flex;
+            gap: 5px;
+            margin-top: 8px;
+            padding-top: 8px;
+        }
+
+        .shape-actions .button {
+            font-size: 11px;
+            padding: 2px 8px;
+            height: auto;
+            line-height: 1.4;
+            display: flex;
+            align-items: center;
+            gap: 3px;
+        }
+
+        .shape-actions .button .dashicons {
+            margin-top: 1px;
+        }
+
+        .shape-item:hover .shape-actions {
+            background: transparent;
+        }
+
         /* Responsividade */
         @media (max-width: 1200px) {
             .lotes-sidebar {

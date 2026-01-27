@@ -1,0 +1,40 @@
+.simulador-page {
+    width: 100%;
+    min-height: 100vh;
+}
+
+.simulador-page__wrapper {
+    display: flex;
+    flex-direction: row;
+    min-height: 100vh;
+}
+
+.simulador-page__sidebar {
+    width: 380px;
+    flex-shrink: 0;
+    background: #fff;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+}
+
+.simulador-page__mapa {
+    flex: 1;
+    min-height: 100vh;
+}
+
+/* Responsivo */
+@media (max-width: 1024px) {
+    .simulador-page__wrapper {
+        flex-direction: column;
+    }
+
+    .simulador-page__sidebar {
+        width: 100%;
+        order: 2;
+    }
+
+    .simulador-page__mapa {
+        min-height: 60vh;
+        order: 1;
+    }
+}
