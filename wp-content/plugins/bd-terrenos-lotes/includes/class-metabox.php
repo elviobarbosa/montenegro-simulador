@@ -29,6 +29,7 @@ class TerrenosLotes_MetaBox {
     $facebook_pixel_token = get_post_meta($post->ID, '_facebook_pixel_token', true);
     $logo_empreendimento = get_post_meta($post->ID, '_logo_empreendimento', true);
     $tabela_preco_id = get_post_meta($post->ID, '_tabela_preco_id', true);
+    $empreendimento_id = get_post_meta($post->ID, '_empreendimento_id', true);
 
     // Dados da Planta Humanizada
     $image_url = get_post_meta($post->ID, '_terreno_image_url', true);
@@ -36,113 +37,203 @@ class TerrenosLotes_MetaBox {
     // Dados do SVG
     $svg_content = get_post_meta($post->ID, '_terreno_svg_content', true);
     ?>
-    <!-- Código da Tabela de Preços -->
-    <div style="margin-bottom: 20px;">
-        <label for="tabela_preco_id" style="display: block; margin-bottom: 5px; font-weight: 600;">
-            Código da Tabela de Preços
-        </label>
-        <input type="text" id="tabela_preco_id" name="tabela_preco_id"
-            value="<?php echo esc_attr($tabela_preco_id); ?>"
-            placeholder="Ex: 252"
-            style="width: 100%;" />
-        <p style="font-size: 11px; color: #666; margin-top: 5px;">
-            ID da tabela de preços do CV CRM para buscar valores das unidades.
-        </p>
-    </div>
-    <hr style="margin: 20px 0;">
+    <style>
+        .sidebar-section {
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-bottom: 12px;
+            background: #fff;
+        }
+        .sidebar-section-header {
+            background: #f5f5f5;
+            padding: 10px 12px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #ddd;
+            user-select: none;
+        }
+        .sidebar-section-header:hover {
+            background: #eee;
+        }
+        .sidebar-section-header h4 {
+            margin: 0;
+            font-size: 13px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .sidebar-section-toggle {
+            transition: transform 0.2s;
+        }
+        .sidebar-section.collapsed .sidebar-section-toggle {
+            transform: rotate(-90deg);
+        }
+        .sidebar-section.collapsed .sidebar-section-content {
+            display: none;
+        }
+        .sidebar-section-content {
+            padding: 12px;
+        }
+        .sidebar-field {
+            margin-bottom: 12px;
+        }
+        .sidebar-field:last-child {
+            margin-bottom: 0;
+        }
+        .sidebar-field label {
+            display: block;
+            margin-bottom: 4px;
+            font-weight: 600;
+            font-size: 12px;
+        }
+        .sidebar-field input[type="text"] {
+            width: 100%;
+        }
+        .sidebar-field .description {
+            font-size: 11px;
+            color: #666;
+            margin-top: 4px;
+        }
+        .sidebar-field .button {
+            width: 100%;
+            margin-bottom: 5px;
+        }
+        .sidebar-field .button:last-child {
+            margin-bottom: 0;
+        }
+    </style>
 
-    <!-- Logo do Empreendimento -->
-    <div style="margin-bottom: 20px;">
-        <label style="display: block; margin-bottom: 5px; font-weight: 600;">
-            Logo do Empreendimento
-        </label>
-        <div id="logo_empreendimento_preview" style="margin-bottom: 10px;">
-            <?php if ($logo_empreendimento): ?>
-                <?php echo wp_get_attachment_image($logo_empreendimento, 'medium', false, ['style' => 'max-width: 100%; height: auto;']); ?>
-            <?php endif; ?>
+    <!-- Seção: Configurações do Empreendimento -->
+    <div class="sidebar-section">
+        <div class="sidebar-section-header" onclick="toggleSection(this)">
+            <h4>
+                <span class="dashicons dashicons-building"></span>
+                Configurações do Empreendimento
+            </h4>
+            <span class="dashicons dashicons-arrow-down sidebar-section-toggle"></span>
         </div>
-        <input type="hidden" id="logo_empreendimento" name="logo_empreendimento" value="<?php echo esc_attr($logo_empreendimento); ?>" />
-        <button type="button" class="button" id="logo_empreendimento_button" style="width: 100%;">
-            <?php echo $logo_empreendimento ? 'Alterar Logo' : 'Selecionar Logo'; ?>
-        </button>
-        <?php if ($logo_empreendimento): ?>
-            <button type="button" class="button" id="logo_empreendimento_remove" style="width: 100%; margin-top: 5px;">
-                Remover Logo
-            </button>
-        <?php endif; ?>
+        <div class="sidebar-section-content">
+            <!-- ID do Empreendimento -->
+            <div class="sidebar-field">
+                <label for="empreendimento_id_sidebar">ID do Empreendimento</label>
+                <input type="text" id="empreendimento_id_sidebar" name="empreendimento_id"
+                    value="<?php echo esc_attr($empreendimento_id); ?>"
+                    placeholder="Ex: 123" />
+                <p class="description">ID do empreendimento no CV CRM.</p>
+            </div>
+
+            <!-- Código da Tabela de Preços -->
+            <div class="sidebar-field">
+                <label for="tabela_preco_id">Código da Tabela de Preços</label>
+                <input type="text" id="tabela_preco_id" name="tabela_preco_id"
+                    value="<?php echo esc_attr($tabela_preco_id); ?>"
+                    placeholder="Ex: 252" />
+                <p class="description">ID da tabela de preços para buscar valores.</p>
+            </div>
+
+            <!-- Logo do Empreendimento -->
+            <div class="sidebar-field">
+                <label>Logo do Empreendimento</label>
+                <div id="logo_empreendimento_preview" style="margin-bottom: 8px;">
+                    <?php if ($logo_empreendimento): ?>
+                        <?php echo wp_get_attachment_image($logo_empreendimento, 'medium', false, ['style' => 'max-width: 100%; height: auto;']); ?>
+                    <?php endif; ?>
+                </div>
+                <input type="hidden" id="logo_empreendimento" name="logo_empreendimento" value="<?php echo esc_attr($logo_empreendimento); ?>" />
+                <button type="button" class="button" id="logo_empreendimento_button">
+                    <?php echo $logo_empreendimento ? 'Alterar Logo' : 'Selecionar Logo'; ?>
+                </button>
+                <?php if ($logo_empreendimento): ?>
+                    <button type="button" class="button" id="logo_empreendimento_remove">
+                        Remover Logo
+                    </button>
+                <?php endif; ?>
+            </div>
+
+            <!-- Facebook Pixel ID -->
+            <div class="sidebar-field">
+                <label for="facebook_pixel_id">Facebook Pixel ID</label>
+                <input type="text" id="facebook_pixel_id" name="facebook_pixel_id"
+                    value="<?php echo esc_attr($facebook_pixel_id); ?>"
+                    placeholder="Ex: 1423368039304251" />
+            </div>
+
+            <!-- Facebook Access Token -->
+            <div class="sidebar-field">
+                <label for="facebook_pixel_token">Facebook Access Token</label>
+                <input type="text" id="facebook_pixel_token" name="facebook_pixel_token"
+                    value="<?php echo esc_attr($facebook_pixel_token); ?>"
+                    placeholder="Cole o token aqui" />
+            </div>
+        </div>
     </div>
-<hr>
-    <!-- Facebook Pixel -->
-    <div style="margin-bottom: 15px;">
-        <label for="facebook_pixel_id" style="display: block; margin-bottom: 5px; font-weight: 600;">
-            Facebook Pixel ID
-        </label>
-        <input type="text" id="facebook_pixel_id" name="facebook_pixel_id"
-            value="<?php echo esc_attr($facebook_pixel_id); ?>"
-            placeholder="Ex: 1423368039304251"
-            style="width: 100%;" />
-    </div>
 
-    <div style="margin-bottom: 15px;">
-        <label for="facebook_pixel_token" style="display: block; margin-bottom: 5px; font-weight: 600;">
-            Facebook Access Token
-        </label>
-        <input type="text" id="facebook_pixel_token" name="facebook_pixel_token"
-            value="<?php echo esc_attr($facebook_pixel_token); ?>"
-            placeholder="Cole o token aqui"
-            style="width: 100%;" />
-    </div>
+    <!-- Seção: Importação de Overlays -->
+    <div class="sidebar-section">
+        <div class="sidebar-section-header" onclick="toggleSection(this)">
+            <h4>
+                <span class="dashicons dashicons-upload"></span>
+                Importação de Overlays
+            </h4>
+            <span class="dashicons dashicons-arrow-down sidebar-section-toggle"></span>
+        </div>
+        <div class="sidebar-section-content">
+            <!-- Planta Humanizada -->
+            <div class="sidebar-field">
+                <label>Planta Humanizada</label>
+                <p class="description" style="margin-bottom: 8px;">Imagem de planta como overlay no mapa.</p>
+                <button type="button" class="button button-primary" id="btn_importar_planta">
+                    <span class="dashicons dashicons-format-image" style="margin-top: 3px;"></span>
+                    Selecionar Imagem
+                </button>
+                <button type="button" class="button" id="btn_ajustar_planta" <?php echo empty($image_url) ? 'disabled' : ''; ?>>
+                    <span class="dashicons dashicons-move" style="margin-top: 3px;"></span>
+                    Ajustar Posição
+                </button>
+            </div>
 
-    <hr style="margin: 20px 0;">
-
-    <!-- Planta Humanizada -->
-    <div style="margin-bottom: 15px;">
-        <label style="display: block; margin-bottom: 5px; font-weight: 600;">
-            Planta Humanizada
-        </label>
-        <p style="font-size: 12px; color: #666; margin-bottom: 10px;">
-            Adicione uma imagem de planta humanizada como overlay no mapa.
-        </p>
-        <button type="button" class="button button-primary" id="btn_importar_planta" style="width: 100%; margin-bottom: 5px;">
-            <span class="dashicons dashicons-format-image" style="margin-top: 3px;"></span>
-            Selecionar Imagem
-        </button>
-        <button type="button" class="button" id="btn_ajustar_planta" style="width: 100%;" <?php echo empty($image_url) ? 'disabled' : ''; ?>>
-            <span class="dashicons dashicons-move" style="margin-top: 3px;"></span>
-            Ajustar Posição
-        </button>
-    </div>
-
-    <hr style="margin: 20px 0;">
-
-    <!-- Importar SVG -->
-    <div style="margin-bottom: 15px;">
-        <label style="display: block; margin-bottom: 5px; font-weight: 600;">
-            Importar Lotes de SVG
-        </label>
-        <p style="font-size: 12px; color: #666; margin-bottom: 10px;">
-            Importe lotes a partir de um arquivo SVG da planta do loteamento.
-        </p>
-        <?php if (empty($svg_content)): ?>
-        <button type="button" class="button button-primary" id="btn_importar_svg" style="width: 100%; margin-bottom: 5px;">
-            <span class="dashicons dashicons-upload" style="margin-top: 3px;"></span>
-            Importar SVG
-        </button>
-        <?php else: ?>
-        <button type="button" class="button" id="btn_ajustar_svg" style="width: 100%; margin-bottom: 5px;">
-            <span class="dashicons dashicons-move" style="margin-top: 3px;"></span>
-            Ajustar Posição
-        </button>
-        <button type="button" class="button" id="btn_remover_svg" style="width: 100%; color: #b32d2e; border-color: #b32d2e;">
-            <span class="dashicons dashicons-trash" style="margin-top: 3px;"></span>
-            Remover SVG
-        </button>
-        <?php endif; ?>
+            <!-- Importar SVG -->
+            <div class="sidebar-field">
+                <label>Importar Lotes de SVG</label>
+                <p class="description" style="margin-bottom: 8px;">Importe lotes a partir de um arquivo SVG.</p>
+                <?php if (empty($svg_content)): ?>
+                <button type="button" class="button button-primary" id="btn_importar_svg">
+                    <span class="dashicons dashicons-upload" style="margin-top: 3px;"></span>
+                    Importar SVG
+                </button>
+                <?php else: ?>
+                <button type="button" class="button" id="btn_ajustar_svg">
+                    <span class="dashicons dashicons-move" style="margin-top: 3px;"></span>
+                    Ajustar Posição
+                </button>
+                <button type="button" class="button" id="btn_remover_svg" style="color: #b32d2e; border-color: #b32d2e;">
+                    <span class="dashicons dashicons-trash" style="margin-top: 3px;"></span>
+                    Remover SVG
+                </button>
+                <?php endif; ?>
+            </div>
+        </div>
     </div>
 
     <script>
+    function toggleSection(header) {
+        var section = header.parentElement;
+        section.classList.toggle('collapsed');
+    }
+
     jQuery(document).ready(function($) {
         var logoMediaUploader;
+
+        // Sincroniza ID do Empreendimento entre sidebar e área principal
+        $('#empreendimento_id_sidebar').on('input', function() {
+            $('#empreendimento_id').val($(this).val());
+        });
+        $('#empreendimento_id').on('input', function() {
+            $('#empreendimento_id_sidebar').val($(this).val());
+        });
 
         $('#logo_empreendimento_button').on('click', function(e) {
             e.preventDefault();
@@ -167,7 +258,7 @@ class TerrenosLotes_MetaBox {
                 $('#logo_empreendimento_button').text('Alterar Logo');
 
                 if ($('#logo_empreendimento_remove').length === 0) {
-                    $('#logo_empreendimento_button').after('<button type="button" class="button" id="logo_empreendimento_remove" style="width: 100%; margin-top: 5px;">Remover Logo</button>');
+                    $('#logo_empreendimento_button').after('<button type="button" class="button" id="logo_empreendimento_remove">Remover Logo</button>');
                 }
             });
 
@@ -349,19 +440,15 @@ class TerrenosLotes_MetaBox {
         <div class="terreno-controls">
             <div class="control-row">
                 <div class="control-group">
-                    <label for="empreendimento_id">ID do Empreendimento:</label>
-                    <input type="text" id="empreendimento_id" name="empreendimento_id"
-                        value="<?php echo esc_attr($empreendimento_id); ?>"
-                        placeholder="Digite ID do Empreendimento" />
-                
                     <label for="terreno_endereco">Endereço:</label>
-                    <input type="text" id="terreno_endereco" name="terreno_endereco" 
-                           value="<?php echo esc_attr($endereco); ?>" 
+                    <input type="text" id="terreno_endereco" name="terreno_endereco"
+                           value="<?php echo esc_attr($endereco); ?>"
                            placeholder="Digite o endereço ou clique no mapa" />
                     <button type="button" id="buscar_endereco" class="button">Buscar</button>
-                    <!-- <button type="button" id="minha_localizacao" class="button">Minha Localização</button> -->
                 </div>
             </div>
+            <!-- Campo hidden para sincronizar com a sidebar -->
+            <input type="hidden" id="empreendimento_id" name="empreendimento_id" value="<?php echo esc_attr($empreendimento_id); ?>" />
             
             <div class="control-row">
                 <div class="coordinate-group">
