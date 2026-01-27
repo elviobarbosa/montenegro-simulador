@@ -38,7 +38,6 @@ import { ColorGenerator } from './utils/ColorGenerator';
  */
 class TerrenoMapApp {
   constructor() {
-    console.log('🚀 Iniciando TerrenoMapApp...');
 
     // Inicializa core modules
     this.eventBus = new EventBus();
@@ -127,8 +126,6 @@ class TerrenoMapApp {
       this.setupEventHandlers();
       this.setupDOMEventHandlers();
 
-      console.log('✓ TerrenoMapApp inicializado com sucesso');
-      console.log(`📍 ${lotesData.length} lote(s) carregado(s)`);
 
     } catch (error) {
       console.error('❌ Erro ao inicializar TerrenoMapApp:', error);
@@ -142,12 +139,10 @@ class TerrenoMapApp {
   setupEventHandlers() {
     // Drawing completed
     this.eventBus.on('drawing:completed', ({ polygon, coordinates }) => {
-      console.log('Desenho completado, aguardando aplicação...');
     });
 
     // Polygon clicked - abre InfoWindow
     this.eventBus.on('polygon:clicked', ({ lote, polygon, event }) => {
-      console.log('Polígono clicado:', lote.nome || lote.id);
       this.openInfoWindow(lote, polygon, event);
     });
 
@@ -167,19 +162,16 @@ class TerrenoMapApp {
 
     // Data events
     this.eventBus.on('data:saved', () => {
-      console.log('✓ Dados salvos com sucesso');
     });
 
     // SVG Import events
     this.eventBus.on('lotes:imported', ({ count }) => {
-      console.log(`✓ ${count} lotes importados do SVG`);
       // Atualiza a lista de lotes na UI
       this.uiManager.renderLotesList(this.stateManager.getState('lotesData'));
     });
 
     // SVG Editor events - clique em shape no overlay
     this.eventBus.on('svg:shape_clicked', ({ index }) => {
-      console.log(`Shape ${index} clicado no overlay`);
       // Abre o editor e seleciona o shape
       if (this.svgEditorManager) {
         this.svgEditorManager.openEditor();
@@ -189,7 +181,6 @@ class TerrenoMapApp {
 
     // SVG configuração salva
     this.eventBus.on('svg:configuration_saved', (data) => {
-      console.log('✓ Configuração SVG salva:', data);
     });
   }
 
@@ -322,14 +313,12 @@ class TerrenoMapApp {
       this.drawingManager.stopDrawing();
       this.uiManager.updateDrawingButtons(false);
 
-      console.log('✓ Lote criado - ID:', lote.id, '| Nome:', lote.nome, '| Bloco:', lote.bloco);
 
     } catch (error) {
       // Usuário cancelou - remove o polígono temporário
       polygon.setMap(null);
       this.drawingManager.stopDrawing();
       this.uiManager.updateDrawingButtons(false);
-      console.log('Criação de lote cancelada');
     }
   }
 
@@ -348,7 +337,6 @@ class TerrenoMapApp {
     this.polygonManager.clearAllPolygons();
     this.dataPersistence.clearAll();
     this.uiManager.renderLotesList([]);
-    console.log('✓ Todos os lotes foram removidos');
   }
 
   /**
@@ -358,7 +346,6 @@ class TerrenoMapApp {
     this.polygonManager.deletePolygon(loteId);
     this.dataPersistence.removeLote(loteId);
     this.uiManager.renderLotesList(this.stateManager.getState('lotesData'));
-    console.log('✓ Lote removido:', loteId);
   }
 
   /**
@@ -387,7 +374,6 @@ class TerrenoMapApp {
         DOMHelper.setValue('terreno_endereco', result.address);
       }
 
-      console.log('✓ Endereço encontrado:', result.address || address);
 
     } catch (error) {
       alert('Erro ao buscar endereço: ' + error.message);
@@ -421,7 +407,6 @@ class TerrenoMapApp {
     this.mapManager.updateCenter(lat, lng);
     this.mapManager.updateZoom(zoom);
 
-    console.log(`✓ Mapa movido para: ${lat}, ${lng} (zoom: ${zoom})`);
   }
 
   /**
@@ -470,7 +455,6 @@ class TerrenoMapApp {
         // Cria novo polígono no mapa
         this.polygonManager.createPolygon(newLote.toJSON());
 
-        console.log('✓ Lote recriado com novo ID - Antigo:', loteId, '| Novo:', editedData.id);
       } else {
         // Se o ID não mudou, apenas atualiza os dados
         this.dataPersistence.updateLote(loteId, {
@@ -478,7 +462,6 @@ class TerrenoMapApp {
           bloco: editedData.bloco || lote.bloco
         });
 
-        console.log('✓ Lote atualizado:', loteId);
       }
 
       // Re-renderiza a lista
@@ -486,7 +469,6 @@ class TerrenoMapApp {
 
     } catch (error) {
       // Usuário cancelou o modal
-      console.log('Edição cancelada');
     }
   }
 
@@ -551,7 +533,6 @@ class TerrenoMapApp {
 jQuery(document).ready(() => {
   // Verifica se o elemento do mapa existe
   if (jQuery('#gmap').length === 0) {
-    console.log('Elemento #gmap não encontrado, não iniciando TerrenoMapApp');
     return;
   }
 

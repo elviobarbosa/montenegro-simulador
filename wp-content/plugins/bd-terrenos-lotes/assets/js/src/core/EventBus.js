@@ -14,7 +14,6 @@
  *
  * @example
  * const eventBus = new EventBus();
- * eventBus.on('lote:created', (lote) => console.log('Novo lote:', lote));
  * eventBus.emit('lote:created', { id: 1, nome: 'Lote 1' });
  */
 export class EventBus {

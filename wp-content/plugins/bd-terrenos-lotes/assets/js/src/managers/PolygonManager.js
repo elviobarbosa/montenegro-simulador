@@ -121,7 +121,6 @@ export class PolygonManager {
     const polygon = this.stateManager.getPolygon(loteId);
 
     if (!polygon) {
-      console.warn(`Polígono com ID "${loteId}" não encontrado`);
       return false;
     }
 
@@ -148,7 +147,6 @@ export class PolygonManager {
     const polygon = this.stateManager.getPolygon(loteId);
 
     if (!polygon) {
-      console.warn(`Polígono com ID "${loteId}" não encontrado`);
       return;
     }
 
@@ -227,7 +225,6 @@ export class PolygonManager {
     const polygon = this.stateManager.getPolygon(loteId);
 
     if (!polygon) {
-      console.warn(`Polígono com ID "${loteId}" não encontrado`);
       return false;
     }
 
@@ -267,7 +264,6 @@ export class PolygonManager {
       }
     });
 
-    console.log(`${polygons.length} polígono(s) carregado(s) no mapa`);
     this.eventBus.emit('polygons:loaded', polygons);
 
     return polygons;
@@ -287,7 +283,6 @@ export class PolygonManager {
     polygons.clear();
     this.eventBus.emit('polygons:cleared');
 
-    console.log('Todos os polígonos foram removidos');
   }
 
   /**

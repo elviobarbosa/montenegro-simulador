@@ -118,7 +118,6 @@ export class MapManager {
    */
   updateCenter(lat, lng) {
     if (!this.map) {
-      console.warn('Mapa não inicializado');
       return;
     }
 
@@ -134,7 +133,6 @@ export class MapManager {
    */
   updateZoom(level) {
     if (!this.map) {
-      console.warn('Mapa não inicializado');
       return;
     }
 
@@ -148,7 +146,6 @@ export class MapManager {
    */
   toggleMapType() {
     if (!this.map) {
-      console.warn('Mapa não inicializado');
       return;
     }
 

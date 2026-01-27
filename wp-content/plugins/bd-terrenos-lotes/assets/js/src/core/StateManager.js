@@ -6,7 +6,6 @@
  *
  * @example
  * const stateManager = new StateManager();
- * stateManager.subscribe('map', (newMap) => console.log('Mapa atualizado:', newMap));
  * stateManager.setState('map', mapInstance);
  */
 export class StateManager {

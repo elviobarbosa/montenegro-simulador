@@ -78,7 +78,6 @@ export class SVGOverlayManager {
     if (btnAjustar) {
       btnAjustar.addEventListener('click', (e) => {
         e.preventDefault();
-        console.log('SVGOverlayManager: ajustar posicao clicado');
         this.toggleEditMode();
       });
     } else {
@@ -222,7 +221,6 @@ export class SVGOverlayManager {
           new google.maps.LatLng(bounds.north, bounds.east)
         );
       } catch (e) {
-        console.warn('Erro ao carregar bounds:', e);
       }
     }
 
@@ -234,7 +232,6 @@ export class SVGOverlayManager {
       try {
         this.shapeMapping = JSON.parse(mappingInput.value);
       } catch (e) {
-        console.warn('Erro ao carregar mapping:', e);
       }
     }
 
@@ -275,7 +272,6 @@ export class SVGOverlayManager {
       this.renderShapesInSidebar();
     }, 100);
 
-    console.log('✓ Overlay SVG carregado dos dados salvos');
   }
 
   /**
@@ -453,7 +449,6 @@ export class SVGOverlayManager {
         // Renderiza lista de shapes
         this.renderShapesList();
 
-        console.log(`✓ SVG processado: ${this.shapes.length} shapes`);
       } else {
         alert(
           'Erro ao processar SVG: ' +
@@ -589,7 +584,6 @@ export class SVGOverlayManager {
     // Emite evento para outros managers
     this.eventBus.emit('svg:removed', {});
 
-    console.log('✓ SVG removido. Salve o post para confirmar a remoção.');
     alert('SVG removido. Salve o post para confirmar a remoção.');
   }
 
@@ -961,7 +955,6 @@ export class SVGOverlayManager {
     this.renderShapesInSidebar();
     this.updateShapeColors();
 
-    console.log(`Shape ${index} vinculado ao lote ${data.id} - Quadra ${data.bloco}`);
   }
 
   /**
@@ -986,7 +979,6 @@ export class SVGOverlayManager {
     this.renderShapesInSidebar();
     this.updateShapeColors();
 
-    console.log(`Vínculo removido do shape ${index}`);
   }
 
   /**
@@ -1034,7 +1026,6 @@ export class SVGOverlayManager {
 
       // Se não tem bounds, tenta criar o overlay primeiro
       if (!this.overlay.bounds) {
-        console.log('Bounds não encontrados, criando overlay...');
         this.createMapOverlay();
 
         // Aguarda um pouco para o overlay ser criado
@@ -1100,10 +1091,6 @@ export class SVGOverlayManager {
     // Atualiza visibilidade dos botões
     this.updateSvgButtonsVisibility(true);
 
-    console.log('✓ SVG salvo como overlay permanente');
-    console.log(`  Shapes: ${this.shapes.length}`);
-    console.log(`  Bounds: N=${boundsData.north}, S=${boundsData.south}, E=${boundsData.east}, W=${boundsData.west}`);
-    console.log(`  Rotação: ${this.overlay.rotation}°`);
   }
 
   /**
@@ -1292,7 +1279,6 @@ export class SVGOverlayManager {
     if (rotationSlider) rotationSlider.value = this.overlay.rotation || 0;
     if (rotationValue) rotationValue.textContent = `${Math.round(this.overlay.rotation || 0)}°`;
 
-    console.log('SVG: Modo de ajuste ativado');
   }
 
   /**
@@ -1330,12 +1316,8 @@ export class SVGOverlayManager {
         return;
       }
 
-      console.log('Iniciando conversão de shapes para polígonos...');
-      const ne = this.overlay.bounds.getNorthEast();
-      const sw = this.overlay.bounds.getSouthWest();
-      console.log(`Bounds: N=${ne.lat()}, S=${sw.lat()}, E=${ne.lng()}, W=${sw.lng()}`);
-      console.log('Rotação:', this.overlay.rotation);
-      console.log('ViewBox:', this.viewBox);
+      // const ne = this.overlay.bounds.getNorthEast();
+      // const sw = this.overlay.bounds.getSouthWest();
 
       const importedLotes = [];
 
@@ -1363,7 +1345,6 @@ export class SVGOverlayManager {
         importedLotes.push(lote);
       });
 
-      console.log(`Convertidos ${importedLotes.length} lotes.`);
 
       // Adiciona os lotes
       importedLotes.forEach((lote) => {

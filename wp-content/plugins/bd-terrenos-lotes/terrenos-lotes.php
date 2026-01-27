@@ -147,7 +147,6 @@ function terreno_mapa_shortcode($atts) {
 
         // Verifica se tem configuração de tabela
         if (!tabelaPrecoConfig.idEmpreendimento || !tabelaPrecoConfig.idTabela) {
-            console.warn('Configuração de tabela de preços não encontrada');
             return null;
         }
 
@@ -158,7 +157,6 @@ function terreno_mapa_shortcode($atts) {
 
             // Armazena no cache
             tabelaPrecoCache = data;
-            console.log('Tabela de preços carregada e cacheada:', data?.unidades?.length || 0, 'unidades');
             return data;
         } catch (err) {
             console.error('Erro ao carregar tabela de preços:', err);
@@ -268,7 +266,6 @@ function terreno_mapa_shortcode($atts) {
 
     function waitForGoogleMaps<?php echo $post_id; ?>() {
         if (typeof google !== 'undefined' && typeof google.maps !== 'undefined') {
-            console.log('Dados:', empreedimentosData);
             initTerrenoMap<?php echo $post_id; ?>();
         } else {
             setTimeout(waitForGoogleMaps<?php echo $post_id; ?>, 100);
@@ -317,8 +314,6 @@ function terreno_mapa_shortcode($atts) {
     }
 
     function infoWindowTemplate(lote) {
-        console.log(lote)
-
         // Validação defensiva
         if (!lote || !lote.situacao) {
             return '<div class="info-window-step1">Dados do lote indisponíveis</div>';
@@ -382,8 +377,6 @@ function terreno_mapa_shortcode($atts) {
     }
 
     function infoWindowTemplateStep2(lote) {
-        console.log(`STEP2`, lote)
-
         if (!lote) {
             return '<div class="info-window-step2">Dados do lote indisponíveis</div>';
         }
@@ -506,16 +499,13 @@ function terreno_mapa_shortcode($atts) {
 
         // Inicializa Image Overlay (planta humanizada) - sempre abaixo dos polígonos/SVG
         if (imageOverlayConfig.enabled && imageOverlayConfig.url && imageOverlayConfig.bounds) {
-            console.log('Carregando Planta Humanizada');
             initImageOverlay(map);
         }
 
         // Verifica se deve usar SVG Overlay
         if (svgOverlayConfig.enabled && svgOverlayConfig.content && svgOverlayConfig.bounds) {
-            console.log('Usando SVG Overlay');
             initSVGOverlay(map, blocos, infoWindow);
         } else {
-            console.log('Usando polígonos tradicionais');
             initPolygons(map, blocos, infoWindow);
         }
     }
@@ -713,7 +703,6 @@ function terreno_mapa_shortcode($atts) {
 
                         const unidade = findUnidade(blocos, mappingData.bloco, mappingData.lote_id);
                         if (!unidade) {
-                            console.warn('Unidade não encontrada:', mappingData);
                             return;
                         }
 
@@ -871,8 +860,7 @@ function terreno_mapa_shortcode($atts) {
     function initPolygons(map, blocos, infoWindow) {
         <?php if ($lotes_data): ?>
         var lotes = <?php echo $lotes_data; ?>;
-        console.log(lotes);
-        
+
         lotes.forEach(function(lote, index) {
             if (lote.coordinates && lote.coordinates.length > 0 && lote.bloco) {
                 var polygonCoords = lote.coordinates.map(function(coord) {
@@ -880,17 +868,14 @@ function terreno_mapa_shortcode($atts) {
                 });
 
                 const unidade = findUnidade(blocos, lote.bloco, lote.id);
-                console.log(unidade);
                 // Validação defensiva: verifica se unidade existe antes de acessar propriedades
                 if (!unidade) {
-                    console.warn(`Unidade não encontrada para bloco ${lote.bloco}, lote ${lote.id}`);
                     return; // Pula este lote se unidade não foi encontrada
                 }
 
                 const { situacao } = unidade;
                 const disponivel = (situacao.situacao_mapa_disponibilidade === 1);
                 const color = disponivel ? '#14d279' : '#FF0000';
-                console.log(`BLOCOS`, empreedimentosData)
                 
                 var polygon = new google.maps.Polygon({
                     paths: polygonCoords,

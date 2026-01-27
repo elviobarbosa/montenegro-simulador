@@ -52,7 +52,6 @@ export class DrawingManager {
       }
     });
 
-    console.log('DrawingManager inicializado');
   }
 
   /**
@@ -72,7 +71,6 @@ export class DrawingManager {
     this.stateManager.setState('isDrawingMode', true);
 
     this.eventBus.emit('drawing:started');
-    console.log('Modo de desenho ativado');
   }
 
   /**
@@ -91,7 +89,6 @@ export class DrawingManager {
     this.currentPolygon = null;
 
     this.eventBus.emit('drawing:stopped', { polygon });
-    console.log('Modo de desenho desativado');
 
     return polygon;
   }
@@ -114,7 +111,6 @@ export class DrawingManager {
     this.stateManager.setState('currentPolygon', null);
 
     this.eventBus.emit('drawing:canceled');
-    console.log('Desenho cancelado');
   }
 
   /**
@@ -143,10 +139,6 @@ export class DrawingManager {
     this.eventBus.emit('drawing:completed', {
       polygon: polygon,
       coordinates: coordinates
-    });
-
-    console.log('Polígono desenhado com sucesso', {
-      vertices: coordinates.length
     });
   }
 
@@ -238,6 +230,5 @@ export class DrawingManager {
     this.stateManager.setState('isDrawingMode', false);
     this.stateManager.setState('currentPolygon', null);
 
-    console.log('DrawingManager destruído');
   }
 }

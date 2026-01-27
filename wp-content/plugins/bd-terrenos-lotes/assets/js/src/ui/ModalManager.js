@@ -25,7 +25,6 @@ export class ModalManager {
     this.modal = document.getElementById('editModal');
 
     if (!this.modal) {
-      console.warn('Modal #editModal não encontrado no DOM');
       return;
     }
 

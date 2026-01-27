@@ -48,7 +48,6 @@ export class UIManager {
     const container = DOMHelper.getElement('lista-lotes-container');
 
     if (!container) {
-      console.warn('Container de lotes não encontrado');
       return;
     }
 
@@ -213,9 +212,7 @@ export class UIManager {
     if (type === 'error') {
       alert('Erro: ' + message);
     } else if (type === 'success') {
-      console.log('✓ ' + message);
     } else {
-      console.log(message);
     }
   }
 
@@ -227,7 +224,6 @@ export class UIManager {
     // Implementação simplificada
     // Pode ser melhorada com spinner visual
     if (show) {
-      console.log('Loading...');
     }
   }
 }

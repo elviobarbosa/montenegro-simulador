@@ -51,7 +51,6 @@ export class DOMHelper {
     const element = this.getElement(id);
 
     if (!element) {
-      console.warn(`Elemento com ID "${id}" não encontrado`);
       return false;
     }
 
@@ -167,7 +166,6 @@ export class DOMHelper {
     const element = this.getElement(id);
 
     if (!element) {
-      console.warn(`Elemento com ID "${id}" não encontrado para event listener`);
       return false;
     }
 

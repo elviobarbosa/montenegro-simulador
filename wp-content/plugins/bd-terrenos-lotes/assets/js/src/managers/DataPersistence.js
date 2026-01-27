@@ -47,7 +47,6 @@ export class DataPersistence {
     const rawData = this.field.value;
 
     if (!rawData || rawData.trim() === '') {
-      console.log('Nenhum dado de lotes encontrado');
       return [];
     }
 
@@ -65,7 +64,6 @@ export class DataPersistence {
       // Atualiza o estado
       this.stateManager.setState('lotesData', validLotes);
 
-      console.log(`${validLotes.length} lote(s) carregado(s)`);
       this.eventBus.emit('data:loaded', validLotes);
 
       return validLotes;
@@ -93,7 +91,6 @@ export class DataPersistence {
 
       this.field.value = jsonData;
 
-      console.log(`${lotesData.length} lote(s) salvo(s)`);
       this.eventBus.emit('data:saved', lotesData);
 
       return true;
@@ -111,7 +108,6 @@ export class DataPersistence {
    */
   validateLote(lote) {
     if (!lote || typeof lote !== 'object') {
-      console.warn('Lote inválido: não é um objeto', lote);
       return false;
     }
 
@@ -120,21 +116,18 @@ export class DataPersistence {
 
     for (const field of requiredFields) {
       if (!(field in lote)) {
-        console.warn(`Lote inválido: campo "${field}" ausente`, lote);
         return false;
       }
     }
 
     // Valida coordinates
     if (!Array.isArray(lote.coordinates) || lote.coordinates.length < 3) {
-      console.warn('Lote inválido: coordinates deve ser array com no mínimo 3 pontos', lote);
       return false;
     }
 
     // Valida cada coordenada
     for (const coord of lote.coordinates) {
       if (typeof coord.lat !== 'number' || typeof coord.lng !== 'number') {
-        console.warn('Lote inválido: coordenada com lat/lng inválido', coord);
         return false;
       }
     }

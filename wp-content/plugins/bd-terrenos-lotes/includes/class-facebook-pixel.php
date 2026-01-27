@@ -17,21 +17,16 @@ class TerrenosLotes_FacebookPixel {
         $terreno_id = null;
 
         // Debug: Log da execução
-        error_log('=== FACEBOOK PIXEL DEBUG ===');
-        error_log('Post Type: ' . get_post_type());
-        error_log('is_singular(terreno): ' . (is_singular('terreno') ? 'SIM' : 'NÃO'));
 
         // Caso 1: Estamos em um custom post type "terreno"
         if (is_singular('terreno')) {
             $terreno_id = get_the_ID();
-            error_log('Caso 1: Custom Post Type terreno - ID: ' . $terreno_id);
         }
         // Caso 2: Estamos em uma página que pode ter um terreno com mesmo slug
         elseif (is_page()) {
             global $post;
 
             $slug_pagina = $post->post_name;
-            error_log('Caso 2: Página - Slug: ' . $slug_pagina);
 
             // Busca um terreno com o mesmo slug da página
             if (!empty($slug_pagina)) {
@@ -47,23 +42,18 @@ class TerrenosLotes_FacebookPixel {
 
                 if ($query->have_posts()) {
                     $terreno_id = $query->posts[0];
-                    error_log('Caso 2: Terreno encontrado com mesmo slug - ID: ' . $terreno_id);
                 } else {
-                    error_log('Caso 2: Nenhum terreno encontrado com slug: ' . $slug_pagina);
                 }
                 wp_reset_postdata();
             } else {
-                error_log('Caso 2: Slug da página vazio');
             }
         }
         else {
-            error_log('PIXEL NÃO CARREGADO: Não é terreno nem página');
             return;
         }
 
         // Se não encontramos um ID de terreno, não carrega o pixel
         if (!$terreno_id) {
-            error_log('PIXEL NÃO CARREGADO: ID do terreno não encontrado');
             return;
         }
 
@@ -71,17 +61,12 @@ class TerrenosLotes_FacebookPixel {
         $pixel_id = get_post_meta($terreno_id, '_facebook_pixel_id', true);
         $pixel_token = get_post_meta($terreno_id, '_facebook_pixel_token', true);
 
-        error_log('Terreno ID: ' . $terreno_id);
-        error_log('Pixel ID encontrado: ' . ($pixel_id ? $pixel_id : 'VAZIO'));
-        error_log('Pixel Token encontrado: ' . ($pixel_token ? 'SIM' : 'NÃO'));
 
         // Se não houver Pixel ID, não carrega nada
         if (empty($pixel_id)) {
-            error_log('PIXEL NÃO CARREGADO: Pixel ID vazio para terreno ' . $terreno_id);
             return;
         }
 
-        error_log('PIXEL CARREGADO COM SUCESSO! Terreno: ' . $terreno_id . ' | Pixel: ' . $pixel_id);
 
         ?>
         <!-- Meta Pixel Code -->

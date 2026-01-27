@@ -40,7 +40,6 @@ export class GeocodeManager {
           };
 
           this.eventBus.emit('geocode:success', result);
-          console.log('Endereço encontrado:', result.formatted_address);
 
           resolve(result);
         } else {
@@ -74,7 +73,6 @@ export class GeocodeManager {
             address
           });
 
-          console.log('Endereço encontrado:', address);
           resolve(address);
         } else {
           const error = new Error(`Reverse geocode falhou: ${status}`);
@@ -113,7 +111,6 @@ export class GeocodeManager {
     const result = { lat, lng };
 
     this.eventBus.emit('coordinates:searched', result);
-    console.log('Coordenadas processadas:', result);
 
     return result;
   }
@@ -137,7 +134,6 @@ export class GeocodeManager {
           };
 
           this.eventBus.emit('geolocation:success', result);
-          console.log('Localização atual obtida:', result);
 
           resolve(result);
         },

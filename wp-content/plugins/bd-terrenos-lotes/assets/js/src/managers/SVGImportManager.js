@@ -272,7 +272,6 @@ export class SVGImportManager {
         // Renderiza lista de shapes
         this.renderShapesList();
 
-        console.log(`✓ SVG processado: ${this.shapes.length} shapes`);
       } else {
         alert(
           'Erro ao processar SVG: ' +
@@ -432,7 +431,6 @@ export class SVGImportManager {
       if (svgPreviewHint) svgPreviewHint.textContent = '✓ Calibração completa!';
       if (svgImportConfirm) svgImportConfirm.disabled = false;
 
-      console.log('✓ Calibração completa:', this.calibration);
     }
   }
 
@@ -603,7 +601,6 @@ export class SVGImportManager {
     try {
       // Calcula transformação
       const transform = this.calculateTransform();
-      console.log('Transformação calculada:', transform);
 
       const importedLotes = [];
 
@@ -631,7 +628,6 @@ export class SVGImportManager {
         importedLotes.push(lote);
       });
 
-      console.log(`Importando ${importedLotes.length} lotes...`);
 
       // Adiciona os lotes
       importedLotes.forEach((lote) => {

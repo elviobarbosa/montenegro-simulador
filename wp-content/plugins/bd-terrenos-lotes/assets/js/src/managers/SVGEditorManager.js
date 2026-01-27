@@ -489,7 +489,7 @@ export class SVGEditorManager {
       try {
         this.overlay.bounds = JSON.parse(boundsInput.value);
       } catch (e) {
-        console.warn('Erro ao parsear bounds:', e);
+        // Ignore parse errors
       }
     }
 
@@ -505,7 +505,7 @@ export class SVGEditorManager {
       try {
         this.shapeMapping = JSON.parse(mappingInput.value);
       } catch (e) {
-        console.warn('Erro ao parsear mapping:', e);
+        // Ignore parse errors
       }
     }
 
@@ -831,10 +831,6 @@ export class SVGEditorManager {
 
     // Fecha modal
     this.closeModal();
-
-    console.log(
-      `✓ Shape ${this.selectedShapeIndex} vinculado ao lote ${loteId}`,
-    );
   }
 
   /**
@@ -854,7 +850,6 @@ export class SVGEditorManager {
     // Fecha modal
     this.closeModal();
 
-    console.log(`✓ Vínculo removido do shape ${this.selectedShapeIndex}`);
   }
 
   /**
@@ -867,7 +862,6 @@ export class SVGEditorManager {
     this.updateOverlayColors();
     this.updateHiddenInputs();
 
-    console.log('✓ Todos os vínculos foram removidos');
   }
 
   /**

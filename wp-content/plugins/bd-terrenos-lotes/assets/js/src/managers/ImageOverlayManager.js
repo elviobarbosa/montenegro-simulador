@@ -33,7 +33,6 @@ export class ImageOverlayManager {
 
     // Elementos DOM
     this.controlPanel = null;
-    console.log('ImageOverlayManager: construtor');
     this.init();
   }
 
@@ -41,19 +40,13 @@ export class ImageOverlayManager {
    * Inicializa os event listeners
    */
   init() {
-    console.log('ImageOverlayManager: init()');
 
     // Botão de importar imagem
     const btnImportar = document.getElementById('btn_importar_planta');
-    console.log(
-      'ImageOverlayManager: btn_importar_planta encontrado?',
-      !!btnImportar,
-    );
 
     if (btnImportar) {
       btnImportar.addEventListener('click', (e) => {
         e.preventDefault();
-        console.log('ImageOverlayManager: botao clicado');
         this.openMediaLibrary();
       });
     } else {
@@ -61,10 +54,8 @@ export class ImageOverlayManager {
       setTimeout(() => {
         const btn = document.getElementById('btn_importar_planta');
         if (btn) {
-          console.log('ImageOverlayManager: btn encontrado no retry');
           btn.addEventListener('click', (e) => {
             e.preventDefault();
-            console.log('ImageOverlayManager: botao clicado (retry)');
             this.openMediaLibrary();
           });
         }
@@ -82,7 +73,6 @@ export class ImageOverlayManager {
     if (btnAjustar) {
       btnAjustar.addEventListener('click', (e) => {
         e.preventDefault();
-        console.log('ImageOverlayManager: ajustar posicao clicado');
         this.toggleEditMode();
       });
     } else {
@@ -406,7 +396,6 @@ export class ImageOverlayManager {
     document.getElementById('imageSaveBtn')?.addEventListener('click', () => {
       this.updateHiddenInputs();
       this.hideControls();
-      console.log('Ajustes da planta humanizada salvos');
     });
   }
 
@@ -414,19 +403,8 @@ export class ImageOverlayManager {
    * Abre a Media Library do WordPress
    */
   openMediaLibrary() {
-    console.log('ImageOverlayManager: openMediaLibrary()');
-    console.log(
-      'ImageOverlayManager: wp disponivel?',
-      typeof wp !== 'undefined',
-    );
-    console.log(
-      'ImageOverlayManager: wp.media disponivel?',
-      typeof wp !== 'undefined' && typeof wp.media !== 'undefined',
-    );
-
     if (typeof wp === 'undefined' || typeof wp.media === 'undefined') {
       alert('Media Library nao disponivel. Recarregue a pagina.');
-      console.error('ImageOverlayManager: wp.media nao disponivel');
       return;
     }
 
@@ -469,7 +447,6 @@ export class ImageOverlayManager {
     // Atualiza hidden inputs
     this.updateHiddenInputs();
 
-    console.log('Planta humanizada carregada:', imageUrl);
   }
 
   /**
@@ -640,7 +617,6 @@ export class ImageOverlayManager {
     // Limpa hidden inputs
     this.clearHiddenInputs();
 
-    console.log('Planta humanizada removida');
   }
 
   /**
@@ -766,7 +742,7 @@ export class ImageOverlayManager {
           lng: (bounds.east + bounds.west) / 2,
         };
       } catch (e) {
-        console.warn('Erro ao carregar bounds da imagem:', e);
+        // Silently ignore parse errors
       }
     }
 
@@ -825,7 +801,6 @@ export class ImageOverlayManager {
     if (opacityValue)
       opacityValue.textContent = `${Math.round(this.overlay.opacity * 100)}%`;
 
-    console.log('Overlay de imagem carregado dos dados salvos');
   }
 
   /**
