@@ -284,6 +284,7 @@ export class SVGEditorManager {
         border-bottom: 1px solid #eee;
         cursor: pointer;
         transition: background 0.2s;
+        justify-content: space-between;
       }
 
       .shape-item:last-child {
@@ -332,7 +333,7 @@ export class SVGEditorManager {
 
       .shape-status {
         font-size: 10px;
-        padding: 2px 6px;
+        padding: 2px 6px 2px 0;
         border-radius: 10px;
       }
 

@@ -109,7 +109,7 @@ class TerrenosLotes_MetaBox {
         </button>
         <button type="button" class="button" id="btn_ajustar_planta" style="width: 100%;" <?php echo empty($image_url) ? 'disabled' : ''; ?>>
             <span class="dashicons dashicons-move" style="margin-top: 3px;"></span>
-            Ajustar Posicao
+            Ajustar Posição
         </button>
     </div>
 
@@ -123,15 +123,16 @@ class TerrenosLotes_MetaBox {
         <p style="font-size: 12px; color: #666; margin-bottom: 10px;">
             Importe lotes a partir de um arquivo SVG da planta do loteamento.
         </p>
+        <?php if (empty($svg_content)): ?>
         <button type="button" class="button button-primary" id="btn_importar_svg" style="width: 100%; margin-bottom: 5px;">
             <span class="dashicons dashicons-upload" style="margin-top: 3px;"></span>
             Importar SVG
         </button>
-        <button type="button" class="button" id="btn_ajustar_svg" style="width: 100%; margin-bottom: 5px;" <?php echo empty($svg_content) ? 'disabled' : ''; ?>>
+        <?php else: ?>
+        <button type="button" class="button" id="btn_ajustar_svg" style="width: 100%; margin-bottom: 5px;">
             <span class="dashicons dashicons-move" style="margin-top: 3px;"></span>
-            Ajustar Posicao
+            Ajustar Posição
         </button>
-        <?php if (!empty($svg_content)): ?>
         <button type="button" class="button" id="btn_remover_svg" style="width: 100%; color: #b32d2e; border-color: #b32d2e;">
             <span class="dashicons dashicons-trash" style="margin-top: 3px;"></span>
             Remover SVG
@@ -746,8 +747,6 @@ class TerrenosLotes_MetaBox {
         }
 
         .shape-header {
-            display: flex;
-            align-items: center;
             gap: 8px;
             margin-bottom: 4px;
         }
@@ -787,6 +786,32 @@ class TerrenosLotes_MetaBox {
         .shapes-info {
             color: #0073aa;
             font-size: 13px;
+        }
+
+        /* Botões de ação dos shapes */
+        .shape-actions {
+            display: flex;
+            gap: 5px;
+            margin-top: 8px;
+            padding-top: 8px;
+        }
+
+        .shape-actions .button {
+            font-size: 11px;
+            padding: 2px 8px;
+            height: auto;
+            line-height: 1.4;
+            display: flex;
+            align-items: center;
+            gap: 3px;
+        }
+
+        .shape-actions .button .dashicons {
+            margin-top: 1px;
+        }
+
+        .shape-item:hover .shape-actions {
+            background: transparent;
         }
 
         /* Responsividade */

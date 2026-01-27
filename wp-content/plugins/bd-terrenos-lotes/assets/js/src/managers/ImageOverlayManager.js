@@ -125,45 +125,76 @@ export class ImageOverlayManager {
     this.controlPanel.id = 'imageOverlayControls';
     this.controlPanel.innerHTML = `
       <div class="image-overlay-header">
-        <span>Planta Humanizada</span>
+        <span>Ajustar Planta Humanizada</span>
         <button type="button" id="imageControlsClose" title="Fechar">&times;</button>
       </div>
       <div class="image-overlay-content">
+        <!-- Instruções -->
+        <div style="background: #e7f5ff; border: 1px solid #28a745; border-radius: 4px; padding: 10px; margin-bottom: 15px;">
+          <h4 style="margin: 0 0 8px 0; color: #28a745; font-size: 13px;">
+            <span class="dashicons dashicons-info" style="margin-right: 5px;"></span>
+            Como posicionar
+          </h4>
+          <ul style="margin: 0; padding-left: 18px; font-size: 12px; color: #333;">
+            <li><strong>Arrastar:</strong> Clique e arraste para mover</li>
+            <li><strong>Redimensionar:</strong> Arraste os cantos</li>
+            <li><strong>Rotacionar:</strong> Use o slider abaixo</li>
+          </ul>
+        </div>
+
         <div class="image-overlay-preview">
           <img id="imageOverlayPreview" src="" alt="Preview" />
         </div>
         <div class="image-overlay-controls">
+          <h4 style="margin: 0 0 12px 0; font-size: 13px;">Controles</h4>
+          <div class="control-group">
+            <label>Rotação: <span id="imageRotationValue">0°</span></label>
+            <div class="rotation-controls">
+              <button type="button" class="button button-small" id="imageRotateLeft" title="-1°">&#8634;</button>
+              <input type="range" id="imageRotationSlider" min="-180" max="180" value="0" />
+              <button type="button" class="button button-small" id="imageRotateRight" title="+1°">&#8635;</button>
+            </div>
+          </div>
           <div class="control-group">
             <label>Opacidade</label>
             <input type="range" id="imageOpacitySlider" min="10" max="100" value="70" />
-            <span id="imageOpacityValue">70%</span>
           </div>
           <div class="control-group">
-            <label>Rotacao</label>
-            <div class="rotation-controls">
-              <button type="button" id="imageRotateLeft" title="Rotacionar -1">&#8634;</button>
-              <input type="range" id="imageRotationSlider" min="-180" max="180" value="0" />
-              <button type="button" id="imageRotateRight" title="Rotacionar +1">&#8635;</button>
-            </div>
-            <span id="imageRotationValue">0</span>
-          </div>
-          <div class="control-group">
-            <label>Escala</label>
             <div class="scale-controls">
-              <button type="button" id="imageZoomOut" title="Diminuir">-</button>
-              <button type="button" id="imageZoomIn" title="Aumentar">+</button>
-              <button type="button" id="imageResetScale" title="Resetar">Reset</button>
+              <button type="button" class="button button-small" id="imageZoomOut" title="Diminuir">
+                <span class="dashicons dashicons-minus" style="font-size: 16px;"></span>
+              </button>
+              <button type="button" class="button button-small" id="imageZoomIn" title="Aumentar">
+                <span class="dashicons dashicons-plus" style="font-size: 16px;"></span>
+              </button>
+              <button type="button" class="button button-small" id="imageResetScale" title="Resetar">
+                <span class="dashicons dashicons-image-rotate" style="font-size: 16px;"></span> Resetar
+              </button>
             </div>
           </div>
         </div>
+
+        <!-- Dica -->
+        <div style="background: #fff8e5; border: 1px solid #f0c36d; border-radius: 4px; padding: 8px; margin-bottom: 15px; font-size: 11px;">
+          <strong>Dica:</strong> Alinhe com as ruas no satélite.
+        </div>
+
         <div class="image-overlay-actions">
           <button type="button" id="imageRemoveBtn" class="button">Remover Imagem</button>
+          <button type="button" id="imageSaveBtn" class="button button-primary">Salvar Ajustes</button>
         </div>
       </div>
     `;
 
     this.addControlPanelStyles();
-    document.body.appendChild(this.controlPanel);
+
+    // Insere o painel no mesmo local que o modal do SVG (antes do #terreno-mapa-container)
+    const terrenoContainer = document.getElementById('terreno-mapa-container');
+    if (terrenoContainer && terrenoContainer.parentNode) {
+      terrenoContainer.parentNode.insertBefore(this.controlPanel, terrenoContainer);
+    } else {
+      document.body.appendChild(this.controlPanel);
+    }
 
     // Event listeners do painel
     this.setupControlListeners();
@@ -180,40 +211,50 @@ export class ImageOverlayManager {
     style.textContent = `
       #imageOverlayControls {
         position: fixed;
-        top: 50px;
-        right: -320px;
-        width: 300px;
+        top: 32px;
+        right: 0;
+        width: 320px;
+        height: calc(100vh - 32px);
         background: #fff;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-        z-index: 9998;
-        transition: right 0.3s ease;
+        border-left: 1px solid #ddd;
+        box-shadow: -4px 0 20px rgba(0,0,0,0.2);
+        z-index: 9999;
+        overflow-y: auto;
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        display: none;
       }
       #imageOverlayControls.active {
-        right: 10px;
+        display: block;
       }
       .image-overlay-header {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 10px 15px;
-        background: #0073aa;
-        color: #fff;
-        border-radius: 4px 4px 0 0;
+        padding: 15px 20px;
+        border-bottom: 1px solid #ddd;
+        background: #fff;
+      }
+      .image-overlay-header span {
+        margin: 0;
+        color: #23282d;
+        font-size: 16px;
+        font-weight: 600;
       }
       .image-overlay-header button {
         background: none;
-        border: none;
-        color: #fff;
-        font-size: 20px;
+        border: 1px solid #ccc;
+        color: #666;
+        font-size: 18px;
         cursor: pointer;
-        padding: 0;
-        line-height: 1;
+        padding: 0 8px;
+        line-height: 1.5;
+        border-radius: 3px;
+      }
+      .image-overlay-header button:hover {
+        background: #f0f0f0;
       }
       .image-overlay-content {
-        padding: 15px;
+        padding: 20px;
       }
       .image-overlay-preview {
         margin-bottom: 15px;
@@ -225,29 +266,37 @@ export class ImageOverlayManager {
         border: 1px solid #ddd;
         border-radius: 4px;
       }
-      .image-overlay-controls .control-group {
+      .image-overlay-controls {
+        background: #f5f5f5;
+        padding: 12px;
+        border-radius: 4px;
         margin-bottom: 15px;
+      }
+      .image-overlay-controls .control-group {
+        margin-bottom: 12px;
+      }
+      .image-overlay-controls .control-group:last-child {
+        margin-bottom: 0;
       }
       .image-overlay-controls label {
         display: block;
-        margin-bottom: 5px;
+        margin-bottom: 4px;
         font-weight: 600;
         font-size: 12px;
         color: #333;
       }
       .image-overlay-controls input[type="range"] {
         width: 100%;
+        margin: 0;
       }
       .image-overlay-controls span {
-        display: block;
-        text-align: center;
+        display: inline;
         font-size: 12px;
         color: #666;
-        margin-top: 3px;
       }
       .rotation-controls, .scale-controls {
         display: flex;
-        gap: 5px;
+        gap: 6px;
         align-items: center;
       }
       .rotation-controls input[type="range"] {
@@ -264,14 +313,19 @@ export class ImageOverlayManager {
       .rotation-controls button:hover, .scale-controls button:hover {
         background: #e5e5e5;
       }
+      .scale-controls button:last-child {
+        flex: 1;
+      }
       .image-overlay-actions {
-        margin-top: 15px;
+        display: flex;
+        gap: 8px;
+        justify-content: flex-end;
+        border-top: 1px solid #ddd;
         padding-top: 15px;
-        border-top: 1px solid #eee;
+        margin-top: 10px;
       }
       .image-overlay-actions button {
-        width: 100%;
-        padding: 8px;
+        padding: 8px 12px;
         cursor: pointer;
       }
       #imageRemoveBtn {
@@ -313,7 +367,7 @@ export class ImageOverlayManager {
       ?.addEventListener('input', (e) => {
         this.setRotation(parseFloat(e.target.value));
         document.getElementById('imageRotationValue').textContent =
-          `${e.target.value}`;
+          `${e.target.value}°`;
       });
 
     document
@@ -346,6 +400,13 @@ export class ImageOverlayManager {
     // Remover
     document.getElementById('imageRemoveBtn')?.addEventListener('click', () => {
       this.removeOverlay();
+    });
+
+    // Salvar e fechar
+    document.getElementById('imageSaveBtn')?.addEventListener('click', () => {
+      this.updateHiddenInputs();
+      this.hideControls();
+      console.log('Ajustes da planta humanizada salvos');
     });
   }
 
@@ -608,7 +669,7 @@ export class ImageOverlayManager {
     const slider = document.getElementById('imageRotationSlider');
     const value = document.getElementById('imageRotationValue');
     if (slider) slider.value = this.overlay.rotation;
-    if (value) value.textContent = `${Math.round(this.overlay.rotation)}`;
+    if (value) value.textContent = `${Math.round(this.overlay.rotation)}°`;
 
     this.updateHiddenInputs();
   }
@@ -660,7 +721,7 @@ export class ImageOverlayManager {
     const rotationSlider = document.getElementById('imageRotationSlider');
     const rotationValue = document.getElementById('imageRotationValue');
     if (rotationSlider) rotationSlider.value = 0;
-    if (rotationValue) rotationValue.textContent = '0';
+    if (rotationValue) rotationValue.textContent = '0°';
 
     this.updateHiddenInputs();
   }
@@ -759,7 +820,7 @@ export class ImageOverlayManager {
 
     if (rotationSlider) rotationSlider.value = this.overlay.rotation;
     if (rotationValue)
-      rotationValue.textContent = `${Math.round(this.overlay.rotation)}`;
+      rotationValue.textContent = `${Math.round(this.overlay.rotation)}°`;
     if (opacitySlider) opacitySlider.value = this.overlay.opacity * 100;
     if (opacityValue)
       opacityValue.textContent = `${Math.round(this.overlay.opacity * 100)}%`;

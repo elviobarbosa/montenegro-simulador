@@ -583,12 +583,8 @@ export class SVGOverlayManager {
       `;
     }
 
-    // Desabilita botões de ajustar e remove botão de remover
-    const btnAjustar = document.getElementById('btn_ajustar_svg');
-    const btnRemover = document.getElementById('btn_remover_svg');
-
-    if (btnAjustar) btnAjustar.disabled = true;
-    if (btnRemover) btnRemover.remove();
+    // Atualiza visibilidade dos botões
+    this.updateSvgButtonsVisibility(false);
 
     // Emite evento para outros managers
     this.eventBus.emit('svg:removed', {});
@@ -753,16 +749,29 @@ export class SVGOverlayManager {
         const statusClass = isMapped ? 'shape-mapped' : 'shape-unmapped';
         const statusText = isMapped
           ? `Quadra ${mapping.bloco} | Lote ${mapping.lote_id}`
-          : 'Não mapeado';
+          : 'Clique para vincular';
 
         return `
           <div class="shape-item ${statusClass}" data-shape-index="${index}">
             <div class="shape-header">
-              <span class="shape-color" style="background: ${shape.fill || shape.stroke || '#ccc'};"></span>
+              
               <span class="shape-name">${shape.id || `Shape ${index + 1}`}</span>
-              <span class="shape-points">${shape.points?.length || 0} pts</span>
+              
+              <div class="shape-status">${statusText}</div>
             </div>
-            <div class="shape-status">${statusText}</div>
+            
+            <div class="shape-actions">
+              <button type="button" class="button button-small shape-edit-btn" data-shape-index="${index}">
+                <span class="dashicons dashicons-edit" style="font-size: 14px; width: 14px; height: 14px;"></span>
+                ${isMapped ? 'Editar' : 'Vincular'}
+              </button>
+              ${isMapped ? `
+              <button type="button" class="button button-small shape-remove-btn" data-shape-index="${index}" style="color: #b32d2e;">
+                <span class="dashicons dashicons-no" style="font-size: 14px; width: 14px; height: 14px;"></span>
+                Remover
+              </button>
+              ` : ''}
+            </div>
           </div>
         `;
       })
@@ -789,11 +798,195 @@ export class SVGOverlayManager {
       item.addEventListener('mouseleave', () => {
         this.unhighlightShape(index);
       });
+    });
 
-      item.addEventListener('click', () => {
-        this.eventBus.emit('svg:shape_clicked', { index });
+    // Botões de editar
+    const editBtns = document.querySelectorAll('.shape-edit-btn');
+    editBtns.forEach((btn) => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const index = parseInt(btn.dataset.shapeIndex);
+        this.openShapeEditModal(index);
       });
     });
+
+    // Botões de remover vínculo
+    const removeBtns = document.querySelectorAll('.shape-remove-btn');
+    removeBtns.forEach((btn) => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const index = parseInt(btn.dataset.shapeIndex);
+        this.removeShapeMapping(index);
+      });
+    });
+  }
+
+  /**
+   * Abre modal de edição para um shape específico
+   */
+  async openShapeEditModal(index) {
+    const shape = this.shapes[index];
+    const mapping = this.shapeMapping?.[index];
+
+    // Prepara dados para o modal
+    const loteData = {
+      id: mapping?.lote_id || '',
+      bloco: mapping?.bloco || '',
+      nome: mapping?.nome || shape?.id || `Shape ${index + 1}`,
+    };
+
+    // Usa o ModalManager se disponível (através do eventBus)
+    // Emite evento para abrir o modal
+    this.eventBus.emit('modal:open_edit', {
+      loteData,
+      callback: (result) => {
+        if (result) {
+          this.saveShapeMappingData(index, result);
+        }
+      },
+    });
+
+    // Fallback: se o modal não foi aberto pelo eventBus, usa método direto
+    const modal = document.getElementById('editModal');
+    if (modal && modal.style.display !== 'block') {
+      // Preenche os campos manualmente
+      const unidadeIdInput = document.getElementById('editLoteUnidadeId');
+      const blocoInput = document.getElementById('editLoteBloco');
+      const nomeInput = document.getElementById('editLoteNome');
+
+      if (unidadeIdInput) unidadeIdInput.value = loteData.id;
+      if (blocoInput) blocoInput.value = loteData.bloco;
+      if (nomeInput) nomeInput.value = loteData.nome;
+
+      // Armazena o índice do shape sendo editado
+      this.editingShapeIndex = index;
+
+      // Mostra o modal
+      modal.style.display = 'block';
+
+      // Adiciona listeners temporários para os botões
+      this.setupModalListeners();
+    }
+  }
+
+  /**
+   * Configura listeners temporários para o modal
+   */
+  setupModalListeners() {
+    const modal = document.getElementById('editModal');
+    if (!modal) return;
+
+    const saveBtn = modal.querySelector('.button-primary');
+    const cancelBtn = modal.querySelector('.button-secondary');
+
+    // Remove listeners antigos
+    const newSaveBtn = saveBtn.cloneNode(true);
+    const newCancelBtn = cancelBtn.cloneNode(true);
+    saveBtn.parentNode.replaceChild(newSaveBtn, saveBtn);
+    cancelBtn.parentNode.replaceChild(newCancelBtn, cancelBtn);
+
+    // Adiciona novos listeners
+    newSaveBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      this.handleModalSave();
+    });
+
+    newCancelBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      this.closeShapeEditModal();
+    });
+  }
+
+  /**
+   * Handler para salvar do modal
+   */
+  handleModalSave() {
+    const index = this.editingShapeIndex;
+    if (index === null || index === undefined) return;
+
+    const unidadeId = document.getElementById('editLoteUnidadeId')?.value?.trim();
+    const bloco = document.getElementById('editLoteBloco')?.value?.trim();
+    const nome = document.getElementById('editLoteNome')?.value?.trim();
+
+    if (!unidadeId) {
+      alert('O ID da Unidade é obrigatório');
+      return;
+    }
+
+    if (!bloco) {
+      alert('A Quadra/Bloco é obrigatória');
+      return;
+    }
+
+    this.saveShapeMappingData(index, { id: unidadeId, bloco, nome });
+    this.closeShapeEditModal();
+  }
+
+  /**
+   * Fecha o modal de edição de shape
+   */
+  closeShapeEditModal() {
+    const modal = document.getElementById('editModal');
+    if (modal) {
+      modal.style.display = 'none';
+    }
+    this.editingShapeIndex = null;
+  }
+
+  /**
+   * Salva o mapeamento do shape com os dados fornecidos
+   */
+  saveShapeMappingData(index, data) {
+    // Salva no mapeamento
+    if (!this.shapeMapping) {
+      this.shapeMapping = {};
+    }
+
+    this.shapeMapping[index] = {
+      lote_id: data.id,
+      bloco: data.bloco,
+      nome: data.nome,
+      shape_index: index,
+    };
+
+    // Atualiza o input hidden
+    const mappingInput = document.getElementById('terreno_shape_mapping');
+    if (mappingInput) {
+      mappingInput.value = JSON.stringify(this.shapeMapping);
+    }
+
+    // Atualiza a UI
+    this.renderShapesInSidebar();
+    this.updateShapeColors();
+
+    console.log(`Shape ${index} vinculado ao lote ${data.id} - Quadra ${data.bloco}`);
+  }
+
+  /**
+   * Remove o mapeamento de um shape
+   */
+  removeShapeMapping(index) {
+    if (!confirm('Tem certeza que deseja remover o vínculo deste shape?')) {
+      return;
+    }
+
+    if (this.shapeMapping && this.shapeMapping[index]) {
+      delete this.shapeMapping[index];
+    }
+
+    // Atualiza o input hidden
+    const mappingInput = document.getElementById('terreno_shape_mapping');
+    if (mappingInput) {
+      mappingInput.value = JSON.stringify(this.shapeMapping || {});
+    }
+
+    // Atualiza a UI
+    this.renderShapesInSidebar();
+    this.updateShapeColors();
+
+    console.log(`Vínculo removido do shape ${index}`);
   }
 
   /**
@@ -904,10 +1097,85 @@ export class SVGOverlayManager {
     // Ativa modo de edição no overlay
     this.enableEditorMode();
 
+    // Atualiza visibilidade dos botões
+    this.updateSvgButtonsVisibility(true);
+
     console.log('✓ SVG salvo como overlay permanente');
     console.log(`  Shapes: ${this.shapes.length}`);
     console.log(`  Bounds: N=${boundsData.north}, S=${boundsData.south}, E=${boundsData.east}, W=${boundsData.west}`);
     console.log(`  Rotação: ${this.overlay.rotation}°`);
+  }
+
+  /**
+   * Atualiza a visibilidade dos botões de SVG dinamicamente
+   * @param {boolean} hasSvg - Se true, há SVG importado; se false, não há
+   */
+  updateSvgButtonsVisibility(hasSvg) {
+    const btnImportar = document.getElementById('btn_importar_svg');
+    const btnAjustar = document.getElementById('btn_ajustar_svg');
+    let btnRemover = document.getElementById('btn_remover_svg');
+
+    if (hasSvg) {
+      // SVG importado: esconde Importar, mostra Ajustar e Remover
+      if (btnImportar) {
+        btnImportar.style.display = 'none';
+      }
+
+      // Cria botão Ajustar se não existir
+      if (!btnAjustar) {
+        const ajustarBtn = document.createElement('button');
+        ajustarBtn.type = 'button';
+        ajustarBtn.className = 'button';
+        ajustarBtn.id = 'btn_ajustar_svg';
+        ajustarBtn.style.cssText = 'width: 100%; margin-bottom: 5px;';
+        ajustarBtn.innerHTML = '<span class="dashicons dashicons-move" style="margin-top: 3px;"></span> Ajustar Posicao';
+        ajustarBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          this.toggleEditMode();
+        });
+
+        const container = btnImportar?.parentElement;
+        if (container && btnImportar) {
+          container.insertBefore(ajustarBtn, btnImportar.nextSibling);
+        }
+      } else {
+        btnAjustar.style.display = 'block';
+        btnAjustar.disabled = false;
+      }
+
+      // Cria botão Remover se não existir
+      if (!btnRemover) {
+        const removerBtn = document.createElement('button');
+        removerBtn.type = 'button';
+        removerBtn.className = 'button';
+        removerBtn.id = 'btn_remover_svg';
+        removerBtn.style.cssText = 'width: 100%; color: #b32d2e; border-color: #b32d2e;';
+        removerBtn.innerHTML = '<span class="dashicons dashicons-trash" style="margin-top: 3px;"></span> Remover SVG';
+        removerBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          this.confirmAndRemoveSvg();
+        });
+
+        const ajustarBtn = document.getElementById('btn_ajustar_svg');
+        const container = ajustarBtn?.parentElement;
+        if (container && ajustarBtn) {
+          container.insertBefore(removerBtn, ajustarBtn.nextSibling);
+        }
+      } else {
+        btnRemover.style.display = 'block';
+      }
+    } else {
+      // Sem SVG: mostra Importar, esconde Ajustar e Remover
+      if (btnImportar) {
+        btnImportar.style.display = 'block';
+      }
+      if (btnAjustar) {
+        btnAjustar.style.display = 'none';
+      }
+      if (btnRemover) {
+        btnRemover.style.display = 'none';
+      }
+    }
   }
 
   /**
