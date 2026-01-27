@@ -1990,3 +1990,98 @@ Stack trace:
 [27-Jan-2026 01:01:08 UTC] Pixel Token encontrado: NÃO
 [27-Jan-2026 01:01:08 UTC] PIXEL NÃO CARREGADO: Pixel ID vazio para terreno 56
 [27-Jan-2026 01:01:09 UTC] 💾 [CVCRM] Cache HIT para cvcrm_empreendimento_38
+[27-Jan-2026 01:05:01 UTC] 🌎 [CVCRM] Consultando URL: https://montenegro.cvcrm.com.br/api/v1/cadastros/empreendimentos/38/tabelasdepreco/252
+[27-Jan-2026 01:05:02 UTC] [CVCRM] Status: 200
+[27-Jan-2026 01:05:02 UTC] [CVCRM] Body: [{"empreendimento":"Condominio Ipe Amarelo","idempreendimento":"38","idtabela":252,"idtabela_int":null,"tabela":"TABELA IP\u00ca AMARELO","idtipo":null,"tipo":null,"forma":null,"tabela_preco_customizada":null,"tabela_minima":"N","idtabela_minima":null,"data_vigencia_de":"2025-12-15","data_vigencia_ate":"2030-12-15","quantidade_parcelas_permitidas_min":null,"quantidade_parcelas_permitidas_max":null,"plano_parcelamento":null,"n_linhas_impressao":null,"idindexador":null,"configurar_distancia_series
+[27-Jan-2026 01:06:27 UTC] Scripts frontend carregados com sucesso
+[27-Jan-2026 01:06:27 UTC] === FACEBOOK PIXEL DEBUG ===
+[27-Jan-2026 01:06:27 UTC] Post Type: terreno
+[27-Jan-2026 01:06:27 UTC] is_singular(terreno): SIM
+[27-Jan-2026 01:06:27 UTC] Caso 1: Custom Post Type terreno - ID: 56
+[27-Jan-2026 01:06:27 UTC] Terreno ID: 56
+[27-Jan-2026 01:06:27 UTC] Pixel ID encontrado: VAZIO
+[27-Jan-2026 01:06:27 UTC] Pixel Token encontrado: NÃO
+[27-Jan-2026 01:06:27 UTC] PIXEL NÃO CARREGADO: Pixel ID vazio para terreno 56
+[27-Jan-2026 01:06:28 UTC] 💾 [CVCRM] Cache HIT para cvcrm_empreendimento_38
+[27-Jan-2026 01:12:06 UTC] Hook: post.php, Post Type: terreno
+[27-Jan-2026 01:12:06 UTC] Scripts carregados com sucesso
+[27-Jan-2026 01:12:10 UTC] Scripts frontend carregados com sucesso
+[27-Jan-2026 01:12:10 UTC] === FACEBOOK PIXEL DEBUG ===
+[27-Jan-2026 01:12:10 UTC] Post Type: terreno
+[27-Jan-2026 01:12:10 UTC] is_singular(terreno): SIM
+[27-Jan-2026 01:12:10 UTC] Caso 1: Custom Post Type terreno - ID: 56
+[27-Jan-2026 01:12:10 UTC] Terreno ID: 56
+[27-Jan-2026 01:12:10 UTC] Pixel ID encontrado: VAZIO
+[27-Jan-2026 01:12:10 UTC] Pixel Token encontrado: NÃO
+[27-Jan-2026 01:12:10 UTC] PIXEL NÃO CARREGADO: Pixel ID vazio para terreno 56
+[27-Jan-2026 01:12:11 UTC] 💾 [CVCRM] Cache HIT para cvcrm_empreendimento_38
+[27-Jan-2026 01:12:16 UTC] Scripts frontend carregados com sucesso
+[27-Jan-2026 01:12:16 UTC] === FACEBOOK PIXEL DEBUG ===
+[27-Jan-2026 01:12:16 UTC] Post Type: terreno
+[27-Jan-2026 01:12:16 UTC] is_singular(terreno): SIM
+[27-Jan-2026 01:12:16 UTC] Caso 1: Custom Post Type terreno - ID: 56
+[27-Jan-2026 01:12:16 UTC] Terreno ID: 56
+[27-Jan-2026 01:12:16 UTC] Pixel ID encontrado: VAZIO
+[27-Jan-2026 01:12:16 UTC] Pixel Token encontrado: NÃO
+[27-Jan-2026 01:12:16 UTC] PIXEL NÃO CARREGADO: Pixel ID vazio para terreno 56
+[27-Jan-2026 01:12:17 UTC] 💾 [CVCRM] Cache HIT para cvcrm_empreendimento_38
+[27-Jan-2026 01:12:45 UTC] Scripts frontend carregados com sucesso
+[27-Jan-2026 01:12:45 UTC] === FACEBOOK PIXEL DEBUG ===
+[27-Jan-2026 01:12:45 UTC] Post Type: terreno
+[27-Jan-2026 01:12:45 UTC] is_singular(terreno): SIM
+[27-Jan-2026 01:12:45 UTC] Caso 1: Custom Post Type terreno - ID: 56
+[27-Jan-2026 01:12:45 UTC] Terreno ID: 56
+[27-Jan-2026 01:12:45 UTC] Pixel ID encontrado: VAZIO
+[27-Jan-2026 01:12:45 UTC] Pixel Token encontrado: NÃO
+[27-Jan-2026 01:12:45 UTC] PIXEL NÃO CARREGADO: Pixel ID vazio para terreno 56
+[27-Jan-2026 01:12:46 UTC] 💾 [CVCRM] Cache HIT para cvcrm_empreendimento_38
+[27-Jan-2026 01:14:20 UTC] Scripts frontend carregados com sucesso
+[27-Jan-2026 01:14:20 UTC] === FACEBOOK PIXEL DEBUG ===
+[27-Jan-2026 01:14:20 UTC] Post Type: terreno
+[27-Jan-2026 01:14:20 UTC] is_singular(terreno): SIM
+[27-Jan-2026 01:14:20 UTC] Caso 1: Custom Post Type terreno - ID: 56
+[27-Jan-2026 01:14:20 UTC] Terreno ID: 56
+[27-Jan-2026 01:14:20 UTC] Pixel ID encontrado: VAZIO
+[27-Jan-2026 01:14:20 UTC] Pixel Token encontrado: NÃO
+[27-Jan-2026 01:14:20 UTC] PIXEL NÃO CARREGADO: Pixel ID vazio para terreno 56
+[27-Jan-2026 01:14:22 UTC] 💾 [CVCRM] Cache HIT para cvcrm_empreendimento_38
+[27-Jan-2026 01:14:53 UTC] Scripts frontend carregados com sucesso
+[27-Jan-2026 01:14:53 UTC] === FACEBOOK PIXEL DEBUG ===
+[27-Jan-2026 01:14:53 UTC] Post Type: terreno
+[27-Jan-2026 01:14:53 UTC] is_singular(terreno): SIM
+[27-Jan-2026 01:14:53 UTC] Caso 1: Custom Post Type terreno - ID: 56
+[27-Jan-2026 01:14:53 UTC] Terreno ID: 56
+[27-Jan-2026 01:14:53 UTC] Pixel ID encontrado: VAZIO
+[27-Jan-2026 01:14:53 UTC] Pixel Token encontrado: NÃO
+[27-Jan-2026 01:14:53 UTC] PIXEL NÃO CARREGADO: Pixel ID vazio para terreno 56
+[27-Jan-2026 01:14:54 UTC] 💾 [CVCRM] Cache HIT para cvcrm_empreendimento_38
+[27-Jan-2026 01:17:24 UTC] Scripts frontend carregados com sucesso
+[27-Jan-2026 01:17:24 UTC] === FACEBOOK PIXEL DEBUG ===
+[27-Jan-2026 01:17:24 UTC] Post Type: terreno
+[27-Jan-2026 01:17:24 UTC] is_singular(terreno): SIM
+[27-Jan-2026 01:17:24 UTC] Caso 1: Custom Post Type terreno - ID: 56
+[27-Jan-2026 01:17:24 UTC] Terreno ID: 56
+[27-Jan-2026 01:17:24 UTC] Pixel ID encontrado: VAZIO
+[27-Jan-2026 01:17:24 UTC] Pixel Token encontrado: NÃO
+[27-Jan-2026 01:17:24 UTC] PIXEL NÃO CARREGADO: Pixel ID vazio para terreno 56
+[27-Jan-2026 01:17:27 UTC] 💾 [CVCRM] Cache HIT para cvcrm_empreendimento_38
+[27-Jan-2026 01:17:29 UTC] Scripts frontend carregados com sucesso
+[27-Jan-2026 01:17:29 UTC] === FACEBOOK PIXEL DEBUG ===
+[27-Jan-2026 01:17:29 UTC] Post Type: terreno
+[27-Jan-2026 01:17:29 UTC] is_singular(terreno): SIM
+[27-Jan-2026 01:17:29 UTC] Caso 1: Custom Post Type terreno - ID: 56
+[27-Jan-2026 01:17:29 UTC] Terreno ID: 56
+[27-Jan-2026 01:17:29 UTC] Pixel ID encontrado: VAZIO
+[27-Jan-2026 01:17:29 UTC] Pixel Token encontrado: NÃO
+[27-Jan-2026 01:17:29 UTC] PIXEL NÃO CARREGADO: Pixel ID vazio para terreno 56
+[27-Jan-2026 01:17:30 UTC] 💾 [CVCRM] Cache HIT para cvcrm_empreendimento_38
+[27-Jan-2026 01:20:26 UTC] Scripts frontend carregados com sucesso
+[27-Jan-2026 01:20:26 UTC] === FACEBOOK PIXEL DEBUG ===
+[27-Jan-2026 01:20:26 UTC] Post Type: terreno
+[27-Jan-2026 01:20:26 UTC] is_singular(terreno): SIM
+[27-Jan-2026 01:20:26 UTC] Caso 1: Custom Post Type terreno - ID: 56
+[27-Jan-2026 01:20:26 UTC] Terreno ID: 56
+[27-Jan-2026 01:20:26 UTC] Pixel ID encontrado: VAZIO
+[27-Jan-2026 01:20:26 UTC] Pixel Token encontrado: NÃO
+[27-Jan-2026 01:20:26 UTC] PIXEL NÃO CARREGADO: Pixel ID vazio para terreno 56
+[27-Jan-2026 01:20:27 UTC] 💾 [CVCRM] Cache HIT para cvcrm_empreendimento_38

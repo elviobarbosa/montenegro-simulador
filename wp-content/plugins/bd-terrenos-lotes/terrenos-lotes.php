@@ -675,8 +675,8 @@ function terreno_mapa_shortcode($atts) {
                     }
 
                     const disponivel = unidade.situacao.situacao_mapa_disponibilidade === 1;
-                    shape.style.fill = disponivel ? 'rgba(90, 163, 129, 0.5)' : 'rgba(255, 0, 0, 0.5)';
-                    shape.style.stroke = disponivel ? '#5aa381' : '#FF0000';
+                    shape.style.fill = disponivel ? 'rgba(20, 210, 121, 0.5)' : 'rgba(255, 0, 0, 0.5)';
+                    shape.style.stroke = disponivel ? '#14d279' : '#FF0000';
                     shape.style.strokeWidth = '2px';
                     shape.style.cursor = 'pointer';
                     shape.dataset.shapeIndex = index;
@@ -889,7 +889,7 @@ function terreno_mapa_shortcode($atts) {
 
                 const { situacao } = unidade;
                 const disponivel = (situacao.situacao_mapa_disponibilidade === 1);
-                const color = disponivel ? '#5aa381' : '#FF0000';
+                const color = disponivel ? '#14d279' : '#FF0000';
                 console.log(`BLOCOS`, empreedimentosData)
                 
                 var polygon = new google.maps.Polygon({

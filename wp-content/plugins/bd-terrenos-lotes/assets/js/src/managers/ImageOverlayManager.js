@@ -384,11 +384,11 @@ export class ImageOverlayManager {
 
     // Escala
     document.getElementById('imageZoomIn')?.addEventListener('click', () => {
-      this.scaleOverlay(1.1);
+      this.scaleOverlay(1.01);
     });
 
     document.getElementById('imageZoomOut')?.addEventListener('click', () => {
-      this.scaleOverlay(0.9);
+      this.scaleOverlay(0.99);
     });
 
     document

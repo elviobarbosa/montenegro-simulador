@@ -158,10 +158,10 @@ export class SVGOverlayManager {
       this.rotateOverlay(1);
     });
     document.getElementById('svgZoomIn')?.addEventListener('click', () => {
-      this.scaleOverlay(1.1);
+      this.scaleOverlay(1.01);
     });
     document.getElementById('svgZoomOut')?.addEventListener('click', () => {
-      this.scaleOverlay(0.9);
+      this.scaleOverlay(0.99);
     });
     document
       .getElementById('svgResetTransform')
