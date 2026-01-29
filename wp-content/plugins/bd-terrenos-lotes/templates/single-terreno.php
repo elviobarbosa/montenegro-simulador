@@ -1,41 +1,53 @@
 <?php
 /**
  * Template para exibir o simulador do terreno
+ * Template INDEPENDENTE - Usa header e footer do plugin
  */
 
-get_header();
+// Carrega header do plugin (não do tema)
+include plugin_dir_path(__FILE__) . 'header-terreno.php';
 
 $post_id = get_the_ID();
-
-// Carrega as funções de templates do tema se existirem
-if (function_exists('empreendimento_cover')) {
-    empreendimento_cover();
-}
 ?>
 
-<div class="map__contaier" id="map">
-    <div class="box-simulador__container">
-        <?php
-        if (function_exists('box_simulador')) {
-            box_simulador();
-        } else {
-            get_template_part('template-parts/components/box-simulador');
-        }
-        ?>
+<!-- Wrapper para isolar CSS do plugin -->
+<div class="terrenos-lotes-wrapper">
+
+    <?php
+    // Empreendimento Cover (topo)
+    if (function_exists('empreendimento_cover')) {
+        empreendimento_cover();
+    }
+    ?>
+
+    <!-- Mapa e Simulador -->
+    <div class="map__contaier" id="map">
+        <div class="box-simulador__container">
+            <?php
+            if (function_exists('box_simulador')) {
+                box_simulador();
+            }
+            ?>
+        </div>
+        <div class="map__wrapper">
+            <?php echo do_shortcode('[terreno_mapa id="' . $post_id . '"]'); ?>
+        </div>
     </div>
-    <div class="map__wrapper">
-        <?php echo do_shortcode('[terreno_mapa id="' . $post_id . '"]'); ?>
-    </div>
+
+    <?php
+    // Seções adicionais (se as funções existirem no tema customizado)
+    if (function_exists('vantagens_financiamento')) {
+        vantagens_financiamento();
+    }
+
+    if (function_exists('faq')) {
+        faq();
+    }
+    ?>
+
 </div>
 
 <?php
-if (function_exists('vantagens_financiamento')) {
-    vantagens_financiamento();
-}
-
-if (function_exists('faq')) {
-    faq();
-}
-
-get_footer();
+// Carrega footer do plugin (não do tema)
+include plugin_dir_path(__FILE__) . 'footer-terreno.php';
 ?>

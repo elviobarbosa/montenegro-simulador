@@ -1,0 +1,30 @@
+@use 'sass:math';
+
+@function proportion($w-proportional, $h-proportional) {
+  $p: math.div($h-proportional, $w-proportional);
+
+  @return calc( ($p * 100) * 1% );
+}
+
+@mixin image-proportional($w-proportional, $h-proportional) {
+  height: 0;
+  padding-bottom: proportion($w-proportional, $h-proportional);
+  position: relative;
+
+  .proportional__wrapper,
+  figure,
+  a {
+    display: block;
+    height: 100%!important;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+  }
+
+  img {
+    height: 100%;
+    object-fit: cover;
+    width: 100%;
+  }
+}

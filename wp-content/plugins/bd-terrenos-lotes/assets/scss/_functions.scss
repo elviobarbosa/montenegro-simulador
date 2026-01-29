@@ -1,0 +1,19 @@
+@function color($name, $colors: $colors, $is-css-var: true) {
+    $color: map-get($colors, $name);
+  
+    @if (not $is-css-var) {
+      @return $color;
+    }
+  
+    @return var(--color-#{$name}, $color);
+}
+
+@function px-rem($value: 16px, $base: 16px) {
+  @return ($value / $base) + rem;
+}
+
+@function color-theme($name, $colors: $theme-colors) {
+  $color-theme: map-get($map: $colors, $key: $name);
+  
+  @return #{$color-theme};
+}

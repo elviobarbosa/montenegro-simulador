@@ -1,0 +1,38 @@
+@use "sass:math";
+@use "../variables" as v;
+
+/* stylelint-disable scss/dollar-variable-pattern */
+@function strip-unit($value) {
+  @return math.div($value, $value * 0 + 1);
+}
+
+@mixin fluid-size(
+  $attr,
+  $min-size,
+  $max-size,
+  $min-w: v.$min-vw,
+  $max-w: v.$max-vw
+) {
+  $u1: unit($min-w);
+  $u2: unit($max-w);
+  $u3: unit($min-size);
+  $u4: unit($max-size);
+
+  @if $u1 == $u2 and $u1 == $u3 and $u1 == $u4 {
+    /* stylelint-disable-next-line scss/selector-no-redundant-nesting-selector */
+    & {
+      #{$attr}: $min-size;
+
+      @media screen and (min-width: $min-w) {
+        #{$attr}: calc(
+          #{$min-size} + #{strip-unit($max-size - $min-size)} *
+            ((100vw - #{$min-w}) / #{strip-unit($max-w - $min-w)})
+        );
+      }
+
+      @media screen and (min-width: $max-w) {
+        #{$attr}: $max-size;
+      }
+    }
+  }
+}

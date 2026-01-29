@@ -1,0 +1,23 @@
+/**
+ * Estilos Frontend - Plugin Terrenos e Lotes
+ * Importa todos os componentes relacionados ao plugin
+ */
+
+// Base
+@import 'variables';
+@import 'colors';
+@import 'plugin-colors'; // Cores independentes do tema
+@import 'functions';
+@import 'typography';
+
+// Layout (Header, Footer, Wrapper para isolamento)
+@import 'components/wrapper';
+@import 'components/header';
+@import 'components/footer';
+
+// Componentes
+@import 'components/button';
+@import 'components/box-simulador';
+@import 'components/empreendimento-cover';
+@import 'components/simudalor-mini';
+@import 'components/simulador';

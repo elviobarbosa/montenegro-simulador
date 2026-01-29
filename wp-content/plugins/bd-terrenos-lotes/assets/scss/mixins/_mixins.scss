@@ -1,0 +1,73 @@
+@mixin responsive-title {
+  font-size: 4.6rem;
+
+  @include min-xl {
+    @include font-xx-large;
+  }
+}
+
+@mixin border-radius($radius) {
+  border-radius: $radius;
+  -webkit-border-radius: $radius;
+  -moz-border-radius: $radius;
+}
+
+// Set width and height of the same size.
+@mixin width-height($size) {
+  height: $size;
+  width: $size;
+}
+
+// BREAKPOINTS
+
+@mixin max-sm {
+  @media (max-width: 575.9px) {
+    @content;
+  }
+}
+
+// Medium devices
+
+@mixin min-sm {
+  @media (min-width: #{$screen-sm-min}) {
+    @content;
+  }
+}
+
+@mixin between-sm-md {
+  @media (min-width: $screen-sm-min) and (max-width: 767.9px) {
+    @content;
+  }
+}
+
+// Large devices
+@mixin between-md-lg {
+  @media (min-width: $screen-md-min) and (max-width: 991.9px) {
+    @content;
+  }
+}
+
+// Extra large devices
+@mixin between-lg-xl {
+  @media (min-width: $screen-lg-min) and (max-width: 1199.9px) {
+    @content;
+  }
+}
+
+@mixin breakpoint-min-max($screen-min, $screen-max) {
+  @media (min-width: $screen-min) and (max-width: $screen-max) {
+    @content;
+  }
+}
+
+@mixin between-xl-xxl {
+  @media (min-width: $screen-xl-min) and (max-width: 1365.9px) {
+    @content;
+  }
+}
+
+@mixin between-xxl-xxxl {
+  @media (min-width: $screen-xxl-min) and (max-width: 1439.9px) {
+    @content;
+  }
+}

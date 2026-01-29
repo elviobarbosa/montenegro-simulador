@@ -1,0 +1,35 @@
+// @use "../frontend/variables" as v;
+// @mixin colors($colors) {
+//   @each $name, $color in $colors {
+//     .#{$name} {
+//       color: $color;
+//     }
+
+//     .has-#{$name}-color {
+//       color: $color;
+//     }
+//   }
+// }
+
+// @mixin rootcolors($colors) {
+//   :root {
+//     @each $name, $color in $colors {
+//       --#{$name}: #{$color};
+//     }
+//   }
+// }
+
+// @mixin bgcolors($colors) {
+//   @each $name, $color in $colors {
+//     .bg-#{$name} {
+//       background-color: $color;
+//     }
+
+//     .has-#{$name}-background-color {
+//       background-color: $color;
+//     }
+//   }
+// }
+// @include rootcolors(v.$theme-colors);
+// @include colors(v.$theme-colors);
+// @include bgcolors(v.$theme-colors);

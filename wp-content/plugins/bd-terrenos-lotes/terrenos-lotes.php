@@ -18,6 +18,8 @@ require_once __DIR__ . '/includes/class-settings-page.php';
 require_once __DIR__ . '/includes/class-facebook-pixel.php';
 require_once __DIR__ . '/includes/class-svg-importer.php';
 require_once __DIR__ . '/includes/class-ajax-handlers.php';
+require_once __DIR__ . '/includes/class-cvcrm-api.php';
+require_once __DIR__ . '/includes/class-template-loader.php';
 
 new TerrenosLotes_CPT();
 new TerrenosLotes_MetaBox();
@@ -27,6 +29,7 @@ new TerrenosLotes_LoteInfo();
 new TerrenosLotes_SettingsPage();
 new TerrenosLotes_FacebookPixel();
 new TerrenosLotes_AjaxHandlers();
+new TerrenosLotes_TemplateLoader();
 
 function get_terreno_lotes($post_id) {
     $lotes_data = get_post_meta($post_id, '_terreno_lotes', true);

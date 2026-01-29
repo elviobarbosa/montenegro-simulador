@@ -1,0 +1,11 @@
+
+@mixin pattern($img) {
+    background-image: url($imgpath + $img);
+    background-repeat: repeat-y;
+    background-position: 100% 0%;
+    
+    @include max-lg {
+        background-size: 30%;
+    }
+
+}

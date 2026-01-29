@@ -1,0 +1,242 @@
+@use "../mixins/breakpoints" as bp;
+@use "../functions" as fn;
+
+.nav-container {
+  &__wrapper.nav-container--primary {
+    padding: 0 40px;
+    position: relative;
+  }
+
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  h3 {
+    margin: 0;
+    padding: 0;
+    text-align: center;
+  }
+
+  svg {
+    width: 150px;
+    height: 38px;
+    @include bp.min-lg {
+      width: 214px;
+      height: 54px;
+    }
+  }
+
+  &--primary {
+    background-color: var(--wp--preset--color--white);
+
+    .menu-item,
+    .page_item {
+      a {
+        color: white;
+        opacity: 1;
+      }
+    }
+  }
+
+  &--secondary {
+    @include bp.max-xl {
+      .menu-item,
+      .page_item {
+        a {
+          color: white;
+          opacity: 1;
+        }
+      }
+    }
+    @include bp.min-xl {
+      max-width: 1010px;
+      margin: 0 auto;
+
+      .menu-item,
+      .page_item {
+        a {
+          color: #333;
+          opacity: 0.75;
+        }
+        &.current-menu-item {
+          a {
+            color: black;
+            font-weight: bold;
+            opacity: 0.9;
+          }
+        }
+      }
+    }
+  }
+
+  &__toggle {
+    display: none;
+
+    &:checked {
+      ~ div .nav-container__menu {
+        @include bp.max-xl {
+          transform: translateX(0);
+          visibility: visible;
+          opacity: 1;
+        }
+      }
+
+      ~ div .nav-container__control .h-menu {
+        .h-menu__line {
+          &:nth-child(1) {
+            transform: rotate(45deg) translate(7px, 7px);
+          }
+          &:nth-child(2) {
+            opacity: 0;
+            transform: scale(0);
+          }
+          &:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -7px);
+          }
+        }
+      }
+
+      ~ .nav-overlay {
+        opacity: 1;
+        visibility: visible;
+      }
+    }
+  }
+
+  &__menu {
+    @include bp.min-xl {
+      display: block;
+    }
+
+    @include bp.max-xl {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 280px;
+      height: 100vh;
+      background-color: var(--primary-color);
+      transform: translateX(-100%);
+      transition:
+        transform 0.3s ease-in-out,
+        opacity 0.3s ease-in-out;
+      opacity: 0;
+      visibility: hidden;
+      z-index: 999;
+      padding: 80px 40px 40px;
+      overflow-y: auto;
+    }
+
+    ul {
+      padding: 0;
+      margin: 0;
+      opacity: 1;
+
+      @include bp.min-xl {
+        display: flex;
+        column-gap: 20px;
+        align-items: center;
+      }
+
+      @include bp.max-lg {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+    }
+
+    .menu-item:not(.button),
+    .page_item {
+      font-family: var(--body-font);
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 100%;
+      list-style: none;
+      opacity: 1;
+
+      @include bp.max-xl {
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        padding-bottom: 15px;
+
+        &:last-child {
+          border-bottom: none;
+        }
+      }
+
+      a {
+        text-decoration: none;
+        display: block;
+        padding: 10px 0;
+        transition: color 0.2s ease;
+
+        @include bp.max-xl {
+          font-size: 18px;
+          padding: 15px 0;
+        }
+
+        &:hover {
+          color: hsl(24, 100%, 70%);
+        }
+      }
+    }
+  }
+
+  &__control {
+    @include bp.min-xl {
+      display: none;
+    }
+
+    @include bp.max-xl {
+      display: block;
+      position: relative;
+      z-index: 1001;
+    }
+
+    .h-menu {
+      cursor: pointer;
+      padding: 10px;
+      margin: -10px;
+
+      &__line {
+        width: 36px;
+        height: 1px;
+        background-color: white;
+        display: block;
+        transition: all 0.3s ease;
+        transform-origin: center;
+
+        &:not(:last-child) {
+          margin-bottom: 9px;
+        }
+      }
+    }
+  }
+}
+
+.nav-overlay {
+  @include bp.max-xl {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    visibility: hidden;
+    transition:
+      opacity 0.3s ease,
+      visibility 0.3s ease;
+    z-index: 998;
+  }
+
+  @include bp.min-xl {
+    display: none;
+  }
+}

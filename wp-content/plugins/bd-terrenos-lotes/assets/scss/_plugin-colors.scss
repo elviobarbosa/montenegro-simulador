@@ -1,0 +1,36 @@
+/**
+ * Cores do Plugin - Independentes do tema
+ * Define as variáveis CSS que eram do WordPress/tema
+ */
+
+:root {
+  // Cores principais
+  --wp--preset--color--primary: #316D78;
+  --wp--preset--color--secondary: #034E84;
+
+  // Base
+  --wp--preset--color--white: #ffffff;
+  --wp--preset--color--base: #ffffff;
+  --wp--preset--color--contrast: #000000;
+
+  // Grays
+  --wp--preset--color--gray-200: #a2a2a2;
+  --wp--preset--color--gray-500: #8D8D8D;
+
+  // Greens
+  --wp--preset--color--green-200: #CCFBB6;
+  --wp--preset--color--green-300: #84BC8E;
+  --wp--preset--color--green-400: #447629;
+  --wp--preset--color--green-500: #23552C;
+  --wp--preset--color--dark-500: #061408;
+
+  // Complementares
+  --wp--preset--color--blue-200: #6BCCD5;
+  --wp--preset--color--yellow-200: #FDE38B;
+  --wp--preset--color--color-1: #a7542f;
+  --wp--preset--color--color-2: #84bc8e;
+
+  // WordPress padrão (cyan)
+  --wp--preset--color--vivid-green-cyan: #00d084;
+  --wp--preset--color--light-green-cyan: #7bdcb5;
+}

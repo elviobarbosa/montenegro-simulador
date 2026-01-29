@@ -10,11 +10,10 @@
  * Usa Custom Overlay do Google Maps + manipulação manual de transformações
  */
 export class SVGOverlayManager {
-  constructor(map, stateManager, eventBus, polygonManager, dataPersistence) {
+  constructor(map, stateManager, eventBus, dataPersistence) {
     this.map = map;
     this.stateManager = stateManager;
     this.eventBus = eventBus;
-    this.polygonManager = polygonManager;
     this.dataPersistence = dataPersistence;
 
     // Estado do overlay
@@ -1297,77 +1296,6 @@ export class SVGOverlayManager {
   updateShapeColors() {
     if (this.customOverlay) {
       this.customOverlay.updateShapeColors(this.shapeMapping);
-    }
-  }
-
-  /**
-   * Finaliza a importação - converte shapes para polígonos no mapa
-   * (Mantido para compatibilidade, mas não é mais o fluxo principal)
-   */
-  async finalizeImport() {
-    try {
-      if (!this.shapes || this.shapes.length === 0) {
-        alert('Nenhum shape para importar.');
-        return;
-      }
-
-      if (!this.overlay.bounds) {
-        alert('Posicione o SVG no mapa primeiro.');
-        return;
-      }
-
-      // const ne = this.overlay.bounds.getNorthEast();
-      // const sw = this.overlay.bounds.getSouthWest();
-
-      const importedLotes = [];
-
-      // Converte cada shape
-      this.shapes.forEach((shape, index) => {
-        if (!shape.points || shape.points.length < 3) return;
-
-        // Converte coordenadas SVG para lat/lng
-        const coordinates = shape.points.map((point) =>
-          this.svgPointToLatLng(point),
-        );
-
-        // Gera dados do lote
-        const lote = {
-          id: `imported_${Date.now()}_${index}`,
-          nome: shape.id || `Lote ${index + 1}`,
-          bloco: '',
-          coordinates: coordinates,
-          area: this.calculateArea(coordinates),
-          color: shape.fill || this.generateRandomColor(),
-          status: 'disponivel',
-          created_at: new Date().toISOString(),
-        };
-
-        importedLotes.push(lote);
-      });
-
-
-      // Adiciona os lotes
-      importedLotes.forEach((lote) => {
-        this.dataPersistence.addLote(lote);
-        this.polygonManager.createPolygon(lote);
-      });
-
-      // Atualiza UI
-      this.eventBus.emit('lotes:imported', { count: importedLotes.length });
-
-      // Remove overlay e fecha modal
-      this.removeOverlay();
-      this.closeModal();
-
-      // Centraliza no primeiro lote importado
-      if (importedLotes.length > 0) {
-        this.polygonManager.centerOnPolygon(importedLotes[0].id);
-      }
-
-      alert(`✓ ${importedLotes.length} lotes importados com sucesso!`);
-    } catch (error) {
-      console.error('Erro ao importar lotes:', error);
-      alert('Erro ao importar lotes: ' + error.message);
     }
   }
 

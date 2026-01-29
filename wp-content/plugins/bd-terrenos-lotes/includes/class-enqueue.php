@@ -45,6 +45,31 @@ class TerrenosLotes_Enqueue {
 
     public function enqueue_frontend() {
         global $post;
+
+        // Carrega fonte Kumbh Sans do Google Fonts
+        wp_enqueue_style(
+            'terrenos-lotes-font',
+            'https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@100..900&display=swap',
+            array(),
+            null
+        );
+
+        // Carrega CSS e JS do plugin em todas as páginas (para uso em qualquer tema)
+        wp_enqueue_style(
+            'terrenos-lotes-frontend',
+            plugin_dir_url(dirname(__FILE__)) . 'assets/css/frontend.css',
+            array('terrenos-lotes-font'),
+            '1.0.1'
+        );
+
+        wp_enqueue_script(
+            'terrenos-lotes-frontend',
+            plugin_dir_url(dirname(__FILE__)) . 'assets/js/frontend/index.js',
+            array(),
+            '1.0.1',
+            true
+        );
+
         if (is_singular()) {
             $api_key = get_option('terreno_google_maps_api_key', '');
 

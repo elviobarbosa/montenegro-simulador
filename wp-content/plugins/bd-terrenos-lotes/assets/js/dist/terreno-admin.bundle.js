@@ -1,3 +1,6404 @@
-/*! For license information please see terreno-admin.bundle.js.LICENSE.txt */
-(()=>{"use strict";function e(t){return e="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e},e(t)}function t(e,t){var n=Object.keys(e);if(Object.getOwnPropertySymbols){var o=Object.getOwnPropertySymbols(e);t&&(o=o.filter(function(t){return Object.getOwnPropertyDescriptor(e,t).enumerable})),n.push.apply(n,o)}return n}function n(e){for(var n=1;n<arguments.length;n++){var a=null!=arguments[n]?arguments[n]:{};n%2?t(Object(a),!0).forEach(function(t){o(e,t,a[t])}):Object.getOwnPropertyDescriptors?Object.defineProperties(e,Object.getOwnPropertyDescriptors(a)):t(Object(a)).forEach(function(t){Object.defineProperty(e,t,Object.getOwnPropertyDescriptor(a,t))})}return e}function o(e,t,n){return(t=r(t))in e?Object.defineProperty(e,t,{value:n,enumerable:!0,configurable:!0,writable:!0}):e[t]=n,e}function a(e,t){for(var n=0;n<t.length;n++){var o=t[n];o.enumerable=o.enumerable||!1,o.configurable=!0,"value"in o&&(o.writable=!0),Object.defineProperty(e,r(o.key),o)}}function r(t){var n=function(t){if("object"!=e(t)||!t)return t;var n=t[Symbol.toPrimitive];if(void 0!==n){var o=n.call(t,"string");if("object"!=e(o))return o;throw new TypeError("@@toPrimitive must return a primitive value.")}return String(t)}(t);return"symbol"==e(n)?n:n+""}var i=function(){return e=function e(){!function(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}(this,e),this.state={map:null,drawingManager:null,polygons:new Map,lotesData:[],isDrawingMode:!1,currentMapType:"roadmap",currentPolygon:null,currentInfoWindow:null,currentEditLoteId:null,zoom:18,center:{lat:-3.7319,lng:-38.5267}},this.subscribers=new Map},(t=[{key:"setState",value:function(e,t){var n=this.state[e];this.state[e]=t,n!==t&&this.notifySubscribers(e,t,n)}},{key:"getState",value:function(e){return this.state[e]}},{key:"getAllState",value:function(){return n({},this.state)}},{key:"subscribe",value:function(e,t){this.subscribers.has(e)||this.subscribers.set(e,[]),this.subscribers.get(e).push(t)}},{key:"unsubscribe",value:function(e,t){if(this.subscribers.has(e)){var n=this.subscribers.get(e),o=n.indexOf(t);o>-1&&n.splice(o,1)}}},{key:"notifySubscribers",value:function(e,t,n){this.subscribers.has(e)&&this.subscribers.get(e).forEach(function(o){try{o(t,n)}catch(t){console.error('Erro ao executar subscriber da chave "'.concat(e,'":'),t)}})}},{key:"setMultiple",value:function(e){var t=this;Object.keys(e).forEach(function(n){t.setState(n,e[n])})}},{key:"reset",value:function(){this.state={map:null,drawingManager:null,polygons:new Map,lotesData:[],isDrawingMode:!1,currentMapType:"roadmap",currentPolygon:null,currentInfoWindow:null,currentEditLoteId:null,zoom:18,center:{lat:-3.7319,lng:-38.5267}}}},{key:"addPolygon",value:function(e,t){this.state.polygons.set(e,t)}},{key:"removePolygon",value:function(e){this.state.polygons.delete(e)}},{key:"getPolygon",value:function(e){return this.state.polygons.get(e)}},{key:"addLote",value:function(e){this.state.lotesData.push(e)}},{key:"updateLote",value:function(e,t){var o=this.state.lotesData.findIndex(function(t){return t.id===e});o>-1&&(this.state.lotesData[o]=n(n({},this.state.lotesData[o]),t))}},{key:"removeLote",value:function(e){this.state.lotesData=this.state.lotesData.filter(function(t){return t.id!==e})}},{key:"getLote",value:function(e){return this.state.lotesData.find(function(t){return t.id===e})}}])&&a(e.prototype,t),Object.defineProperty(e,"prototype",{writable:!1}),e;var e,t}();function s(e){return s="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e},s(e)}function l(e,t){for(var n=0;n<t.length;n++){var o=t[n];o.enumerable=o.enumerable||!1,o.configurable=!0,"value"in o&&(o.writable=!0),Object.defineProperty(e,u(o.key),o)}}function u(e){var t=function(e){if("object"!=s(e)||!e)return e;var t=e[Symbol.toPrimitive];if(void 0!==t){var n=t.call(e,"string");if("object"!=s(n))return n;throw new TypeError("@@toPrimitive must return a primitive value.")}return String(e)}(e);return"symbol"==s(t)?t:t+""}var c=function(){return e=function e(){!function(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}(this,e),this.events=new Map},t=[{key:"on",value:function(e,t){this.events.has(e)||this.events.set(e,[]),this.events.get(e).push(t)}},{key:"off",value:function(e,t){if(this.events.has(e)){var n=this.events.get(e),o=n.indexOf(t);o>-1&&n.splice(o,1),0===n.length&&this.events.delete(e)}}},{key:"emit",value:function(e,t){this.events.has(e)&&this.events.get(e).forEach(function(n){try{n(t)}catch(t){console.error('Erro ao executar callback do evento "'.concat(e,'":'),t)}})}},{key:"once",value:function(e,t){var n=this,o=function(a){t(a),n.off(e,o)};this.on(e,o)}},{key:"clear",value:function(){var e=arguments.length>0&&void 0!==arguments[0]?arguments[0]:null;e?this.events.delete(e):this.events.clear()}},{key:"listenerCount",value:function(e){return this.events.has(e)?this.events.get(e).length:0}}],t&&l(e.prototype,t),Object.defineProperty(e,"prototype",{writable:!1}),e;var e,t}();function d(e){return d="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e},d(e)}function v(){var e,t,n="function"==typeof Symbol?Symbol:{},o=n.iterator||"@@iterator",a=n.toStringTag||"@@toStringTag";function r(n,o,a,r){var l=o&&o.prototype instanceof s?o:s,u=Object.create(l.prototype);return p(u,"_invoke",function(n,o,a){var r,s,l,u=0,c=a||[],d=!1,v={p:0,n:0,v:e,a:p,f:p.bind(e,4),d:function(t,n){return r=t,s=0,l=e,v.n=n,i}};function p(n,o){for(s=n,l=o,t=0;!d&&u&&!a&&t<c.length;t++){var a,r=c[t],p=v.p,h=r[2];n>3?(a=h===o)&&(l=r[(s=r[4])?5:(s=3,3)],r[4]=r[5]=e):r[0]<=p&&((a=n<2&&p<r[1])?(s=0,v.v=o,v.n=r[1]):p<h&&(a=n<3||r[0]>o||o>h)&&(r[4]=n,r[5]=o,v.n=h,s=0))}if(a||n>1)return i;throw d=!0,o}return function(a,c,h){if(u>1)throw TypeError("Generator is already running");for(d&&1===c&&p(c,h),s=c,l=h;(t=s<2?e:l)||!d;){r||(s?s<3?(s>1&&(v.n=-1),p(s,l)):v.n=l:v.v=l);try{if(u=2,r){if(s||(a="next"),t=r[a]){if(!(t=t.call(r,l)))throw TypeError("iterator result is not an object");if(!t.done)return t;l=t.value,s<2&&(s=0)}else 1===s&&(t=r.return)&&t.call(r),s<2&&(l=TypeError("The iterator does not provide a '"+a+"' method"),s=1);r=e}else if((t=(d=v.n<0)?l:n.call(o,v))!==i)break}catch(t){r=e,s=1,l=t}finally{u=1}}return{value:t,done:d}}}(n,a,r),!0),u}var i={};function s(){}function l(){}function u(){}t=Object.getPrototypeOf;var c=[][o]?t(t([][o]())):(p(t={},o,function(){return this}),t),d=u.prototype=s.prototype=Object.create(c);function h(e){return Object.setPrototypeOf?Object.setPrototypeOf(e,u):(e.__proto__=u,p(e,a,"GeneratorFunction")),e.prototype=Object.create(d),e}return l.prototype=u,p(d,"constructor",u),p(u,"constructor",l),l.displayName="GeneratorFunction",p(u,a,"GeneratorFunction"),p(d),p(d,a,"Generator"),p(d,o,function(){return this}),p(d,"toString",function(){return"[object Generator]"}),(v=function(){return{w:r,m:h}})()}function p(e,t,n,o){var a=Object.defineProperty;try{a({},"",{})}catch(e){a=0}p=function(e,t,n,o){function r(t,n){p(e,t,function(e){return this._invoke(t,n,e)})}t?a?a(e,t,{value:n,enumerable:!o,configurable:!o,writable:!o}):e[t]=n:(r("next",0),r("throw",1),r("return",2))},p(e,t,n,o)}function h(e,t,n,o,a,r,i){try{var s=e[r](i),l=s.value}catch(e){return void n(e)}s.done?t(l):Promise.resolve(l).then(o,a)}function g(e,t){for(var n=0;n<t.length;n++){var o=t[n];o.enumerable=o.enumerable||!1,o.configurable=!0,"value"in o&&(o.writable=!0),Object.defineProperty(e,y(o.key),o)}}function y(e){var t=function(e){if("object"!=d(e)||!e)return e;var t=e[Symbol.toPrimitive];if(void 0!==t){var n=t.call(e,"string");if("object"!=d(n))return n;throw new TypeError("@@toPrimitive must return a primitive value.")}return String(e)}(e);return"symbol"==d(t)?t:t+""}var m=function(){return e=function e(t,n,o){!function(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}(this,e),this.elementId=t,this.stateManager=n,this.eventBus=o,this.map=null,this.geocoder=null},t=[{key:"initialize",value:(n=v().m(function e(t,n,o){var a,r;return v().w(function(e){for(;;)switch(e.n){case 0:if(a=document.getElementById(this.elementId)){e.n=1;break}throw new Error('Elemento com ID "'.concat(this.elementId,'" não encontrado'));case 1:if("undefined"!=typeof google&&void 0!==google.maps){e.n=2;break}throw new Error("Google Maps API não está carregada");case 2:return r={center:{lat:t,lng:n},zoom:o,mapTypeId:google.maps.MapTypeId.ROADMAP,mapTypeControl:!1,streetViewControl:!1,fullscreenControl:!0,zoomControl:!0,gestureHandling:"greedy"},this.map=new google.maps.Map(a,r),this.geocoder=new google.maps.Geocoder,this.stateManager.setState("map",this.map),this.stateManager.setMultiple({center:{lat:t,lng:n},zoom:o,currentMapType:"roadmap"}),this.setupMapEventListeners(),this.eventBus.emit("map:initialized",{lat:t,lng:n,zoom:o}),e.a(2,this.map)}},e,this)}),o=function(){var e=this,t=arguments;return new Promise(function(o,a){var r=n.apply(e,t);function i(e){h(r,o,a,i,s,"next",e)}function s(e){h(r,o,a,i,s,"throw",e)}i(void 0)})},function(e,t,n){return o.apply(this,arguments)})},{key:"setupMapEventListeners",value:function(){var e=this;google.maps.event.addListener(this.map,"zoom_changed",function(){var t=e.map.getZoom();e.stateManager.setState("zoom",t),e.eventBus.emit("map:zoom_changed",t)}),google.maps.event.addListener(this.map,"center_changed",function(){var t=e.map.getCenter(),n={lat:t.lat(),lng:t.lng()};e.stateManager.setState("center",n)}),google.maps.event.addListener(this.map,"click",function(){e.eventBus.emit("map:clicked")})}},{key:"getMap",value:function(){return this.map}},{key:"getGeocoder",value:function(){return this.geocoder}},{key:"updateCenter",value:function(e,t){if(this.map){var n=new google.maps.LatLng(e,t);this.map.setCenter(n),this.stateManager.setState("center",{lat:e,lng:t}),this.eventBus.emit("map:center_updated",{lat:e,lng:t})}}},{key:"updateZoom",value:function(e){if(this.map){var t=Math.max(1,Math.min(20,e));this.map.setZoom(t),this.stateManager.setState("zoom",t)}}},{key:"toggleMapType",value:function(){if(this.map){var e="roadmap"===this.stateManager.getState("currentMapType")?"satellite":"roadmap";return this.map.setMapTypeId("satellite"===e?google.maps.MapTypeId.SATELLITE:google.maps.MapTypeId.ROADMAP),this.stateManager.setState("currentMapType",e),this.eventBus.emit("map:type_changed",e),e}}},{key:"fitBounds",value:function(e){if(this.map&&e&&0!==e.length){var t=new google.maps.LatLngBounds;e.forEach(function(e){e.getPath().forEach(function(e){t.extend(e)})}),this.map.fitBounds(t)}}},{key:"fitToBounds",value:function(e){this.map&&this.map.fitBounds(e)}},{key:"panTo",value:function(e,t){if(this.map){var n=new google.maps.LatLng(e,t);this.map.panTo(n)}}},{key:"clearOverlays",value:function(){this.eventBus.emit("map:overlays_cleared")}},{key:"destroy",value:function(){this.map&&(google.maps.event.clearInstanceListeners(this.map),this.map=null,this.geocoder=null,this.stateManager.setState("map",null),this.eventBus.emit("map:destroyed"))}}],t&&g(e.prototype,t),Object.defineProperty(e,"prototype",{writable:!1}),e;var e,t,n,o}();function f(e){return f="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e},f(e)}function b(e,t){for(var n=0;n<t.length;n++){var o=t[n];o.enumerable=o.enumerable||!1,o.configurable=!0,"value"in o&&(o.writable=!0),Object.defineProperty(e,E(o.key),o)}}function E(e){var t=function(e){if("object"!=f(e)||!e)return e;var t=e[Symbol.toPrimitive];if(void 0!==t){var n=t.call(e,"string");if("object"!=f(n))return n;throw new TypeError("@@toPrimitive must return a primitive value.")}return String(e)}(e);return"symbol"==f(t)?t:t+""}var S=function(){return e=function e(t,n,o){!function(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}(this,e),this.map=t,this.stateManager=n,this.eventBus=o,this.drawingManager=null,this.currentPolygon=null},(t=[{key:"initialize",value:function(){var e=this;this.drawingManager||(this.drawingManager=new google.maps.drawing.DrawingManager({drawingMode:null,drawingControl:!1,polygonOptions:{strokeColor:"#FF6B6B",strokeOpacity:.8,strokeWeight:2,fillColor:"#FF6B6B",fillOpacity:.35,editable:!0,draggable:!1}}),this.drawingManager.setMap(this.map),this.stateManager.setState("drawingManager",this.drawingManager),google.maps.event.addListener(this.drawingManager,"overlaycomplete",function(t){t.type===google.maps.drawing.OverlayType.POLYGON&&e.handlePolygonComplete(t.overlay)}))}},{key:"startDrawing",value:function(){this.drawingManager||this.initialize(),this.currentPolygon&&this.cancelDrawing(),this.drawingManager.setDrawingMode(google.maps.drawing.OverlayType.POLYGON),this.stateManager.setState("isDrawingMode",!0),this.eventBus.emit("drawing:started")}},{key:"stopDrawing",value:function(){if(!this.drawingManager)return null;this.drawingManager.setDrawingMode(null),this.stateManager.setState("isDrawingMode",!1);var e=this.currentPolygon;return this.currentPolygon=null,this.eventBus.emit("drawing:stopped",{polygon:e}),e}},{key:"cancelDrawing",value:function(){this.currentPolygon&&(this.currentPolygon.setMap(null),this.currentPolygon=null),this.drawingManager&&this.drawingManager.setDrawingMode(null),this.stateManager.setState("isDrawingMode",!1),this.stateManager.setState("currentPolygon",null),this.eventBus.emit("drawing:canceled")}},{key:"handlePolygonComplete",value:function(e){if(this.drawingManager.setDrawingMode(null),!this.validatePolygon(e))return e.setMap(null),void this.eventBus.emit("drawing:invalid");this.currentPolygon=e,this.stateManager.setState("currentPolygon",e);var t=this.extractCoordinates(e);this.eventBus.emit("drawing:completed",{polygon:e,coordinates:t})}},{key:"validatePolygon",value:function(e){return!(e.getPath().getLength()<3&&(alert("O polígono deve ter pelo menos 3 vértices"),1))}},{key:"extractCoordinates",value:function(e){for(var t=e.getPath(),n=[],o=0;o<t.getLength();o++){var a=t.getAt(o);n.push({lat:a.lat(),lng:a.lng()})}return n}},{key:"getCurrentPolygon",value:function(){return this.currentPolygon}},{key:"isDrawing",value:function(){return this.stateManager.getState("isDrawingMode")}},{key:"setPolygonOptions",value:function(e){this.drawingManager&&this.drawingManager.setOptions({polygonOptions:e})}},{key:"destroy",value:function(){this.currentPolygon&&(this.currentPolygon.setMap(null),this.currentPolygon=null),this.drawingManager&&(google.maps.event.clearInstanceListeners(this.drawingManager),this.drawingManager.setMap(null),this.drawingManager=null),this.stateManager.setState("drawingManager",null),this.stateManager.setState("isDrawingMode",!1),this.stateManager.setState("currentPolygon",null)}}])&&b(e.prototype,t),Object.defineProperty(e,"prototype",{writable:!1}),e;var e,t}();function w(e){return w="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e},w(e)}function k(e,t){for(var n=0;n<t.length;n++){var o=t[n];o.enumerable=o.enumerable||!1,o.configurable=!0,"value"in o&&(o.writable=!0),Object.defineProperty(e,x(o.key),o)}}function x(e){var t=function(e){if("object"!=w(e)||!e)return e;var t=e[Symbol.toPrimitive];if(void 0!==t){var n=t.call(e,"string");if("object"!=w(n))return n;throw new TypeError("@@toPrimitive must return a primitive value.")}return String(e)}(e);return"symbol"==w(t)?t:t+""}var L=function(){return e=function e(t,n,o){!function(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}(this,e),this.map=t,this.stateManager=n,this.eventBus=o},(t=[{key:"createPolygon",value:function(e){if(!e.coordinates||e.coordinates.length<3)return console.error("Lote deve ter no mínimo 3 coordenadas"),null;var t=e.coordinates.map(function(e){return{lat:e.lat,lng:e.lng}}),n=e.color||this.generateRandomColor(),o=new google.maps.Polygon({paths:t,strokeColor:n,strokeOpacity:.8,strokeWeight:2,fillColor:n,fillOpacity:.35,editable:!1,draggable:!1,map:this.map});return o.loteId=e.id,o.loteData=e,this.stateManager.addPolygon(e.id,o),this.setupPolygonEvents(o,e),o}},{key:"setupPolygonEvents",value:function(e,t){var n=this;google.maps.event.addListener(e,"click",function(o){n.eventBus.emit("polygon:clicked",{lote:t,polygon:e,event:o})}),google.maps.event.addListener(e,"mouseover",function(){e.setOptions({strokeWeight:3,fillOpacity:.5}),n.eventBus.emit("polygon:hover",{lote:t,polygon:e})}),google.maps.event.addListener(e,"mouseout",function(){e.setOptions({strokeWeight:2,fillOpacity:.35})}),google.maps.event.addListener(e,"rightclick",function(o){n.eventBus.emit("polygon:rightclick",{lote:t,polygon:e,event:o})})}},{key:"updatePolygon",value:function(e,t){var n=this.stateManager.getPolygon(e);if(!n)return!1;var o=t.map(function(e){return{lat:e.lat,lng:e.lng}});return n.setPath(o),this.eventBus.emit("polygon:updated",{loteId:e,coordinates:t}),!0}},{key:"enableEditing",value:function(e){var t=this,n=this.stateManager.getPolygon(e);if(n){n.setOptions({editable:!0,draggable:!0});var o=google.maps.event.addListener(n.getPath(),"set_at",function(){t.handlePolygonEdit(n)}),a=google.maps.event.addListener(n.getPath(),"insert_at",function(){t.handlePolygonEdit(n)});n.editListeners=[o,a]}}},{key:"disableEditing",value:function(e){var t=this.stateManager.getPolygon(e);t&&(t.setOptions({editable:!1,draggable:!1}),t.editListeners&&(t.editListeners.forEach(function(e){google.maps.event.removeListener(e)}),t.editListeners=null))}},{key:"handlePolygonEdit",value:function(e){for(var t=e.getPath(),n=[],o=0;o<t.getLength();o++){var a=t.getAt(o);n.push({lat:a.lat(),lng:a.lng()})}this.eventBus.emit("polygon:path_changed",{loteId:e.loteId,coordinates:n})}},{key:"deletePolygon",value:function(e){var t=this.stateManager.getPolygon(e);return!!t&&(t.editListeners&&t.editListeners.forEach(function(e){google.maps.event.removeListener(e)}),google.maps.event.clearInstanceListeners(t),t.setMap(null),this.stateManager.removePolygon(e),this.eventBus.emit("polygon:deleted",{loteId:e}),!0)}},{key:"loadPolygons",value:function(e){var t=this,n=[];return e.forEach(function(e){var o=t.createPolygon(e);o&&n.push(o)}),this.eventBus.emit("polygons:loaded",n),n}},{key:"clearAllPolygons",value:function(){var e=this.stateManager.getState("polygons");e.forEach(function(e,t){google.maps.event.clearInstanceListeners(e),e.setMap(null)}),e.clear(),this.eventBus.emit("polygons:cleared")}},{key:"highlightPolygon",value:function(e){var t=this.stateManager.getPolygon(e);if(t){var n={strokeWeight:t.strokeWeight,strokeOpacity:t.strokeOpacity,fillOpacity:t.fillOpacity};t.setOptions({strokeWeight:4,strokeOpacity:1,fillOpacity:.6}),setTimeout(function(){t.setOptions(n)},2e3)}}},{key:"generateRandomColor",value:function(){var e=["#FF6B6B","#4ECDC4","#45B7D1","#FFA07A","#98D8C8","#F06292","#AED581","#FFD54F","#4DB6AC","#7986CB"];return e[Math.floor(Math.random()*e.length)]}},{key:"getAllPolygons",value:function(){return this.stateManager.getState("polygons")}},{key:"centerOnPolygon",value:function(e){var t=this.stateManager.getPolygon(e);if(t){var n=new google.maps.LatLngBounds;t.getPath().forEach(function(e){n.extend(e)}),this.map.fitBounds(n),this.map.setZoom(Math.min(this.map.getZoom(),18))}}}])&&k(e.prototype,t),Object.defineProperty(e,"prototype",{writable:!1}),e;var e,t}();function M(e){return M="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e},M(e)}function O(e,t){var n=Object.keys(e);if(Object.getOwnPropertySymbols){var o=Object.getOwnPropertySymbols(e);t&&(o=o.filter(function(t){return Object.getOwnPropertyDescriptor(e,t).enumerable})),n.push.apply(n,o)}return n}function B(e){for(var t=1;t<arguments.length;t++){var n=null!=arguments[t]?arguments[t]:{};t%2?O(Object(n),!0).forEach(function(t){I(e,t,n[t])}):Object.getOwnPropertyDescriptors?Object.defineProperties(e,Object.getOwnPropertyDescriptors(n)):O(Object(n)).forEach(function(t){Object.defineProperty(e,t,Object.getOwnPropertyDescriptor(n,t))})}return e}function I(e,t,n){return(t=T(t))in e?Object.defineProperty(e,t,{value:n,enumerable:!0,configurable:!0,writable:!0}):e[t]=n,e}function P(){var e,t,n="function"==typeof Symbol?Symbol:{},o=n.iterator||"@@iterator",a=n.toStringTag||"@@toStringTag";function r(n,o,a,r){var l=o&&o.prototype instanceof s?o:s,u=Object.create(l.prototype);return C(u,"_invoke",function(n,o,a){var r,s,l,u=0,c=a||[],d=!1,v={p:0,n:0,v:e,a:p,f:p.bind(e,4),d:function(t,n){return r=t,s=0,l=e,v.n=n,i}};function p(n,o){for(s=n,l=o,t=0;!d&&u&&!a&&t<c.length;t++){var a,r=c[t],p=v.p,h=r[2];n>3?(a=h===o)&&(l=r[(s=r[4])?5:(s=3,3)],r[4]=r[5]=e):r[0]<=p&&((a=n<2&&p<r[1])?(s=0,v.v=o,v.n=r[1]):p<h&&(a=n<3||r[0]>o||o>h)&&(r[4]=n,r[5]=o,v.n=h,s=0))}if(a||n>1)return i;throw d=!0,o}return function(a,c,h){if(u>1)throw TypeError("Generator is already running");for(d&&1===c&&p(c,h),s=c,l=h;(t=s<2?e:l)||!d;){r||(s?s<3?(s>1&&(v.n=-1),p(s,l)):v.n=l:v.v=l);try{if(u=2,r){if(s||(a="next"),t=r[a]){if(!(t=t.call(r,l)))throw TypeError("iterator result is not an object");if(!t.done)return t;l=t.value,s<2&&(s=0)}else 1===s&&(t=r.return)&&t.call(r),s<2&&(l=TypeError("The iterator does not provide a '"+a+"' method"),s=1);r=e}else if((t=(d=v.n<0)?l:n.call(o,v))!==i)break}catch(t){r=e,s=1,l=t}finally{u=1}}return{value:t,done:d}}}(n,a,r),!0),u}var i={};function s(){}function l(){}function u(){}t=Object.getPrototypeOf;var c=[][o]?t(t([][o]())):(C(t={},o,function(){return this}),t),d=u.prototype=s.prototype=Object.create(c);function v(e){return Object.setPrototypeOf?Object.setPrototypeOf(e,u):(e.__proto__=u,C(e,a,"GeneratorFunction")),e.prototype=Object.create(d),e}return l.prototype=u,C(d,"constructor",u),C(u,"constructor",l),l.displayName="GeneratorFunction",C(u,a,"GeneratorFunction"),C(d),C(d,a,"Generator"),C(d,o,function(){return this}),C(d,"toString",function(){return"[object Generator]"}),(P=function(){return{w:r,m:v}})()}function C(e,t,n,o){var a=Object.defineProperty;try{a({},"",{})}catch(e){a=0}C=function(e,t,n,o){function r(t,n){C(e,t,function(e){return this._invoke(t,n,e)})}t?a?a(e,t,{value:n,enumerable:!o,configurable:!o,writable:!o}):e[t]=n:(r("next",0),r("throw",1),r("return",2))},C(e,t,n,o)}function _(e,t,n,o,a,r,i){try{var s=e[r](i),l=s.value}catch(e){return void n(e)}s.done?t(l):Promise.resolve(l).then(o,a)}function j(e){return function(){var t=this,n=arguments;return new Promise(function(o,a){var r=e.apply(t,n);function i(e){_(r,o,a,i,s,"next",e)}function s(e){_(r,o,a,i,s,"throw",e)}i(void 0)})}}function D(e,t){for(var n=0;n<t.length;n++){var o=t[n];o.enumerable=o.enumerable||!1,o.configurable=!0,"value"in o&&(o.writable=!0),Object.defineProperty(e,T(o.key),o)}}function T(e){var t=function(e){if("object"!=M(e)||!e)return e;var t=e[Symbol.toPrimitive];if(void 0!==t){var n=t.call(e,"string");if("object"!=M(n))return n;throw new TypeError("@@toPrimitive must return a primitive value.")}return String(e)}(e);return"symbol"==M(t)?t:t+""}var A=function(){return e=function e(t,n){!function(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}(this,e),this.geocoder=t,this.eventBus=n},t=[{key:"searchAddress",value:(s=j(P().m(function e(t){var n=this;return P().w(function(e){for(;;)switch(e.n){case 0:if(t&&""!==t.trim()){e.n=1;break}throw new Error("Endereço não pode ser vazio");case 1:return e.a(2,new Promise(function(e,o){n.geocoder.geocode({address:t},function(a,r){if(r===google.maps.GeocoderStatus.OK&&a[0]){var i=a[0].geometry.location,s={lat:i.lat(),lng:i.lng(),formatted_address:a[0].formatted_address,place_id:a[0].place_id};n.eventBus.emit("geocode:success",s),e(s)}else{var l=new Error("Geocode falhou: ".concat(r));n.eventBus.emit("geocode:error",{address:t,status:r}),console.error("Erro ao buscar endereço:",r),o(l)}})}))}},e)})),function(e){return s.apply(this,arguments)})},{key:"reverseGeocode",value:(i=j(P().m(function e(t,n){var o,a=this;return P().w(function(e){for(;;)if(0===e.n)return o=new google.maps.LatLng(t,n),e.a(2,new Promise(function(e,r){a.geocoder.geocode({location:o},function(o,i){if(i===google.maps.GeocoderStatus.OK&&o[0]){var s=o[0].formatted_address;a.eventBus.emit("reverse_geocode:success",{lat:t,lng:n,address:s}),e(s)}else{var l=new Error("Reverse geocode falhou: ".concat(i));a.eventBus.emit("reverse_geocode:error",{lat:t,lng:n,status:i}),r(l)}})}))},e)})),function(e,t){return i.apply(this,arguments)})},{key:"searchCoordinates",value:(r=j(P().m(function e(t){var n,o,a,r;return P().w(function(e){for(;;)switch(e.n){case 0:if(2===(n=t.split(",").map(function(e){return e.trim()})).length){e.n=1;break}throw new Error("Formato inválido. Use: latitude, longitude");case 1:if(o=parseFloat(n[0]),a=parseFloat(n[1]),!isNaN(o)&&!isNaN(a)){e.n=2;break}throw new Error("Coordenadas inválidas");case 2:if(!(o<-90||o>90||a<-180||a>180)){e.n=3;break}throw new Error("Coordenadas fora dos limites válidos");case 3:return r={lat:o,lng:a},this.eventBus.emit("coordinates:searched",r),e.a(2,r)}},e,this)})),function(e){return r.apply(this,arguments)})},{key:"getCurrentLocation",value:(a=j(P().m(function e(){var t=this;return P().w(function(e){for(;;)switch(e.n){case 0:if(navigator.geolocation){e.n=1;break}throw new Error("Geolocalização não é suportada por este navegador");case 1:return e.a(2,new Promise(function(e,n){navigator.geolocation.getCurrentPosition(function(n){var o={lat:n.coords.latitude,lng:n.coords.longitude,accuracy:n.coords.accuracy};t.eventBus.emit("geolocation:success",o),e(o)},function(e){var o="Erro ao obter localização";switch(e.code){case e.PERMISSION_DENIED:o="Permissão de localização negada";break;case e.POSITION_UNAVAILABLE:o="Localização indisponível";break;case e.TIMEOUT:o="Timeout ao obter localização"}t.eventBus.emit("geolocation:error",{code:e.code,message:o}),console.error(o,e),n(new Error(o))},{enableHighAccuracy:!0,timeout:1e4,maximumAge:0})}))}},e)})),function(){return a.apply(this,arguments)})},{key:"getPlaceDetails",value:(o=j(P().m(function e(t){var n=this;return P().w(function(e){for(;;)if(0===e.n)return e.a(2,new Promise(function(e,o){n.geocoder.geocode({placeId:t},function(a,r){if(r===google.maps.GeocoderStatus.OK&&a[0]){var i=a[0].geometry.location,s={lat:i.lat(),lng:i.lng(),formatted_address:a[0].formatted_address,place_id:a[0].place_id,types:a[0].types};n.eventBus.emit("place_details:success",s),e(s)}else{var l=new Error("Place details falhou: ".concat(r));n.eventBus.emit("place_details:error",{placeId:t,status:r}),o(l)}})}))},e)})),function(e){return o.apply(this,arguments)})},{key:"validateInput",value:function(e){return e&&""!==e.trim()?(e=e.trim(),/^-?\d+\.?\d*\s*,\s*-?\d+\.?\d*$/.test(e)?{type:"coordinates",valid:!0}:{type:"address",valid:!0}):{type:null,valid:!1}}},{key:"smartSearch",value:(n=j(P().m(function e(t){var n,o,a,r;return P().w(function(e){for(;;)switch(e.n){case 0:if((n=this.validateInput(t)).valid){e.n=1;break}throw new Error("Entrada inválida");case 1:if("coordinates"!==n.type){e.n=4;break}return e.n=2,this.searchCoordinates(t);case 2:return o=e.v,e.n=3,this.reverseGeocode(o.lat,o.lng);case 3:return a=e.v,e.a(2,B(B({},o),{},{address:a}));case 4:return e.n=5,this.searchAddress(t);case 5:return r=e.v,e.a(2,{lat:r.lat,lng:r.lng,address:r.formatted_address});case 6:return e.a(2)}},e,this)})),function(e){return n.apply(this,arguments)})}],t&&D(e.prototype,t),Object.defineProperty(e,"prototype",{writable:!1}),e;var e,t,n,o,a,r,i,s}();function z(e,t){(null==t||t>e.length)&&(t=e.length);for(var n=0,o=Array(t);n<t;n++)o[n]=e[n];return o}function N(e){return N="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e},N(e)}function R(e,t){for(var n=0;n<t.length;n++){var o=t[n];o.enumerable=o.enumerable||!1,o.configurable=!0,"value"in o&&(o.writable=!0),Object.defineProperty(e,F(o.key),o)}}function F(e){var t=function(e){if("object"!=N(e)||!e)return e;var t=e[Symbol.toPrimitive];if(void 0!==t){var n=t.call(e,"string");if("object"!=N(n))return n;throw new TypeError("@@toPrimitive must return a primitive value.")}return String(e)}(e);return"symbol"==N(t)?t:t+""}var V=function(){return e=function e(t,n,o){!function(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}(this,e),this.fieldId=t,this.stateManager=n,this.eventBus=o,this.field=null},(t=[{key:"initialize",value:function(){return this.field=document.getElementById(this.fieldId),!!this.field||(console.error('Campo hidden com ID "'.concat(this.fieldId,'" não encontrado')),!1)}},{key:"load",value:function(){var e=this;if(!this.initialize())return[];var t=this.field.value;if(!t||""===t.trim())return[];try{var n=JSON.parse(t);if(!Array.isArray(n))return console.error("Dados de lotes inválidos: esperado array"),[];var o=n.filter(function(t){return e.validateLote(t)});return this.stateManager.setState("lotesData",o),this.eventBus.emit("data:loaded",o),o}catch(e){return console.error("Erro ao fazer parse dos dados de lotes:",e),console.error("Dados problemáticos:",t.substring(0,200)),[]}}},{key:"save",value:function(){if(!this.initialize())return!1;var e=this.stateManager.getState("lotesData");try{var t=JSON.stringify(e);return this.field.value=t,this.eventBus.emit("data:saved",e),!0}catch(e){return console.error("Erro ao serializar dados de lotes:",e),!1}}},{key:"validateLote",value:function(e){if(!e||"object"!==N(e))return!1;for(var t=0,n=["id","coordinates"];t<n.length;t++)if(!(n[t]in e))return!1;if(!Array.isArray(e.coordinates)||e.coordinates.length<3)return!1;var o,a=function(e,t){var n="undefined"!=typeof Symbol&&e[Symbol.iterator]||e["@@iterator"];if(!n){if(Array.isArray(e)||(n=function(e,t){if(e){if("string"==typeof e)return z(e,t);var n={}.toString.call(e).slice(8,-1);return"Object"===n&&e.constructor&&(n=e.constructor.name),"Map"===n||"Set"===n?Array.from(e):"Arguments"===n||/^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)?z(e,t):void 0}}(e))||t&&e&&"number"==typeof e.length){n&&(e=n);var o=0,a=function(){};return{s:a,n:function(){return o>=e.length?{done:!0}:{done:!1,value:e[o++]}},e:function(e){throw e},f:a}}throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.")}var r,i=!0,s=!1;return{s:function(){n=n.call(e)},n:function(){var e=n.next();return i=e.done,e},e:function(e){s=!0,r=e},f:function(){try{i||null==n.return||n.return()}finally{if(s)throw r}}}}(e.coordinates);try{for(a.s();!(o=a.n()).done;){var r=o.value;if("number"!=typeof r.lat||"number"!=typeof r.lng)return!1}}catch(e){a.e(e)}finally{a.f()}return!0}},{key:"addLote",value:function(e){return this.validateLote(e)?(this.stateManager.addLote(e),this.save()):(console.error("Lote inválido, não será adicionado"),!1)}},{key:"updateLote",value:function(e,t){return this.stateManager.updateLote(e,t),this.save()}},{key:"removeLote",value:function(e){return this.stateManager.removeLote(e),this.save()}},{key:"clearAll",value:function(){return this.stateManager.setState("lotesData",[]),this.save()}},{key:"exportJSON",value:function(){var e=this.stateManager.getState("lotesData");return JSON.stringify(e,null,2)}},{key:"importJSON",value:function(e){var t=this;try{var n=JSON.parse(e);if(!Array.isArray(n))throw new Error("Dados devem ser um array");var o=n.filter(function(e){return t.validateLote(e)});return this.stateManager.setState("lotesData",o),this.save()}catch(e){return console.error("Erro ao importar JSON:",e),!1}}}])&&R(e.prototype,t),Object.defineProperty(e,"prototype",{writable:!1}),e;var e,t}();function G(e){return G="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e},G(e)}function H(){try{var e=!Boolean.prototype.valueOf.call(Reflect.construct(Boolean,[],function(){}))}catch(e){}return(H=function(){return!!e})()}function q(e){return q=Object.setPrototypeOf?Object.getPrototypeOf.bind():function(e){return e.__proto__||Object.getPrototypeOf(e)},q(e)}function W(e,t){return W=Object.setPrototypeOf?Object.setPrototypeOf.bind():function(e,t){return e.__proto__=t,e},W(e,t)}function U(){var e,t,n="function"==typeof Symbol?Symbol:{},o=n.iterator||"@@iterator",a=n.toStringTag||"@@toStringTag";function r(n,o,a,r){var l=o&&o.prototype instanceof s?o:s,u=Object.create(l.prototype);return J(u,"_invoke",function(n,o,a){var r,s,l,u=0,c=a||[],d=!1,v={p:0,n:0,v:e,a:p,f:p.bind(e,4),d:function(t,n){return r=t,s=0,l=e,v.n=n,i}};function p(n,o){for(s=n,l=o,t=0;!d&&u&&!a&&t<c.length;t++){var a,r=c[t],p=v.p,h=r[2];n>3?(a=h===o)&&(l=r[(s=r[4])?5:(s=3,3)],r[4]=r[5]=e):r[0]<=p&&((a=n<2&&p<r[1])?(s=0,v.v=o,v.n=r[1]):p<h&&(a=n<3||r[0]>o||o>h)&&(r[4]=n,r[5]=o,v.n=h,s=0))}if(a||n>1)return i;throw d=!0,o}return function(a,c,h){if(u>1)throw TypeError("Generator is already running");for(d&&1===c&&p(c,h),s=c,l=h;(t=s<2?e:l)||!d;){r||(s?s<3?(s>1&&(v.n=-1),p(s,l)):v.n=l:v.v=l);try{if(u=2,r){if(s||(a="next"),t=r[a]){if(!(t=t.call(r,l)))throw TypeError("iterator result is not an object");if(!t.done)return t;l=t.value,s<2&&(s=0)}else 1===s&&(t=r.return)&&t.call(r),s<2&&(l=TypeError("The iterator does not provide a '"+a+"' method"),s=1);r=e}else if((t=(d=v.n<0)?l:n.call(o,v))!==i)break}catch(t){r=e,s=1,l=t}finally{u=1}}return{value:t,done:d}}}(n,a,r),!0),u}var i={};function s(){}function l(){}function u(){}t=Object.getPrototypeOf;var c=[][o]?t(t([][o]())):(J(t={},o,function(){return this}),t),d=u.prototype=s.prototype=Object.create(c);function v(e){return Object.setPrototypeOf?Object.setPrototypeOf(e,u):(e.__proto__=u,J(e,a,"GeneratorFunction")),e.prototype=Object.create(d),e}return l.prototype=u,J(d,"constructor",u),J(u,"constructor",l),l.displayName="GeneratorFunction",J(u,a,"GeneratorFunction"),J(d),J(d,a,"Generator"),J(d,o,function(){return this}),J(d,"toString",function(){return"[object Generator]"}),(U=function(){return{w:r,m:v}})()}function J(e,t,n,o){var a=Object.defineProperty;try{a({},"",{})}catch(e){a=0}J=function(e,t,n,o){function r(t,n){J(e,t,function(e){return this._invoke(t,n,e)})}t?a?a(e,t,{value:n,enumerable:!o,configurable:!o,writable:!o}):e[t]=n:(r("next",0),r("throw",1),r("return",2))},J(e,t,n,o)}function Z(e,t,n,o,a,r,i){try{var s=e[r](i),l=s.value}catch(e){return void n(e)}s.done?t(l):Promise.resolve(l).then(o,a)}function Y(e){return function(){var t=this,n=arguments;return new Promise(function(o,a){var r=e.apply(t,n);function i(e){Z(r,o,a,i,s,"next",e)}function s(e){Z(r,o,a,i,s,"throw",e)}i(void 0)})}}function X(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}function Q(e,t){for(var n=0;n<t.length;n++){var o=t[n];o.enumerable=o.enumerable||!1,o.configurable=!0,"value"in o&&(o.writable=!0),Object.defineProperty(e,K(o.key),o)}}function $(e,t,n){return t&&Q(e.prototype,t),n&&Q(e,n),Object.defineProperty(e,"prototype",{writable:!1}),e}function K(e){var t=function(e){if("object"!=G(e)||!e)return e;var t=e[Symbol.toPrimitive];if(void 0!==t){var n=t.call(e,"string");if("object"!=G(n))return n;throw new TypeError("@@toPrimitive must return a primitive value.")}return String(e)}(e);return"symbol"==G(t)?t:t+""}var ee=function(){return $(function e(t,n,o,a,r){X(this,e),this.map=t,this.stateManager=n,this.eventBus=o,this.polygonManager=a,this.dataPersistence=r,this.svgContent=null,this.svgElement=null,this.shapes=[],this.viewBox=null,this.shapeMapping={},this.overlay={bounds:null,rotation:0,scale:1,center:null,width:400,height:400},this.isDragging=!1,this.isResizing=!1,this.isRotating=!1,this.dragStart=null,this.isModalOpen=!1,this.isEditorMode=!1,this.selectedShapeIndex=null,this.modal=null,this.overlayContainer=null,this.overlayElement=null,this.customOverlay=null,this.init()},[{key:"init",value:function(){var e,t,n,o,a,r,i,s,l,u,c,d,v=this,p=document.getElementById("btn_importar_svg");p&&p.addEventListener("click",function(){return v.openModal()});var h=document.getElementById("btn_ajustar_svg");h?h.addEventListener("click",function(e){e.preventDefault(),v.toggleEditMode()}):setTimeout(function(){var e=document.getElementById("btn_ajustar_svg");e&&e.addEventListener("click",function(e){e.preventDefault(),v.toggleEditMode()})},500);var g=document.getElementById("btn_remover_svg");if(g&&g.addEventListener("click",function(e){e.preventDefault(),v.confirmAndRemoveSvg()}),this.modal=document.getElementById("svgImportModal"),this.modal){null===(e=document.getElementById("svgImportClose"))||void 0===e||e.addEventListener("click",function(){return v.closeModal(!0)}),null===(t=document.getElementById("svgImportCancel"))||void 0===t||t.addEventListener("click",function(){return v.closeModal(!0)}),null===(n=document.getElementById("svgSelectFile"))||void 0===n||n.addEventListener("click",function(){var e;null===(e=document.getElementById("svgFileInput"))||void 0===e||e.click()}),null===(o=document.getElementById("svgFileInput"))||void 0===o||o.addEventListener("change",function(e){e.target.files.length>0&&v.handleFileUpload(e.target.files[0])});var y=document.getElementById("svgDropZone");y&&(y.addEventListener("dragover",function(e){e.preventDefault(),y.style.borderColor="#0073aa",y.style.background="#f0f7fc"}),y.addEventListener("dragleave",function(){y.style.borderColor="#ccc",y.style.background="transparent"}),y.addEventListener("drop",function(e){e.preventDefault(),y.style.borderColor="#ccc",y.style.background="transparent",e.dataTransfer.files.length>0&&v.handleFileUpload(e.dataTransfer.files[0])})),null===(a=document.getElementById("svgRotateLeft"))||void 0===a||a.addEventListener("click",function(){v.rotateOverlay(-1)}),null===(r=document.getElementById("svgRotateRight"))||void 0===r||r.addEventListener("click",function(){v.rotateOverlay(1)}),null===(i=document.getElementById("svgZoomIn"))||void 0===i||i.addEventListener("click",function(){v.scaleOverlay(1.01)}),null===(s=document.getElementById("svgZoomOut"))||void 0===s||s.addEventListener("click",function(){v.scaleOverlay(.99)}),null===(l=document.getElementById("svgResetTransform"))||void 0===l||l.addEventListener("click",function(){v.resetTransform()}),null===(u=document.getElementById("svgOpacitySlider"))||void 0===u||u.addEventListener("input",function(e){v.setOverlayOpacity(e.target.value/100)}),null===(c=document.getElementById("svgRotationSlider"))||void 0===c||c.addEventListener("input",function(e){v.setRotation(parseFloat(e.target.value))}),null===(d=document.getElementById("svgImportConfirm"))||void 0===d||d.addEventListener("click",function(){v.saveAsOverlay()}),this.eventBus.on("svg:highlight_shape",function(e){v.highlightShape(e.index)}),this.eventBus.on("svg:update_colors",function(e){v.shapeMapping=e.mapping,v.updateShapeColors()})}}},{key:"loadSavedOverlay",value:function(){var e=document.getElementById("terreno_svg_content"),t=document.getElementById("terreno_svg_bounds"),n=document.getElementById("terreno_svg_rotation"),o=document.getElementById("terreno_shape_mapping");if(null!=e&&e.value&&(this.svgContent=e.value),null!=t&&t.value)try{var a=JSON.parse(t.value);this.overlay.bounds=new google.maps.LatLngBounds(new google.maps.LatLng(a.south,a.west),new google.maps.LatLng(a.north,a.east))}catch(e){}if(null!=n&&n.value&&(this.overlay.rotation=parseFloat(n.value)||0),null!=o&&o.value)try{this.shapeMapping=JSON.parse(o.value)}catch(e){}this.svgContent&&this.overlay.bounds&&this.renderSavedOverlay()}},{key:"renderSavedOverlay",value:function(){var e=this;if(this.svgContent&&this.overlay.bounds){this.parseSVGContent();var t=ne();this.customOverlay=new t(this.overlay.bounds,this.svgContent,this.map,this,!0),this.customOverlay.setMap(this.map),this.overlay.rotation&&this.customOverlay.updateRotation(this.overlay.rotation),setTimeout(function(){e.updateShapeColors(),e.renderShapesInSidebar()},100)}}},{key:"parseSVGContent",value:function(){if(this.svgContent){var e=(new DOMParser).parseFromString(this.svgContent,"image/svg+xml").documentElement,t=e.getAttribute("viewBox");if(t){var n=t.split(/[\s,]+/).map(parseFloat);this.viewBox={x:n[0]||0,y:n[1]||0,width:n[2]||100,height:n[3]||100}}var o=e.querySelectorAll("polygon, path, polyline, rect");this.shapes=Array.from(o).map(function(e,t){return{index:t,type:e.tagName.toLowerCase(),id:e.id||"shape_".concat(t),fill:e.getAttribute("fill")||"#ccc",stroke:e.getAttribute("stroke")||"#000"}})}}},{key:"openModal",value:function(){this.modal&&(this.isModalOpen=!0,this.modal.style.display="block",this.resetState())}},{key:"closeModal",value:function(){var e=arguments.length>0&&void 0!==arguments[0]&&arguments[0];if(this.modal){this.isModalOpen=!1,this.modal.style.display="none";var t=document.getElementById("terreno_svg_content"),n=t&&t.value;e||n||(this.removeOverlay(),this.resetState())}}},{key:"resetState",value:function(){this.svgContent=null,this.svgElement=null,this.shapes=[],this.viewBox=null,this.overlay={bounds:null,rotation:0,scale:1,center:null,width:400,height:400};var e=document.getElementById("svgStep1"),t=document.getElementById("svgStep2");e&&(e.style.display="block"),t&&(t.style.display="none");var n=document.getElementById("svgUploadStatus");n&&(n.style.display="none");var o=document.getElementById("svgImportConfirm");o&&(o.disabled=!0);var a=document.getElementById("svgOpacitySlider");a&&(a.value=70);var r=document.getElementById("svgRotationSlider");r&&(r.value=0);var i=document.getElementById("svgRotationValue");i&&(i.textContent="0°")}},{key:"handleFileUpload",value:(o=Y(U().m(function e(t){var n,o=this;return U().w(function(e){for(;;)switch(e.n){case 0:if(t.name.endsWith(".svg")){e.n=1;break}return alert("Por favor, selecione um arquivo SVG válido."),e.a(2);case 1:(n=new FileReader).onload=function(){var e=Y(U().m(function e(n){return U().w(function(e){for(;;)switch(e.n){case 0:return o.svgContent=n.target.result,e.n=1,o.processSVG(t.name);case 1:return e.a(2)}},e)}));return function(t){return e.apply(this,arguments)}}(),n.readAsText(t);case 2:return e.a(2)}},e)})),function(e){return o.apply(this,arguments)})},{key:"processSVG",value:(n=Y(U().m(function e(t){var n,o,a,r,i,s,l,u,c,d,v;return U().w(function(e){for(;;)switch(e.p=e.n){case 0:return e.p=0,n=document.getElementById("svgUploadStatus"),o=document.getElementById("svgFileName"),a=document.getElementById("svgShapeCount"),n&&(n.style.display="block"),o&&(o.textContent="Processando ".concat(t,"...")),a&&(a.textContent=""),(r=new FormData).append("action","terreno_parse_svg"),r.append("nonce",terreno_ajax.nonce),r.append("svg_content",this.svgContent),e.n=1,fetch(terreno_ajax.ajax_url,{method:"POST",body:r});case 1:return i=e.v,e.n=2,i.json();case 2:(s=e.v).success?(this.shapes=s.data.shapes,this.viewBox=s.data.viewBox,o&&(o.textContent=t),a&&(a.textContent="".concat(this.shapes.length," shapes encontrados")),l=document.getElementById("svgStep1"),u=document.getElementById("svgStep2"),l&&(l.style.display="none"),u&&(u.style.display="block"),this.createMapOverlay(),(c=document.getElementById("svgImportConfirm"))&&(c.disabled=!1),this.renderShapesList()):(alert("Erro ao processar SVG: "+((null===(d=s.data)||void 0===d?void 0:d.message)||"Erro desconhecido")),n&&(n.style.display="none")),e.n=4;break;case 3:e.p=3,v=e.v,console.error("Erro ao processar SVG:",v),alert("Erro ao processar SVG. Verifique o console para detalhes.");case 4:return e.a(2)}},e,this,[[0,3]])})),function(e){return n.apply(this,arguments)})},{key:"createMapOverlay",value:function(){this.removeOverlay();var e=this.map.getCenter();this.overlay.center={lat:e.lat(),lng:e.lng()};var t=.002*(this.viewBox?this.viewBox.width/this.viewBox.height:1)/2;this.overlay.bounds=new google.maps.LatLngBounds(new google.maps.LatLng(this.overlay.center.lat-.001,this.overlay.center.lng-t),new google.maps.LatLng(this.overlay.center.lat+.001,this.overlay.center.lng+t));var n=ne();this.customOverlay=new n(this.overlay.bounds,this.svgContent,this.map,this),this.customOverlay.setMap(this.map),this.map.setCenter(e),this.map.setZoom(18)}},{key:"removeOverlay",value:function(){this.customOverlay&&(this.customOverlay.setMap(null),this.customOverlay=null)}},{key:"confirmAndRemoveSvg",value:function(){if(confirm("Tem certeza que deseja remover o SVG? Esta ação irá remover o overlay e todos os mapeamentos de shapes. Você precisará salvar o post para confirmar a remoção.")){this.removeOverlay(),this.svgContent=null,this.svgElement=null,this.shapes=[],this.viewBox=null,this.shapeMapping={},this.overlay={bounds:null,rotation:0,scale:1,center:null,width:400,height:400};var e=document.getElementById("terreno_svg_content"),t=document.getElementById("terreno_svg_bounds"),n=document.getElementById("terreno_svg_rotation"),o=document.getElementById("terreno_shape_mapping");e&&(e.value=""),t&&(t.value=""),n&&(n.value=""),o&&(o.value="");var a=document.getElementById("shapes-sidebar-container"),r=document.getElementById("total-shapes"),i=document.getElementById("shapes-mapped-count");r&&(r.textContent="0"),i&&(i.textContent="0"),a&&(a.innerHTML='\n        <div class="no-lotes" id="no-shapes-message">\n          <div class="no-lotes-icon">\n            <span class="dashicons dashicons-admin-multisite"></span>\n          </div>\n          <p>Nenhum shape carregado.</p>\n          <p class="help-text">Importe um SVG para visualizar os shapes.</p>\n        </div>\n      '),this.updateSvgButtonsVisibility(!1),this.eventBus.emit("svg:removed",{}),alert("SVG removido. Salve o post para confirmar a remoção.")}}},{key:"rotateOverlay",value:function(e){this.overlay.rotation+=e,this.overlay.rotation=this.overlay.rotation%360,this.updateOverlayTransform();var t=document.getElementById("svgRotationSlider"),n=document.getElementById("svgRotationValue");t&&(t.value=this.overlay.rotation),n&&(n.textContent="".concat(Math.round(this.overlay.rotation),"°"))}},{key:"setRotation",value:function(e){if(this.overlay.rotation=e,this.updateOverlayTransform(),this.isModalOpen){var t=document.getElementById("svgRotationValue");t&&(t.textContent="".concat(Math.round(e),"°"))}}},{key:"scaleOverlay",value:function(e){var t;if(this.overlay.bounds&&this.overlay.center){var n=this.overlay.bounds,o=n.getNorthEast(),a=n.getSouthWest(),r=this.overlay.center.lat,i=this.overlay.center.lng,s=(o.lat()-a.lat())/2*e,l=(o.lng()-a.lng())/2*e;this.overlay.bounds=new google.maps.LatLngBounds(new google.maps.LatLng(r-s,i-l),new google.maps.LatLng(r+s,i+l)),null===(t=this.customOverlay)||void 0===t||t.updateBounds(this.overlay.bounds)}}},{key:"updateOverlayBounds",value:function(){if(this.overlay.bounds&&this.overlay.center){var e=this.overlay.bounds,t=e.getNorthEast(),n=e.getSouthWest(),o=this.overlay.center.lat,a=this.overlay.center.lng,r=(t.lat()-n.lat())/2*this.overlay.scale,i=(t.lng()-n.lng())/2*this.overlay.scale;this.overlay.bounds=new google.maps.LatLngBounds(new google.maps.LatLng(o-r,a-i),new google.maps.LatLng(o+r,a+i)),this.overlay.scale=1,this.customOverlay&&this.customOverlay.updateBounds(this.overlay.bounds)}}},{key:"updateOverlayTransform",value:function(){this.customOverlay&&this.customOverlay.updateRotation(this.overlay.rotation)}},{key:"setOverlayOpacity",value:function(e){this.customOverlay&&this.customOverlay.setOpacity(e)}},{key:"resetTransform",value:function(){if(this.svgContent&&this.map){this.overlay.rotation=0,this.overlay.scale=1,this.updateOverlayTransform(),this.createMapOverlay();var e=document.getElementById("svgRotationSlider"),t=document.getElementById("svgRotationValue");e&&(e.value=0),t&&(t.textContent="0°")}}},{key:"renderShapesList",value:function(){this.renderShapesInSidebar()}},{key:"renderShapesInSidebar",value:function(){var e=this,t=document.getElementById("shapes-sidebar-container"),n=document.getElementById("total-shapes"),o=document.getElementById("shapes-mapped-count"),a=document.getElementById("no-shapes-message");if(n&&(n.textContent=this.shapes.length),t)if(0!==this.shapes.length){a&&(a.style.display="none");var r=Object.keys(this.shapeMapping||{}).length;o&&(o.textContent=r);var i=this.shapes.map(function(t,n){var o,a=null===(o=e.shapeMapping)||void 0===o?void 0:o[n],r=!!a,i=r?"shape-mapped":"shape-unmapped",s=r?"Quadra ".concat(a.bloco," | Lote ").concat(a.lote_id):"Clique para vincular";return'\n          <div class="shape-item '.concat(i,'" data-shape-index="').concat(n,'">\n            <div class="shape-header">\n              \n              <span class="shape-name">').concat(t.id||"Shape ".concat(n+1),'</span>\n              \n              <div class="shape-status">').concat(s,'</div>\n            </div>\n            \n            <div class="shape-actions">\n              <button type="button" class="button button-small shape-edit-btn" data-shape-index="').concat(n,'">\n                <span class="dashicons dashicons-edit" style="font-size: 14px; width: 14px; height: 14px;"></span>\n                ').concat(r?"Editar":"Vincular","\n              </button>\n              ").concat(r?'\n              <button type="button" class="button button-small shape-remove-btn" data-shape-index="'.concat(n,'" style="color: #b32d2e;">\n                <span class="dashicons dashicons-no" style="font-size: 14px; width: 14px; height: 14px;"></span>\n                Remover\n              </button>\n              '):"","\n            </div>\n          </div>\n        ")}).join("");t.innerHTML=i,this.setupShapeItemListeners()}else a&&(a.style.display="block")}},{key:"setupShapeItemListeners",value:function(){var e=this;document.querySelectorAll(".shape-item").forEach(function(t){var n=parseInt(t.dataset.shapeIndex);t.addEventListener("mouseenter",function(){e.highlightShape(n)}),t.addEventListener("mouseleave",function(){e.unhighlightShape(n)})}),document.querySelectorAll(".shape-edit-btn").forEach(function(t){t.addEventListener("click",function(n){n.stopPropagation();var o=parseInt(t.dataset.shapeIndex);e.openShapeEditModal(o)})}),document.querySelectorAll(".shape-remove-btn").forEach(function(t){t.addEventListener("click",function(n){n.stopPropagation();var o=parseInt(t.dataset.shapeIndex);e.removeShapeMapping(o)})})}},{key:"openShapeEditModal",value:(t=Y(U().m(function e(t){var n,o,a,r,i,s,l,u,c=this;return U().w(function(e){for(;;)switch(e.n){case 0:o=this.shapes[t],a=null===(n=this.shapeMapping)||void 0===n?void 0:n[t],r={id:(null==a?void 0:a.lote_id)||"",bloco:(null==a?void 0:a.bloco)||"",nome:(null==a?void 0:a.nome)||(null==o?void 0:o.id)||"Shape ".concat(t+1)},this.eventBus.emit("modal:open_edit",{loteData:r,callback:function(e){e&&c.saveShapeMappingData(t,e)}}),(i=document.getElementById("editModal"))&&"block"!==i.style.display&&(s=document.getElementById("editLoteUnidadeId"),l=document.getElementById("editLoteBloco"),u=document.getElementById("editLoteNome"),s&&(s.value=r.id),l&&(l.value=r.bloco),u&&(u.value=r.nome),this.editingShapeIndex=t,i.style.display="block",this.setupModalListeners());case 1:return e.a(2)}},e,this)})),function(e){return t.apply(this,arguments)})},{key:"setupModalListeners",value:function(){var e=this,t=document.getElementById("editModal");if(t){var n=t.querySelector(".button-primary"),o=t.querySelector(".button-secondary"),a=n.cloneNode(!0),r=o.cloneNode(!0);n.parentNode.replaceChild(a,n),o.parentNode.replaceChild(r,o),a.addEventListener("click",function(t){t.preventDefault(),t.stopPropagation(),e.handleModalSave()}),r.addEventListener("click",function(t){t.preventDefault(),t.stopPropagation(),e.closeShapeEditModal()})}}},{key:"handleModalSave",value:function(){var e,t,n,o=this.editingShapeIndex;if(null!=o){var a=null===(e=document.getElementById("editLoteUnidadeId"))||void 0===e||null===(e=e.value)||void 0===e?void 0:e.trim(),r=null===(t=document.getElementById("editLoteBloco"))||void 0===t||null===(t=t.value)||void 0===t?void 0:t.trim(),i=null===(n=document.getElementById("editLoteNome"))||void 0===n||null===(n=n.value)||void 0===n?void 0:n.trim();a?r?(this.saveShapeMappingData(o,{id:a,bloco:r,nome:i}),this.closeShapeEditModal()):alert("A Quadra/Bloco é obrigatória"):alert("O ID da Unidade é obrigatório")}}},{key:"closeShapeEditModal",value:function(){var e=document.getElementById("editModal");e&&(e.style.display="none"),this.editingShapeIndex=null}},{key:"saveShapeMappingData",value:function(e,t){this.shapeMapping||(this.shapeMapping={}),this.shapeMapping[e]={lote_id:t.id,bloco:t.bloco,nome:t.nome,shape_index:e};var n=document.getElementById("terreno_shape_mapping");n&&(n.value=JSON.stringify(this.shapeMapping)),this.renderShapesInSidebar(),this.updateShapeColors()}},{key:"removeShapeMapping",value:function(e){if(confirm("Tem certeza que deseja remover o vínculo deste shape?")){this.shapeMapping&&this.shapeMapping[e]&&delete this.shapeMapping[e];var t=document.getElementById("terreno_shape_mapping");t&&(t.value=JSON.stringify(this.shapeMapping||{})),this.renderShapesInSidebar(),this.updateShapeColors()}}},{key:"unhighlightShape",value:function(e){this.customOverlay&&this.customOverlay.unhighlightShape(e)}},{key:"updateOverlayCenter",value:function(e){var t=this.overlay.center,n=this.overlay.bounds;if(t&&n){var o=e.lat-t.lat,a=e.lng-t.lng,r=n.getNorthEast(),i=n.getSouthWest();this.overlay.bounds=new google.maps.LatLngBounds(new google.maps.LatLng(i.lat()+o,i.lng()+a),new google.maps.LatLng(r.lat()+o,r.lng()+a)),this.overlay.center=e}}},{key:"saveAsOverlay",value:function(){var e=this;try{if(!this.svgContent)return void alert("Nenhum SVG carregado.");if(!this.overlay.bounds)return this.createMapOverlay(),void setTimeout(function(){e.overlay.bounds?e.completeSaveOverlay():alert("Erro: não foi possível posicionar o SVG no mapa. Tente novamente.")},100);this.completeSaveOverlay()}catch(e){console.error("Erro ao salvar overlay:",e),alert("Erro ao salvar overlay: "+e.message)}}},{key:"completeSaveOverlay",value:function(){if(!this.overlay.bounds)return console.error("Bounds ainda é null após criação do overlay"),void alert("Erro ao posicionar SVG. Recarregue a página e tente novamente.");this.updateHiddenInputs();var e={north:this.overlay.bounds.getNorthEast().lat(),south:this.overlay.bounds.getSouthWest().lat(),east:this.overlay.bounds.getNorthEast().lng(),west:this.overlay.bounds.getSouthWest().lng()};this.eventBus.emit("svg:loaded",{svgContent:this.svgContent,shapes:this.shapes,viewBox:this.viewBox}),this.eventBus.emit("svg:positioned",{bounds:e,rotation:this.overlay.rotation,center:this.overlay.center}),this.closeModal(!0),this.enableEditorMode(),this.updateSvgButtonsVisibility(!0)}},{key:"updateSvgButtonsVisibility",value:function(e){var t=this,n=document.getElementById("btn_importar_svg"),o=document.getElementById("btn_ajustar_svg"),a=document.getElementById("btn_remover_svg");if(e){if(n&&(n.style.display="none"),o)o.style.display="block",o.disabled=!1;else{var r=document.createElement("button");r.type="button",r.className="button",r.id="btn_ajustar_svg",r.style.cssText="width: 100%; margin-bottom: 5px;",r.innerHTML='<span class="dashicons dashicons-move" style="margin-top: 3px;"></span> Ajustar Posicao',r.addEventListener("click",function(e){e.preventDefault(),t.toggleEditMode()});var i=null==n?void 0:n.parentElement;i&&n&&i.insertBefore(r,n.nextSibling)}if(a)a.style.display="block";else{var s=document.createElement("button");s.type="button",s.className="button",s.id="btn_remover_svg",s.style.cssText="width: 100%; color: #b32d2e; border-color: #b32d2e;",s.innerHTML='<span class="dashicons dashicons-trash" style="margin-top: 3px;"></span> Remover SVG',s.addEventListener("click",function(e){e.preventDefault(),t.confirmAndRemoveSvg()});var l=document.getElementById("btn_ajustar_svg"),u=null==l?void 0:l.parentElement;u&&l&&u.insertBefore(s,l.nextSibling)}}else n&&(n.style.display="block"),o&&(o.style.display="none"),a&&(a.style.display="none")}},{key:"updateHiddenInputs",value:function(){var e=document.querySelector("#terreno-mapa-container");if(e){var t=document.getElementById("terreno_svg_content");t||((t=document.createElement("input")).type="hidden",t.id="terreno_svg_content",t.name="terreno_svg_content",e.appendChild(t)),t.value=this.svgContent||"";var n=document.getElementById("terreno_svg_bounds");n||((n=document.createElement("input")).type="hidden",n.id="terreno_svg_bounds",n.name="terreno_svg_bounds",e.appendChild(n)),this.overlay.bounds&&(n.value=JSON.stringify({north:this.overlay.bounds.getNorthEast().lat(),south:this.overlay.bounds.getSouthWest().lat(),east:this.overlay.bounds.getNorthEast().lng(),west:this.overlay.bounds.getSouthWest().lng()}));var o=document.getElementById("terreno_svg_rotation");o||((o=document.createElement("input")).type="hidden",o.id="terreno_svg_rotation",o.name="terreno_svg_rotation",e.appendChild(o)),o.value=this.overlay.rotation||0}}},{key:"enableEditorMode",value:function(){this.isEditorMode=!0,this.customOverlay&&this.customOverlay.enableEditorMode()}},{key:"disableEditorMode",value:function(){this.isEditorMode=!1,this.customOverlay&&this.customOverlay.disableEditorMode()}},{key:"toggleEditMode",value:function(){this.svgContent&&this.customOverlay?this.openModalForAdjustment():alert("Nenhum SVG carregado. Importe um SVG primeiro.")}},{key:"openModalForAdjustment",value:function(){if(this.modal){this.isModalOpen=!0,this.modal.style.display="block";var e=document.getElementById("svgStep1"),t=document.getElementById("svgStep2");e&&(e.style.display="none"),t&&(t.style.display="block");var n=document.getElementById("svgImportConfirm");n&&(n.disabled=!1,n.textContent="Salvar Ajustes"),this.customOverlay&&this.customOverlay.disableEditorMode();var o=document.getElementById("svgRotationSlider"),a=document.getElementById("svgRotationValue");o&&(o.value=this.overlay.rotation||0),a&&(a.textContent="".concat(Math.round(this.overlay.rotation||0),"°"))}}},{key:"highlightShape",value:function(e){this.selectedShapeIndex=e,this.customOverlay&&this.customOverlay.highlightShape(e)}},{key:"updateShapeColors",value:function(){this.customOverlay&&this.customOverlay.updateShapeColors(this.shapeMapping)}},{key:"finalizeImport",value:(e=Y(U().m(function e(){var t,n,o=this;return U().w(function(e){for(;;)switch(e.p=e.n){case 0:if(e.p=0,this.shapes&&0!==this.shapes.length){e.n=1;break}return alert("Nenhum shape para importar."),e.a(2);case 1:if(this.overlay.bounds){e.n=2;break}return alert("Posicione o SVG no mapa primeiro."),e.a(2);case 2:t=[],this.shapes.forEach(function(e,n){if(e.points&&!(e.points.length<3)){var a=e.points.map(function(e){return o.svgPointToLatLng(e)}),r={id:"imported_".concat(Date.now(),"_").concat(n),nome:e.id||"Lote ".concat(n+1),bloco:"",coordinates:a,area:o.calculateArea(a),color:e.fill||o.generateRandomColor(),status:"disponivel",created_at:(new Date).toISOString()};t.push(r)}}),t.forEach(function(e){o.dataPersistence.addLote(e),o.polygonManager.createPolygon(e)}),this.eventBus.emit("lotes:imported",{count:t.length}),this.removeOverlay(),this.closeModal(),t.length>0&&this.polygonManager.centerOnPolygon(t[0].id),alert("✓ ".concat(t.length," lotes importados com sucesso!")),e.n=4;break;case 3:e.p=3,n=e.v,console.error("Erro ao importar lotes:",n),alert("Erro ao importar lotes: "+n.message);case 4:return e.a(2)}},e,this,[[0,3]])})),function(){return e.apply(this,arguments)})},{key:"svgPointToLatLng",value:function(e){var t=this.overlay.bounds,n=this.overlay.rotation,o=this.viewBox,a=(e.x-o.x)/o.width,r=(e.y-o.y)/o.height,i=n*Math.PI/180,s=Math.cos(i),l=Math.sin(i),u=a-.5,c=r-.5,d=u*s-c*l+.5,v=u*l+c*s+.5,p=t.getNorthEast(),h=t.getSouthWest(),g=h.lng()+d*(p.lng()-h.lng());return{lat:p.lat()-v*(p.lat()-h.lat()),lng:g}}},{key:"calculateArea",value:function(e){if(e.length<3)return 0;for(var t=0,n=e.length,o=0;o<n;o++){var a=(o+1)%n;t+=e[o].lng*e[a].lat,t-=e[a].lng*e[o].lat}var r=111e3;return(t=Math.abs(t/2))*r*r}},{key:"generateRandomColor",value:function(){var e=["#FF6B6B","#4ECDC4","#45B7D1","#FFA07A","#98D8C8","#F06292","#AED581","#FFD54F","#4DB6AC","#7986CB"];return e[Math.floor(Math.random()*e.length)]}}]);var e,t,n,o}(),te=null;function ne(){return te||(te=function(){function e(t,n,o,a){var r,i=arguments.length>4&&void 0!==arguments[4]&&arguments[4];return X(this,e),(r=function(e,t,n){return t=q(t),function(e,t){if(t&&("object"==G(t)||"function"==typeof t))return t;if(void 0!==t)throw new TypeError("Derived constructors may only return object or undefined");return function(e){if(void 0===e)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return e}(e)}(e,H()?Reflect.construct(t,n||[],q(e).constructor):t.apply(e,n))}(this,e)).bounds=t,r.svgContent=n,r.manager=a,r.div=null,r.rotation=0,r.opacity=.7,r.isDragging=!1,r.isResizing=!1,r.isEditorMode=i,r.selectedShapeIndex=null,r.shapeMapping={},r}return function(e,t){if("function"!=typeof t&&null!==t)throw new TypeError("Super expression must either be null or a function");e.prototype=Object.create(t&&t.prototype,{constructor:{value:e,writable:!0,configurable:!0}}),Object.defineProperty(e,"prototype",{writable:!1}),t&&W(e,t)}(e,google.maps.OverlayView),$(e,[{key:"onAdd",value:function(){this.div=document.createElement("div"),this.div.style.position="absolute",this.div.style.cursor=this.isEditorMode?"crosshair":"move",this.div.innerHTML=this.svgContent,this.isEditorMode&&this.div.classList.add("svg-editor-overlay");var e=this.div.querySelector("svg");e&&(e.style.width="100%",e.style.height="100%",e.style.opacity=this.opacity,e.style.pointerEvents=this.isEditorMode?"auto":"none"),this.div.style.border="2px dashed #0073aa",this.div.style.boxSizing="border-box",this.isEditorMode||this.addResizeHandles(),this.isEditorMode||this.addDragListeners(),this.isEditorMode&&this.addShapeClickListeners(),this.div.style.zIndex="10",this.getPanes().overlayMouseTarget.appendChild(this.div)}},{key:"addShapeClickListeners",value:function(){var e=this,t=this.div.querySelector("svg");t&&t.querySelectorAll("polygon, path, polyline, rect").forEach(function(t,n){t.style.cursor="pointer",t.style.pointerEvents="auto",t.dataset.shapeIndex=n,t.addEventListener("mouseenter",function(){e.selectedShapeIndex!==n&&(t.style.fill="rgba(0, 115, 170, 0.5)",t.style.stroke="#0073aa",t.style.strokeWidth="3px")}),t.addEventListener("mouseleave",function(){e.selectedShapeIndex!==n&&e.restoreShapeStyle(t,n)}),t.addEventListener("click",function(o){o.stopPropagation(),e.manager.eventBus.emit("svg:shape_clicked",{index:n,shape:t})})})}},{key:"restoreShapeStyle",value:function(e,t){this.shapeMapping[t]?(e.style.fill="rgba(40, 167, 69, 0.4)",e.style.stroke="#28a745",e.style.strokeWidth="2px"):(e.style.fill="rgba(200, 200, 200, 0.3)",e.style.stroke="#666",e.style.strokeWidth="2px")}},{key:"highlightShape",value:function(e){var t,n=null===(t=this.div)||void 0===t?void 0:t.querySelector("svg");if(n){if(null!==this.selectedShapeIndex){var o=n.querySelector('[data-shape-index="'.concat(this.selectedShapeIndex,'"]'));o&&this.restoreShapeStyle(o,this.selectedShapeIndex)}this.selectedShapeIndex=e;var a=n.querySelector('[data-shape-index="'.concat(e,'"]'));a&&(a.style.fill="rgba(255, 193, 7, 0.5)",a.style.stroke="#ffc107",a.style.strokeWidth="4px")}}},{key:"unhighlightShape",value:function(e){var t,n=null===(t=this.div)||void 0===t?void 0:t.querySelector("svg");if(n){var o=n.querySelector('[data-shape-index="'.concat(e,'"]'));o&&this.restoreShapeStyle(o,e),this.selectedShapeIndex===e&&(this.selectedShapeIndex=null)}}},{key:"updateShapeColors",value:function(e){var t,n=this;this.shapeMapping=e||{};var o=null===(t=this.div)||void 0===t?void 0:t.querySelector("svg");o&&o.querySelectorAll("polygon, path, polyline, rect").forEach(function(e,t){n.selectedShapeIndex!==t&&n.restoreShapeStyle(e,t)})}},{key:"enableEditorMode",value:function(){if(this.isEditorMode=!0,this.div){this.div.style.cursor="crosshair",this.div.classList.add("svg-editor-overlay");var e=this.div.querySelector("svg");e&&(e.style.pointerEvents="auto"),this.div.querySelectorAll(".svg-resize-handle").forEach(function(e){return e.remove()}),this.addShapeClickListeners()}}},{key:"disableEditorMode",value:function(){if(this.isEditorMode=!1,this.div){this.div.style.cursor="move",this.div.classList.remove("svg-editor-overlay");var e=this.div.querySelector("svg");e&&(e.style.pointerEvents="none"),this.addResizeHandles(),this.addDragListeners()}}},{key:"addResizeHandles",value:function(){var e=this;["nw","ne","sw","se"].forEach(function(t){var n=document.createElement("div");n.className="svg-resize-handle svg-resize-".concat(t),n.style.cssText="\n        position: absolute;\n        width: 12px;\n        height: 12px;\n        background: #0073aa;\n        border: 2px solid white;\n        border-radius: 50%;\n        cursor: ".concat(t,"-resize;\n        z-index: 1000;\n      "),t.includes("n")&&(n.style.top="-6px"),t.includes("s")&&(n.style.bottom="-6px"),t.includes("w")&&(n.style.left="-6px"),t.includes("e")&&(n.style.right="-6px"),n.addEventListener("mousedown",function(n){n.stopPropagation(),e.startResize(n,t)}),e.div.appendChild(n)})}},{key:"addDragListeners",value:function(){var e=this;this.div.addEventListener("mousedown",function(t){t.target.classList.contains("svg-resize-handle")||e.startDrag(t)}),document.addEventListener("mousemove",function(t){e.isDragging&&e.onDrag(t),e.isResizing&&e.onResize(t)}),document.addEventListener("mouseup",function(){if(e.isDragging||e.isResizing){var t=e.getMap();t&&t.setOptions({draggable:!0}),e.manager.updateHiddenInputs()}e.isDragging=!1,e.isResizing=!1})}},{key:"startDrag",value:function(e){this.isDragging=!0,this.dragStart={x:e.clientX,y:e.clientY,bounds:new google.maps.LatLngBounds(this.bounds.getSouthWest(),this.bounds.getNorthEast())},this.getMap().setOptions({draggable:!1}),e.preventDefault(),e.stopPropagation()}},{key:"onDrag",value:function(e){var t=this.getProjection();if(t){var n=e.clientX-this.dragStart.x,o=e.clientY-this.dragStart.y,a=this.dragStart.bounds.getSouthWest(),r=this.dragStart.bounds.getNorthEast(),i=t.fromLatLngToDivPixel(a),s=t.fromLatLngToDivPixel(r),l=t.fromDivPixelToLatLng(new google.maps.Point(i.x+n,i.y+o)),u=t.fromDivPixelToLatLng(new google.maps.Point(s.x+n,s.y+o));this.bounds=new google.maps.LatLngBounds(l,u),this.manager.overlay.bounds=this.bounds,this.manager.overlay.center={lat:(l.lat()+u.lat())/2,lng:(l.lng()+u.lng())/2},this.draw()}}},{key:"startResize",value:function(e,t){this.isResizing=!0,this.resizeCorner=t,this.resizeStart={x:e.clientX,y:e.clientY,bounds:new google.maps.LatLngBounds(this.bounds.getSouthWest(),this.bounds.getNorthEast())},this.getMap().setOptions({draggable:!1}),e.preventDefault(),e.stopPropagation()}},{key:"onResize",value:function(e){var t=this.getProjection();if(t){var n=this.resizeStart.bounds.getSouthWest(),o=this.resizeStart.bounds.getNorthEast(),a=n,r=o,i=t.fromLatLngToDivPixel(n),s=t.fromLatLngToDivPixel(o),l=e.clientX-this.resizeStart.x,u=e.clientY-this.resizeStart.y;this.resizeCorner.includes("e")&&(r=t.fromDivPixelToLatLng(new google.maps.Point(s.x+l,s.y))),this.resizeCorner.includes("w")&&(a=t.fromDivPixelToLatLng(new google.maps.Point(i.x+l,i.y))),this.resizeCorner.includes("n")&&(r=t.fromDivPixelToLatLng(new google.maps.Point(this.resizeCorner.includes("e")?s.x+l:s.x,s.y+u))),this.resizeCorner.includes("s")&&(a=t.fromDivPixelToLatLng(new google.maps.Point(this.resizeCorner.includes("w")?i.x+l:i.x,i.y+u))),this.bounds=new google.maps.LatLngBounds(a,r),this.manager.overlay.bounds=this.bounds,this.manager.overlay.center={lat:(a.lat()+r.lat())/2,lng:(a.lng()+r.lng())/2},this.draw()}}},{key:"draw",value:function(){if(this.div){var e=this.getProjection();if(e){var t=e.fromLatLngToDivPixel(this.bounds.getSouthWest()),n=e.fromLatLngToDivPixel(this.bounds.getNorthEast());if(t&&n){var o=n.x-t.x,a=t.y-n.y;this.div.style.left=t.x+"px",this.div.style.top=n.y+"px",this.div.style.width=o+"px",this.div.style.height=a+"px",this.div.style.transform="rotate(".concat(this.rotation,"deg)"),this.div.style.transformOrigin="center center"}}}}},{key:"updateBounds",value:function(e){this.bounds=e,this.draw()}},{key:"updateRotation",value:function(e){this.rotation=e,this.draw()}},{key:"setOpacity",value:function(e){if(this.opacity=e,this.div){var t=this.div.querySelector("svg");t&&(t.style.opacity=e)}}},{key:"onRemove",value:function(){this.div&&(this.div.parentNode.removeChild(this.div),this.div=null)}}])}(),te)}function oe(e){return oe="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e},oe(e)}function ae(e,t){for(var n=0;n<t.length;n++){var o=t[n];o.enumerable=o.enumerable||!1,o.configurable=!0,"value"in o&&(o.writable=!0),Object.defineProperty(e,re(o.key),o)}}function re(e){var t=function(e){if("object"!=oe(e)||!e)return e;var t=e[Symbol.toPrimitive];if(void 0!==t){var n=t.call(e,"string");if("object"!=oe(n))return n;throw new TypeError("@@toPrimitive must return a primitive value.")}return String(e)}(e);return"symbol"==oe(t)?t:t+""}var ie=function(){return e=function e(t,n,o){!function(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}(this,e),this.map=t,this.stateManager=n,this.eventBus=o,this.svgContent=null,this.svgElement=null,this.shapes=[],this.viewBox=null,this.shapeMapping={},this.overlay={bounds:null,rotation:0,center:null},this.customOverlay=null,this.isEditorActive=!1,this.selectedShapeIndex=null,this.editorPanel=null,this.shapesList=null,this.init()},t=[{key:"init",value:function(){this.createEditorPanel(),this.loadSavedData(),this.setupEventListeners()}},{key:"createEditorPanel",value:function(){if(document.getElementById("svgEditorPanel"))this.editorPanel=document.getElementById("svgEditorPanel");else{var e=document.createElement("div");e.id="svgEditorPanel",e.innerHTML='\n      <div class="svg-editor-header">\n        <h3>\n          <span class="dashicons dashicons-admin-appearance"></span>\n          Editor de Lotes SVG\n        </h3>\n        <button type="button" class="button svg-editor-close" title="Fechar">&times;</button>\n      </div>\n\n      <div class="svg-editor-content">\n        \x3c!-- Info do SVG carregado --\x3e\n        <div class="svg-editor-info" id="svgEditorInfo" style="display: none;">\n          <div class="svg-info-item">\n            <span class="dashicons dashicons-images-alt2"></span>\n            <span id="svgEditorShapeCount">0 shapes</span>\n          </div>\n          <div class="svg-info-item">\n            <span class="dashicons dashicons-saved"></span>\n            <span id="svgEditorMappedCount">0 vinculados</span>\n          </div>\n        </div>\n\n        \x3c!-- Instruções --\x3e\n        <div class="svg-editor-instructions">\n          <p><strong>Como usar:</strong></p>\n          <ol>\n            <li>Importe um SVG pelo botão "Importar SVG"</li>\n            <li>Posicione o SVG sobre o mapa</li>\n            <li>Clique em cada shape para vincular ao lote</li>\n            <li>Salve o post para persistir as configurações</li>\n          </ol>\n        </div>\n\n        \x3c!-- Lista de shapes --\x3e\n        <div class="svg-editor-shapes-header" style="display: none;">\n          <h4>Shapes do SVG</h4>\n          <button type="button" class="button button-small" id="svgEditorSelectAll">Selecionar Todos</button>\n        </div>\n        <div class="svg-editor-shapes-list" id="svgEditorShapesList">\n          <p class="no-shapes">Nenhum SVG carregado</p>\n        </div>\n\n        \x3c!-- Ações --\x3e\n        <div class="svg-editor-actions" style="display: none;">\n          <button type="button" class="button" id="svgEditorClearAll">\n            <span class="dashicons dashicons-trash"></span> Limpar Vínculos\n          </button>\n          <button type="button" class="button button-primary" id="svgEditorSave">\n            <span class="dashicons dashicons-yes"></span> Aplicar Configuração\n          </button>\n        </div>\n      </div>\n\n      \x3c!-- Modal de vinculação --\x3e\n      <div class="svg-editor-modal" id="svgEditorModal" style="display: none;">\n        <div class="svg-editor-modal-content">\n          <h4>Vincular Shape ao Lote</h4>\n          <p class="shape-info">Shape: <strong id="modalShapeIndex">-</strong></p>\n\n          <div class="form-group">\n            <label for="modalLoteId">ID da Unidade: <span class="required">*</span></label>\n            <input type="text" id="modalLoteId" placeholder="Ex: 123" />\n            <small>ID da unidade correspondente na API</small>\n          </div>\n\n          <div class="form-group">\n            <label for="modalBloco">Quadra/Bloco: <span class="required">*</span></label>\n            <input type="text" id="modalBloco" placeholder="Ex: A, B, C..." />\n            <small>Bloco onde a unidade está localizada</small>\n          </div>\n\n          <div class="form-group">\n            <label for="modalNome">Nome (opcional):</label>\n            <input type="text" id="modalNome" placeholder="Ex: Lote 01" />\n          </div>\n\n          <div class="modal-actions">\n            <button type="button" class="button" id="modalCancel">Cancelar</button>\n            <button type="button" class="button" id="modalRemove" style="display: none; color: #d63638;">Remover Vínculo</button>\n            <button type="button" class="button button-primary" id="modalSave">Salvar</button>\n          </div>\n        </div>\n      </div>\n    ',this.addStyles(),document.body.appendChild(e),this.editorPanel=e}}},{key:"addStyles",value:function(){if(!document.getElementById("svgEditorStyles")){var e=document.createElement("style");e.id="svgEditorStyles",e.textContent="\n      #svgEditorPanel {\n        display: none;\n        position: fixed;\n        top: 32px;\n        right: 0;\n        width: 320px;\n        height: calc(100vh - 32px);\n        background: #fff;\n        border-left: 1px solid #ddd;\n        box-shadow: -4px 0 20px rgba(0,0,0,0.1);\n        z-index: 9998;\n        overflow: hidden;\n      }\n\n      #svgEditorPanel.active {\n        display: flex;\n        flex-direction: column;\n      }\n\n      .svg-editor-header {\n        display: flex;\n        justify-content: space-between;\n        align-items: center;\n        padding: 15px;\n        background: #f8f9fa;\n        border-bottom: 1px solid #ddd;\n      }\n\n      .svg-editor-header h3 {\n        margin: 0;\n        font-size: 14px;\n        display: flex;\n        align-items: center;\n        gap: 8px;\n      }\n\n      .svg-editor-close {\n        padding: 0 8px !important;\n        font-size: 18px !important;\n        line-height: 1 !important;\n      }\n\n      .svg-editor-content {\n        flex: 1;\n        overflow-y: auto;\n        padding: 15px;\n      }\n\n      .svg-editor-info {\n        display: flex;\n        gap: 15px;\n        padding: 10px;\n        background: #e7f5ff;\n        border-radius: 4px;\n        margin-bottom: 15px;\n      }\n\n      .svg-info-item {\n        display: flex;\n        align-items: center;\n        gap: 5px;\n        font-size: 12px;\n      }\n\n      .svg-editor-instructions {\n        background: #f5f5f5;\n        padding: 12px;\n        border-radius: 4px;\n        margin-bottom: 15px;\n        font-size: 12px;\n      }\n\n      .svg-editor-instructions p {\n        margin: 0 0 8px 0;\n      }\n\n      .svg-editor-instructions ol {\n        margin: 0;\n        padding-left: 18px;\n      }\n\n      .svg-editor-instructions li {\n        margin-bottom: 4px;\n      }\n\n      .svg-editor-shapes-header {\n        display: flex;\n        justify-content: space-between;\n        align-items: center;\n        margin-bottom: 10px;\n      }\n\n      .svg-editor-shapes-header h4 {\n        margin: 0;\n        font-size: 13px;\n      }\n\n      .svg-editor-shapes-list {\n        max-height: 300px;\n        overflow-y: auto;\n        border: 1px solid #ddd;\n        border-radius: 4px;\n        margin-bottom: 15px;\n      }\n\n      .svg-editor-shapes-list .no-shapes {\n        padding: 20px;\n        text-align: center;\n        color: #666;\n        margin: 0;\n      }\n\n      .shape-item {\n        display: flex;\n        align-items: center;\n        padding: 8px 12px;\n        border-bottom: 1px solid #eee;\n        cursor: pointer;\n        transition: background 0.2s;\n        justify-content: space-between;\n      }\n\n      .shape-item:last-child {\n        border-bottom: none;\n      }\n\n      .shape-item:hover {\n        background: #f0f7fc;\n      }\n\n      .shape-item.selected {\n        background: #e7f5ff;\n        border-left: 3px solid #0073aa;\n      }\n\n      .shape-item.mapped {\n        background: #d4edda;\n      }\n\n      .shape-item.mapped.selected {\n        background: #c3e6cb;\n        border-left: 3px solid #28a745;\n      }\n\n      .shape-color {\n        width: 16px;\n        height: 16px;\n        border-radius: 3px;\n        margin-right: 10px;\n        border: 1px solid #ddd;\n      }\n\n      .shape-info-text {\n        flex: 1;\n        font-size: 12px;\n      }\n\n      .shape-info-text .shape-name {\n        font-weight: 600;\n      }\n\n      .shape-info-text .shape-lote {\n        color: #28a745;\n        font-size: 11px;\n      }\n\n      .shape-status {\n        font-size: 10px;\n        padding: 2px 6px 2px 0;\n        border-radius: 10px;\n      }\n\n      .shape-status.unmapped {\n        background: #f8d7da;\n        color: #721c24;\n      }\n\n      .shape-status.mapped {\n        background: #d4edda;\n        color: #155724;\n      }\n\n      .svg-editor-actions {\n        display: flex;\n        gap: 10px;\n        padding-top: 15px;\n        border-top: 1px solid #ddd;\n      }\n\n      .svg-editor-actions .button {\n        flex: 1;\n        display: flex;\n        align-items: center;\n        justify-content: center;\n        gap: 5px;\n      }\n\n      /* Modal */\n      .svg-editor-modal {\n        position: fixed;\n        top: 0;\n        left: 0;\n        width: 100%;\n        height: 100%;\n        background: rgba(0,0,0,0.5);\n        z-index: 100000;\n        display: flex;\n        align-items: center;\n        justify-content: center;\n      }\n\n      .svg-editor-modal-content {\n        background: #fff;\n        padding: 25px;\n        border-radius: 8px;\n        width: 350px;\n        max-width: 90%;\n      }\n\n      .svg-editor-modal-content h4 {\n        margin: 0 0 15px 0;\n      }\n\n      .svg-editor-modal-content .shape-info {\n        background: #f5f5f5;\n        padding: 8px 12px;\n        border-radius: 4px;\n        margin-bottom: 15px;\n        font-size: 13px;\n      }\n\n      .svg-editor-modal-content .form-group {\n        margin-bottom: 15px;\n      }\n\n      .svg-editor-modal-content label {\n        display: block;\n        margin-bottom: 5px;\n        font-weight: 600;\n      }\n\n      .svg-editor-modal-content label .required {\n        color: #d63638;\n      }\n\n      .svg-editor-modal-content input {\n        width: 100%;\n        padding: 8px;\n        border: 1px solid #ddd;\n        border-radius: 4px;\n      }\n\n      .svg-editor-modal-content small {\n        display: block;\n        margin-top: 4px;\n        color: #666;\n        font-size: 11px;\n      }\n\n      .modal-actions {\n        display: flex;\n        gap: 10px;\n        justify-content: flex-end;\n        margin-top: 20px;\n      }\n\n      /* Overlay SVG interativo */\n      .svg-editor-overlay {\n        cursor: crosshair;\n      }\n\n      .svg-editor-overlay svg {\n        width: 100%;\n        height: 100%;\n      }\n\n      .svg-editor-overlay svg polygon,\n      .svg-editor-overlay svg path,\n      .svg-editor-overlay svg polyline,\n      .svg-editor-overlay svg rect {\n        cursor: pointer;\n        transition: fill 0.2s, stroke 0.2s;\n      }\n\n      .svg-editor-overlay svg polygon:hover,\n      .svg-editor-overlay svg path:hover,\n      .svg-editor-overlay svg polyline:hover,\n      .svg-editor-overlay svg rect:hover {\n        fill: rgba(0, 115, 170, 0.5) !important;\n        stroke: #0073aa !important;\n        stroke-width: 3px !important;\n      }\n\n      .svg-editor-overlay svg .shape-mapped {\n        fill: rgba(40, 167, 69, 0.4) !important;\n        stroke: #28a745 !important;\n      }\n\n      .svg-editor-overlay svg .shape-selected {\n        fill: rgba(255, 193, 7, 0.5) !important;\n        stroke: #ffc107 !important;\n        stroke-width: 4px !important;\n      }\n    ",document.head.appendChild(e)}}},{key:"loadSavedData",value:function(){var e=document.getElementById("terreno_svg_content");e&&e.value&&(this.svgContent=e.value);var t=document.getElementById("terreno_svg_bounds");if(t&&t.value)try{this.overlay.bounds=JSON.parse(t.value)}catch(e){}var n=document.getElementById("terreno_svg_rotation");n&&n.value&&(this.overlay.rotation=parseFloat(n.value)||0);var o=document.getElementById("terreno_shape_mapping");if(o&&o.value)try{this.shapeMapping=JSON.parse(o.value)}catch(e){}this.svgContent&&this.processSVGContent()}},{key:"setupEventListeners",value:function(){var e=this;document.addEventListener("click",function(t){t.target.classList.contains("svg-editor-close")&&e.closeEditor()}),document.addEventListener("click",function(t){"modalCancel"===t.target.id&&e.closeModal(),"modalSave"===t.target.id&&e.saveShapeMapping(),"modalRemove"===t.target.id&&e.removeShapeMapping()}),document.addEventListener("click",function(t){("svgEditorClearAll"===t.target.id||t.target.closest("#svgEditorClearAll"))&&confirm("Tem certeza que deseja remover todos os vínculos?")&&e.clearAllMappings()}),document.addEventListener("click",function(t){("svgEditorSave"===t.target.id||t.target.closest("#svgEditorSave"))&&e.saveConfiguration()}),this.eventBus.on("svg:loaded",function(t){e.onSVGLoaded(t)}),this.eventBus.on("svg:positioned",function(t){e.onSVGPositioned(t)})}},{key:"openEditor",value:function(){this.isEditorActive=!0,this.editorPanel.classList.add("active")}},{key:"closeEditor",value:function(){this.isEditorActive=!1,this.editorPanel.classList.remove("active")}},{key:"toggleEditor",value:function(){this.isEditorActive?this.closeEditor():this.openEditor()}},{key:"onSVGLoaded",value:function(e){this.svgContent=e.svgContent,this.shapes=e.shapes,this.viewBox=e.viewBox,this.processSVGContent(),this.renderShapesList(),this.updateEditorUI(),this.openEditor()}},{key:"onSVGPositioned",value:function(e){this.overlay.bounds=e.bounds,this.overlay.rotation=e.rotation,this.overlay.center=e.center,this.updateHiddenInputs()}},{key:"processSVGContent",value:function(){if(this.svgContent){var e=(new DOMParser).parseFromString(this.svgContent,"image/svg+xml");this.svgElement=e.documentElement;var t=this.svgElement.getAttribute("viewBox");if(t){var n=t.split(/[\s,]+/).map(parseFloat);this.viewBox={x:n[0]||0,y:n[1]||0,width:n[2]||100,height:n[3]||100}}var o=this.svgElement.querySelectorAll("polygon, path, polyline, rect");this.shapes=Array.from(o).map(function(e,t){return{index:t,type:e.tagName.toLowerCase(),id:e.id||"shape_".concat(t),fill:e.getAttribute("fill")||e.style.fill||"#ccc",stroke:e.getAttribute("stroke")||e.style.stroke||"#000"}})}}},{key:"renderShapesList",value:function(){var e=this,t=document.getElementById("svgEditorShapesList");if(t)if(0!==this.shapes.length){var n=this.shapes.map(function(t){var n=e.shapeMapping[t.index],o=!!n,a=o?"Lote ".concat(n.lote_id," - Bloco ").concat(n.bloco):"";return'\n        <div class="shape-item '.concat(o?"mapped":"",'" data-shape-index="').concat(t.index,'">\n          <div class="shape-color" style="background: ').concat(t.fill,"; border-color: ").concat(t.stroke,';"></div>\n          <div class="shape-info-text">\n            <div class="shape-name">').concat(t.id,"</div>\n            ").concat(o?'<div class="shape-lote">'.concat(a,"</div>"):"",'\n          </div>\n          <span class="shape-status ').concat(o?"mapped":"unmapped",'">\n            ').concat(o?"Vinculado":"Pendente","\n          </span>\n        </div>\n      ")}).join("");t.innerHTML=n,t.querySelectorAll(".shape-item").forEach(function(t){t.addEventListener("click",function(){var n=parseInt(t.dataset.shapeIndex);e.selectShape(n)})})}else t.innerHTML='<p class="no-shapes">Nenhum SVG carregado</p>'}},{key:"updateEditorUI",value:function(){var e=document.getElementById("svgEditorInfo"),t=document.querySelector(".svg-editor-shapes-header"),n=document.querySelector(".svg-editor-actions");if(this.shapes.length>0){e&&(e.style.display="flex"),t&&(t.style.display="flex"),n&&(n.style.display="flex"),document.getElementById("svgEditorShapeCount").textContent="".concat(this.shapes.length," shapes");var o=Object.keys(this.shapeMapping).length;document.getElementById("svgEditorMappedCount").textContent="".concat(o," vinculados")}}},{key:"selectShape",value:function(e){this.selectedShapeIndex=e,document.querySelectorAll(".shape-item").forEach(function(t){t.classList.remove("selected"),parseInt(t.dataset.shapeIndex)===e&&t.classList.add("selected")}),this.highlightShapeInOverlay(e),this.openMappingModal(e)}},{key:"highlightShapeInOverlay",value:function(e){this.eventBus.emit("svg:highlight_shape",{index:e})}},{key:"openMappingModal",value:function(e){var t=document.getElementById("svgEditorModal");if(t){var n=this.shapes.find(function(t){return t.index===e}),o=this.shapeMapping[e];document.getElementById("modalShapeIndex").textContent=(null==n?void 0:n.id)||"Shape ".concat(e),document.getElementById("modalLoteId").value=(null==o?void 0:o.lote_id)||"",document.getElementById("modalBloco").value=(null==o?void 0:o.bloco)||"",document.getElementById("modalNome").value=(null==o?void 0:o.nome)||"";var a=document.getElementById("modalRemove");a&&(a.style.display=o?"block":"none"),t.style.display="flex"}}},{key:"closeModal",value:function(){var e=document.getElementById("svgEditorModal");e&&(e.style.display="none"),this.selectedShapeIndex=null}},{key:"saveShapeMapping",value:function(){var e=document.getElementById("modalLoteId").value.trim(),t=document.getElementById("modalBloco").value.trim(),n=document.getElementById("modalNome").value.trim();e?t?(this.shapeMapping[this.selectedShapeIndex]={lote_id:e,bloco:t,nome:n,shape_index:this.selectedShapeIndex},this.renderShapesList(),this.updateEditorUI(),this.updateOverlayColors(),this.updateHiddenInputs(),this.closeModal()):alert("O Bloco é obrigatório"):alert("O ID da Unidade é obrigatório")}},{key:"removeShapeMapping",value:function(){null!==this.selectedShapeIndex&&(delete this.shapeMapping[this.selectedShapeIndex],this.renderShapesList(),this.updateEditorUI(),this.updateOverlayColors(),this.updateHiddenInputs(),this.closeModal())}},{key:"clearAllMappings",value:function(){this.shapeMapping={},this.renderShapesList(),this.updateEditorUI(),this.updateOverlayColors(),this.updateHiddenInputs()}},{key:"updateOverlayColors",value:function(){this.eventBus.emit("svg:update_colors",{mapping:this.shapeMapping})}},{key:"updateHiddenInputs",value:function(){var e,t=document.getElementById("terreno_svg_content");t||((t=document.createElement("input")).type="hidden",t.id="terreno_svg_content",t.name="terreno_svg_content",null===(e=document.querySelector("#terreno-mapa-container"))||void 0===e||e.appendChild(t)),t.value=this.svgContent||"";var n,o=document.getElementById("terreno_svg_bounds");o||((o=document.createElement("input")).type="hidden",o.id="terreno_svg_bounds",o.name="terreno_svg_bounds",null===(n=document.querySelector("#terreno-mapa-container"))||void 0===n||n.appendChild(o)),o.value=this.overlay.bounds?JSON.stringify(this.overlay.bounds):"";var a,r=document.getElementById("terreno_svg_rotation");r||((r=document.createElement("input")).type="hidden",r.id="terreno_svg_rotation",r.name="terreno_svg_rotation",null===(a=document.querySelector("#terreno-mapa-container"))||void 0===a||a.appendChild(r)),r.value=this.overlay.rotation||0;var i,s=document.getElementById("terreno_shape_mapping");s||((s=document.createElement("input")).type="hidden",s.id="terreno_shape_mapping",s.name="terreno_shape_mapping",null===(i=document.querySelector("#terreno-mapa-container"))||void 0===i||i.appendChild(s)),s.value=JSON.stringify(this.shapeMapping)}},{key:"saveConfiguration",value:function(){this.updateHiddenInputs(),this.eventBus.emit("svg:configuration_saved",{svgContent:this.svgContent,bounds:this.overlay.bounds,rotation:this.overlay.rotation,mapping:this.shapeMapping}),alert("Configuração aplicada! Não esqueça de salvar o post."),this.closeEditor()}},{key:"getMapping",value:function(){return this.shapeMapping}},{key:"getDataForSave",value:function(){return{svgContent:this.svgContent,bounds:this.overlay.bounds,rotation:this.overlay.rotation,mapping:this.shapeMapping}}}],t&&ae(e.prototype,t),Object.defineProperty(e,"prototype",{writable:!1}),e;var e,t}();function se(e){return se="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e},se(e)}function le(){try{var e=!Boolean.prototype.valueOf.call(Reflect.construct(Boolean,[],function(){}))}catch(e){}return(le=function(){return!!e})()}function ue(e){return ue=Object.setPrototypeOf?Object.getPrototypeOf.bind():function(e){return e.__proto__||Object.getPrototypeOf(e)},ue(e)}function ce(e,t){return ce=Object.setPrototypeOf?Object.setPrototypeOf.bind():function(e,t){return e.__proto__=t,e},ce(e,t)}function de(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}function ve(e,t){for(var n=0;n<t.length;n++){var o=t[n];o.enumerable=o.enumerable||!1,o.configurable=!0,"value"in o&&(o.writable=!0),Object.defineProperty(e,he(o.key),o)}}function pe(e,t,n){return t&&ve(e.prototype,t),n&&ve(e,n),Object.defineProperty(e,"prototype",{writable:!1}),e}function he(e){var t=function(e){if("object"!=se(e)||!e)return e;var t=e[Symbol.toPrimitive];if(void 0!==t){var n=t.call(e,"string");if("object"!=se(n))return n;throw new TypeError("@@toPrimitive must return a primitive value.")}return String(e)}(e);return"symbol"==se(t)?t:t+""}var ge=function(){return pe(function e(t,n,o){de(this,e),this.map=t,this.stateManager=n,this.eventBus=o,this.imageUrl=null,this.overlay={bounds:null,rotation:0,opacity:.7,center:null},this.customOverlay=null,this.isControlsVisible=!1,this.controlPanel=null,this.init()},[{key:"init",value:function(){var e=this,t=document.getElementById("btn_importar_planta");t?t.addEventListener("click",function(t){t.preventDefault(),e.openMediaLibrary()}):setTimeout(function(){var t=document.getElementById("btn_importar_planta");t&&t.addEventListener("click",function(t){t.preventDefault(),e.openMediaLibrary()})},500);var n=document.getElementById("btn_remover_planta");n&&n.addEventListener("click",function(){return e.removeOverlay()});var o=document.getElementById("btn_ajustar_planta");o?o.addEventListener("click",function(t){t.preventDefault(),e.toggleEditMode()}):setTimeout(function(){var t=document.getElementById("btn_ajustar_planta");t&&t.addEventListener("click",function(t){t.preventDefault(),e.toggleEditMode()})},500),this.createControlPanel()}},{key:"toggleEditMode",value:function(){this.imageUrl?this.isControlsVisible?this.hideControls():this.showControls():alert("Nenhuma imagem carregada. Selecione uma imagem primeiro.")}},{key:"createControlPanel",value:function(){this.controlPanel=document.createElement("div"),this.controlPanel.id="imageOverlayControls",this.controlPanel.innerHTML='\n      <div class="image-overlay-header">\n        <span>Ajustar Planta Humanizada</span>\n        <button type="button" id="imageControlsClose" title="Fechar">&times;</button>\n      </div>\n      <div class="image-overlay-content">\n        \x3c!-- Instruções --\x3e\n        <div style="background: #e7f5ff; border: 1px solid #28a745; border-radius: 4px; padding: 10px; margin-bottom: 15px;">\n          <h4 style="margin: 0 0 8px 0; color: #28a745; font-size: 13px;">\n            <span class="dashicons dashicons-info" style="margin-right: 5px;"></span>\n            Como posicionar\n          </h4>\n          <ul style="margin: 0; padding-left: 18px; font-size: 12px; color: #333;">\n            <li><strong>Arrastar:</strong> Clique e arraste para mover</li>\n            <li><strong>Redimensionar:</strong> Arraste os cantos</li>\n            <li><strong>Rotacionar:</strong> Use o slider abaixo</li>\n          </ul>\n        </div>\n\n        <div class="image-overlay-preview">\n          <img id="imageOverlayPreview" src="" alt="Preview" />\n        </div>\n        <div class="image-overlay-controls">\n          <h4 style="margin: 0 0 12px 0; font-size: 13px;">Controles</h4>\n          <div class="control-group">\n            <label>Rotação: <span id="imageRotationValue">0°</span></label>\n            <div class="rotation-controls">\n              <button type="button" class="button button-small" id="imageRotateLeft" title="-1°">&#8634;</button>\n              <input type="range" id="imageRotationSlider" min="-180" max="180" value="0" />\n              <button type="button" class="button button-small" id="imageRotateRight" title="+1°">&#8635;</button>\n            </div>\n          </div>\n          <div class="control-group">\n            <label>Opacidade</label>\n            <input type="range" id="imageOpacitySlider" min="10" max="100" value="70" />\n          </div>\n          <div class="control-group">\n            <div class="scale-controls">\n              <button type="button" class="button button-small" id="imageZoomOut" title="Diminuir">\n                <span class="dashicons dashicons-minus" style="font-size: 16px;"></span>\n              </button>\n              <button type="button" class="button button-small" id="imageZoomIn" title="Aumentar">\n                <span class="dashicons dashicons-plus" style="font-size: 16px;"></span>\n              </button>\n              <button type="button" class="button button-small" id="imageResetScale" title="Resetar">\n                <span class="dashicons dashicons-image-rotate" style="font-size: 16px;"></span> Resetar\n              </button>\n            </div>\n          </div>\n        </div>\n\n        \x3c!-- Dica --\x3e\n        <div style="background: #fff8e5; border: 1px solid #f0c36d; border-radius: 4px; padding: 8px; margin-bottom: 15px; font-size: 11px;">\n          <strong>Dica:</strong> Alinhe com as ruas no satélite.\n        </div>\n\n        <div class="image-overlay-actions">\n          <button type="button" id="imageRemoveBtn" class="button">Remover Imagem</button>\n          <button type="button" id="imageSaveBtn" class="button button-primary">Salvar Ajustes</button>\n        </div>\n      </div>\n    ',this.addControlPanelStyles();var e=document.getElementById("terreno-mapa-container");e&&e.parentNode?e.parentNode.insertBefore(this.controlPanel,e):document.body.appendChild(this.controlPanel),this.setupControlListeners()}},{key:"addControlPanelStyles",value:function(){if(!document.getElementById("imageOverlayStyles")){var e=document.createElement("style");e.id="imageOverlayStyles",e.textContent='\n      #imageOverlayControls {\n        position: fixed;\n        top: 32px;\n        right: 0;\n        width: 320px;\n        height: calc(100vh - 32px);\n        background: #fff;\n        border-left: 1px solid #ddd;\n        box-shadow: -4px 0 20px rgba(0,0,0,0.2);\n        z-index: 9999;\n        overflow-y: auto;\n        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;\n        display: none;\n      }\n      #imageOverlayControls.active {\n        display: block;\n      }\n      .image-overlay-header {\n        display: flex;\n        justify-content: space-between;\n        align-items: center;\n        padding: 15px 20px;\n        border-bottom: 1px solid #ddd;\n        background: #fff;\n      }\n      .image-overlay-header span {\n        margin: 0;\n        color: #23282d;\n        font-size: 16px;\n        font-weight: 600;\n      }\n      .image-overlay-header button {\n        background: none;\n        border: 1px solid #ccc;\n        color: #666;\n        font-size: 18px;\n        cursor: pointer;\n        padding: 0 8px;\n        line-height: 1.5;\n        border-radius: 3px;\n      }\n      .image-overlay-header button:hover {\n        background: #f0f0f0;\n      }\n      .image-overlay-content {\n        padding: 20px;\n      }\n      .image-overlay-preview {\n        margin-bottom: 15px;\n        text-align: center;\n      }\n      .image-overlay-preview img {\n        max-width: 100%;\n        max-height: 120px;\n        border: 1px solid #ddd;\n        border-radius: 4px;\n      }\n      .image-overlay-controls {\n        background: #f5f5f5;\n        padding: 12px;\n        border-radius: 4px;\n        margin-bottom: 15px;\n      }\n      .image-overlay-controls .control-group {\n        margin-bottom: 12px;\n      }\n      .image-overlay-controls .control-group:last-child {\n        margin-bottom: 0;\n      }\n      .image-overlay-controls label {\n        display: block;\n        margin-bottom: 4px;\n        font-weight: 600;\n        font-size: 12px;\n        color: #333;\n      }\n      .image-overlay-controls input[type="range"] {\n        width: 100%;\n        margin: 0;\n      }\n      .image-overlay-controls span {\n        display: inline;\n        font-size: 12px;\n        color: #666;\n      }\n      .rotation-controls, .scale-controls {\n        display: flex;\n        gap: 6px;\n        align-items: center;\n      }\n      .rotation-controls input[type="range"] {\n        flex: 1;\n      }\n      .rotation-controls button, .scale-controls button {\n        padding: 5px 10px;\n        font-size: 14px;\n        cursor: pointer;\n        border: 1px solid #ccc;\n        background: #f7f7f7;\n        border-radius: 3px;\n      }\n      .rotation-controls button:hover, .scale-controls button:hover {\n        background: #e5e5e5;\n      }\n      .scale-controls button:last-child {\n        flex: 1;\n      }\n      .image-overlay-actions {\n        display: flex;\n        gap: 8px;\n        justify-content: flex-end;\n        border-top: 1px solid #ddd;\n        padding-top: 15px;\n        margin-top: 10px;\n      }\n      .image-overlay-actions button {\n        padding: 8px 12px;\n        cursor: pointer;\n      }\n      #imageRemoveBtn {\n        background: #dc3545;\n        color: #fff;\n        border-color: #dc3545;\n      }\n      #imageRemoveBtn:hover {\n        background: #c82333;\n      }\n    ',document.head.appendChild(e)}}},{key:"setupControlListeners",value:function(){var e,t,n,o,a,r,i,s,l,u,c=this;null===(e=document.getElementById("imageControlsClose"))||void 0===e||e.addEventListener("click",function(){c.hideControls()}),null===(t=document.getElementById("imageOpacitySlider"))||void 0===t||t.addEventListener("input",function(e){var t=e.target.value/100;c.setOverlayOpacity(t),document.getElementById("imageOpacityValue").textContent="".concat(e.target.value,"%")}),null===(n=document.getElementById("imageRotationSlider"))||void 0===n||n.addEventListener("input",function(e){c.setRotation(parseFloat(e.target.value)),document.getElementById("imageRotationValue").textContent="".concat(e.target.value,"°")}),null===(o=document.getElementById("imageRotateLeft"))||void 0===o||o.addEventListener("click",function(){c.rotateOverlay(-1)}),null===(a=document.getElementById("imageRotateRight"))||void 0===a||a.addEventListener("click",function(){c.rotateOverlay(1)}),null===(r=document.getElementById("imageZoomIn"))||void 0===r||r.addEventListener("click",function(){c.scaleOverlay(1.01)}),null===(i=document.getElementById("imageZoomOut"))||void 0===i||i.addEventListener("click",function(){c.scaleOverlay(.99)}),null===(s=document.getElementById("imageResetScale"))||void 0===s||s.addEventListener("click",function(){c.resetTransform()}),null===(l=document.getElementById("imageRemoveBtn"))||void 0===l||l.addEventListener("click",function(){c.removeOverlay()}),null===(u=document.getElementById("imageSaveBtn"))||void 0===u||u.addEventListener("click",function(){c.updateHiddenInputs(),c.hideControls()})}},{key:"openMediaLibrary",value:function(){var e=this;if("undefined"!=typeof wp&&void 0!==wp.media){var t=wp.media({title:"Selecionar Planta Humanizada",button:{text:"Usar esta imagem"},multiple:!1,library:{type:"image"}});t.on("select",function(){var n=t.state().get("selection").first().toJSON();e.handleImageSelect(n.url)}),t.open()}else alert("Media Library nao disponivel. Recarregue a pagina.")}},{key:"handleImageSelect",value:function(e){this.imageUrl=e;var t=document.getElementById("imageOverlayPreview");t&&(t.src=e),this.createMapOverlay(),this.showControls(),this.updateAjustarButton(!0),this.updateHiddenInputs()}},{key:"updateAjustarButton",value:function(e){var t=document.getElementById("btn_ajustar_planta");t&&(t.disabled=!e)}},{key:"createMapOverlay",value:function(){var e=this;this.customOverlay&&this.customOverlay.setMap(null);var t=new Image;t.onload=function(){var n=t.naturalWidth/t.naturalHeight,o=e.map.getCenter();e.overlay.center={lat:o.lat(),lng:o.lng()};var a,r;n>1?(a=.0015,r=.003/n/2):(r=.0015,a=.003*n/2),e.overlay.bounds=new google.maps.LatLngBounds(new google.maps.LatLng(e.overlay.center.lat-r,e.overlay.center.lng-a),new google.maps.LatLng(e.overlay.center.lat+r,e.overlay.center.lng+a));var i=me();e.customOverlay=new i(e.overlay.bounds,e.imageUrl,e.map,e),e.customOverlay.setMap(e.map),e.map.setCenter(o),e.map.setZoom(18),e.updateHiddenInputs()},t.onerror=function(){console.error("Erro ao carregar imagem para calcular dimensões"),e.createMapOverlayFallback()},t.src=this.imageUrl}},{key:"createMapOverlayFallback",value:function(){var e=this.map.getCenter();this.overlay.center={lat:e.lat(),lng:e.lng()};var t=.0015;this.overlay.bounds=new google.maps.LatLngBounds(new google.maps.LatLng(this.overlay.center.lat-t,this.overlay.center.lng-t),new google.maps.LatLng(this.overlay.center.lat+t,this.overlay.center.lng+t));var n=me();this.customOverlay=new n(this.overlay.bounds,this.imageUrl,this.map,this),this.customOverlay.setMap(this.map),this.map.setCenter(e),this.map.setZoom(18)}},{key:"showControls",value:function(){var e;this.isControlsVisible=!0,null===(e=this.controlPanel)||void 0===e||e.classList.add("active")}},{key:"hideControls",value:function(){var e;this.isControlsVisible=!1,null===(e=this.controlPanel)||void 0===e||e.classList.remove("active")}},{key:"removeOverlay",value:function(){this.customOverlay&&(this.customOverlay.setMap(null),this.customOverlay=null),this.imageUrl=null,this.overlay={bounds:null,rotation:0,opacity:.7,center:null};var e=document.getElementById("imageOverlayPreview");e&&(e.src=""),this.hideControls(),this.updateAjustarButton(!1),this.clearHiddenInputs()}},{key:"setOverlayOpacity",value:function(e){this.overlay.opacity=e,this.customOverlay&&this.customOverlay.setOpacity(e),this.updateHiddenInputs()}},{key:"rotateOverlay",value:function(e){this.overlay.rotation+=e,this.overlay.rotation=(this.overlay.rotation%360+360)%360,this.overlay.rotation>180&&(this.overlay.rotation-=360),this.updateOverlayTransform();var t=document.getElementById("imageRotationSlider"),n=document.getElementById("imageRotationValue");t&&(t.value=this.overlay.rotation),n&&(n.textContent="".concat(Math.round(this.overlay.rotation),"°")),this.updateHiddenInputs()}},{key:"setRotation",value:function(e){this.overlay.rotation=e,this.updateOverlayTransform(),this.updateHiddenInputs()}},{key:"scaleOverlay",value:function(e){var t;if(this.overlay.bounds&&this.overlay.center){var n=this.overlay.bounds,o=n.getNorthEast(),a=n.getSouthWest(),r=this.overlay.center.lat,i=this.overlay.center.lng,s=(o.lat()-a.lat())/2*e,l=(o.lng()-a.lng())/2*e;this.overlay.bounds=new google.maps.LatLngBounds(new google.maps.LatLng(r-s,i-l),new google.maps.LatLng(r+s,i+l)),null===(t=this.customOverlay)||void 0===t||t.updateBounds(this.overlay.bounds),this.updateHiddenInputs()}}},{key:"resetTransform",value:function(){if(this.imageUrl&&this.map){this.overlay.rotation=0,this.createMapOverlay();var e=document.getElementById("imageRotationSlider"),t=document.getElementById("imageRotationValue");e&&(e.value=0),t&&(t.textContent="0°"),this.updateHiddenInputs()}}},{key:"updateOverlayTransform",value:function(){this.customOverlay&&this.customOverlay.updateRotation(this.overlay.rotation)}},{key:"loadSavedOverlay",value:function(){var e=document.getElementById("terreno_image_url"),t=document.getElementById("terreno_image_bounds"),n=document.getElementById("terreno_image_rotation"),o=document.getElementById("terreno_image_opacity");if(null!=e&&e.value){this.imageUrl=e.value;var a=document.getElementById("imageOverlayPreview");a&&(a.src=this.imageUrl)}if(null!=t&&t.value)try{var r=JSON.parse(t.value);this.overlay.bounds=new google.maps.LatLngBounds(new google.maps.LatLng(r.south,r.west),new google.maps.LatLng(r.north,r.east)),this.overlay.center={lat:(r.north+r.south)/2,lng:(r.east+r.west)/2}}catch(e){}null!=n&&n.value&&(this.overlay.rotation=parseFloat(n.value)||0),null!=o&&o.value&&(this.overlay.opacity=parseFloat(o.value)||.7),this.imageUrl&&this.overlay.bounds?(this.renderSavedOverlay(),this.updateAjustarButton(!0)):this.imageUrl&&this.updateAjustarButton(!0)}},{key:"renderSavedOverlay",value:function(){if(this.imageUrl&&this.overlay.bounds){var e=me();this.customOverlay=new e(this.overlay.bounds,this.imageUrl,this.map,this),this.customOverlay.setMap(this.map),this.overlay.rotation&&this.customOverlay.updateRotation(this.overlay.rotation),this.overlay.opacity&&this.customOverlay.setOpacity(this.overlay.opacity);var t=document.getElementById("imageRotationSlider"),n=document.getElementById("imageRotationValue"),o=document.getElementById("imageOpacitySlider"),a=document.getElementById("imageOpacityValue");t&&(t.value=this.overlay.rotation),n&&(n.textContent="".concat(Math.round(this.overlay.rotation),"°")),o&&(o.value=100*this.overlay.opacity),a&&(a.textContent="".concat(Math.round(100*this.overlay.opacity),"%"))}}},{key:"updateHiddenInputs",value:function(){var e=document.querySelector("#terreno-mapa-container");if(e){var t=document.getElementById("terreno_image_url");t||((t=document.createElement("input")).type="hidden",t.id="terreno_image_url",t.name="terreno_image_url",e.appendChild(t)),t.value=this.imageUrl||"";var n=document.getElementById("terreno_image_bounds");n||((n=document.createElement("input")).type="hidden",n.id="terreno_image_bounds",n.name="terreno_image_bounds",e.appendChild(n)),this.overlay.bounds&&(n.value=JSON.stringify({north:this.overlay.bounds.getNorthEast().lat(),south:this.overlay.bounds.getSouthWest().lat(),east:this.overlay.bounds.getNorthEast().lng(),west:this.overlay.bounds.getSouthWest().lng()}));var o=document.getElementById("terreno_image_rotation");o||((o=document.createElement("input")).type="hidden",o.id="terreno_image_rotation",o.name="terreno_image_rotation",e.appendChild(o)),o.value=this.overlay.rotation||0;var a=document.getElementById("terreno_image_opacity");a||((a=document.createElement("input")).type="hidden",a.id="terreno_image_opacity",a.name="terreno_image_opacity",e.appendChild(a)),a.value=this.overlay.opacity||.7}}},{key:"clearHiddenInputs",value:function(){["terreno_image_url","terreno_image_bounds","terreno_image_rotation","terreno_image_opacity"].forEach(function(e){var t=document.getElementById(e);t&&(t.value="")})}}])}(),ye=null;function me(){return ye||(ye=function(){function e(t,n,o,a){var r;return de(this,e),(r=function(e,t,n){return t=ue(t),function(e,t){if(t&&("object"==se(t)||"function"==typeof t))return t;if(void 0!==t)throw new TypeError("Derived constructors may only return object or undefined");return function(e){if(void 0===e)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return e}(e)}(e,le()?Reflect.construct(t,n||[],ue(e).constructor):t.apply(e,n))}(this,e)).bounds=t,r.imageUrl=n,r.manager=a,r.div=null,r.img=null,r.rotation=0,r.opacity=.7,r.isDragging=!1,r.isResizing=!1,r}return function(e,t){if("function"!=typeof t&&null!==t)throw new TypeError("Super expression must either be null or a function");e.prototype=Object.create(t&&t.prototype,{constructor:{value:e,writable:!0,configurable:!0}}),Object.defineProperty(e,"prototype",{writable:!1}),t&&ce(e,t)}(e,google.maps.OverlayView),pe(e,[{key:"onAdd",value:function(){this.div=document.createElement("div"),this.div.style.position="absolute",this.div.style.cursor="move",this.img=document.createElement("img"),this.img.src=this.imageUrl,this.img.style.width="100%",this.img.style.height="100%",this.img.style.opacity=this.opacity,this.img.style.pointerEvents="none",this.img.style.objectFit="contain",this.div.appendChild(this.img),this.div.style.border="2px dashed #28a745",this.div.style.boxSizing="border-box",this.addResizeHandles(),this.addDragListeners(),this.div.style.zIndex="1",this.getPanes().overlayMouseTarget.appendChild(this.div)}},{key:"addResizeHandles",value:function(){var e=this;["nw","ne","sw","se"].forEach(function(t){var n=document.createElement("div");n.className="image-resize-handle image-resize-".concat(t),n.style.cssText="\n          position: absolute;\n          width: 14px;\n          height: 14px;\n          background: #28a745;\n          border: 2px solid white;\n          border-radius: 50%;\n          cursor: ".concat(t,"-resize;\n          z-index: 1000;\n        "),t.includes("n")&&(n.style.top="-7px"),t.includes("s")&&(n.style.bottom="-7px"),t.includes("w")&&(n.style.left="-7px"),t.includes("e")&&(n.style.right="-7px"),n.addEventListener("mousedown",function(n){n.stopPropagation(),e.startResize(n,t)}),e.div.appendChild(n)})}},{key:"addDragListeners",value:function(){var e=this;this.div.addEventListener("mousedown",function(t){t.target.classList.contains("image-resize-handle")||e.startDrag(t)}),document.addEventListener("mousemove",function(t){e.isDragging&&e.onDrag(t),e.isResizing&&e.onResize(t)}),document.addEventListener("mouseup",function(){if(e.isDragging||e.isResizing){e.manager.updateHiddenInputs();var t=e.getMap();t&&t.setOptions({draggable:!0})}e.isDragging=!1,e.isResizing=!1})}},{key:"startDrag",value:function(e){this.isDragging=!0,this.dragStart={x:e.clientX,y:e.clientY,bounds:new google.maps.LatLngBounds(this.bounds.getSouthWest(),this.bounds.getNorthEast())},this.getMap().setOptions({draggable:!1}),e.preventDefault(),e.stopPropagation()}},{key:"onDrag",value:function(e){var t=this.getProjection();if(t){var n=e.clientX-this.dragStart.x,o=e.clientY-this.dragStart.y,a=this.dragStart.bounds.getSouthWest(),r=this.dragStart.bounds.getNorthEast(),i=t.fromLatLngToDivPixel(a),s=t.fromLatLngToDivPixel(r),l=t.fromDivPixelToLatLng(new google.maps.Point(i.x+n,i.y+o)),u=t.fromDivPixelToLatLng(new google.maps.Point(s.x+n,s.y+o));this.bounds=new google.maps.LatLngBounds(l,u),this.manager.overlay.bounds=this.bounds,this.manager.overlay.center={lat:(l.lat()+u.lat())/2,lng:(l.lng()+u.lng())/2},this.draw()}}},{key:"startResize",value:function(e,t){this.isResizing=!0,this.resizeCorner=t,this.resizeStart={x:e.clientX,y:e.clientY,bounds:new google.maps.LatLngBounds(this.bounds.getSouthWest(),this.bounds.getNorthEast())},this.getMap().setOptions({draggable:!1}),e.preventDefault(),e.stopPropagation()}},{key:"onResize",value:function(e){var t=this.getProjection();if(t){var n=this.resizeStart.bounds.getSouthWest(),o=this.resizeStart.bounds.getNorthEast(),a=n,r=o,i=t.fromLatLngToDivPixel(n),s=t.fromLatLngToDivPixel(o),l=e.clientX-this.resizeStart.x,u=e.clientY-this.resizeStart.y;this.resizeCorner.includes("e")&&(r=t.fromDivPixelToLatLng(new google.maps.Point(s.x+l,s.y))),this.resizeCorner.includes("w")&&(a=t.fromDivPixelToLatLng(new google.maps.Point(i.x+l,i.y))),this.resizeCorner.includes("n")&&(r=t.fromDivPixelToLatLng(new google.maps.Point(this.resizeCorner.includes("e")?s.x+l:s.x,s.y+u))),this.resizeCorner.includes("s")&&(a=t.fromDivPixelToLatLng(new google.maps.Point(this.resizeCorner.includes("w")?i.x+l:i.x,i.y+u))),this.bounds=new google.maps.LatLngBounds(a,r),this.manager.overlay.bounds=this.bounds,this.manager.overlay.center={lat:(a.lat()+r.lat())/2,lng:(a.lng()+r.lng())/2},this.draw()}}},{key:"draw",value:function(){if(this.div){var e=this.getProjection();if(e){var t=e.fromLatLngToDivPixel(this.bounds.getSouthWest()),n=e.fromLatLngToDivPixel(this.bounds.getNorthEast());if(t&&n){var o=n.x-t.x,a=t.y-n.y;this.div.style.left=t.x+"px",this.div.style.top=n.y+"px",this.div.style.width=o+"px",this.div.style.height=a+"px",this.div.style.transform="rotate(".concat(this.rotation,"deg)"),this.div.style.transformOrigin="center center"}}}}},{key:"updateBounds",value:function(e){this.bounds=e,this.draw()}},{key:"updateRotation",value:function(e){this.rotation=e,this.draw()}},{key:"setOpacity",value:function(e){this.opacity=e,this.img&&(this.img.style.opacity=e)}},{key:"onRemove",value:function(){this.div&&(this.div.parentNode.removeChild(this.div),this.div=null,this.img=null)}}])}())}function fe(e){return fe="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e},fe(e)}function be(e,t){for(var n=0;n<t.length;n++){var o=t[n];o.enumerable=o.enumerable||!1,o.configurable=!0,"value"in o&&(o.writable=!0),Object.defineProperty(e,Ee(o.key),o)}}function Ee(e){var t=function(e){if("object"!=fe(e)||!e)return e;var t=e[Symbol.toPrimitive];if(void 0!==t){var n=t.call(e,"string");if("object"!=fe(n))return n;throw new TypeError("@@toPrimitive must return a primitive value.")}return String(e)}(e);return"symbol"==fe(t)?t:t+""}var Se=function(){return e=function e(){!function(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}(this,e)},t=[{key:"pathToArray",value:function(e){for(var t=[],n=0;n<e.getLength();n++){var o=e.getAt(n);t.push({lat:o.lat(),lng:o.lng()})}return t}},{key:"arrayToLatLngArray",value:function(e){return e.map(function(e){return new google.maps.LatLng(e.lat,e.lng)})}},{key:"validateCoordinates",value:function(e,t){return!("number"!=typeof e||"number"!=typeof t||isNaN(e)||isNaN(t)||e<-90||e>90||t<-180||t>180)}},{key:"getPolygonCenter",value:function(e){if(!e||0===e.length)return null;var t=0,n=0;return e.forEach(function(e){t+=e.lat,n+=e.lng}),{lat:t/e.length,lng:n/e.length}}},{key:"getBounds",value:function(e){if(!e||0===e.length)return null;var t=new google.maps.LatLngBounds;return e.forEach(function(e){t.extend(new google.maps.LatLng(e.lat,e.lng))}),t}},{key:"formatCoordinates",value:function(e,t){var n=arguments.length>2&&void 0!==arguments[2]?arguments[2]:6;return"".concat(e.toFixed(n),", ").concat(t.toFixed(n))}},{key:"calculateDistance",value:function(e,t){var n=e.lat*Math.PI/180,o=t.lat*Math.PI/180,a=(t.lat-e.lat)*Math.PI/180,r=(t.lng-e.lng)*Math.PI/180,i=Math.sin(a/2)*Math.sin(a/2)+Math.cos(n)*Math.cos(o)*Math.sin(r/2)*Math.sin(r/2);return 2*Math.atan2(Math.sqrt(i),Math.sqrt(1-i))*6371e3}},{key:"simplifyPolygon",value:function(e){var t=arguments.length>1&&void 0!==arguments[1]?arguments[1]:1;if(e.length<=3)return e;for(var n=[e[0]],o=1;o<e.length-1;o++)this.calculateDistance(n[n.length-1],e[o])>=t&&n.push(e[o]);return n.push(e[e.length-1]),n}},{key:"isPointInPolygon",value:function(e,t){var n=new google.maps.LatLng(e.lat,e.lng),o=new google.maps.Polygon({paths:t});return google.maps.geometry.poly.containsLocation(n,o)}}],null&&be(e.prototype,null),t&&be(e,t),Object.defineProperty(e,"prototype",{writable:!1}),e;var e,t}();function we(e){return we="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e},we(e)}function ke(e){return function(e){if(Array.isArray(e))return xe(e)}(e)||function(e){if("undefined"!=typeof Symbol&&null!=e[Symbol.iterator]||null!=e["@@iterator"])return Array.from(e)}(e)||function(e,t){if(e){if("string"==typeof e)return xe(e,t);var n={}.toString.call(e).slice(8,-1);return"Object"===n&&e.constructor&&(n=e.constructor.name),"Map"===n||"Set"===n?Array.from(e):"Arguments"===n||/^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)?xe(e,t):void 0}}(e)||function(){throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.")}()}function xe(e,t){(null==t||t>e.length)&&(t=e.length);for(var n=0,o=Array(t);n<t;n++)o[n]=e[n];return o}function Le(e,t){for(var n=0;n<t.length;n++){var o=t[n];o.enumerable=o.enumerable||!1,o.configurable=!0,"value"in o&&(o.writable=!0),Object.defineProperty(e,Me(o.key),o)}}function Me(e){var t=function(e){if("object"!=we(e)||!e)return e;var t=e[Symbol.toPrimitive];if(void 0!==t){var n=t.call(e,"string");if("object"!=we(n))return n;throw new TypeError("@@toPrimitive must return a primitive value.")}return String(e)}(e);return"symbol"==we(t)?t:t+""}var Oe=function(){return e=function e(){!function(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}(this,e)},t=[{key:"calculateArea",value:function(e){if(!e||!e.getPath)return console.error("Polígono inválido para cálculo de área"),0;var t=google.maps.geometry.spherical.computeArea(e.getPath());return Math.round(100*t)/100}},{key:"calculateAreaFromCoordinates",value:function(e){if(!e||e.length<3)return 0;var t=e.map(function(e){return new google.maps.LatLng(e.lat,e.lng)}),n=google.maps.geometry.spherical.computeArea(t);return Math.round(100*n)/100}},{key:"formatArea",value:function(e){if("number"!=typeof e||isNaN(e))return"0 m²";var t=e.toLocaleString("pt-BR",{minimumFractionDigits:2,maximumFractionDigits:2});return"".concat(t," m²")}},{key:"toHectares",value:function(e){return e/1e4}},{key:"formatAsHectares",value:function(e){var t=this.toHectares(e).toLocaleString("pt-BR",{minimumFractionDigits:4,maximumFractionDigits:4});return"".concat(t," ha")}},{key:"formatSmart",value:function(e){return e>=1e4?this.formatAsHectares(e):this.formatArea(e)}},{key:"calculatePerimeter",value:function(e){if(!e||!e.getPath)return 0;for(var t=e.getPath(),n=0,o=0;o<t.getLength();o++){var a=t.getAt(o),r=t.getAt((o+1)%t.getLength());n+=google.maps.geometry.spherical.computeDistanceBetween(a,r)}return Math.round(100*n)/100}},{key:"calculatePerimeterFromCoordinates",value:function(e){if(!e||e.length<3)return 0;for(var t=0,n=0;n<e.length;n++){var o=new google.maps.LatLng(e[n].lat,e[n].lng),a=new google.maps.LatLng(e[(n+1)%e.length].lat,e[(n+1)%e.length].lng);t+=google.maps.geometry.spherical.computeDistanceBetween(o,a)}return Math.round(100*t)/100}},{key:"formatPerimeter",value:function(e){return"number"!=typeof e||isNaN(e)?"0 m":e>=1e3?"".concat((e/1e3).toFixed(2)," km"):"".concat(e.toFixed(2)," m")}},{key:"calculateTotalArea",value:function(e){var t=this;return e&&Array.isArray(e)?e.reduce(function(e,n){return e+t.calculateArea(n)},0):0}},{key:"calculateStatistics",value:function(e){var t=this;if(!e||!Array.isArray(e)||0===e.length)return{total:0,average:0,min:0,max:0,count:0};var n=e.map(function(e){return t.calculateArea(e)});return{total:n.reduce(function(e,t){return e+t},0),average:n.reduce(function(e,t){return e+t},0)/n.length,min:Math.min.apply(Math,ke(n)),max:Math.max.apply(Math,ke(n)),count:n.length}}}],null&&Le(e.prototype,null),t&&Le(e,t),Object.defineProperty(e,"prototype",{writable:!1}),e;var e,t}();function Be(e){return Be="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e},Be(e)}function Ie(e,t){for(var n=0;n<t.length;n++){var o=t[n];o.enumerable=o.enumerable||!1,o.configurable=!0,"value"in o&&(o.writable=!0),Object.defineProperty(e,Pe(o.key),o)}}function Pe(e){var t=function(e){if("object"!=Be(e)||!e)return e;var t=e[Symbol.toPrimitive];if(void 0!==t){var n=t.call(e,"string");if("object"!=Be(n))return n;throw new TypeError("@@toPrimitive must return a primitive value.")}return String(e)}(e);return"symbol"==Be(t)?t:t+""}var Ce,_e,je,De=function(){return e=function e(){!function(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}(this,e)},t=[{key:"getElement",value:function(e){var t=!(arguments.length>1&&void 0!==arguments[1])||arguments[1];if(t&&this.elementCache.has(e))return this.elementCache.get(e);var n=document.getElementById(e);return n&&t&&this.elementCache.set(e,n),n}},{key:"getValue",value:function(e){var t=this.getElement(e);return t?t.value:""}},{key:"setValue",value:function(e,t){var n=this.getElement(e);return!!n&&(n.value=t,!0)}},{key:"show",value:function(e){var t=this.getElement(e);t&&(t.style.display="",t.classList.remove("hidden"))}},{key:"hide",value:function(e){var t=this.getElement(e);t&&t.classList.add("hidden")}},{key:"toggle",value:function(e){var t=this.getElement(e);t&&t.classList.toggle("hidden")}},{key:"addClass",value:function(e,t){var n=this.getElement(e);n&&n.classList.add(t)}},{key:"removeClass",value:function(e,t){var n=this.getElement(e);n&&n.classList.remove(t)}},{key:"setText",value:function(e,t){var n=this.getElement(e);n&&(n.textContent=t)}},{key:"setHTML",value:function(e,t){var n=this.getElement(e);n&&(n.innerHTML=t)}},{key:"clearCache",value:function(){this.elementCache.clear()}},{key:"removeFromCache",value:function(e){this.elementCache.delete(e)}},{key:"addEventListener",value:function(e,t,n){var o=this.getElement(e);return!!o&&(o.addEventListener(t,n),!0)}},{key:"enable",value:function(e){var t=this.getElement(e);t&&(t.disabled=!1)}},{key:"disable",value:function(e){var t=this.getElement(e);t&&(t.disabled=!0)}},{key:"exists",value:function(e){return null!==this.getElement(e)}},{key:"focus",value:function(e){var t=this.getElement(e);t&&"function"==typeof t.focus&&t.focus()}},{key:"createElement",value:function(e){var t=arguments.length>1&&void 0!==arguments[1]?arguments[1]:{},n=arguments.length>2&&void 0!==arguments[2]?arguments[2]:"",o=document.createElement(e);return Object.keys(t).forEach(function(e){"class"===e?o.className=t[e]:"style"===e?Object.assign(o.style,t[e]):o.setAttribute(e,t[e])}),n&&(o.innerHTML=n),o}},{key:"clearChildren",value:function(e){var t=this.getElement(e);if(t)for(;t.firstChild;)t.removeChild(t.firstChild)}}],null&&Ie(e.prototype,null),t&&Ie(e,t),Object.defineProperty(e,"prototype",{writable:!1}),e;var e,t}();function Te(e){return Te="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e},Te(e)}function Ae(e,t){for(var n=0;n<t.length;n++){var o=t[n];o.enumerable=o.enumerable||!1,o.configurable=!0,"value"in o&&(o.writable=!0),Object.defineProperty(e,ze(o.key),o)}}function ze(e){var t=function(e){if("object"!=Te(e)||!e)return e;var t=e[Symbol.toPrimitive];if(void 0!==t){var n=t.call(e,"string");if("object"!=Te(n))return n;throw new TypeError("@@toPrimitive must return a primitive value.")}return String(e)}(e);return"symbol"==Te(t)?t:t+""}Ce=De,_e="elementCache",je=new Map,(_e=Pe(_e))in Ce?Object.defineProperty(Ce,_e,{value:je,enumerable:!0,configurable:!0,writable:!0}):Ce[_e]=je;var Ne=function(){return function(e,t,n){return n&&Ae(e,n),Object.defineProperty(e,"prototype",{writable:!1}),e}(function e(){!function(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}(this,e)},0,[{key:"random",value:function(){var e=Math.floor(Math.random()*this.PALETTE.length);return this.PALETTE[e]}},{key:"fromPalette",value:function(e){var t=e%this.PALETTE.length;return this.PALETTE[t]}},{key:"randomHex",value:function(){return"#"+Math.floor(16777215*Math.random()).toString(16).padStart(6,"0")}},{key:"fromId",value:function(e){for(var t=0,n=0;n<e.length;n++)t=e.charCodeAt(n)+((t<<5)-t);var o=Math.abs(t)%this.PALETTE.length;return this.PALETTE[o]}},{key:"fromStatus",value:function(e){return{disponivel:"#14d279",vendido:"#FF6B6B",reservado:"#FFD54F"}[e]||this.random()}},{key:"darken",value:function(e,t){var n=parseInt(e.replace("#",""),16),o=Math.round(2.55*t),a=(n>>16)-o,r=(n>>8&255)-o,i=(255&n)-o;return"#"+(16777216+65536*(a<255?a<1?0:a:255)+256*(r<255?r<1?0:r:255)+(i<255?i<1?0:i:255)).toString(16).slice(1)}},{key:"lighten",value:function(e,t){var n=parseInt(e.replace("#",""),16),o=Math.round(2.55*t),a=(n>>16)+o,r=(n>>8&255)+o,i=(255&n)+o;return"#"+(16777216+65536*(a<255?a:255)+256*(r<255?r:255)+(i<255?i:255)).toString(16).slice(1)}},{key:"hexToRgb",value:function(e){var t=/^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(e);return t?{r:parseInt(t[1],16),g:parseInt(t[2],16),b:parseInt(t[3],16)}:null}},{key:"rgbToHex",value:function(e,t,n){return"#"+((1<<24)+(e<<16)+(t<<8)+n).toString(16).slice(1)}},{key:"getContrastColor",value:function(e){var t=this.hexToRgb(e);return t?(.299*t.r+.587*t.g+.114*t.b)/255>.5?"#000000":"#FFFFFF":"#000000"}}])}();function Re(e){return Re="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e},Re(e)}function Fe(e,t){for(var n=0;n<t.length;n++){var o=t[n];o.enumerable=o.enumerable||!1,o.configurable=!0,"value"in o&&(o.writable=!0),Object.defineProperty(e,Ve(o.key),o)}}function Ve(e){var t=function(e){if("object"!=Re(e)||!e)return e;var t=e[Symbol.toPrimitive];if(void 0!==t){var n=t.call(e,"string");if("object"!=Re(n))return n;throw new TypeError("@@toPrimitive must return a primitive value.")}return String(e)}(e);return"symbol"==Re(t)?t:t+""}!function(e,t,n){(t=ze(t))in e?Object.defineProperty(e,t,{value:n,enumerable:!0,configurable:!0,writable:!0}):e[t]=n}(Ne,"PALETTE",["#FF6B6B","#4ECDC4","#45B7D1","#FFA07A","#98D8C8","#F06292","#AED581","#FFD54F","#4DB6AC","#7986CB","#9575CD","#F06292","#BA68C8","#4FC3F7","#81C784","#DCE775","#FFB74D","#FF8A65","#A1887F","#90A4AE"]);var Ge=function(){return function(e,t){return t&&Fe(e.prototype,t),Object.defineProperty(e,"prototype",{writable:!1}),e}(function e(t,n){!function(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}(this,e),this.stateManager=t,this.eventBus=n},[{key:"updateDrawingButtons",value:function(e){e?(De.hide("desenhar_lote"),De.show("aplicar_desenho"),De.show("cancelar_desenho"),De.setText("modo_desenho","MODO DESENHO ATIVO")):(De.show("desenhar_lote"),De.hide("aplicar_desenho"),De.hide("cancelar_desenho"),De.setText("modo_desenho",""))}},{key:"renderLotesList",value:function(e){var t=this,n=De.getElement("lista-lotes-container");if(n){if(!e||0===e.length)return this.renderEmptyState(n),this.updateLotesCounter(0),void this.updateTotalArea(0);De.clearChildren("lista-lotes-container"),e.forEach(function(e){var o=t.createLoteElement(e);n.appendChild(o)}),this.updateLotesCounter(e.length),this.updateTotalArea(this.calculateTotalArea(e))}}},{key:"renderEmptyState",value:function(e){De.setHTML("lista-lotes-container",'\n      <div class="no-lotes">\n        <div class="no-lotes-icon">\n          <span class="dashicons dashicons-admin-multisite"></span>\n        </div>\n        <p>Nenhum lote cadastrado ainda.</p>\n        <p class="help-text">Clique em "Desenhar Novo Lote" para começar.</p>\n      </div>\n    ')}},{key:"createLoteElement",value:function(e){var t=De.createElement("div",{class:"lote-item","data-lote-id":e.id}),n="status-".concat(e.status||"disponivel"),o=this.getStatusLabel(e.status),a=Oe.formatArea(e.area||0);return t.innerHTML='\n      <h5>\n        <span class="dashicons dashicons-location"></span>\n        '.concat(e.nome||e.id,'\n        <span class="status-badge ').concat(n,'">').concat(o,"</span>\n      </h5>\n      ").concat(e.bloco?"<p><strong>Bloco:</strong> ".concat(e.bloco,"</p>"):"","\n      <p><strong>Área:</strong> ").concat(a,"</p>\n      <p><strong>Vértices:</strong> ").concat(e.coordinates.length,'</p>\n      <div class="lote-actions">\n        <button type="button" class="button button-small lote-action-zoom" data-lote-id="').concat(e.id,'">\n          <span class="dashicons dashicons-visibility"></span> Ver\n        </button>\n        <button type="button" class="button button-small lote-action-edit" data-lote-id="').concat(e.id,'">\n          <span class="dashicons dashicons-edit"></span> Editar\n        </button>\n        <button type="button" class="button button-small lote-action-delete" data-lote-id="').concat(e.id,'">\n          <span class="dashicons dashicons-trash"></span> Excluir\n        </button>\n      </div>\n    '),this.attachLoteActions(t,e.id),t}},{key:"attachLoteActions",value:function(e,t){var n=this,o=e.querySelector(".lote-action-zoom");o&&o.addEventListener("click",function(){n.eventBus.emit("ui:zoom_lote",{loteId:t})});var a=e.querySelector(".lote-action-edit");a&&a.addEventListener("click",function(){n.eventBus.emit("ui:edit_lote",{loteId:t})});var r=e.querySelector(".lote-action-delete");r&&r.addEventListener("click",function(){confirm("Tem certeza que deseja excluir este lote?")&&n.eventBus.emit("ui:delete_lote",{loteId:t})})}},{key:"updateLotesCounter",value:function(e){De.setText("total-lotes",e.toString())}},{key:"updateTotalArea",value:function(e){var t=Oe.formatArea(e);De.setText("area-total-value",t)}},{key:"calculateTotalArea",value:function(e){return e.reduce(function(e,t){return e+(t.area||0)},0)}},{key:"getStatusLabel",value:function(e){return{disponivel:"Disponível",vendido:"Vendido",reservado:"Reservado"}[e]||"Disponível"}},{key:"showNotification",value:function(e){"error"===(arguments.length>1&&void 0!==arguments[1]?arguments[1]:"info")&&alert("Erro: "+e)}},{key:"toggleLoading",value:function(e){}}])}();function He(e){return He="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e},He(e)}function qe(e,t){for(var n=0;n<t.length;n++){var o=t[n];o.enumerable=o.enumerable||!1,o.configurable=!0,"value"in o&&(o.writable=!0),Object.defineProperty(e,We(o.key),o)}}function We(e){var t=function(e){if("object"!=He(e)||!e)return e;var t=e[Symbol.toPrimitive];if(void 0!==t){var n=t.call(e,"string");if("object"!=He(n))return n;throw new TypeError("@@toPrimitive must return a primitive value.")}return String(e)}(e);return"symbol"==He(t)?t:t+""}var Ue=function(){return function(e,t){return t&&qe(e.prototype,t),Object.defineProperty(e,"prototype",{writable:!1}),e}(function e(){!function(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}(this,e),this.modal=null,this.resolveCallback=null,this.rejectCallback=null,this.initialize()},[{key:"initialize",value:function(){var e=this;if(this.modal=document.getElementById("editModal"),this.modal){var t=this.modal.querySelector('button[onclick="saveEditLote()"]');t&&(t.removeAttribute("onclick"),t.addEventListener("click",function(){return e.handleSave()}));var n=this.modal.querySelector('button[onclick="closeEditModal()"]');n&&(n.removeAttribute("onclick"),n.addEventListener("click",function(){return e.handleCancel()})),this.modal.addEventListener("click",function(t){t.target===e.modal&&e.handleCancel()}),document.addEventListener("keydown",function(t){"Escape"===t.key&&e.isOpen()&&e.handleCancel()})}}},{key:"openEditModal",value:function(e){var t=this;return new Promise(function(n,o){t.resolveCallback=n,t.rejectCallback=o;var a=document.getElementById("editLoteUnidadeId"),r=document.getElementById("editLoteBloco"),i=document.getElementById("editLoteNome");a&&(a.value=e.id||""),r&&(r.value=e.bloco||""),i&&(i.value=e.nome||""),t.show(),a&&setTimeout(function(){return a.focus()},100)})}},{key:"handleSave",value:function(){var e=document.getElementById("editLoteUnidadeId"),t=document.getElementById("editLoteBloco"),n=document.getElementById("editLoteNome"),o={id:e?e.value.trim():"",bloco:t?t.value.trim():"",nome:n?n.value.trim():""};return o.id?o.bloco?(this.hide(),void(this.resolveCallback&&(this.resolveCallback(o),this.resolveCallback=null,this.rejectCallback=null))):(alert("Bloco é obrigatório"),void(t&&t.focus())):(alert("ID da Unidade é obrigatório"),void(e&&e.focus()))}},{key:"handleCancel",value:function(){this.hide(),this.rejectCallback&&(this.rejectCallback(new Error("Modal cancelado pelo usuário")),this.resolveCallback=null,this.rejectCallback=null)}},{key:"show",value:function(){this.modal&&(this.modal.style.display="block")}},{key:"hide",value:function(){this.modal&&(this.modal.style.display="none")}},{key:"isOpen",value:function(){return this.modal&&"block"===this.modal.style.display}},{key:"clear",value:function(){var e=document.getElementById("editLoteUnidadeId"),t=document.getElementById("editLoteBloco"),n=document.getElementById("editLoteNome");e&&(e.value=""),t&&(t.value=""),n&&(n.value="")}}])}();function Je(e){return Je="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e},Je(e)}function Ze(e,t){for(var n=0;n<t.length;n++){var o=t[n];o.enumerable=o.enumerable||!1,o.configurable=!0,"value"in o&&(o.writable=!0),Object.defineProperty(e,Ye(o.key),o)}}function Ye(e){var t=function(e){if("object"!=Je(e)||!e)return e;var t=e[Symbol.toPrimitive];if(void 0!==t){var n=t.call(e,"string");if("object"!=Je(n))return n;throw new TypeError("@@toPrimitive must return a primitive value.")}return String(e)}(e);return"symbol"==Je(t)?t:t+""}var Xe=function(){function e(){var t=arguments.length>0&&void 0!==arguments[0]?arguments[0]:{};!function(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}(this,e),this.id=t.id||this.generateId(),this.nome=t.nome||"",this.bloco=t.bloco||"",this.coordinates=t.coordinates||[],this.area=t.area||0,this.color=t.color||"",this.status=t.status||"disponivel",this.observacoes=t.observacoes||"",this.created_at=t.created_at||(new Date).toISOString(),this.updated_at=t.updated_at||(new Date).toISOString()}return function(e,t,n){return t&&Ze(e.prototype,t),n&&Ze(e,n),Object.defineProperty(e,"prototype",{writable:!1}),e}(e,[{key:"generateId",value:function(){return"lote_"+Date.now()+"_"+Math.random().toString(36).substr(2,9)}},{key:"validate",value:function(){var e=[];return this.id||e.push("ID é obrigatório"),(!Array.isArray(this.coordinates)||this.coordinates.length<3)&&e.push("Lote deve ter no mínimo 3 coordenadas"),this.coordinates.length>0&&this.coordinates.forEach(function(t,n){"number"==typeof t.lat&&"number"==typeof t.lng||e.push("Coordenada ".concat(n," inválida"))}),["disponivel","vendido","reservado"].includes(this.status)||e.push("Status inválido: ".concat(this.status)),{valid:0===e.length,errors:e}}},{key:"toJSON",value:function(){return{id:this.id,nome:this.nome,bloco:this.bloco,coordinates:this.coordinates,area:this.area,color:this.color,status:this.status,observacoes:this.observacoes,created_at:this.created_at,updated_at:this.updated_at}}},{key:"update",value:function(e){var t=this;Object.keys(e).forEach(function(n){"id"!==n&&"created_at"!==n&&(t[n]=e[n])}),this.updated_at=(new Date).toISOString()}},{key:"getFullName",value:function(){return this.bloco&&this.nome?"".concat(this.bloco," - ").concat(this.nome):this.nome||this.bloco||this.id}},{key:"getStatusLabel",value:function(){return{disponivel:"Disponível",vendido:"Vendido",reservado:"Reservado"}[this.status]||this.status}},{key:"isAvailable",value:function(){return"disponivel"===this.status}},{key:"markAsSold",value:function(){this.status="vendido",this.updated_at=(new Date).toISOString()}},{key:"markAsReserved",value:function(){this.status="reservado",this.updated_at=(new Date).toISOString()}},{key:"markAsAvailable",value:function(){this.status="disponivel",this.updated_at=(new Date).toISOString()}},{key:"clone",value:function(){return new e(this.toJSON())}}],[{key:"fromJSON",value:function(t){return"string"==typeof t&&(t=JSON.parse(t)),new e(t)}}])}();function Qe(e){return Qe="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e},Qe(e)}function $e(){var e,t,n="function"==typeof Symbol?Symbol:{},o=n.iterator||"@@iterator",a=n.toStringTag||"@@toStringTag";function r(n,o,a,r){var l=o&&o.prototype instanceof s?o:s,u=Object.create(l.prototype);return Ke(u,"_invoke",function(n,o,a){var r,s,l,u=0,c=a||[],d=!1,v={p:0,n:0,v:e,a:p,f:p.bind(e,4),d:function(t,n){return r=t,s=0,l=e,v.n=n,i}};function p(n,o){for(s=n,l=o,t=0;!d&&u&&!a&&t<c.length;t++){var a,r=c[t],p=v.p,h=r[2];n>3?(a=h===o)&&(l=r[(s=r[4])?5:(s=3,3)],r[4]=r[5]=e):r[0]<=p&&((a=n<2&&p<r[1])?(s=0,v.v=o,v.n=r[1]):p<h&&(a=n<3||r[0]>o||o>h)&&(r[4]=n,r[5]=o,v.n=h,s=0))}if(a||n>1)return i;throw d=!0,o}return function(a,c,h){if(u>1)throw TypeError("Generator is already running");for(d&&1===c&&p(c,h),s=c,l=h;(t=s<2?e:l)||!d;){r||(s?s<3?(s>1&&(v.n=-1),p(s,l)):v.n=l:v.v=l);try{if(u=2,r){if(s||(a="next"),t=r[a]){if(!(t=t.call(r,l)))throw TypeError("iterator result is not an object");if(!t.done)return t;l=t.value,s<2&&(s=0)}else 1===s&&(t=r.return)&&t.call(r),s<2&&(l=TypeError("The iterator does not provide a '"+a+"' method"),s=1);r=e}else if((t=(d=v.n<0)?l:n.call(o,v))!==i)break}catch(t){r=e,s=1,l=t}finally{u=1}}return{value:t,done:d}}}(n,a,r),!0),u}var i={};function s(){}function l(){}function u(){}t=Object.getPrototypeOf;var c=[][o]?t(t([][o]())):(Ke(t={},o,function(){return this}),t),d=u.prototype=s.prototype=Object.create(c);function v(e){return Object.setPrototypeOf?Object.setPrototypeOf(e,u):(e.__proto__=u,Ke(e,a,"GeneratorFunction")),e.prototype=Object.create(d),e}return l.prototype=u,Ke(d,"constructor",u),Ke(u,"constructor",l),l.displayName="GeneratorFunction",Ke(u,a,"GeneratorFunction"),Ke(d),Ke(d,a,"Generator"),Ke(d,o,function(){return this}),Ke(d,"toString",function(){return"[object Generator]"}),($e=function(){return{w:r,m:v}})()}function Ke(e,t,n,o){var a=Object.defineProperty;try{a({},"",{})}catch(e){a=0}Ke=function(e,t,n,o){function r(t,n){Ke(e,t,function(e){return this._invoke(t,n,e)})}t?a?a(e,t,{value:n,enumerable:!o,configurable:!o,writable:!o}):e[t]=n:(r("next",0),r("throw",1),r("return",2))},Ke(e,t,n,o)}function et(e,t,n,o,a,r,i){try{var s=e[r](i),l=s.value}catch(e){return void n(e)}s.done?t(l):Promise.resolve(l).then(o,a)}function tt(e){return function(){var t=this,n=arguments;return new Promise(function(o,a){var r=e.apply(t,n);function i(e){et(r,o,a,i,s,"next",e)}function s(e){et(r,o,a,i,s,"throw",e)}i(void 0)})}}function nt(e,t){for(var n=0;n<t.length;n++){var o=t[n];o.enumerable=o.enumerable||!1,o.configurable=!0,"value"in o&&(o.writable=!0),Object.defineProperty(e,ot(o.key),o)}}function ot(e){var t=function(e){if("object"!=Qe(e)||!e)return e;var t=e[Symbol.toPrimitive];if(void 0!==t){var n=t.call(e,"string");if("object"!=Qe(n))return n;throw new TypeError("@@toPrimitive must return a primitive value.")}return String(e)}(e);return"symbol"==Qe(t)?t:t+""}var at=function(){return function(e,t){return t&&nt(e.prototype,t),Object.defineProperty(e,"prototype",{writable:!1}),e}(function e(){!function(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}(this,e),this.eventBus=new c,this.stateManager=new i,this.mapManager=null,this.drawingManager=null,this.polygonManager=null,this.geocodeManager=null,this.dataPersistence=null,this.uiManager=null,this.modalManager=null,this.svgImportManager=null,this.svgEditorManager=null,this.imageOverlayManager=null,this.infoWindow=null},[{key:"initialize",value:(o=tt($e().m(function e(){var t,n,o,a,r,i,s;return $e().w(function(e){for(;;)switch(e.p=e.n){case 0:return e.p=0,t=parseFloat(De.getValue("terreno_latitude"))||-3.7319,n=parseFloat(De.getValue("terreno_longitude"))||-38.5267,o=parseInt(De.getValue("terreno_zoom"))||18,this.mapManager=new m("gmap",this.stateManager,this.eventBus),e.n=1,this.mapManager.initialize(t,n,o);case 1:a=this.mapManager.getMap(),r=this.mapManager.getGeocoder(),this.drawingManager=new S(a,this.stateManager,this.eventBus),this.polygonManager=new L(a,this.stateManager,this.eventBus),this.geocodeManager=new A(r,this.eventBus),this.dataPersistence=new V("terreno_lotes_data",this.stateManager,this.eventBus),this.uiManager=new Ge(this.stateManager,this.eventBus),this.modalManager=new Ue,this.svgImportManager=new ee(a,this.stateManager,this.eventBus,this.polygonManager,this.dataPersistence),this.svgEditorManager=new ie(a,this.stateManager,this.eventBus),this.imageOverlayManager=new ge(a,this.stateManager,this.eventBus),this.svgImportManager.loadSavedOverlay(),this.imageOverlayManager.loadSavedOverlay(),(i=this.dataPersistence.load()).length>0&&this.polygonManager.loadPolygons(i),this.uiManager.renderLotesList(i),this.setupEventHandlers(),this.setupDOMEventHandlers(),e.n=3;break;case 2:e.p=2,s=e.v,console.error("❌ Erro ao inicializar TerrenoMapApp:",s),alert("Erro ao inicializar o mapa. Verifique se a chave da API do Google Maps está configurada corretamente.");case 3:return e.a(2)}},e,this,[[0,2]])})),function(){return o.apply(this,arguments)})},{key:"setupEventHandlers",value:function(){var e=this;this.eventBus.on("drawing:completed",function(e){e.polygon,e.coordinates}),this.eventBus.on("polygon:clicked",function(t){var n=t.lote,o=t.polygon,a=t.event;e.openInfoWindow(n,o,a)}),this.eventBus.on("ui:zoom_lote",function(t){var n=t.loteId;e.polygonManager.centerOnPolygon(n),e.polygonManager.highlightPolygon(n)}),this.eventBus.on("ui:edit_lote",function(t){var n=t.loteId;e.openEditModal(n)}),this.eventBus.on("ui:delete_lote",function(t){var n=t.loteId;e.deleteLote(n)}),this.eventBus.on("data:saved",function(){}),this.eventBus.on("lotes:imported",function(t){t.count,e.uiManager.renderLotesList(e.stateManager.getState("lotesData"))}),this.eventBus.on("svg:shape_clicked",function(t){var n=t.index;e.svgEditorManager&&(e.svgEditorManager.openEditor(),e.svgEditorManager.selectShape(n))}),this.eventBus.on("svg:configuration_saved",function(e){})}},{key:"setupDOMEventHandlers",value:function(){var e=this;De.addEventListener("desenhar_lote","click",function(){e.startDrawing()}),De.addEventListener("aplicar_desenho","click",function(){e.applyDrawing()}),De.addEventListener("cancelar_desenho","click",function(){e.cancelDrawing()}),De.addEventListener("limpar_lotes","click",function(){confirm("Tem certeza que deseja limpar TODOS os lotes? Esta ação não pode ser desfeita.")&&e.clearAllLotes()}),De.addEventListener("toggle_satellite","click",function(){var t="satellite"===e.mapManager.toggleMapType()?"Visualização Roadmap":"Visualização Satélite";De.setText("toggle_satellite",t)}),De.addEventListener("buscar_endereco","click",function(){e.searchAddress()}),De.addEventListener("ir_para_coordenadas","click",function(){e.goToCoordinates()}),this.eventBus.on("map:zoom_changed",function(e){De.setValue("terreno_zoom",e)}),this.eventBus.on("map:center_updated",function(e){var t=e.lat,n=e.lng;De.setValue("terreno_latitude",t.toFixed(7)),De.setValue("terreno_longitude",n.toFixed(7))})}},{key:"startDrawing",value:function(){this.drawingManager.startDrawing(),this.uiManager.updateDrawingButtons(!0)}},{key:"applyDrawing",value:(n=tt($e().m(function e(){var t,n,o,a,r,i,s,l,u;return $e().w(function(e){for(;;)switch(e.p=e.n){case 0:if(t=this.drawingManager.getCurrentPolygon()){e.n=1;break}return alert("Nenhum polígono desenhado"),e.a(2);case 1:return n=Se.pathToArray(t.getPath()),o=Oe.calculateAreaFromCoordinates(n),a=Ne.random(),r="Lote ".concat(this.stateManager.getState("lotesData").length+1),i=new Xe({coordinates:n,area:o,color:a,nome:r,bloco:""}),e.p=2,e.n=3,this.modalManager.openEditModal(i);case 3:if(s=e.v,l=new Xe({id:s.id,coordinates:n,area:o,color:a,nome:s.nome||r,bloco:s.bloco}),(u=l.validate()).valid){e.n=4;break}return alert("Lote inválido: "+u.errors.join(", ")),e.a(2);case 4:t.setMap(null),this.dataPersistence.addLote(l.toJSON()),this.polygonManager.createPolygon(l.toJSON()),this.uiManager.renderLotesList(this.stateManager.getState("lotesData")),this.drawingManager.stopDrawing(),this.uiManager.updateDrawingButtons(!1),e.n=6;break;case 5:e.p=5,e.v,t.setMap(null),this.drawingManager.stopDrawing(),this.uiManager.updateDrawingButtons(!1);case 6:return e.a(2)}},e,this,[[2,5]])})),function(){return n.apply(this,arguments)})},{key:"cancelDrawing",value:function(){this.drawingManager.cancelDrawing(),this.uiManager.updateDrawingButtons(!1)}},{key:"clearAllLotes",value:function(){this.polygonManager.clearAllPolygons(),this.dataPersistence.clearAll(),this.uiManager.renderLotesList([])}},{key:"deleteLote",value:function(e){this.polygonManager.deletePolygon(e),this.dataPersistence.removeLote(e),this.uiManager.renderLotesList(this.stateManager.getState("lotesData"))}},{key:"searchAddress",value:(t=tt($e().m(function e(){var t,n,o;return $e().w(function(e){for(;;)switch(e.p=e.n){case 0:if(t=De.getValue("terreno_endereco")){e.n=1;break}return alert("Digite um endereço para buscar"),e.a(2);case 1:return e.p=1,e.n=2,this.geocodeManager.smartSearch(t);case 2:n=e.v,this.mapManager.updateCenter(n.lat,n.lng),this.mapManager.updateZoom(18),De.setValue("terreno_latitude",n.lat.toFixed(7)),De.setValue("terreno_longitude",n.lng.toFixed(7)),n.address&&De.setValue("terreno_endereco",n.address),e.n=4;break;case 3:e.p=3,o=e.v,alert("Erro ao buscar endereço: "+o.message);case 4:return e.a(2)}},e,this,[[1,3]])})),function(){return t.apply(this,arguments)})},{key:"goToCoordinates",value:function(){var e=parseFloat(De.getValue("terreno_latitude")),t=parseFloat(De.getValue("terreno_longitude")),n=parseInt(De.getValue("terreno_zoom"))||18;isNaN(e)||isNaN(t)?alert("Por favor, digite coordenadas válidas de latitude e longitude."):e<-90||e>90?alert("Latitude deve estar entre -90 e 90."):t<-180||t>180?alert("Longitude deve estar entre -180 e 180."):(this.mapManager.updateCenter(e,t),this.mapManager.updateZoom(n))}},{key:"openEditModal",value:(e=tt($e().m(function e(t){var n,o,a;return $e().w(function(e){for(;;)switch(e.p=e.n){case 0:if(n=this.stateManager.getLote(t)){e.n=1;break}return alert("Lote não encontrado"),e.a(2);case 1:return e.p=1,e.n=2,this.modalManager.openEditModal(n);case 2:(o=e.v).id!==t?(this.polygonManager.deletePolygon(t),this.dataPersistence.removeLote(t),a=new Xe({id:o.id,coordinates:n.coordinates,area:n.area,color:n.color,nome:o.nome||n.nome,bloco:o.bloco,status:n.status,observacoes:n.observacoes,created_at:n.created_at}),this.dataPersistence.addLote(a.toJSON()),this.polygonManager.createPolygon(a.toJSON())):this.dataPersistence.updateLote(t,{nome:o.nome||n.nome,bloco:o.bloco||n.bloco}),this.uiManager.renderLotesList(this.stateManager.getState("lotesData")),e.n=4;break;case 3:e.p=3,e.v;case 4:return e.a(2)}},e,this,[[1,3]])})),function(t){return e.apply(this,arguments)})},{key:"openInfoWindow",value:function(e,t,n){var o=this;this.infoWindow&&this.infoWindow.close();var a='\n      <div style="padding: 10px; min-width: 200px;">\n        <h4 style="margin: 0 0 10px 0; color: #23282d; font-size: 14px;">\n          '.concat(e.nome||"Lote sem nome",'\n        </h4>\n        <p style="margin: 5px 0; font-size: 13px; color: #666;">\n          <strong>ID da Unidade:</strong> ').concat(e.id||"-",'\n        </p>\n        <p style="margin: 5px 0; font-size: 13px; color: #666;">\n          <strong>Quadra:</strong> ').concat(e.bloco||"-",'\n        </p>\n        <p style="margin: 5px 0; font-size: 13px; color: #666;">\n          <strong>Área:</strong> ').concat(e.area?e.area.toFixed(2)+" m²":"-",'\n        </p>\n        <div style="margin-top: 12px; text-align: center;">\n          <button type="button" class="button button-primary" id="infowindow-edit-btn" style="width: 100%;">\n            Editar Lote\n          </button>\n        </div>\n      </div>\n    ');this.infoWindow=new google.maps.InfoWindow({content:a,position:n.latLng}),this.infoWindow.open(this.mapManager.getMap()),google.maps.event.addListenerOnce(this.infoWindow,"domready",function(){var t=document.getElementById("infowindow-edit-btn");t&&t.addEventListener("click",function(){o.infoWindow.close(),o.openEditModal(e.id)})})}}]);var e,t,n,o}();jQuery(document).ready(function(){if(0!==jQuery("#gmap").length){var e=new at;e.initialize(),window.TerrenoMapApp=e}}),window.TerrenoMapApp={}})();
+/******/ (() => { // webpackBootstrap
+/******/ 	"use strict";
+/******/ 	var __webpack_modules__ = ({
+
+/***/ "./assets/js/src/core/EventBus.js"
+/*!****************************************!*\
+  !*** ./assets/js/src/core/EventBus.js ***!
+  \****************************************/
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   EventBus: () => (/* binding */ EventBus)
+/* harmony export */ });
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
+function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
+function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+/**
+ * EventBus - Sistema de eventos para comunicação desacoplada entre módulos
+ *
+ * Permite que diferentes partes da aplicação se comuniquem sem dependências diretas.
+ *
+ * Eventos disponíveis:
+ * - lote:created - Quando um novo lote é criado
+ * - lote:updated - Quando um lote é atualizado
+ * - lote:deleted - Quando um lote é excluído
+ * - map:updated - Quando o mapa é atualizado (centro, zoom)
+ * - drawing:started - Quando o modo de desenho é iniciado
+ * - drawing:completed - Quando um desenho é completado
+ * - drawing:canceled - Quando o desenho é cancelado
+ *
+ * @example
+ * const eventBus = new EventBus();
+ * eventBus.emit('lote:created', { id: 1, nome: 'Lote 1' });
+ */
+var EventBus = /*#__PURE__*/function () {
+  function EventBus() {
+    _classCallCheck(this, EventBus);
+    this.events = new Map();
+  }
+
+  /**
+   * Registra um listener para um evento
+   * @param {string} event - Nome do evento
+   * @param {Function} callback - Função a ser executada
+   */
+  return _createClass(EventBus, [{
+    key: "on",
+    value: function on(event, callback) {
+      if (!this.events.has(event)) {
+        this.events.set(event, []);
+      }
+      this.events.get(event).push(callback);
+    }
+
+    /**
+     * Remove um listener de um evento
+     * @param {string} event - Nome do evento
+     * @param {Function} callback - Função a ser removida
+     */
+  }, {
+    key: "off",
+    value: function off(event, callback) {
+      if (!this.events.has(event)) {
+        return;
+      }
+      var callbacks = this.events.get(event);
+      var index = callbacks.indexOf(callback);
+      if (index > -1) {
+        callbacks.splice(index, 1);
+      }
+
+      // Remove o evento se não houver mais callbacks
+      if (callbacks.length === 0) {
+        this.events["delete"](event);
+      }
+    }
+
+    /**
+     * Dispara um evento
+     * @param {string} event - Nome do evento
+     * @param {*} data - Dados a serem passados para os listeners
+     */
+  }, {
+    key: "emit",
+    value: function emit(event, data) {
+      if (!this.events.has(event)) {
+        return;
+      }
+      var callbacks = this.events.get(event);
+      callbacks.forEach(function (callback) {
+        try {
+          callback(data);
+        } catch (error) {
+          console.error("Erro ao executar callback do evento \"".concat(event, "\":"), error);
+        }
+      });
+    }
+
+    /**
+     * Registra um listener que será executado apenas uma vez
+     * @param {string} event - Nome do evento
+     * @param {Function} callback - Função a ser executada
+     */
+  }, {
+    key: "once",
+    value: function once(event, callback) {
+      var _this = this;
+      var _onceCallback = function onceCallback(data) {
+        callback(data);
+        _this.off(event, _onceCallback);
+      };
+      this.on(event, _onceCallback);
+    }
+
+    /**
+     * Remove todos os listeners de um evento ou de todos os eventos
+     * @param {string} [event] - Nome do evento (opcional)
+     */
+  }, {
+    key: "clear",
+    value: function clear() {
+      var event = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+      if (event) {
+        this.events["delete"](event);
+      } else {
+        this.events.clear();
+      }
+    }
+
+    /**
+     * Retorna o número de listeners para um evento
+     * @param {string} event - Nome do evento
+     * @returns {number}
+     */
+  }, {
+    key: "listenerCount",
+    value: function listenerCount(event) {
+      return this.events.has(event) ? this.events.get(event).length : 0;
+    }
+  }]);
+}();
+
+/***/ },
+
+/***/ "./assets/js/src/core/MapManager.js"
+/*!******************************************!*\
+  !*** ./assets/js/src/core/MapManager.js ***!
+  \******************************************/
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   MapManager: () => (/* binding */ MapManager)
+/* harmony export */ });
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _regenerator() { /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE */ var e, t, r = "function" == typeof Symbol ? Symbol : {}, n = r.iterator || "@@iterator", o = r.toStringTag || "@@toStringTag"; function i(r, n, o, i) { var c = n && n.prototype instanceof Generator ? n : Generator, u = Object.create(c.prototype); return _regeneratorDefine2(u, "_invoke", function (r, n, o) { var i, c, u, f = 0, p = o || [], y = !1, G = { p: 0, n: 0, v: e, a: d, f: d.bind(e, 4), d: function d(t, r) { return i = t, c = 0, u = e, G.n = r, a; } }; function d(r, n) { for (c = r, u = n, t = 0; !y && f && !o && t < p.length; t++) { var o, i = p[t], d = G.p, l = i[2]; r > 3 ? (o = l === n) && (u = i[(c = i[4]) ? 5 : (c = 3, 3)], i[4] = i[5] = e) : i[0] <= d && ((o = r < 2 && d < i[1]) ? (c = 0, G.v = n, G.n = i[1]) : d < l && (o = r < 3 || i[0] > n || n > l) && (i[4] = r, i[5] = n, G.n = l, c = 0)); } if (o || r > 1) return a; throw y = !0, n; } return function (o, p, l) { if (f > 1) throw TypeError("Generator is already running"); for (y && 1 === p && d(p, l), c = p, u = l; (t = c < 2 ? e : u) || !y;) { i || (c ? c < 3 ? (c > 1 && (G.n = -1), d(c, u)) : G.n = u : G.v = u); try { if (f = 2, i) { if (c || (o = "next"), t = i[o]) { if (!(t = t.call(i, u))) throw TypeError("iterator result is not an object"); if (!t.done) return t; u = t.value, c < 2 && (c = 0); } else 1 === c && (t = i["return"]) && t.call(i), c < 2 && (u = TypeError("The iterator does not provide a '" + o + "' method"), c = 1); i = e; } else if ((t = (y = G.n < 0) ? u : r.call(n, G)) !== a) break; } catch (t) { i = e, c = 1, u = t; } finally { f = 1; } } return { value: t, done: y }; }; }(r, o, i), !0), u; } var a = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} t = Object.getPrototypeOf; var c = [][n] ? t(t([][n]())) : (_regeneratorDefine2(t = {}, n, function () { return this; }), t), u = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(c); function f(e) { return Object.setPrototypeOf ? Object.setPrototypeOf(e, GeneratorFunctionPrototype) : (e.__proto__ = GeneratorFunctionPrototype, _regeneratorDefine2(e, o, "GeneratorFunction")), e.prototype = Object.create(u), e; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, _regeneratorDefine2(u, "constructor", GeneratorFunctionPrototype), _regeneratorDefine2(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = "GeneratorFunction", _regeneratorDefine2(GeneratorFunctionPrototype, o, "GeneratorFunction"), _regeneratorDefine2(u), _regeneratorDefine2(u, o, "Generator"), _regeneratorDefine2(u, n, function () { return this; }), _regeneratorDefine2(u, "toString", function () { return "[object Generator]"; }), (_regenerator = function _regenerator() { return { w: i, m: f }; })(); }
+function _regeneratorDefine2(e, r, n, t) { var i = Object.defineProperty; try { i({}, "", {}); } catch (e) { i = 0; } _regeneratorDefine2 = function _regeneratorDefine(e, r, n, t) { function o(r, n) { _regeneratorDefine2(e, r, function (e) { return this._invoke(r, n, e); }); } r ? i ? i(e, r, { value: n, enumerable: !t, configurable: !t, writable: !t }) : e[r] = n : (o("next", 0), o("throw", 1), o("return", 2)); }, _regeneratorDefine2(e, r, n, t); }
+function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
+function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
+function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
+function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
+function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+/**
+ * MapManager - Gerencia a instância e operações do Google Maps
+ *
+ * Responsável por:
+ * - Inicialização do mapa
+ * - Controle de zoom e centro
+ * - Alternância entre visualizações (satélite/roadmap)
+ * - Eventos de clique no mapa
+ *
+ * @example
+ * const mapManager = new MapManager('gmap', stateManager, eventBus);
+ * await mapManager.initialize(-3.7319, -38.5267, 18);
+ */
+var MapManager = /*#__PURE__*/function () {
+  function MapManager(elementId, stateManager, eventBus) {
+    _classCallCheck(this, MapManager);
+    this.elementId = elementId;
+    this.stateManager = stateManager;
+    this.eventBus = eventBus;
+    this.map = null;
+    this.geocoder = null;
+  }
+
+  /**
+   * Inicializa o mapa do Google Maps
+   * @param {number} lat - Latitude inicial
+   * @param {number} lng - Longitude inicial
+   * @param {number} zoom - Nível de zoom inicial
+   * @returns {Promise<google.maps.Map>}
+   */
+  return _createClass(MapManager, [{
+    key: "initialize",
+    value: (function () {
+      var _initialize = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee(lat, lng, zoom) {
+        var element, mapOptions;
+        return _regenerator().w(function (_context) {
+          while (1) switch (_context.n) {
+            case 0:
+              element = document.getElementById(this.elementId);
+              if (element) {
+                _context.n = 1;
+                break;
+              }
+              throw new Error("Elemento com ID \"".concat(this.elementId, "\" n\xE3o encontrado"));
+            case 1:
+              if (!(typeof google === 'undefined' || typeof google.maps === 'undefined')) {
+                _context.n = 2;
+                break;
+              }
+              throw new Error('Google Maps API não está carregada');
+            case 2:
+              mapOptions = {
+                center: {
+                  lat: lat,
+                  lng: lng
+                },
+                zoom: zoom,
+                mapTypeId: google.maps.MapTypeId.ROADMAP,
+                mapTypeControl: false,
+                streetViewControl: false,
+                fullscreenControl: true,
+                zoomControl: true,
+                gestureHandling: 'greedy'
+              };
+              this.map = new google.maps.Map(element, mapOptions);
+              this.geocoder = new google.maps.Geocoder();
+
+              // Atualiza o estado
+              this.stateManager.setState('map', this.map);
+              this.stateManager.setMultiple({
+                center: {
+                  lat: lat,
+                  lng: lng
+                },
+                zoom: zoom,
+                currentMapType: 'roadmap'
+              });
+
+              // Registra listeners de eventos do mapa
+              this.setupMapEventListeners();
+
+              // Emite evento de inicialização
+              this.eventBus.emit('map:initialized', {
+                lat: lat,
+                lng: lng,
+                zoom: zoom
+              });
+              return _context.a(2, this.map);
+          }
+        }, _callee, this);
+      }));
+      function initialize(_x, _x2, _x3) {
+        return _initialize.apply(this, arguments);
+      }
+      return initialize;
+    }()
+    /**
+     * Configura event listeners do mapa
+     * @private
+     */
+    )
+  }, {
+    key: "setupMapEventListeners",
+    value: function setupMapEventListeners() {
+      var _this = this;
+      // Atualiza estado quando o zoom muda
+      google.maps.event.addListener(this.map, 'zoom_changed', function () {
+        var newZoom = _this.map.getZoom();
+        _this.stateManager.setState('zoom', newZoom);
+        _this.eventBus.emit('map:zoom_changed', newZoom);
+      });
+
+      // Atualiza estado quando o centro muda
+      google.maps.event.addListener(this.map, 'center_changed', function () {
+        var center = _this.map.getCenter();
+        var newCenter = {
+          lat: center.lat(),
+          lng: center.lng()
+        };
+        _this.stateManager.setState('center', newCenter);
+      });
+
+      // Evento de clique no mapa (pode ser usado para fechar info windows)
+      google.maps.event.addListener(this.map, 'click', function () {
+        _this.eventBus.emit('map:clicked');
+      });
+    }
+
+    /**
+     * Retorna a instância do mapa
+     * @returns {google.maps.Map}
+     */
+  }, {
+    key: "getMap",
+    value: function getMap() {
+      return this.map;
+    }
+
+    /**
+     * Retorna a instância do geocoder
+     * @returns {google.maps.Geocoder}
+     */
+  }, {
+    key: "getGeocoder",
+    value: function getGeocoder() {
+      return this.geocoder;
+    }
+
+    /**
+     * Atualiza o centro do mapa
+     * @param {number} lat - Latitude
+     * @param {number} lng - Longitude
+     */
+  }, {
+    key: "updateCenter",
+    value: function updateCenter(lat, lng) {
+      if (!this.map) {
+        return;
+      }
+      var center = new google.maps.LatLng(lat, lng);
+      this.map.setCenter(center);
+      this.stateManager.setState('center', {
+        lat: lat,
+        lng: lng
+      });
+      this.eventBus.emit('map:center_updated', {
+        lat: lat,
+        lng: lng
+      });
+    }
+
+    /**
+     * Atualiza o nível de zoom
+     * @param {number} level - Nível de zoom (1-20)
+     */
+  }, {
+    key: "updateZoom",
+    value: function updateZoom(level) {
+      if (!this.map) {
+        return;
+      }
+      var zoomLevel = Math.max(1, Math.min(20, level));
+      this.map.setZoom(zoomLevel);
+      this.stateManager.setState('zoom', zoomLevel);
+    }
+
+    /**
+     * Alterna entre visualização satélite e roadmap
+     */
+  }, {
+    key: "toggleMapType",
+    value: function toggleMapType() {
+      if (!this.map) {
+        return;
+      }
+      var currentType = this.stateManager.getState('currentMapType');
+      var newType = currentType === 'roadmap' ? 'satellite' : 'roadmap';
+      this.map.setMapTypeId(newType === 'satellite' ? google.maps.MapTypeId.SATELLITE : google.maps.MapTypeId.ROADMAP);
+      this.stateManager.setState('currentMapType', newType);
+      this.eventBus.emit('map:type_changed', newType);
+      return newType;
+    }
+
+    /**
+     * Ajusta o mapa para mostrar todos os polígonos
+     * @param {Array<google.maps.Polygon>} polygons - Array de polígonos
+     */
+  }, {
+    key: "fitBounds",
+    value: function fitBounds(polygons) {
+      if (!this.map || !polygons || polygons.length === 0) {
+        return;
+      }
+      var bounds = new google.maps.LatLngBounds();
+      polygons.forEach(function (polygon) {
+        var path = polygon.getPath();
+        path.forEach(function (latLng) {
+          bounds.extend(latLng);
+        });
+      });
+      this.map.fitBounds(bounds);
+    }
+
+    /**
+     * Ajusta o zoom para mostrar um bounds específico
+     * @param {google.maps.LatLngBounds} bounds - Bounds a exibir
+     */
+  }, {
+    key: "fitToBounds",
+    value: function fitToBounds(bounds) {
+      if (!this.map) {
+        return;
+      }
+      this.map.fitBounds(bounds);
+    }
+
+    /**
+     * Pan suave para uma localização
+     * @param {number} lat - Latitude
+     * @param {number} lng - Longitude
+     */
+  }, {
+    key: "panTo",
+    value: function panTo(lat, lng) {
+      if (!this.map) {
+        return;
+      }
+      var position = new google.maps.LatLng(lat, lng);
+      this.map.panTo(position);
+    }
+
+    /**
+     * Limpa todos os overlays do mapa
+     */
+  }, {
+    key: "clearOverlays",
+    value: function clearOverlays() {
+      // Esta função pode ser expandida conforme necessário
+      this.eventBus.emit('map:overlays_cleared');
+    }
+
+    /**
+     * Destrói o mapa e limpa recursos
+     */
+  }, {
+    key: "destroy",
+    value: function destroy() {
+      if (this.map) {
+        google.maps.event.clearInstanceListeners(this.map);
+        this.map = null;
+        this.geocoder = null;
+        this.stateManager.setState('map', null);
+        this.eventBus.emit('map:destroyed');
+      }
+    }
+  }]);
+}();
+
+/***/ },
+
+/***/ "./assets/js/src/core/StateManager.js"
+/*!********************************************!*\
+  !*** ./assets/js/src/core/StateManager.js ***!
+  \********************************************/
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   StateManager: () => (/* binding */ StateManager)
+/* harmony export */ });
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
+function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
+function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
+function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+/**
+ * StateManager - Gerenciamento centralizado de estado da aplicação
+ *
+ * Substitui variáveis globais descontroladas por um estado centralizado e reativo.
+ * Implementa o padrão Observer para notificar mudanças de estado.
+ *
+ * @example
+ * const stateManager = new StateManager();
+ * stateManager.setState('map', mapInstance);
+ */
+var StateManager = /*#__PURE__*/function () {
+  function StateManager() {
+    _classCallCheck(this, StateManager);
+    this.state = {
+      map: null,
+      drawingManager: null,
+      polygons: new Map(),
+      lotesData: [],
+      isDrawingMode: false,
+      currentMapType: 'roadmap',
+      currentPolygon: null,
+      currentInfoWindow: null,
+      currentEditLoteId: null,
+      zoom: 18,
+      center: {
+        lat: -3.7319,
+        lng: -38.5267
+      }
+    };
+    this.subscribers = new Map();
+  }
+
+  /**
+   * Define um valor no estado
+   * @param {string} key - Chave do estado
+   * @param {*} value - Novo valor
+   */
+  return _createClass(StateManager, [{
+    key: "setState",
+    value: function setState(key, value) {
+      var oldValue = this.state[key];
+      this.state[key] = value;
+
+      // Notifica subscribers apenas se o valor mudou
+      if (oldValue !== value) {
+        this.notifySubscribers(key, value, oldValue);
+      }
+    }
+
+    /**
+     * Retorna um valor do estado
+     * @param {string} key - Chave do estado
+     * @returns {*}
+     */
+  }, {
+    key: "getState",
+    value: function getState(key) {
+      return this.state[key];
+    }
+
+    /**
+     * Retorna todo o estado (cópia)
+     * @returns {Object}
+     */
+  }, {
+    key: "getAllState",
+    value: function getAllState() {
+      return _objectSpread({}, this.state);
+    }
+
+    /**
+     * Registra um subscriber para mudanças em uma chave específica
+     * @param {string} key - Chave do estado a observar
+     * @param {Function} callback - Função a ser executada quando o estado mudar
+     */
+  }, {
+    key: "subscribe",
+    value: function subscribe(key, callback) {
+      if (!this.subscribers.has(key)) {
+        this.subscribers.set(key, []);
+      }
+      this.subscribers.get(key).push(callback);
+    }
+
+    /**
+     * Remove um subscriber
+     * @param {string} key - Chave do estado
+     * @param {Function} callback - Função a ser removida
+     */
+  }, {
+    key: "unsubscribe",
+    value: function unsubscribe(key, callback) {
+      if (!this.subscribers.has(key)) {
+        return;
+      }
+      var callbacks = this.subscribers.get(key);
+      var index = callbacks.indexOf(callback);
+      if (index > -1) {
+        callbacks.splice(index, 1);
+      }
+    }
+
+    /**
+     * Notifica todos os subscribers de uma chave
+     * @private
+     * @param {string} key - Chave do estado
+     * @param {*} newValue - Novo valor
+     * @param {*} oldValue - Valor anterior
+     */
+  }, {
+    key: "notifySubscribers",
+    value: function notifySubscribers(key, newValue, oldValue) {
+      if (!this.subscribers.has(key)) {
+        return;
+      }
+      var callbacks = this.subscribers.get(key);
+      callbacks.forEach(function (callback) {
+        try {
+          callback(newValue, oldValue);
+        } catch (error) {
+          console.error("Erro ao executar subscriber da chave \"".concat(key, "\":"), error);
+        }
+      });
+    }
+
+    /**
+     * Atualiza múltiplas chaves do estado de uma vez
+     * @param {Object} updates - Objeto com as chaves e valores a atualizar
+     */
+  }, {
+    key: "setMultiple",
+    value: function setMultiple(updates) {
+      var _this = this;
+      Object.keys(updates).forEach(function (key) {
+        _this.setState(key, updates[key]);
+      });
+    }
+
+    /**
+     * Reseta o estado para os valores iniciais
+     */
+  }, {
+    key: "reset",
+    value: function reset() {
+      this.state = {
+        map: null,
+        drawingManager: null,
+        polygons: new Map(),
+        lotesData: [],
+        isDrawingMode: false,
+        currentMapType: 'roadmap',
+        currentPolygon: null,
+        currentInfoWindow: null,
+        currentEditLoteId: null,
+        zoom: 18,
+        center: {
+          lat: -3.7319,
+          lng: -38.5267
+        }
+      };
+    }
+
+    /**
+     * Adiciona um polígono ao Map de polígonos
+     * @param {string} loteId - ID do lote
+     * @param {google.maps.Polygon} polygon - Instância do polígono
+     */
+  }, {
+    key: "addPolygon",
+    value: function addPolygon(loteId, polygon) {
+      this.state.polygons.set(loteId, polygon);
+    }
+
+    /**
+     * Remove um polígono do Map de polígonos
+     * @param {string} loteId - ID do lote
+     */
+  }, {
+    key: "removePolygon",
+    value: function removePolygon(loteId) {
+      this.state.polygons["delete"](loteId);
+    }
+
+    /**
+     * Retorna um polígono pelo ID do lote
+     * @param {string} loteId - ID do lote
+     * @returns {google.maps.Polygon|undefined}
+     */
+  }, {
+    key: "getPolygon",
+    value: function getPolygon(loteId) {
+      return this.state.polygons.get(loteId);
+    }
+
+    /**
+     * Adiciona um lote ao array de lotes
+     * @param {Object} lote - Dados do lote
+     */
+  }, {
+    key: "addLote",
+    value: function addLote(lote) {
+      this.state.lotesData.push(lote);
+    }
+
+    /**
+     * Atualiza um lote existente
+     * @param {string} loteId - ID do lote
+     * @param {Object} updates - Dados a atualizar
+     */
+  }, {
+    key: "updateLote",
+    value: function updateLote(loteId, updates) {
+      var index = this.state.lotesData.findIndex(function (l) {
+        return l.id === loteId;
+      });
+      if (index > -1) {
+        this.state.lotesData[index] = _objectSpread(_objectSpread({}, this.state.lotesData[index]), updates);
+      }
+    }
+
+    /**
+     * Remove um lote do array de lotes
+     * @param {string} loteId - ID do lote
+     */
+  }, {
+    key: "removeLote",
+    value: function removeLote(loteId) {
+      this.state.lotesData = this.state.lotesData.filter(function (l) {
+        return l.id !== loteId;
+      });
+    }
+
+    /**
+     * Retorna um lote pelo ID
+     * @param {string} loteId - ID do lote
+     * @returns {Object|undefined}
+     */
+  }, {
+    key: "getLote",
+    value: function getLote(loteId) {
+      return this.state.lotesData.find(function (l) {
+        return l.id === loteId;
+      });
+    }
+  }]);
+}();
+
+/***/ },
+
+/***/ "./assets/js/src/managers/DataPersistence.js"
+/*!***************************************************!*\
+  !*** ./assets/js/src/managers/DataPersistence.js ***!
+  \***************************************************/
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   DataPersistence: () => (/* binding */ DataPersistence)
+/* harmony export */ });
+function _createForOfIteratorHelper(r, e) { var t = "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (!t) { if (Array.isArray(r) || (t = _unsupportedIterableToArray(r)) || e && r && "number" == typeof r.length) { t && (r = t); var _n = 0, F = function F() {}; return { s: F, n: function n() { return _n >= r.length ? { done: !0 } : { done: !1, value: r[_n++] }; }, e: function e(r) { throw r; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var o, a = !0, u = !1; return { s: function s() { t = t.call(r); }, n: function n() { var r = t.next(); return a = r.done, r; }, e: function e(r) { u = !0, o = r; }, f: function f() { try { a || null == t["return"] || t["return"](); } finally { if (u) throw o; } } }; }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
+function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
+function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+/**
+ * DataPersistence - Gerencia a persistência de dados no WordPress
+ *
+ * Responsável por:
+ * - Salvar dados dos lotes em hidden field
+ * - Carregar dados salvos
+ * - Validação de JSON
+ * - Sincronização com o estado
+ *
+ * @example
+ * const persistence = new DataPersistence('terreno_lotes_data', stateManager, eventBus);
+ * persistence.load();
+ * persistence.save();
+ */
+var DataPersistence = /*#__PURE__*/function () {
+  function DataPersistence(fieldId, stateManager, eventBus) {
+    _classCallCheck(this, DataPersistence);
+    this.fieldId = fieldId;
+    this.stateManager = stateManager;
+    this.eventBus = eventBus;
+    this.field = null;
+  }
+
+  /**
+   * Inicializa e valida o campo hidden
+   * @returns {boolean}
+   */
+  return _createClass(DataPersistence, [{
+    key: "initialize",
+    value: function initialize() {
+      this.field = document.getElementById(this.fieldId);
+      if (!this.field) {
+        console.error("Campo hidden com ID \"".concat(this.fieldId, "\" n\xE3o encontrado"));
+        return false;
+      }
+      return true;
+    }
+
+    /**
+     * Carrega os dados salvos do hidden field
+     * @returns {Array<Object>} Array de lotes carregados
+     */
+  }, {
+    key: "load",
+    value: function load() {
+      var _this = this;
+      if (!this.initialize()) {
+        return [];
+      }
+      var rawData = this.field.value;
+      if (!rawData || rawData.trim() === '') {
+        return [];
+      }
+      try {
+        var lotesData = JSON.parse(rawData);
+        if (!Array.isArray(lotesData)) {
+          console.error('Dados de lotes inválidos: esperado array');
+          return [];
+        }
+
+        // Valida cada lote
+        var validLotes = lotesData.filter(function (lote) {
+          return _this.validateLote(lote);
+        });
+
+        // Atualiza o estado
+        this.stateManager.setState('lotesData', validLotes);
+        this.eventBus.emit('data:loaded', validLotes);
+        return validLotes;
+      } catch (error) {
+        console.error('Erro ao fazer parse dos dados de lotes:', error);
+        console.error('Dados problemáticos:', rawData.substring(0, 200));
+        return [];
+      }
+    }
+
+    /**
+     * Salva os dados dos lotes no hidden field
+     * @returns {boolean} Sucesso da operação
+     */
+  }, {
+    key: "save",
+    value: function save() {
+      if (!this.initialize()) {
+        return false;
+      }
+      var lotesData = this.stateManager.getState('lotesData');
+      try {
+        var jsonData = JSON.stringify(lotesData);
+        this.field.value = jsonData;
+        this.eventBus.emit('data:saved', lotesData);
+        return true;
+      } catch (error) {
+        console.error('Erro ao serializar dados de lotes:', error);
+        return false;
+      }
+    }
+
+    /**
+     * Valida a estrutura de um lote
+     * @param {Object} lote - Dados do lote
+     * @returns {boolean}
+     */
+  }, {
+    key: "validateLote",
+    value: function validateLote(lote) {
+      if (!lote || _typeof(lote) !== 'object') {
+        return false;
+      }
+
+      // Campos obrigatórios
+      var requiredFields = ['id', 'coordinates'];
+      for (var _i = 0, _requiredFields = requiredFields; _i < _requiredFields.length; _i++) {
+        var field = _requiredFields[_i];
+        if (!(field in lote)) {
+          return false;
+        }
+      }
+
+      // Valida coordinates
+      if (!Array.isArray(lote.coordinates) || lote.coordinates.length < 3) {
+        return false;
+      }
+
+      // Valida cada coordenada
+      var _iterator = _createForOfIteratorHelper(lote.coordinates),
+        _step;
+      try {
+        for (_iterator.s(); !(_step = _iterator.n()).done;) {
+          var coord = _step.value;
+          if (typeof coord.lat !== 'number' || typeof coord.lng !== 'number') {
+            return false;
+          }
+        }
+      } catch (err) {
+        _iterator.e(err);
+      } finally {
+        _iterator.f();
+      }
+      return true;
+    }
+
+    /**
+     * Adiciona um lote e salva automaticamente
+     * @param {Object} lote - Dados do lote
+     * @returns {boolean}
+     */
+  }, {
+    key: "addLote",
+    value: function addLote(lote) {
+      if (!this.validateLote(lote)) {
+        console.error('Lote inválido, não será adicionado');
+        return false;
+      }
+      this.stateManager.addLote(lote);
+      return this.save();
+    }
+
+    /**
+     * Atualiza um lote e salva automaticamente
+     * @param {string} loteId - ID do lote
+     * @param {Object} updates - Dados a atualizar
+     * @returns {boolean}
+     */
+  }, {
+    key: "updateLote",
+    value: function updateLote(loteId, updates) {
+      this.stateManager.updateLote(loteId, updates);
+      return this.save();
+    }
+
+    /**
+     * Remove um lote e salva automaticamente
+     * @param {string} loteId - ID do lote
+     * @returns {boolean}
+     */
+  }, {
+    key: "removeLote",
+    value: function removeLote(loteId) {
+      this.stateManager.removeLote(loteId);
+      return this.save();
+    }
+
+    /**
+     * Limpa todos os lotes
+     * @returns {boolean}
+     */
+  }, {
+    key: "clearAll",
+    value: function clearAll() {
+      this.stateManager.setState('lotesData', []);
+      return this.save();
+    }
+
+    /**
+     * Exporta os dados como JSON string formatado
+     * @returns {string}
+     */
+  }, {
+    key: "exportJSON",
+    value: function exportJSON() {
+      var lotesData = this.stateManager.getState('lotesData');
+      return JSON.stringify(lotesData, null, 2);
+    }
+
+    /**
+     * Importa dados de um JSON string
+     * @param {string} jsonString - JSON a importar
+     * @returns {boolean}
+     */
+  }, {
+    key: "importJSON",
+    value: function importJSON(jsonString) {
+      var _this2 = this;
+      try {
+        var lotesData = JSON.parse(jsonString);
+        if (!Array.isArray(lotesData)) {
+          throw new Error('Dados devem ser um array');
+        }
+        var validLotes = lotesData.filter(function (lote) {
+          return _this2.validateLote(lote);
+        });
+        this.stateManager.setState('lotesData', validLotes);
+        return this.save();
+      } catch (error) {
+        console.error('Erro ao importar JSON:', error);
+        return false;
+      }
+    }
+  }]);
+}();
+
+/***/ },
+
+/***/ "./assets/js/src/managers/GeocodeManager.js"
+/*!**************************************************!*\
+  !*** ./assets/js/src/managers/GeocodeManager.js ***!
+  \**************************************************/
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   GeocodeManager: () => (/* binding */ GeocodeManager)
+/* harmony export */ });
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
+function _regenerator() { /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE */ var e, t, r = "function" == typeof Symbol ? Symbol : {}, n = r.iterator || "@@iterator", o = r.toStringTag || "@@toStringTag"; function i(r, n, o, i) { var c = n && n.prototype instanceof Generator ? n : Generator, u = Object.create(c.prototype); return _regeneratorDefine2(u, "_invoke", function (r, n, o) { var i, c, u, f = 0, p = o || [], y = !1, G = { p: 0, n: 0, v: e, a: d, f: d.bind(e, 4), d: function d(t, r) { return i = t, c = 0, u = e, G.n = r, a; } }; function d(r, n) { for (c = r, u = n, t = 0; !y && f && !o && t < p.length; t++) { var o, i = p[t], d = G.p, l = i[2]; r > 3 ? (o = l === n) && (u = i[(c = i[4]) ? 5 : (c = 3, 3)], i[4] = i[5] = e) : i[0] <= d && ((o = r < 2 && d < i[1]) ? (c = 0, G.v = n, G.n = i[1]) : d < l && (o = r < 3 || i[0] > n || n > l) && (i[4] = r, i[5] = n, G.n = l, c = 0)); } if (o || r > 1) return a; throw y = !0, n; } return function (o, p, l) { if (f > 1) throw TypeError("Generator is already running"); for (y && 1 === p && d(p, l), c = p, u = l; (t = c < 2 ? e : u) || !y;) { i || (c ? c < 3 ? (c > 1 && (G.n = -1), d(c, u)) : G.n = u : G.v = u); try { if (f = 2, i) { if (c || (o = "next"), t = i[o]) { if (!(t = t.call(i, u))) throw TypeError("iterator result is not an object"); if (!t.done) return t; u = t.value, c < 2 && (c = 0); } else 1 === c && (t = i["return"]) && t.call(i), c < 2 && (u = TypeError("The iterator does not provide a '" + o + "' method"), c = 1); i = e; } else if ((t = (y = G.n < 0) ? u : r.call(n, G)) !== a) break; } catch (t) { i = e, c = 1, u = t; } finally { f = 1; } } return { value: t, done: y }; }; }(r, o, i), !0), u; } var a = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} t = Object.getPrototypeOf; var c = [][n] ? t(t([][n]())) : (_regeneratorDefine2(t = {}, n, function () { return this; }), t), u = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(c); function f(e) { return Object.setPrototypeOf ? Object.setPrototypeOf(e, GeneratorFunctionPrototype) : (e.__proto__ = GeneratorFunctionPrototype, _regeneratorDefine2(e, o, "GeneratorFunction")), e.prototype = Object.create(u), e; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, _regeneratorDefine2(u, "constructor", GeneratorFunctionPrototype), _regeneratorDefine2(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = "GeneratorFunction", _regeneratorDefine2(GeneratorFunctionPrototype, o, "GeneratorFunction"), _regeneratorDefine2(u), _regeneratorDefine2(u, o, "Generator"), _regeneratorDefine2(u, n, function () { return this; }), _regeneratorDefine2(u, "toString", function () { return "[object Generator]"; }), (_regenerator = function _regenerator() { return { w: i, m: f }; })(); }
+function _regeneratorDefine2(e, r, n, t) { var i = Object.defineProperty; try { i({}, "", {}); } catch (e) { i = 0; } _regeneratorDefine2 = function _regeneratorDefine(e, r, n, t) { function o(r, n) { _regeneratorDefine2(e, r, function (e) { return this._invoke(r, n, e); }); } r ? i ? i(e, r, { value: n, enumerable: !t, configurable: !t, writable: !t }) : e[r] = n : (o("next", 0), o("throw", 1), o("return", 2)); }, _regeneratorDefine2(e, r, n, t); }
+function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
+function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
+function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
+function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
+function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+/**
+ * GeocodeManager - Gerencia busca de endereços e coordenadas
+ *
+ * Responsável por:
+ * - Geocoding (endereço → coordenadas)
+ * - Reverse geocoding (coordenadas → endereço)
+ * - Geolocalização do dispositivo
+ * - Busca por coordenadas diretas
+ *
+ * @example
+ * const geocodeManager = new GeocodeManager(geocoder, eventBus);
+ * await geocodeManager.searchAddress('Fortaleza, CE');
+ * await geocodeManager.reverseGeocode(-3.7319, -38.5267);
+ */
+var GeocodeManager = /*#__PURE__*/function () {
+  function GeocodeManager(geocoder, eventBus) {
+    _classCallCheck(this, GeocodeManager);
+    this.geocoder = geocoder;
+    this.eventBus = eventBus;
+  }
+
+  /**
+   * Busca coordenadas a partir de um endereço
+   * @param {string} address - Endereço a buscar
+   * @returns {Promise<Object>} {lat, lng, formatted_address}
+   */
+  return _createClass(GeocodeManager, [{
+    key: "searchAddress",
+    value: (function () {
+      var _searchAddress = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee(address) {
+        var _this = this;
+        return _regenerator().w(function (_context) {
+          while (1) switch (_context.n) {
+            case 0:
+              if (!(!address || address.trim() === '')) {
+                _context.n = 1;
+                break;
+              }
+              throw new Error('Endereço não pode ser vazio');
+            case 1:
+              return _context.a(2, new Promise(function (resolve, reject) {
+                _this.geocoder.geocode({
+                  address: address
+                }, function (results, status) {
+                  if (status === google.maps.GeocoderStatus.OK && results[0]) {
+                    var location = results[0].geometry.location;
+                    var result = {
+                      lat: location.lat(),
+                      lng: location.lng(),
+                      formatted_address: results[0].formatted_address,
+                      place_id: results[0].place_id
+                    };
+                    _this.eventBus.emit('geocode:success', result);
+                    resolve(result);
+                  } else {
+                    var error = new Error("Geocode falhou: ".concat(status));
+                    _this.eventBus.emit('geocode:error', {
+                      address: address,
+                      status: status
+                    });
+                    console.error('Erro ao buscar endereço:', status);
+                    reject(error);
+                  }
+                });
+              }));
+          }
+        }, _callee);
+      }));
+      function searchAddress(_x) {
+        return _searchAddress.apply(this, arguments);
+      }
+      return searchAddress;
+    }()
+    /**
+     * Busca endereço a partir de coordenadas
+     * @param {number} lat - Latitude
+     * @param {number} lng - Longitude
+     * @returns {Promise<string>} Endereço formatado
+     */
+    )
+  }, {
+    key: "reverseGeocode",
+    value: (function () {
+      var _reverseGeocode = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee2(lat, lng) {
+        var _this2 = this;
+        var latLng;
+        return _regenerator().w(function (_context2) {
+          while (1) switch (_context2.n) {
+            case 0:
+              latLng = new google.maps.LatLng(lat, lng);
+              return _context2.a(2, new Promise(function (resolve, reject) {
+                _this2.geocoder.geocode({
+                  location: latLng
+                }, function (results, status) {
+                  if (status === google.maps.GeocoderStatus.OK && results[0]) {
+                    var address = results[0].formatted_address;
+                    _this2.eventBus.emit('reverse_geocode:success', {
+                      lat: lat,
+                      lng: lng,
+                      address: address
+                    });
+                    resolve(address);
+                  } else {
+                    var error = new Error("Reverse geocode falhou: ".concat(status));
+                    _this2.eventBus.emit('reverse_geocode:error', {
+                      lat: lat,
+                      lng: lng,
+                      status: status
+                    });
+                    reject(error);
+                  }
+                });
+              }));
+          }
+        }, _callee2);
+      }));
+      function reverseGeocode(_x2, _x3) {
+        return _reverseGeocode.apply(this, arguments);
+      }
+      return reverseGeocode;
+    }()
+    /**
+     * Busca coordenadas a partir de uma string de coordenadas
+     * Aceita formatos: "-3.7319, -38.5267" ou "-3.7319,-38.5267"
+     * @param {string} coordString - String de coordenadas
+     * @returns {Promise<Object>} {lat, lng}
+     */
+    )
+  }, {
+    key: "searchCoordinates",
+    value: (function () {
+      var _searchCoordinates = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee3(coordString) {
+        var parts, lat, lng, result;
+        return _regenerator().w(function (_context3) {
+          while (1) switch (_context3.n) {
+            case 0:
+              parts = coordString.split(',').map(function (p) {
+                return p.trim();
+              });
+              if (!(parts.length !== 2)) {
+                _context3.n = 1;
+                break;
+              }
+              throw new Error('Formato inválido. Use: latitude, longitude');
+            case 1:
+              lat = parseFloat(parts[0]);
+              lng = parseFloat(parts[1]);
+              if (!(isNaN(lat) || isNaN(lng))) {
+                _context3.n = 2;
+                break;
+              }
+              throw new Error('Coordenadas inválidas');
+            case 2:
+              if (!(lat < -90 || lat > 90 || lng < -180 || lng > 180)) {
+                _context3.n = 3;
+                break;
+              }
+              throw new Error('Coordenadas fora dos limites válidos');
+            case 3:
+              result = {
+                lat: lat,
+                lng: lng
+              };
+              this.eventBus.emit('coordinates:searched', result);
+              return _context3.a(2, result);
+          }
+        }, _callee3, this);
+      }));
+      function searchCoordinates(_x4) {
+        return _searchCoordinates.apply(this, arguments);
+      }
+      return searchCoordinates;
+    }()
+    /**
+     * Obtém a localização atual do usuário via Geolocation API
+     * @returns {Promise<Object>} {lat, lng}
+     */
+    )
+  }, {
+    key: "getCurrentLocation",
+    value: (function () {
+      var _getCurrentLocation = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee4() {
+        var _this3 = this;
+        return _regenerator().w(function (_context4) {
+          while (1) switch (_context4.n) {
+            case 0:
+              if (navigator.geolocation) {
+                _context4.n = 1;
+                break;
+              }
+              throw new Error('Geolocalização não é suportada por este navegador');
+            case 1:
+              return _context4.a(2, new Promise(function (resolve, reject) {
+                navigator.geolocation.getCurrentPosition(function (position) {
+                  var result = {
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude,
+                    accuracy: position.coords.accuracy
+                  };
+                  _this3.eventBus.emit('geolocation:success', result);
+                  resolve(result);
+                }, function (error) {
+                  var errorMessage = 'Erro ao obter localização';
+                  switch (error.code) {
+                    case error.PERMISSION_DENIED:
+                      errorMessage = 'Permissão de localização negada';
+                      break;
+                    case error.POSITION_UNAVAILABLE:
+                      errorMessage = 'Localização indisponível';
+                      break;
+                    case error.TIMEOUT:
+                      errorMessage = 'Timeout ao obter localização';
+                      break;
+                  }
+                  _this3.eventBus.emit('geolocation:error', {
+                    code: error.code,
+                    message: errorMessage
+                  });
+                  console.error(errorMessage, error);
+                  reject(new Error(errorMessage));
+                }, {
+                  enableHighAccuracy: true,
+                  timeout: 10000,
+                  maximumAge: 0
+                });
+              }));
+          }
+        }, _callee4);
+      }));
+      function getCurrentLocation() {
+        return _getCurrentLocation.apply(this, arguments);
+      }
+      return getCurrentLocation;
+    }()
+    /**
+     * Busca detalhes de um lugar por Place ID
+     * @param {string} placeId - ID do lugar no Google Places
+     * @returns {Promise<Object>}
+     */
+    )
+  }, {
+    key: "getPlaceDetails",
+    value: (function () {
+      var _getPlaceDetails = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee5(placeId) {
+        var _this4 = this;
+        return _regenerator().w(function (_context5) {
+          while (1) switch (_context5.n) {
+            case 0:
+              return _context5.a(2, new Promise(function (resolve, reject) {
+                _this4.geocoder.geocode({
+                  placeId: placeId
+                }, function (results, status) {
+                  if (status === google.maps.GeocoderStatus.OK && results[0]) {
+                    var location = results[0].geometry.location;
+                    var result = {
+                      lat: location.lat(),
+                      lng: location.lng(),
+                      formatted_address: results[0].formatted_address,
+                      place_id: results[0].place_id,
+                      types: results[0].types
+                    };
+                    _this4.eventBus.emit('place_details:success', result);
+                    resolve(result);
+                  } else {
+                    var error = new Error("Place details falhou: ".concat(status));
+                    _this4.eventBus.emit('place_details:error', {
+                      placeId: placeId,
+                      status: status
+                    });
+                    reject(error);
+                  }
+                });
+              }));
+          }
+        }, _callee5);
+      }));
+      function getPlaceDetails(_x5) {
+        return _getPlaceDetails.apply(this, arguments);
+      }
+      return getPlaceDetails;
+    }()
+    /**
+     * Valida se uma string parece ser um endereço ou coordenadas
+     * @param {string} input - String a validar
+     * @returns {Object} {type: 'address'|'coordinates', valid: boolean}
+     */
+    )
+  }, {
+    key: "validateInput",
+    value: function validateInput(input) {
+      if (!input || input.trim() === '') {
+        return {
+          type: null,
+          valid: false
+        };
+      }
+      input = input.trim();
+
+      // Verifica se parece coordenadas (contém vírgula e números)
+      var coordPattern = /^-?\d+\.?\d*\s*,\s*-?\d+\.?\d*$/;
+      if (coordPattern.test(input)) {
+        return {
+          type: 'coordinates',
+          valid: true
+        };
+      }
+
+      // Caso contrário, assume que é endereço
+      return {
+        type: 'address',
+        valid: true
+      };
+    }
+
+    /**
+     * Busca inteligente - detecta automaticamente se é endereço ou coordenadas
+     * @param {string} input - Endereço ou coordenadas
+     * @returns {Promise<Object>} {lat, lng, address}
+     */
+  }, {
+    key: "smartSearch",
+    value: (function () {
+      var _smartSearch = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee6(input) {
+        var validation, coords, address, result;
+        return _regenerator().w(function (_context6) {
+          while (1) switch (_context6.n) {
+            case 0:
+              validation = this.validateInput(input);
+              if (validation.valid) {
+                _context6.n = 1;
+                break;
+              }
+              throw new Error('Entrada inválida');
+            case 1:
+              if (!(validation.type === 'coordinates')) {
+                _context6.n = 4;
+                break;
+              }
+              _context6.n = 2;
+              return this.searchCoordinates(input);
+            case 2:
+              coords = _context6.v;
+              _context6.n = 3;
+              return this.reverseGeocode(coords.lat, coords.lng);
+            case 3:
+              address = _context6.v;
+              return _context6.a(2, _objectSpread(_objectSpread({}, coords), {}, {
+                address: address
+              }));
+            case 4:
+              _context6.n = 5;
+              return this.searchAddress(input);
+            case 5:
+              result = _context6.v;
+              return _context6.a(2, {
+                lat: result.lat,
+                lng: result.lng,
+                address: result.formatted_address
+              });
+            case 6:
+              return _context6.a(2);
+          }
+        }, _callee6, this);
+      }));
+      function smartSearch(_x6) {
+        return _smartSearch.apply(this, arguments);
+      }
+      return smartSearch;
+    }())
+  }]);
+}();
+
+/***/ },
+
+/***/ "./assets/js/src/managers/ImageOverlayManager.js"
+/*!*******************************************************!*\
+  !*** ./assets/js/src/managers/ImageOverlayManager.js ***!
+  \*******************************************************/
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   ImageOverlayManager: () => (/* binding */ ImageOverlayManager)
+/* harmony export */ });
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _callSuper(t, o, e) { return o = _getPrototypeOf(o), _possibleConstructorReturn(t, _isNativeReflectConstruct() ? Reflect.construct(o, e || [], _getPrototypeOf(t).constructor) : o.apply(t, e)); }
+function _possibleConstructorReturn(t, e) { if (e && ("object" == _typeof(e) || "function" == typeof e)) return e; if (void 0 !== e) throw new TypeError("Derived constructors may only return object or undefined"); return _assertThisInitialized(t); }
+function _assertThisInitialized(e) { if (void 0 === e) throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); return e; }
+function _isNativeReflectConstruct() { try { var t = !Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); } catch (t) {} return (_isNativeReflectConstruct = function _isNativeReflectConstruct() { return !!t; })(); }
+function _getPrototypeOf(t) { return _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function (t) { return t.__proto__ || Object.getPrototypeOf(t); }, _getPrototypeOf(t); }
+function _inherits(t, e) { if ("function" != typeof e && null !== e) throw new TypeError("Super expression must either be null or a function"); t.prototype = Object.create(e && e.prototype, { constructor: { value: t, writable: !0, configurable: !0 } }), Object.defineProperty(t, "prototype", { writable: !1 }), e && _setPrototypeOf(t, e); }
+function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function (t, e) { return t.__proto__ = e, t; }, _setPrototypeOf(t, e); }
+function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
+function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
+function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+/**
+ * ImageOverlayManager - Gerencia overlay de planta humanizada no mapa
+ *
+ * Permite:
+ * - Upload de imagem via Media Library do WordPress
+ * - Posicionamento (drag) no mapa
+ * - Redimensionamento (resize)
+ * - Rotação
+ * - Ajuste de opacidade
+ *
+ * A imagem fica ABAIXO dos polígonos de lotes usando panes.overlayLayer
+ */
+var ImageOverlayManager = /*#__PURE__*/function () {
+  function ImageOverlayManager(map, stateManager, eventBus) {
+    _classCallCheck(this, ImageOverlayManager);
+    this.map = map;
+    this.stateManager = stateManager;
+    this.eventBus = eventBus;
+
+    // Estado do overlay
+    this.imageUrl = null;
+    this.overlay = {
+      bounds: null,
+      rotation: 0,
+      opacity: 0.7,
+      center: null
+    };
+
+    // Google Maps Custom Overlay
+    this.customOverlay = null;
+
+    // Estado de interação
+    this.isControlsVisible = false;
+
+    // Elementos DOM
+    this.controlPanel = null;
+    this.init();
+  }
+
+  /**
+   * Inicializa os event listeners
+   */
+  return _createClass(ImageOverlayManager, [{
+    key: "init",
+    value: function init() {
+      var _this = this;
+      // Botão de importar imagem
+      var btnImportar = document.getElementById('btn_importar_planta');
+      if (btnImportar) {
+        btnImportar.addEventListener('click', function (e) {
+          e.preventDefault();
+          _this.openMediaLibrary();
+        });
+      } else {
+        // Tenta novamente após um delay (DOM pode não estar pronto)
+        setTimeout(function () {
+          var btn = document.getElementById('btn_importar_planta');
+          if (btn) {
+            btn.addEventListener('click', function (e) {
+              e.preventDefault();
+              _this.openMediaLibrary();
+            });
+          }
+        }, 500);
+      }
+
+      // Botão de remover imagem
+      var btnRemover = document.getElementById('btn_remover_planta');
+      if (btnRemover) {
+        btnRemover.addEventListener('click', function () {
+          return _this.removeOverlay();
+        });
+      }
+
+      // Botão de ajustar posição
+      var btnAjustar = document.getElementById('btn_ajustar_planta');
+      if (btnAjustar) {
+        btnAjustar.addEventListener('click', function (e) {
+          e.preventDefault();
+          _this.toggleEditMode();
+        });
+      } else {
+        setTimeout(function () {
+          var btn = document.getElementById('btn_ajustar_planta');
+          if (btn) {
+            btn.addEventListener('click', function (e) {
+              e.preventDefault();
+              _this.toggleEditMode();
+            });
+          }
+        }, 500);
+      }
+
+      // Cria painel de controles
+      this.createControlPanel();
+    }
+
+    /**
+     * Alterna modo de edição (mostra/esconde controles)
+     */
+  }, {
+    key: "toggleEditMode",
+    value: function toggleEditMode() {
+      if (!this.imageUrl) {
+        alert('Nenhuma imagem carregada. Selecione uma imagem primeiro.');
+        return;
+      }
+      if (this.isControlsVisible) {
+        this.hideControls();
+      } else {
+        this.showControls();
+      }
+    }
+
+    /**
+     * Cria o painel de controles para a imagem
+     */
+  }, {
+    key: "createControlPanel",
+    value: function createControlPanel() {
+      this.controlPanel = document.createElement('div');
+      this.controlPanel.id = 'imageOverlayControls';
+      this.controlPanel.innerHTML = "\n      <div class=\"image-overlay-header\">\n        <span>Ajustar Planta Humanizada</span>\n        <button type=\"button\" id=\"imageControlsClose\" title=\"Fechar\">&times;</button>\n      </div>\n      <div class=\"image-overlay-content\">\n        <!-- Instru\xE7\xF5es -->\n        <div style=\"background: #e7f5ff; border: 1px solid #28a745; border-radius: 4px; padding: 10px; margin-bottom: 15px;\">\n          <h4 style=\"margin: 0 0 8px 0; color: #28a745; font-size: 13px;\">\n            <span class=\"dashicons dashicons-info\" style=\"margin-right: 5px;\"></span>\n            Como posicionar\n          </h4>\n          <ul style=\"margin: 0; padding-left: 18px; font-size: 12px; color: #333;\">\n            <li><strong>Arrastar:</strong> Clique e arraste para mover</li>\n            <li><strong>Redimensionar:</strong> Arraste os cantos</li>\n            <li><strong>Rotacionar:</strong> Use o slider abaixo</li>\n          </ul>\n        </div>\n\n        <div class=\"image-overlay-preview\">\n          <img id=\"imageOverlayPreview\" src=\"\" alt=\"Preview\" />\n        </div>\n        <div class=\"image-overlay-controls\">\n          <h4 style=\"margin: 0 0 12px 0; font-size: 13px;\">Controles</h4>\n          <div class=\"control-group\">\n            <label>Rota\xE7\xE3o: <span id=\"imageRotationValue\">0\xB0</span></label>\n            <div class=\"rotation-controls\">\n              <button type=\"button\" class=\"button button-small\" id=\"imageRotateLeft\" title=\"-1\xB0\">&#8634;</button>\n              <input type=\"range\" id=\"imageRotationSlider\" min=\"-180\" max=\"180\" value=\"0\" />\n              <button type=\"button\" class=\"button button-small\" id=\"imageRotateRight\" title=\"+1\xB0\">&#8635;</button>\n            </div>\n          </div>\n          <div class=\"control-group\">\n            <label>Opacidade</label>\n            <input type=\"range\" id=\"imageOpacitySlider\" min=\"10\" max=\"100\" value=\"70\" />\n          </div>\n          <div class=\"control-group\">\n            <div class=\"scale-controls\">\n              <button type=\"button\" class=\"button button-small\" id=\"imageZoomOut\" title=\"Diminuir\">\n                <span class=\"dashicons dashicons-minus\" style=\"font-size: 16px;\"></span>\n              </button>\n              <button type=\"button\" class=\"button button-small\" id=\"imageZoomIn\" title=\"Aumentar\">\n                <span class=\"dashicons dashicons-plus\" style=\"font-size: 16px;\"></span>\n              </button>\n              <button type=\"button\" class=\"button button-small\" id=\"imageResetScale\" title=\"Resetar\">\n                <span class=\"dashicons dashicons-image-rotate\" style=\"font-size: 16px;\"></span> Resetar\n              </button>\n            </div>\n          </div>\n        </div>\n\n        <!-- Dica -->\n        <div style=\"background: #fff8e5; border: 1px solid #f0c36d; border-radius: 4px; padding: 8px; margin-bottom: 15px; font-size: 11px;\">\n          <strong>Dica:</strong> Alinhe com as ruas no sat\xE9lite.\n        </div>\n\n        <div class=\"image-overlay-actions\">\n          <button type=\"button\" id=\"imageRemoveBtn\" class=\"button\">Remover Imagem</button>\n          <button type=\"button\" id=\"imageSaveBtn\" class=\"button button-primary\">Salvar Ajustes</button>\n        </div>\n      </div>\n    ";
+      this.addControlPanelStyles();
+
+      // Insere o painel no mesmo local que o modal do SVG (antes do #terreno-mapa-container)
+      var terrenoContainer = document.getElementById('terreno-mapa-container');
+      if (terrenoContainer && terrenoContainer.parentNode) {
+        terrenoContainer.parentNode.insertBefore(this.controlPanel, terrenoContainer);
+      } else {
+        document.body.appendChild(this.controlPanel);
+      }
+
+      // Event listeners do painel
+      this.setupControlListeners();
+    }
+
+    /**
+     * Adiciona estilos CSS do painel de controle
+     */
+  }, {
+    key: "addControlPanelStyles",
+    value: function addControlPanelStyles() {
+      if (document.getElementById('imageOverlayStyles')) return;
+      var style = document.createElement('style');
+      style.id = 'imageOverlayStyles';
+      style.textContent = "\n      #imageOverlayControls {\n        position: fixed;\n        top: 32px;\n        right: 0;\n        width: 320px;\n        height: calc(100vh - 32px);\n        background: #fff;\n        border-left: 1px solid #ddd;\n        box-shadow: -4px 0 20px rgba(0,0,0,0.2);\n        z-index: 9999;\n        overflow-y: auto;\n        font-family: -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif;\n        display: none;\n      }\n      #imageOverlayControls.active {\n        display: block;\n      }\n      .image-overlay-header {\n        display: flex;\n        justify-content: space-between;\n        align-items: center;\n        padding: 15px 20px;\n        border-bottom: 1px solid #ddd;\n        background: #fff;\n      }\n      .image-overlay-header span {\n        margin: 0;\n        color: #23282d;\n        font-size: 16px;\n        font-weight: 600;\n      }\n      .image-overlay-header button {\n        background: none;\n        border: 1px solid #ccc;\n        color: #666;\n        font-size: 18px;\n        cursor: pointer;\n        padding: 0 8px;\n        line-height: 1.5;\n        border-radius: 3px;\n      }\n      .image-overlay-header button:hover {\n        background: #f0f0f0;\n      }\n      .image-overlay-content {\n        padding: 20px;\n      }\n      .image-overlay-preview {\n        margin-bottom: 15px;\n        text-align: center;\n      }\n      .image-overlay-preview img {\n        max-width: 100%;\n        max-height: 120px;\n        border: 1px solid #ddd;\n        border-radius: 4px;\n      }\n      .image-overlay-controls {\n        background: #f5f5f5;\n        padding: 12px;\n        border-radius: 4px;\n        margin-bottom: 15px;\n      }\n      .image-overlay-controls .control-group {\n        margin-bottom: 12px;\n      }\n      .image-overlay-controls .control-group:last-child {\n        margin-bottom: 0;\n      }\n      .image-overlay-controls label {\n        display: block;\n        margin-bottom: 4px;\n        font-weight: 600;\n        font-size: 12px;\n        color: #333;\n      }\n      .image-overlay-controls input[type=\"range\"] {\n        width: 100%;\n        margin: 0;\n      }\n      .image-overlay-controls span {\n        display: inline;\n        font-size: 12px;\n        color: #666;\n      }\n      .rotation-controls, .scale-controls {\n        display: flex;\n        gap: 6px;\n        align-items: center;\n      }\n      .rotation-controls input[type=\"range\"] {\n        flex: 1;\n      }\n      .rotation-controls button, .scale-controls button {\n        padding: 5px 10px;\n        font-size: 14px;\n        cursor: pointer;\n        border: 1px solid #ccc;\n        background: #f7f7f7;\n        border-radius: 3px;\n      }\n      .rotation-controls button:hover, .scale-controls button:hover {\n        background: #e5e5e5;\n      }\n      .scale-controls button:last-child {\n        flex: 1;\n      }\n      .image-overlay-actions {\n        display: flex;\n        gap: 8px;\n        justify-content: flex-end;\n        border-top: 1px solid #ddd;\n        padding-top: 15px;\n        margin-top: 10px;\n      }\n      .image-overlay-actions button {\n        padding: 8px 12px;\n        cursor: pointer;\n      }\n      #imageRemoveBtn {\n        background: #dc3545;\n        color: #fff;\n        border-color: #dc3545;\n      }\n      #imageRemoveBtn:hover {\n        background: #c82333;\n      }\n    ";
+      document.head.appendChild(style);
+    }
+
+    /**
+     * Configura event listeners do painel de controle
+     */
+  }, {
+    key: "setupControlListeners",
+    value: function setupControlListeners() {
+      var _document$getElementB,
+        _this2 = this,
+        _document$getElementB2,
+        _document$getElementB3,
+        _document$getElementB4,
+        _document$getElementB5,
+        _document$getElementB6,
+        _document$getElementB7,
+        _document$getElementB8,
+        _document$getElementB9,
+        _document$getElementB0;
+      // Fechar painel
+      (_document$getElementB = document.getElementById('imageControlsClose')) === null || _document$getElementB === void 0 || _document$getElementB.addEventListener('click', function () {
+        _this2.hideControls();
+      });
+
+      // Opacidade
+      (_document$getElementB2 = document.getElementById('imageOpacitySlider')) === null || _document$getElementB2 === void 0 || _document$getElementB2.addEventListener('input', function (e) {
+        var opacity = e.target.value / 100;
+        _this2.setOverlayOpacity(opacity);
+        document.getElementById('imageOpacityValue').textContent = "".concat(e.target.value, "%");
+      });
+
+      // Rotacao
+      (_document$getElementB3 = document.getElementById('imageRotationSlider')) === null || _document$getElementB3 === void 0 || _document$getElementB3.addEventListener('input', function (e) {
+        _this2.setRotation(parseFloat(e.target.value));
+        document.getElementById('imageRotationValue').textContent = "".concat(e.target.value, "\xB0");
+      });
+      (_document$getElementB4 = document.getElementById('imageRotateLeft')) === null || _document$getElementB4 === void 0 || _document$getElementB4.addEventListener('click', function () {
+        _this2.rotateOverlay(-1);
+      });
+      (_document$getElementB5 = document.getElementById('imageRotateRight')) === null || _document$getElementB5 === void 0 || _document$getElementB5.addEventListener('click', function () {
+        _this2.rotateOverlay(1);
+      });
+
+      // Escala
+      (_document$getElementB6 = document.getElementById('imageZoomIn')) === null || _document$getElementB6 === void 0 || _document$getElementB6.addEventListener('click', function () {
+        _this2.scaleOverlay(1.01);
+      });
+      (_document$getElementB7 = document.getElementById('imageZoomOut')) === null || _document$getElementB7 === void 0 || _document$getElementB7.addEventListener('click', function () {
+        _this2.scaleOverlay(0.99);
+      });
+      (_document$getElementB8 = document.getElementById('imageResetScale')) === null || _document$getElementB8 === void 0 || _document$getElementB8.addEventListener('click', function () {
+        _this2.resetTransform();
+      });
+
+      // Remover
+      (_document$getElementB9 = document.getElementById('imageRemoveBtn')) === null || _document$getElementB9 === void 0 || _document$getElementB9.addEventListener('click', function () {
+        _this2.removeOverlay();
+      });
+
+      // Salvar e fechar
+      (_document$getElementB0 = document.getElementById('imageSaveBtn')) === null || _document$getElementB0 === void 0 || _document$getElementB0.addEventListener('click', function () {
+        _this2.updateHiddenInputs();
+        _this2.hideControls();
+      });
+    }
+
+    /**
+     * Abre a Media Library do WordPress
+     */
+  }, {
+    key: "openMediaLibrary",
+    value: function openMediaLibrary() {
+      var _this3 = this;
+      if (typeof wp === 'undefined' || typeof wp.media === 'undefined') {
+        alert('Media Library nao disponivel. Recarregue a pagina.');
+        return;
+      }
+      var frame = wp.media({
+        title: 'Selecionar Planta Humanizada',
+        button: {
+          text: 'Usar esta imagem'
+        },
+        multiple: false,
+        library: {
+          type: 'image'
+        }
+      });
+      frame.on('select', function () {
+        var attachment = frame.state().get('selection').first().toJSON();
+        _this3.handleImageSelect(attachment.url);
+      });
+      frame.open();
+    }
+
+    /**
+     * Processa a imagem selecionada
+     */
+  }, {
+    key: "handleImageSelect",
+    value: function handleImageSelect(imageUrl) {
+      this.imageUrl = imageUrl;
+
+      // Atualiza preview
+      var preview = document.getElementById('imageOverlayPreview');
+      if (preview) {
+        preview.src = imageUrl;
+      }
+
+      // Cria overlay no mapa
+      this.createMapOverlay();
+
+      // Mostra controles
+      this.showControls();
+
+      // Habilita botão de ajustar posição
+      this.updateAjustarButton(true);
+
+      // Atualiza hidden inputs
+      this.updateHiddenInputs();
+    }
+
+    /**
+     * Atualiza estado do botão de ajustar posição
+     */
+  }, {
+    key: "updateAjustarButton",
+    value: function updateAjustarButton(hasImage) {
+      var btnAjustar = document.getElementById('btn_ajustar_planta');
+      if (btnAjustar) {
+        btnAjustar.disabled = !hasImage;
+      }
+    }
+
+    /**
+     * Cria o overlay da imagem sobre o mapa
+     */
+  }, {
+    key: "createMapOverlay",
+    value: function createMapOverlay() {
+      var _this4 = this;
+      // Remove overlay anterior se existir
+      if (this.customOverlay) {
+        this.customOverlay.setMap(null);
+      }
+
+      // Carrega a imagem para obter dimensões e calcular aspect ratio
+      var img = new Image();
+      img.onload = function () {
+        var aspectRatio = img.naturalWidth / img.naturalHeight;
+
+        // Define posicao inicial baseada no centro do mapa
+        var mapCenter = _this4.map.getCenter();
+        _this4.overlay.center = {
+          lat: mapCenter.lat(),
+          lng: mapCenter.lng()
+        };
+
+        // Tamanho inicial do overlay (em graus, aproximadamente)
+        // Ajusta para manter o aspect ratio da imagem
+        var baseSize = 0.003; // ~300 metros
+        var halfWidth, halfHeight;
+        if (aspectRatio > 1) {
+          // Imagem mais larga que alta
+          halfWidth = baseSize / 2;
+          halfHeight = baseSize / aspectRatio / 2;
+        } else {
+          // Imagem mais alta que larga
+          halfHeight = baseSize / 2;
+          halfWidth = baseSize * aspectRatio / 2;
+        }
+        _this4.overlay.bounds = new google.maps.LatLngBounds(new google.maps.LatLng(_this4.overlay.center.lat - halfHeight, _this4.overlay.center.lng - halfWidth), new google.maps.LatLng(_this4.overlay.center.lat + halfHeight, _this4.overlay.center.lng + halfWidth));
+
+        // Cria Custom Overlay
+        var OverlayClass = getCustomImageOverlayClass();
+        _this4.customOverlay = new OverlayClass(_this4.overlay.bounds, _this4.imageUrl, _this4.map, _this4);
+        _this4.customOverlay.setMap(_this4.map);
+
+        // Centraliza o mapa no overlay
+        _this4.map.setCenter(mapCenter);
+        _this4.map.setZoom(18);
+
+        // Atualiza hidden inputs
+        _this4.updateHiddenInputs();
+      };
+      img.onerror = function () {
+        console.error('Erro ao carregar imagem para calcular dimensões');
+        // Fallback: usa dimensões quadradas
+        _this4.createMapOverlayFallback();
+      };
+      img.src = this.imageUrl;
+    }
+
+    /**
+     * Fallback para criar overlay quando não consegue carregar dimensões da imagem
+     */
+  }, {
+    key: "createMapOverlayFallback",
+    value: function createMapOverlayFallback() {
+      var mapCenter = this.map.getCenter();
+      this.overlay.center = {
+        lat: mapCenter.lat(),
+        lng: mapCenter.lng()
+      };
+      var initialSize = 0.003;
+      var halfSize = initialSize / 2;
+      this.overlay.bounds = new google.maps.LatLngBounds(new google.maps.LatLng(this.overlay.center.lat - halfSize, this.overlay.center.lng - halfSize), new google.maps.LatLng(this.overlay.center.lat + halfSize, this.overlay.center.lng + halfSize));
+      var OverlayClass = getCustomImageOverlayClass();
+      this.customOverlay = new OverlayClass(this.overlay.bounds, this.imageUrl, this.map, this);
+      this.customOverlay.setMap(this.map);
+      this.map.setCenter(mapCenter);
+      this.map.setZoom(18);
+    }
+
+    /**
+     * Mostra o painel de controles
+     */
+  }, {
+    key: "showControls",
+    value: function showControls() {
+      var _this$controlPanel;
+      this.isControlsVisible = true;
+      (_this$controlPanel = this.controlPanel) === null || _this$controlPanel === void 0 || _this$controlPanel.classList.add('active');
+    }
+
+    /**
+     * Esconde o painel de controles
+     */
+  }, {
+    key: "hideControls",
+    value: function hideControls() {
+      var _this$controlPanel2;
+      this.isControlsVisible = false;
+      (_this$controlPanel2 = this.controlPanel) === null || _this$controlPanel2 === void 0 || _this$controlPanel2.classList.remove('active');
+    }
+
+    /**
+     * Remove o overlay do mapa
+     */
+  }, {
+    key: "removeOverlay",
+    value: function removeOverlay() {
+      if (this.customOverlay) {
+        this.customOverlay.setMap(null);
+        this.customOverlay = null;
+      }
+      this.imageUrl = null;
+      this.overlay = {
+        bounds: null,
+        rotation: 0,
+        opacity: 0.7,
+        center: null
+      };
+
+      // Limpa preview
+      var preview = document.getElementById('imageOverlayPreview');
+      if (preview) {
+        preview.src = '';
+      }
+
+      // Esconde controles
+      this.hideControls();
+
+      // Desabilita botão de ajustar posição
+      this.updateAjustarButton(false);
+
+      // Limpa hidden inputs
+      this.clearHiddenInputs();
+    }
+
+    /**
+     * Define a opacidade do overlay
+     */
+  }, {
+    key: "setOverlayOpacity",
+    value: function setOverlayOpacity(opacity) {
+      this.overlay.opacity = opacity;
+      if (this.customOverlay) {
+        this.customOverlay.setOpacity(opacity);
+      }
+      this.updateHiddenInputs();
+    }
+
+    /**
+     * Rotaciona o overlay
+     */
+  }, {
+    key: "rotateOverlay",
+    value: function rotateOverlay(degrees) {
+      this.overlay.rotation += degrees;
+      this.overlay.rotation = (this.overlay.rotation % 360 + 360) % 360;
+      if (this.overlay.rotation > 180) {
+        this.overlay.rotation -= 360;
+      }
+      this.updateOverlayTransform();
+
+      // Atualiza slider
+      var slider = document.getElementById('imageRotationSlider');
+      var value = document.getElementById('imageRotationValue');
+      if (slider) slider.value = this.overlay.rotation;
+      if (value) value.textContent = "".concat(Math.round(this.overlay.rotation), "\xB0");
+      this.updateHiddenInputs();
+    }
+
+    /**
+     * Define rotacao especifica
+     */
+  }, {
+    key: "setRotation",
+    value: function setRotation(degrees) {
+      this.overlay.rotation = degrees;
+      this.updateOverlayTransform();
+      this.updateHiddenInputs();
+    }
+
+    /**
+     * Escala o overlay
+     */
+  }, {
+    key: "scaleOverlay",
+    value: function scaleOverlay(factor) {
+      var _this$customOverlay;
+      if (!this.overlay.bounds || !this.overlay.center) return;
+      var bounds = this.overlay.bounds;
+      var ne = bounds.getNorthEast();
+      var sw = bounds.getSouthWest();
+      var centerLat = this.overlay.center.lat;
+      var centerLng = this.overlay.center.lng;
+      var halfHeight = (ne.lat() - sw.lat()) / 2 * factor;
+      var halfWidth = (ne.lng() - sw.lng()) / 2 * factor;
+      this.overlay.bounds = new google.maps.LatLngBounds(new google.maps.LatLng(centerLat - halfHeight, centerLng - halfWidth), new google.maps.LatLng(centerLat + halfHeight, centerLng + halfWidth));
+      (_this$customOverlay = this.customOverlay) === null || _this$customOverlay === void 0 || _this$customOverlay.updateBounds(this.overlay.bounds);
+      this.updateHiddenInputs();
+    }
+
+    /**
+     * Reseta as transformacoes
+     */
+  }, {
+    key: "resetTransform",
+    value: function resetTransform() {
+      if (!this.imageUrl || !this.map) return;
+      this.overlay.rotation = 0;
+      this.createMapOverlay();
+
+      // Reseta sliders
+      var rotationSlider = document.getElementById('imageRotationSlider');
+      var rotationValue = document.getElementById('imageRotationValue');
+      if (rotationSlider) rotationSlider.value = 0;
+      if (rotationValue) rotationValue.textContent = '0°';
+      this.updateHiddenInputs();
+    }
+
+    /**
+     * Atualiza a transformacao visual do overlay
+     */
+  }, {
+    key: "updateOverlayTransform",
+    value: function updateOverlayTransform() {
+      if (this.customOverlay) {
+        this.customOverlay.updateRotation(this.overlay.rotation);
+      }
+    }
+
+    /**
+     * Carrega dados salvos (chamado na inicializacao)
+     */
+  }, {
+    key: "loadSavedOverlay",
+    value: function loadSavedOverlay() {
+      var imageUrlInput = document.getElementById('terreno_image_url');
+      var boundsInput = document.getElementById('terreno_image_bounds');
+      var rotationInput = document.getElementById('terreno_image_rotation');
+      var opacityInput = document.getElementById('terreno_image_opacity');
+      if (imageUrlInput !== null && imageUrlInput !== void 0 && imageUrlInput.value) {
+        this.imageUrl = imageUrlInput.value;
+
+        // Atualiza preview
+        var preview = document.getElementById('imageOverlayPreview');
+        if (preview) {
+          preview.src = this.imageUrl;
+        }
+      }
+      if (boundsInput !== null && boundsInput !== void 0 && boundsInput.value) {
+        try {
+          var bounds = JSON.parse(boundsInput.value);
+          this.overlay.bounds = new google.maps.LatLngBounds(new google.maps.LatLng(bounds.south, bounds.west), new google.maps.LatLng(bounds.north, bounds.east));
+          this.overlay.center = {
+            lat: (bounds.north + bounds.south) / 2,
+            lng: (bounds.east + bounds.west) / 2
+          };
+        } catch (e) {
+          // Silently ignore parse errors
+        }
+      }
+      if (rotationInput !== null && rotationInput !== void 0 && rotationInput.value) {
+        this.overlay.rotation = parseFloat(rotationInput.value) || 0;
+      }
+      if (opacityInput !== null && opacityInput !== void 0 && opacityInput.value) {
+        this.overlay.opacity = parseFloat(opacityInput.value) || 0.7;
+      }
+
+      // Se tem imagem salva, renderiza o overlay e habilita botão
+      if (this.imageUrl && this.overlay.bounds) {
+        this.renderSavedOverlay();
+        this.updateAjustarButton(true);
+      } else if (this.imageUrl) {
+        // Tem imagem mas não tem bounds ainda
+        this.updateAjustarButton(true);
+      }
+    }
+
+    /**
+     * Renderiza overlay salvo anteriormente
+     */
+  }, {
+    key: "renderSavedOverlay",
+    value: function renderSavedOverlay() {
+      if (!this.imageUrl || !this.overlay.bounds) return;
+
+      // Cria o overlay no mapa
+      var OverlayClass = getCustomImageOverlayClass();
+      this.customOverlay = new OverlayClass(this.overlay.bounds, this.imageUrl, this.map, this);
+      this.customOverlay.setMap(this.map);
+
+      // Aplica rotacao e opacidade salvas
+      if (this.overlay.rotation) {
+        this.customOverlay.updateRotation(this.overlay.rotation);
+      }
+      if (this.overlay.opacity) {
+        this.customOverlay.setOpacity(this.overlay.opacity);
+      }
+
+      // Atualiza sliders
+      var rotationSlider = document.getElementById('imageRotationSlider');
+      var rotationValue = document.getElementById('imageRotationValue');
+      var opacitySlider = document.getElementById('imageOpacitySlider');
+      var opacityValue = document.getElementById('imageOpacityValue');
+      if (rotationSlider) rotationSlider.value = this.overlay.rotation;
+      if (rotationValue) rotationValue.textContent = "".concat(Math.round(this.overlay.rotation), "\xB0");
+      if (opacitySlider) opacitySlider.value = this.overlay.opacity * 100;
+      if (opacityValue) opacityValue.textContent = "".concat(Math.round(this.overlay.opacity * 100), "%");
+    }
+
+    /**
+     * Atualiza inputs hidden com dados do overlay
+     */
+  }, {
+    key: "updateHiddenInputs",
+    value: function updateHiddenInputs() {
+      var container = document.querySelector('#terreno-mapa-container');
+      if (!container) return;
+
+      // Image URL
+      var urlInput = document.getElementById('terreno_image_url');
+      if (!urlInput) {
+        urlInput = document.createElement('input');
+        urlInput.type = 'hidden';
+        urlInput.id = 'terreno_image_url';
+        urlInput.name = 'terreno_image_url';
+        container.appendChild(urlInput);
+      }
+      urlInput.value = this.imageUrl || '';
+
+      // Bounds
+      var boundsInput = document.getElementById('terreno_image_bounds');
+      if (!boundsInput) {
+        boundsInput = document.createElement('input');
+        boundsInput.type = 'hidden';
+        boundsInput.id = 'terreno_image_bounds';
+        boundsInput.name = 'terreno_image_bounds';
+        container.appendChild(boundsInput);
+      }
+      if (this.overlay.bounds) {
+        boundsInput.value = JSON.stringify({
+          north: this.overlay.bounds.getNorthEast().lat(),
+          south: this.overlay.bounds.getSouthWest().lat(),
+          east: this.overlay.bounds.getNorthEast().lng(),
+          west: this.overlay.bounds.getSouthWest().lng()
+        });
+      }
+
+      // Rotation
+      var rotationInput = document.getElementById('terreno_image_rotation');
+      if (!rotationInput) {
+        rotationInput = document.createElement('input');
+        rotationInput.type = 'hidden';
+        rotationInput.id = 'terreno_image_rotation';
+        rotationInput.name = 'terreno_image_rotation';
+        container.appendChild(rotationInput);
+      }
+      rotationInput.value = this.overlay.rotation || 0;
+
+      // Opacity
+      var opacityInput = document.getElementById('terreno_image_opacity');
+      if (!opacityInput) {
+        opacityInput = document.createElement('input');
+        opacityInput.type = 'hidden';
+        opacityInput.id = 'terreno_image_opacity';
+        opacityInput.name = 'terreno_image_opacity';
+        container.appendChild(opacityInput);
+      }
+      opacityInput.value = this.overlay.opacity || 0.7;
+    }
+
+    /**
+     * Limpa hidden inputs
+     */
+  }, {
+    key: "clearHiddenInputs",
+    value: function clearHiddenInputs() {
+      var inputs = ['terreno_image_url', 'terreno_image_bounds', 'terreno_image_rotation', 'terreno_image_opacity'];
+      inputs.forEach(function (id) {
+        var input = document.getElementById(id);
+        if (input) {
+          input.value = '';
+        }
+      });
+    }
+  }]);
+}();
+
+/**
+ * Factory function para criar a classe CustomImageOverlay
+ * Isso evita erro de referencia ao google.maps.OverlayView antes do Maps API estar pronto
+ */
+var CustomImageOverlayClass = null;
+function getCustomImageOverlayClass() {
+  if (CustomImageOverlayClass) {
+    return CustomImageOverlayClass;
+  }
+  CustomImageOverlayClass = /*#__PURE__*/function (_google$maps$OverlayV) {
+    function CustomImageOverlay(bounds, imageUrl, map, manager) {
+      var _this5;
+      _classCallCheck(this, CustomImageOverlay);
+      _this5 = _callSuper(this, CustomImageOverlay);
+      _this5.bounds = bounds;
+      _this5.imageUrl = imageUrl;
+      _this5.manager = manager;
+      _this5.div = null;
+      _this5.img = null;
+      _this5.rotation = 0;
+      _this5.opacity = 0.7;
+      _this5.isDragging = false;
+      _this5.isResizing = false;
+      return _this5;
+    }
+    _inherits(CustomImageOverlay, _google$maps$OverlayV);
+    return _createClass(CustomImageOverlay, [{
+      key: "onAdd",
+      value: function onAdd() {
+        // Cria container do overlay
+        this.div = document.createElement('div');
+        this.div.style.position = 'absolute';
+        this.div.style.cursor = 'move';
+
+        // Cria elemento de imagem
+        this.img = document.createElement('img');
+        this.img.src = this.imageUrl;
+        this.img.style.width = '100%';
+        this.img.style.height = '100%';
+        this.img.style.opacity = this.opacity;
+        this.img.style.pointerEvents = 'none';
+        this.img.style.objectFit = 'contain';
+        this.div.appendChild(this.img);
+
+        // Adiciona borda para visualizacao
+        this.div.style.border = '2px dashed #28a745';
+        this.div.style.boxSizing = 'border-box';
+
+        // Adiciona handles de resize nos cantos
+        this.addResizeHandles();
+
+        // Adiciona eventos de drag
+        this.addDragListeners();
+
+        // Adiciona ao mapa - USA overlayMouseTarget para receber eventos de mouse
+        // z-index menor para ficar ABAIXO do SVG overlay
+        this.div.style.zIndex = '1';
+        var panes = this.getPanes();
+        panes.overlayMouseTarget.appendChild(this.div);
+      }
+    }, {
+      key: "addResizeHandles",
+      value: function addResizeHandles() {
+        var _this6 = this;
+        var corners = ['nw', 'ne', 'sw', 'se'];
+        corners.forEach(function (corner) {
+          var handle = document.createElement('div');
+          handle.className = "image-resize-handle image-resize-".concat(corner);
+          handle.style.cssText = "\n          position: absolute;\n          width: 14px;\n          height: 14px;\n          background: #28a745;\n          border: 2px solid white;\n          border-radius: 50%;\n          cursor: ".concat(corner, "-resize;\n          z-index: 1000;\n        ");
+          if (corner.includes('n')) handle.style.top = '-7px';
+          if (corner.includes('s')) handle.style.bottom = '-7px';
+          if (corner.includes('w')) handle.style.left = '-7px';
+          if (corner.includes('e')) handle.style.right = '-7px';
+          handle.addEventListener('mousedown', function (e) {
+            e.stopPropagation();
+            _this6.startResize(e, corner);
+          });
+          _this6.div.appendChild(handle);
+        });
+      }
+    }, {
+      key: "addDragListeners",
+      value: function addDragListeners() {
+        var _this7 = this;
+        this.div.addEventListener('mousedown', function (e) {
+          if (e.target.classList.contains('image-resize-handle')) return;
+          _this7.startDrag(e);
+        });
+        document.addEventListener('mousemove', function (e) {
+          if (_this7.isDragging) _this7.onDrag(e);
+          if (_this7.isResizing) _this7.onResize(e);
+        });
+        document.addEventListener('mouseup', function () {
+          if (_this7.isDragging || _this7.isResizing) {
+            _this7.manager.updateHiddenInputs();
+            // Reabilita o drag do mapa
+            var map = _this7.getMap();
+            if (map) {
+              map.setOptions({
+                draggable: true
+              });
+            }
+          }
+          _this7.isDragging = false;
+          _this7.isResizing = false;
+        });
+      }
+    }, {
+      key: "startDrag",
+      value: function startDrag(e) {
+        this.isDragging = true;
+        this.dragStart = {
+          x: e.clientX,
+          y: e.clientY,
+          bounds: new google.maps.LatLngBounds(this.bounds.getSouthWest(), this.bounds.getNorthEast())
+        };
+        // Desabilita o drag do mapa enquanto arrasta o overlay
+        this.getMap().setOptions({
+          draggable: false
+        });
+        e.preventDefault();
+        e.stopPropagation();
+      }
+    }, {
+      key: "onDrag",
+      value: function onDrag(e) {
+        var projection = this.getProjection();
+        if (!projection) return;
+        var dx = e.clientX - this.dragStart.x;
+        var dy = e.clientY - this.dragStart.y;
+        var startSW = this.dragStart.bounds.getSouthWest();
+        var startNE = this.dragStart.bounds.getNorthEast();
+        var swPoint = projection.fromLatLngToDivPixel(startSW);
+        var nePoint = projection.fromLatLngToDivPixel(startNE);
+        var newSW = projection.fromDivPixelToLatLng(new google.maps.Point(swPoint.x + dx, swPoint.y + dy));
+        var newNE = projection.fromDivPixelToLatLng(new google.maps.Point(nePoint.x + dx, nePoint.y + dy));
+        this.bounds = new google.maps.LatLngBounds(newSW, newNE);
+        this.manager.overlay.bounds = this.bounds;
+        this.manager.overlay.center = {
+          lat: (newSW.lat() + newNE.lat()) / 2,
+          lng: (newSW.lng() + newNE.lng()) / 2
+        };
+        this.draw();
+      }
+    }, {
+      key: "startResize",
+      value: function startResize(e, corner) {
+        this.isResizing = true;
+        this.resizeCorner = corner;
+        this.resizeStart = {
+          x: e.clientX,
+          y: e.clientY,
+          bounds: new google.maps.LatLngBounds(this.bounds.getSouthWest(), this.bounds.getNorthEast())
+        };
+        // Desabilita o drag do mapa enquanto redimensiona
+        this.getMap().setOptions({
+          draggable: false
+        });
+        e.preventDefault();
+        e.stopPropagation();
+      }
+    }, {
+      key: "onResize",
+      value: function onResize(e) {
+        var projection = this.getProjection();
+        if (!projection) return;
+        var startSW = this.resizeStart.bounds.getSouthWest();
+        var startNE = this.resizeStart.bounds.getNorthEast();
+        var newSW = startSW;
+        var newNE = startNE;
+        var swPoint = projection.fromLatLngToDivPixel(startSW);
+        var nePoint = projection.fromLatLngToDivPixel(startNE);
+        var dx = e.clientX - this.resizeStart.x;
+        var dy = e.clientY - this.resizeStart.y;
+        if (this.resizeCorner.includes('e')) {
+          newNE = projection.fromDivPixelToLatLng(new google.maps.Point(nePoint.x + dx, nePoint.y));
+        }
+        if (this.resizeCorner.includes('w')) {
+          newSW = projection.fromDivPixelToLatLng(new google.maps.Point(swPoint.x + dx, swPoint.y));
+        }
+        if (this.resizeCorner.includes('n')) {
+          newNE = projection.fromDivPixelToLatLng(new google.maps.Point(this.resizeCorner.includes('e') ? nePoint.x + dx : nePoint.x, nePoint.y + dy));
+        }
+        if (this.resizeCorner.includes('s')) {
+          newSW = projection.fromDivPixelToLatLng(new google.maps.Point(this.resizeCorner.includes('w') ? swPoint.x + dx : swPoint.x, swPoint.y + dy));
+        }
+        this.bounds = new google.maps.LatLngBounds(newSW, newNE);
+        this.manager.overlay.bounds = this.bounds;
+        this.manager.overlay.center = {
+          lat: (newSW.lat() + newNE.lat()) / 2,
+          lng: (newSW.lng() + newNE.lng()) / 2
+        };
+        this.draw();
+      }
+    }, {
+      key: "draw",
+      value: function draw() {
+        if (!this.div) return;
+        var projection = this.getProjection();
+        if (!projection) return;
+        var sw = projection.fromLatLngToDivPixel(this.bounds.getSouthWest());
+        var ne = projection.fromLatLngToDivPixel(this.bounds.getNorthEast());
+        if (!sw || !ne) return;
+        var width = ne.x - sw.x;
+        var height = sw.y - ne.y;
+        this.div.style.left = sw.x + 'px';
+        this.div.style.top = ne.y + 'px';
+        this.div.style.width = width + 'px';
+        this.div.style.height = height + 'px';
+
+        // Aplica rotacao
+        this.div.style.transform = "rotate(".concat(this.rotation, "deg)");
+        this.div.style.transformOrigin = 'center center';
+      }
+    }, {
+      key: "updateBounds",
+      value: function updateBounds(bounds) {
+        this.bounds = bounds;
+        this.draw();
+      }
+    }, {
+      key: "updateRotation",
+      value: function updateRotation(rotation) {
+        this.rotation = rotation;
+        this.draw();
+      }
+    }, {
+      key: "setOpacity",
+      value: function setOpacity(opacity) {
+        this.opacity = opacity;
+        if (this.img) {
+          this.img.style.opacity = opacity;
+        }
+      }
+    }, {
+      key: "onRemove",
+      value: function onRemove() {
+        if (this.div) {
+          this.div.parentNode.removeChild(this.div);
+          this.div = null;
+          this.img = null;
+        }
+      }
+    }]);
+  }(google.maps.OverlayView);
+  return CustomImageOverlayClass;
+}
+
+/***/ },
+
+/***/ "./assets/js/src/managers/SVGEditorManager.js"
+/*!****************************************************!*\
+  !*** ./assets/js/src/managers/SVGEditorManager.js ***!
+  \****************************************************/
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   SVGEditorManager: () => (/* binding */ SVGEditorManager)
+/* harmony export */ });
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
+function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
+function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+/**
+ * SVGEditorManager - Editor para vincular shapes do SVG aos lotes
+ *
+ * Responsabilidades:
+ * 1. Renderizar o SVG sobre o mapa com shapes clicáveis
+ * 2. Permitir selecionar cada shape e vincular a um lote (ID da unidade + bloco)
+ * 3. Salvar o mapeamento shape_index → {lote_id, bloco}
+ * 4. Gerenciar estado visual (cores baseadas em status: vinculado/não vinculado)
+ */
+var SVGEditorManager = /*#__PURE__*/function () {
+  function SVGEditorManager(map, stateManager, eventBus) {
+    _classCallCheck(this, SVGEditorManager);
+    this.map = map;
+    this.stateManager = stateManager;
+    this.eventBus = eventBus;
+
+    // Dados do SVG
+    this.svgContent = null;
+    this.svgElement = null;
+    this.shapes = [];
+    this.viewBox = null;
+
+    // Mapeamento shape_index → dados do lote
+    this.shapeMapping = {};
+
+    // Overlay no mapa
+    this.overlay = {
+      bounds: null,
+      rotation: 0,
+      center: null
+    };
+
+    // Custom Overlay do Google Maps
+    this.customOverlay = null;
+
+    // Estado
+    this.isEditorActive = false;
+    this.selectedShapeIndex = null;
+
+    // Elementos DOM
+    this.editorPanel = null;
+    this.shapesList = null;
+    this.init();
+  }
+
+  /**
+   * Inicializa o editor
+   */
+  return _createClass(SVGEditorManager, [{
+    key: "init",
+    value: function init() {
+      this.createEditorPanel();
+      this.loadSavedData();
+      this.setupEventListeners();
+    }
+
+    /**
+     * Cria o painel lateral do editor
+     */
+  }, {
+    key: "createEditorPanel",
+    value: function createEditorPanel() {
+      // Verifica se já existe
+      if (document.getElementById('svgEditorPanel')) {
+        this.editorPanel = document.getElementById('svgEditorPanel');
+        return;
+      }
+      var panel = document.createElement('div');
+      panel.id = 'svgEditorPanel';
+      panel.innerHTML = "\n      <div class=\"svg-editor-header\">\n        <h3>\n          <span class=\"dashicons dashicons-admin-appearance\"></span>\n          Editor de Lotes SVG\n        </h3>\n        <button type=\"button\" class=\"button svg-editor-close\" title=\"Fechar\">&times;</button>\n      </div>\n\n      <div class=\"svg-editor-content\">\n        <!-- Info do SVG carregado -->\n        <div class=\"svg-editor-info\" id=\"svgEditorInfo\" style=\"display: none;\">\n          <div class=\"svg-info-item\">\n            <span class=\"dashicons dashicons-images-alt2\"></span>\n            <span id=\"svgEditorShapeCount\">0 shapes</span>\n          </div>\n          <div class=\"svg-info-item\">\n            <span class=\"dashicons dashicons-saved\"></span>\n            <span id=\"svgEditorMappedCount\">0 vinculados</span>\n          </div>\n        </div>\n\n        <!-- Instru\xE7\xF5es -->\n        <div class=\"svg-editor-instructions\">\n          <p><strong>Como usar:</strong></p>\n          <ol>\n            <li>Importe um SVG pelo bot\xE3o \"Importar SVG\"</li>\n            <li>Posicione o SVG sobre o mapa</li>\n            <li>Clique em cada shape para vincular ao lote</li>\n            <li>Salve o post para persistir as configura\xE7\xF5es</li>\n          </ol>\n        </div>\n\n        <!-- Lista de shapes -->\n        <div class=\"svg-editor-shapes-header\" style=\"display: none;\">\n          <h4>Shapes do SVG</h4>\n          <button type=\"button\" class=\"button button-small\" id=\"svgEditorSelectAll\">Selecionar Todos</button>\n        </div>\n        <div class=\"svg-editor-shapes-list\" id=\"svgEditorShapesList\">\n          <p class=\"no-shapes\">Nenhum SVG carregado</p>\n        </div>\n\n        <!-- A\xE7\xF5es -->\n        <div class=\"svg-editor-actions\" style=\"display: none;\">\n          <button type=\"button\" class=\"button\" id=\"svgEditorClearAll\">\n            <span class=\"dashicons dashicons-trash\"></span> Limpar V\xEDnculos\n          </button>\n          <button type=\"button\" class=\"button button-primary\" id=\"svgEditorSave\">\n            <span class=\"dashicons dashicons-yes\"></span> Aplicar Configura\xE7\xE3o\n          </button>\n        </div>\n      </div>\n\n      <!-- Modal de vincula\xE7\xE3o -->\n      <div class=\"svg-editor-modal\" id=\"svgEditorModal\" style=\"display: none;\">\n        <div class=\"svg-editor-modal-content\">\n          <h4>Vincular Shape ao Lote</h4>\n          <p class=\"shape-info\">Shape: <strong id=\"modalShapeIndex\">-</strong></p>\n\n          <div class=\"form-group\">\n            <label for=\"modalLoteId\">ID da Unidade: <span class=\"required\">*</span></label>\n            <input type=\"text\" id=\"modalLoteId\" placeholder=\"Ex: 123\" />\n            <small>ID da unidade correspondente na API</small>\n          </div>\n\n          <div class=\"form-group\">\n            <label for=\"modalBloco\">Quadra/Bloco: <span class=\"required\">*</span></label>\n            <input type=\"text\" id=\"modalBloco\" placeholder=\"Ex: A, B, C...\" />\n            <small>Bloco onde a unidade est\xE1 localizada</small>\n          </div>\n\n          <div class=\"form-group\">\n            <label for=\"modalNome\">Nome (opcional):</label>\n            <input type=\"text\" id=\"modalNome\" placeholder=\"Ex: Lote 01\" />\n          </div>\n\n          <div class=\"modal-actions\">\n            <button type=\"button\" class=\"button\" id=\"modalCancel\">Cancelar</button>\n            <button type=\"button\" class=\"button\" id=\"modalRemove\" style=\"display: none; color: #d63638;\">Remover V\xEDnculo</button>\n            <button type=\"button\" class=\"button button-primary\" id=\"modalSave\">Salvar</button>\n          </div>\n        </div>\n      </div>\n    ";
+
+      // Adiciona estilos
+      this.addStyles();
+      document.body.appendChild(panel);
+      this.editorPanel = panel;
+    }
+
+    /**
+     * Adiciona estilos CSS do editor
+     */
+  }, {
+    key: "addStyles",
+    value: function addStyles() {
+      if (document.getElementById('svgEditorStyles')) return;
+      var styles = document.createElement('style');
+      styles.id = 'svgEditorStyles';
+      styles.textContent = "\n      #svgEditorPanel {\n        display: none;\n        position: fixed;\n        top: 32px;\n        right: 0;\n        width: 320px;\n        height: calc(100vh - 32px);\n        background: #fff;\n        border-left: 1px solid #ddd;\n        box-shadow: -4px 0 20px rgba(0,0,0,0.1);\n        z-index: 9998;\n        overflow: hidden;\n      }\n\n      #svgEditorPanel.active {\n        display: flex;\n        flex-direction: column;\n      }\n\n      .svg-editor-header {\n        display: flex;\n        justify-content: space-between;\n        align-items: center;\n        padding: 15px;\n        background: #f8f9fa;\n        border-bottom: 1px solid #ddd;\n      }\n\n      .svg-editor-header h3 {\n        margin: 0;\n        font-size: 14px;\n        display: flex;\n        align-items: center;\n        gap: 8px;\n      }\n\n      .svg-editor-close {\n        padding: 0 8px !important;\n        font-size: 18px !important;\n        line-height: 1 !important;\n      }\n\n      .svg-editor-content {\n        flex: 1;\n        overflow-y: auto;\n        padding: 15px;\n      }\n\n      .svg-editor-info {\n        display: flex;\n        gap: 15px;\n        padding: 10px;\n        background: #e7f5ff;\n        border-radius: 4px;\n        margin-bottom: 15px;\n      }\n\n      .svg-info-item {\n        display: flex;\n        align-items: center;\n        gap: 5px;\n        font-size: 12px;\n      }\n\n      .svg-editor-instructions {\n        background: #f5f5f5;\n        padding: 12px;\n        border-radius: 4px;\n        margin-bottom: 15px;\n        font-size: 12px;\n      }\n\n      .svg-editor-instructions p {\n        margin: 0 0 8px 0;\n      }\n\n      .svg-editor-instructions ol {\n        margin: 0;\n        padding-left: 18px;\n      }\n\n      .svg-editor-instructions li {\n        margin-bottom: 4px;\n      }\n\n      .svg-editor-shapes-header {\n        display: flex;\n        justify-content: space-between;\n        align-items: center;\n        margin-bottom: 10px;\n      }\n\n      .svg-editor-shapes-header h4 {\n        margin: 0;\n        font-size: 13px;\n      }\n\n      .svg-editor-shapes-list {\n        max-height: 300px;\n        overflow-y: auto;\n        border: 1px solid #ddd;\n        border-radius: 4px;\n        margin-bottom: 15px;\n      }\n\n      .svg-editor-shapes-list .no-shapes {\n        padding: 20px;\n        text-align: center;\n        color: #666;\n        margin: 0;\n      }\n\n      .shape-item {\n        display: flex;\n        align-items: center;\n        padding: 8px 12px;\n        border-bottom: 1px solid #eee;\n        cursor: pointer;\n        transition: background 0.2s;\n        justify-content: space-between;\n      }\n\n      .shape-item:last-child {\n        border-bottom: none;\n      }\n\n      .shape-item:hover {\n        background: #f0f7fc;\n      }\n\n      .shape-item.selected {\n        background: #e7f5ff;\n        border-left: 3px solid #0073aa;\n      }\n\n      .shape-item.mapped {\n        background: #d4edda;\n      }\n\n      .shape-item.mapped.selected {\n        background: #c3e6cb;\n        border-left: 3px solid #28a745;\n      }\n\n      .shape-color {\n        width: 16px;\n        height: 16px;\n        border-radius: 3px;\n        margin-right: 10px;\n        border: 1px solid #ddd;\n      }\n\n      .shape-info-text {\n        flex: 1;\n        font-size: 12px;\n      }\n\n      .shape-info-text .shape-name {\n        font-weight: 600;\n      }\n\n      .shape-info-text .shape-lote {\n        color: #28a745;\n        font-size: 11px;\n      }\n\n      .shape-status {\n        font-size: 10px;\n        padding: 2px 6px 2px 0;\n        border-radius: 10px;\n      }\n\n      .shape-status.unmapped {\n        background: #f8d7da;\n        color: #721c24;\n      }\n\n      .shape-status.mapped {\n        background: #d4edda;\n        color: #155724;\n      }\n\n      .svg-editor-actions {\n        display: flex;\n        gap: 10px;\n        padding-top: 15px;\n        border-top: 1px solid #ddd;\n      }\n\n      .svg-editor-actions .button {\n        flex: 1;\n        display: flex;\n        align-items: center;\n        justify-content: center;\n        gap: 5px;\n      }\n\n      /* Modal */\n      .svg-editor-modal {\n        position: fixed;\n        top: 0;\n        left: 0;\n        width: 100%;\n        height: 100%;\n        background: rgba(0,0,0,0.5);\n        z-index: 100000;\n        display: flex;\n        align-items: center;\n        justify-content: center;\n      }\n\n      .svg-editor-modal-content {\n        background: #fff;\n        padding: 25px;\n        border-radius: 8px;\n        width: 350px;\n        max-width: 90%;\n      }\n\n      .svg-editor-modal-content h4 {\n        margin: 0 0 15px 0;\n      }\n\n      .svg-editor-modal-content .shape-info {\n        background: #f5f5f5;\n        padding: 8px 12px;\n        border-radius: 4px;\n        margin-bottom: 15px;\n        font-size: 13px;\n      }\n\n      .svg-editor-modal-content .form-group {\n        margin-bottom: 15px;\n      }\n\n      .svg-editor-modal-content label {\n        display: block;\n        margin-bottom: 5px;\n        font-weight: 600;\n      }\n\n      .svg-editor-modal-content label .required {\n        color: #d63638;\n      }\n\n      .svg-editor-modal-content input {\n        width: 100%;\n        padding: 8px;\n        border: 1px solid #ddd;\n        border-radius: 4px;\n      }\n\n      .svg-editor-modal-content small {\n        display: block;\n        margin-top: 4px;\n        color: #666;\n        font-size: 11px;\n      }\n\n      .modal-actions {\n        display: flex;\n        gap: 10px;\n        justify-content: flex-end;\n        margin-top: 20px;\n      }\n\n      /* Overlay SVG interativo */\n      .svg-editor-overlay {\n        cursor: crosshair;\n      }\n\n      .svg-editor-overlay svg {\n        width: 100%;\n        height: 100%;\n      }\n\n      .svg-editor-overlay svg polygon,\n      .svg-editor-overlay svg path,\n      .svg-editor-overlay svg polyline,\n      .svg-editor-overlay svg rect {\n        cursor: pointer;\n        transition: fill 0.2s, stroke 0.2s;\n      }\n\n      .svg-editor-overlay svg polygon:hover,\n      .svg-editor-overlay svg path:hover,\n      .svg-editor-overlay svg polyline:hover,\n      .svg-editor-overlay svg rect:hover {\n        fill: rgba(0, 115, 170, 0.5) !important;\n        stroke: #0073aa !important;\n        stroke-width: 3px !important;\n      }\n\n      .svg-editor-overlay svg .shape-mapped {\n        fill: rgba(40, 167, 69, 0.4) !important;\n        stroke: #28a745 !important;\n      }\n\n      .svg-editor-overlay svg .shape-selected {\n        fill: rgba(255, 193, 7, 0.5) !important;\n        stroke: #ffc107 !important;\n        stroke-width: 4px !important;\n      }\n    ";
+      document.head.appendChild(styles);
+    }
+
+    /**
+     * Carrega dados salvos do hidden input
+     */
+  }, {
+    key: "loadSavedData",
+    value: function loadSavedData() {
+      // SVG content
+      var svgInput = document.getElementById('terreno_svg_content');
+      if (svgInput && svgInput.value) {
+        this.svgContent = svgInput.value;
+      }
+
+      // Bounds
+      var boundsInput = document.getElementById('terreno_svg_bounds');
+      if (boundsInput && boundsInput.value) {
+        try {
+          this.overlay.bounds = JSON.parse(boundsInput.value);
+        } catch (e) {
+          // Ignore parse errors
+        }
+      }
+
+      // Rotation
+      var rotationInput = document.getElementById('terreno_svg_rotation');
+      if (rotationInput && rotationInput.value) {
+        this.overlay.rotation = parseFloat(rotationInput.value) || 0;
+      }
+
+      // Shape mapping
+      var mappingInput = document.getElementById('terreno_shape_mapping');
+      if (mappingInput && mappingInput.value) {
+        try {
+          this.shapeMapping = JSON.parse(mappingInput.value);
+        } catch (e) {
+          // Ignore parse errors
+        }
+      }
+
+      // Se tem SVG salvo, processa e mostra
+      if (this.svgContent) {
+        this.processSVGContent();
+      }
+    }
+
+    /**
+     * Configura event listeners
+     */
+  }, {
+    key: "setupEventListeners",
+    value: function setupEventListeners() {
+      var _this = this;
+      // Fechar painel
+      document.addEventListener('click', function (e) {
+        if (e.target.classList.contains('svg-editor-close')) {
+          _this.closeEditor();
+        }
+      });
+
+      // Modal events
+      document.addEventListener('click', function (e) {
+        if (e.target.id === 'modalCancel') {
+          _this.closeModal();
+        }
+        if (e.target.id === 'modalSave') {
+          _this.saveShapeMapping();
+        }
+        if (e.target.id === 'modalRemove') {
+          _this.removeShapeMapping();
+        }
+      });
+
+      // Limpar todos vínculos
+      document.addEventListener('click', function (e) {
+        if (e.target.id === 'svgEditorClearAll' || e.target.closest('#svgEditorClearAll')) {
+          if (confirm('Tem certeza que deseja remover todos os vínculos?')) {
+            _this.clearAllMappings();
+          }
+        }
+      });
+
+      // Salvar configuração
+      document.addEventListener('click', function (e) {
+        if (e.target.id === 'svgEditorSave' || e.target.closest('#svgEditorSave')) {
+          _this.saveConfiguration();
+        }
+      });
+
+      // Eventos do EventBus
+      this.eventBus.on('svg:loaded', function (data) {
+        _this.onSVGLoaded(data);
+      });
+      this.eventBus.on('svg:positioned', function (data) {
+        _this.onSVGPositioned(data);
+      });
+    }
+
+    /**
+     * Abre o editor
+     */
+  }, {
+    key: "openEditor",
+    value: function openEditor() {
+      this.isEditorActive = true;
+      this.editorPanel.classList.add('active');
+    }
+
+    /**
+     * Fecha o editor
+     */
+  }, {
+    key: "closeEditor",
+    value: function closeEditor() {
+      this.isEditorActive = false;
+      this.editorPanel.classList.remove('active');
+    }
+
+    /**
+     * Toggle do editor
+     */
+  }, {
+    key: "toggleEditor",
+    value: function toggleEditor() {
+      if (this.isEditorActive) {
+        this.closeEditor();
+      } else {
+        this.openEditor();
+      }
+    }
+
+    /**
+     * Callback quando SVG é carregado pelo SVGOverlayManager
+     */
+  }, {
+    key: "onSVGLoaded",
+    value: function onSVGLoaded(data) {
+      this.svgContent = data.svgContent;
+      this.shapes = data.shapes;
+      this.viewBox = data.viewBox;
+      this.processSVGContent();
+      this.renderShapesList();
+      this.updateEditorUI();
+      this.openEditor();
+    }
+
+    /**
+     * Callback quando SVG é posicionado no mapa
+     */
+  }, {
+    key: "onSVGPositioned",
+    value: function onSVGPositioned(data) {
+      this.overlay.bounds = data.bounds;
+      this.overlay.rotation = data.rotation;
+      this.overlay.center = data.center;
+
+      // Salva nos inputs hidden
+      this.updateHiddenInputs();
+    }
+
+    /**
+     * Processa o conteúdo SVG para extrair shapes
+     */
+  }, {
+    key: "processSVGContent",
+    value: function processSVGContent() {
+      if (!this.svgContent) return;
+
+      // Parse SVG
+      var parser = new DOMParser();
+      var doc = parser.parseFromString(this.svgContent, 'image/svg+xml');
+      this.svgElement = doc.documentElement;
+
+      // Extrai viewBox
+      var viewBoxAttr = this.svgElement.getAttribute('viewBox');
+      if (viewBoxAttr) {
+        var parts = viewBoxAttr.split(/[\s,]+/).map(parseFloat);
+        this.viewBox = {
+          x: parts[0] || 0,
+          y: parts[1] || 0,
+          width: parts[2] || 100,
+          height: parts[3] || 100
+        };
+      }
+
+      // Conta shapes
+      var shapeSelectors = 'polygon, path, polyline, rect';
+      var shapeElements = this.svgElement.querySelectorAll(shapeSelectors);
+      this.shapes = Array.from(shapeElements).map(function (el, index) {
+        return {
+          index: index,
+          type: el.tagName.toLowerCase(),
+          id: el.id || "shape_".concat(index),
+          fill: el.getAttribute('fill') || el.style.fill || '#ccc',
+          stroke: el.getAttribute('stroke') || el.style.stroke || '#000'
+        };
+      });
+    }
+
+    /**
+     * Renderiza a lista de shapes no painel
+     */
+  }, {
+    key: "renderShapesList",
+    value: function renderShapesList() {
+      var _this2 = this;
+      var list = document.getElementById('svgEditorShapesList');
+      if (!list) return;
+      if (this.shapes.length === 0) {
+        list.innerHTML = '<p class="no-shapes">Nenhum SVG carregado</p>';
+        return;
+      }
+      var html = this.shapes.map(function (shape) {
+        var mapping = _this2.shapeMapping[shape.index];
+        var isMapped = !!mapping;
+        var loteInfo = isMapped ? "Lote ".concat(mapping.lote_id, " - Bloco ").concat(mapping.bloco) : '';
+        return "\n        <div class=\"shape-item ".concat(isMapped ? 'mapped' : '', "\" data-shape-index=\"").concat(shape.index, "\">\n          <div class=\"shape-color\" style=\"background: ").concat(shape.fill, "; border-color: ").concat(shape.stroke, ";\"></div>\n          <div class=\"shape-info-text\">\n            <div class=\"shape-name\">").concat(shape.id, "</div>\n            ").concat(isMapped ? "<div class=\"shape-lote\">".concat(loteInfo, "</div>") : '', "\n          </div>\n          <span class=\"shape-status ").concat(isMapped ? 'mapped' : 'unmapped', "\">\n            ").concat(isMapped ? 'Vinculado' : 'Pendente', "\n          </span>\n        </div>\n      ");
+      }).join('');
+      list.innerHTML = html;
+
+      // Adiciona click listeners
+      list.querySelectorAll('.shape-item').forEach(function (item) {
+        item.addEventListener('click', function () {
+          var index = parseInt(item.dataset.shapeIndex);
+          _this2.selectShape(index);
+        });
+      });
+    }
+
+    /**
+     * Atualiza UI do editor
+     */
+  }, {
+    key: "updateEditorUI",
+    value: function updateEditorUI() {
+      var infoEl = document.getElementById('svgEditorInfo');
+      var shapesHeader = document.querySelector('.svg-editor-shapes-header');
+      var actionsEl = document.querySelector('.svg-editor-actions');
+      if (this.shapes.length > 0) {
+        // Mostra elementos
+        if (infoEl) infoEl.style.display = 'flex';
+        if (shapesHeader) shapesHeader.style.display = 'flex';
+        if (actionsEl) actionsEl.style.display = 'flex';
+
+        // Atualiza contadores
+        document.getElementById('svgEditorShapeCount').textContent = "".concat(this.shapes.length, " shapes");
+        var mappedCount = Object.keys(this.shapeMapping).length;
+        document.getElementById('svgEditorMappedCount').textContent = "".concat(mappedCount, " vinculados");
+      }
+    }
+
+    /**
+     * Seleciona um shape
+     */
+  }, {
+    key: "selectShape",
+    value: function selectShape(index) {
+      this.selectedShapeIndex = index;
+
+      // Atualiza visual na lista
+      document.querySelectorAll('.shape-item').forEach(function (item) {
+        item.classList.remove('selected');
+        if (parseInt(item.dataset.shapeIndex) === index) {
+          item.classList.add('selected');
+        }
+      });
+
+      // Destaca no overlay
+      this.highlightShapeInOverlay(index);
+
+      // Abre modal de vinculação
+      this.openMappingModal(index);
+    }
+
+    /**
+     * Destaca shape no overlay do mapa
+     */
+  }, {
+    key: "highlightShapeInOverlay",
+    value: function highlightShapeInOverlay(index) {
+      // Emite evento para o overlay
+      this.eventBus.emit('svg:highlight_shape', {
+        index: index
+      });
+    }
+
+    /**
+     * Abre modal de vinculação
+     */
+  }, {
+    key: "openMappingModal",
+    value: function openMappingModal(index) {
+      var modal = document.getElementById('svgEditorModal');
+      if (!modal) return;
+      var shape = this.shapes.find(function (s) {
+        return s.index === index;
+      });
+      var mapping = this.shapeMapping[index];
+
+      // Preenche informações
+      document.getElementById('modalShapeIndex').textContent = (shape === null || shape === void 0 ? void 0 : shape.id) || "Shape ".concat(index);
+
+      // Preenche campos se já tem mapeamento
+      document.getElementById('modalLoteId').value = (mapping === null || mapping === void 0 ? void 0 : mapping.lote_id) || '';
+      document.getElementById('modalBloco').value = (mapping === null || mapping === void 0 ? void 0 : mapping.bloco) || '';
+      document.getElementById('modalNome').value = (mapping === null || mapping === void 0 ? void 0 : mapping.nome) || '';
+
+      // Mostra/esconde botão de remover
+      var removeBtn = document.getElementById('modalRemove');
+      if (removeBtn) {
+        removeBtn.style.display = mapping ? 'block' : 'none';
+      }
+      modal.style.display = 'flex';
+    }
+
+    /**
+     * Fecha modal
+     */
+  }, {
+    key: "closeModal",
+    value: function closeModal() {
+      var modal = document.getElementById('svgEditorModal');
+      if (modal) {
+        modal.style.display = 'none';
+      }
+      this.selectedShapeIndex = null;
+    }
+
+    /**
+     * Salva o mapeamento do shape selecionado
+     */
+  }, {
+    key: "saveShapeMapping",
+    value: function saveShapeMapping() {
+      var loteId = document.getElementById('modalLoteId').value.trim();
+      var bloco = document.getElementById('modalBloco').value.trim();
+      var nome = document.getElementById('modalNome').value.trim();
+      if (!loteId) {
+        alert('O ID da Unidade é obrigatório');
+        return;
+      }
+      if (!bloco) {
+        alert('O Bloco é obrigatório');
+        return;
+      }
+
+      // Salva no mapeamento
+      this.shapeMapping[this.selectedShapeIndex] = {
+        lote_id: loteId,
+        bloco: bloco,
+        nome: nome,
+        shape_index: this.selectedShapeIndex
+      };
+
+      // Atualiza UI
+      this.renderShapesList();
+      this.updateEditorUI();
+      this.updateOverlayColors();
+      this.updateHiddenInputs();
+
+      // Fecha modal
+      this.closeModal();
+    }
+
+    /**
+     * Remove vínculo do shape
+     */
+  }, {
+    key: "removeShapeMapping",
+    value: function removeShapeMapping() {
+      if (this.selectedShapeIndex === null) return;
+      delete this.shapeMapping[this.selectedShapeIndex];
+
+      // Atualiza UI
+      this.renderShapesList();
+      this.updateEditorUI();
+      this.updateOverlayColors();
+      this.updateHiddenInputs();
+
+      // Fecha modal
+      this.closeModal();
+    }
+
+    /**
+     * Limpa todos os mapeamentos
+     */
+  }, {
+    key: "clearAllMappings",
+    value: function clearAllMappings() {
+      this.shapeMapping = {};
+      this.renderShapesList();
+      this.updateEditorUI();
+      this.updateOverlayColors();
+      this.updateHiddenInputs();
+    }
+
+    /**
+     * Atualiza cores no overlay baseado no mapeamento
+     */
+  }, {
+    key: "updateOverlayColors",
+    value: function updateOverlayColors() {
+      this.eventBus.emit('svg:update_colors', {
+        mapping: this.shapeMapping
+      });
+    }
+
+    /**
+     * Atualiza inputs hidden com os dados
+     */
+  }, {
+    key: "updateHiddenInputs",
+    value: function updateHiddenInputs() {
+      // SVG Content
+      var svgInput = document.getElementById('terreno_svg_content');
+      if (!svgInput) {
+        var _document$querySelect;
+        svgInput = document.createElement('input');
+        svgInput.type = 'hidden';
+        svgInput.id = 'terreno_svg_content';
+        svgInput.name = 'terreno_svg_content';
+        (_document$querySelect = document.querySelector('#terreno-mapa-container')) === null || _document$querySelect === void 0 || _document$querySelect.appendChild(svgInput);
+      }
+      svgInput.value = this.svgContent || '';
+
+      // Bounds
+      var boundsInput = document.getElementById('terreno_svg_bounds');
+      if (!boundsInput) {
+        var _document$querySelect2;
+        boundsInput = document.createElement('input');
+        boundsInput.type = 'hidden';
+        boundsInput.id = 'terreno_svg_bounds';
+        boundsInput.name = 'terreno_svg_bounds';
+        (_document$querySelect2 = document.querySelector('#terreno-mapa-container')) === null || _document$querySelect2 === void 0 || _document$querySelect2.appendChild(boundsInput);
+      }
+      boundsInput.value = this.overlay.bounds ? JSON.stringify(this.overlay.bounds) : '';
+
+      // Rotation
+      var rotationInput = document.getElementById('terreno_svg_rotation');
+      if (!rotationInput) {
+        var _document$querySelect3;
+        rotationInput = document.createElement('input');
+        rotationInput.type = 'hidden';
+        rotationInput.id = 'terreno_svg_rotation';
+        rotationInput.name = 'terreno_svg_rotation';
+        (_document$querySelect3 = document.querySelector('#terreno-mapa-container')) === null || _document$querySelect3 === void 0 || _document$querySelect3.appendChild(rotationInput);
+      }
+      rotationInput.value = this.overlay.rotation || 0;
+
+      // Shape mapping
+      var mappingInput = document.getElementById('terreno_shape_mapping');
+      if (!mappingInput) {
+        var _document$querySelect4;
+        mappingInput = document.createElement('input');
+        mappingInput.type = 'hidden';
+        mappingInput.id = 'terreno_shape_mapping';
+        mappingInput.name = 'terreno_shape_mapping';
+        (_document$querySelect4 = document.querySelector('#terreno-mapa-container')) === null || _document$querySelect4 === void 0 || _document$querySelect4.appendChild(mappingInput);
+      }
+      mappingInput.value = JSON.stringify(this.shapeMapping);
+    }
+
+    /**
+     * Salva configuração (aplica e fecha editor)
+     */
+  }, {
+    key: "saveConfiguration",
+    value: function saveConfiguration() {
+      this.updateHiddenInputs();
+
+      // Notifica que foi salvo
+      this.eventBus.emit('svg:configuration_saved', {
+        svgContent: this.svgContent,
+        bounds: this.overlay.bounds,
+        rotation: this.overlay.rotation,
+        mapping: this.shapeMapping
+      });
+      alert('Configuração aplicada! Não esqueça de salvar o post.');
+      this.closeEditor();
+    }
+
+    /**
+     * Retorna o mapeamento atual
+     */
+  }, {
+    key: "getMapping",
+    value: function getMapping() {
+      return this.shapeMapping;
+    }
+
+    /**
+     * Retorna dados completos para salvar
+     */
+  }, {
+    key: "getDataForSave",
+    value: function getDataForSave() {
+      return {
+        svgContent: this.svgContent,
+        bounds: this.overlay.bounds,
+        rotation: this.overlay.rotation,
+        mapping: this.shapeMapping
+      };
+    }
+  }]);
+}();
+
+/***/ },
+
+/***/ "./assets/js/src/managers/SVGOverlayManager.js"
+/*!*****************************************************!*\
+  !*** ./assets/js/src/managers/SVGOverlayManager.js ***!
+  \*****************************************************/
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   SVGOverlayManager: () => (/* binding */ SVGOverlayManager)
+/* harmony export */ });
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _callSuper(t, o, e) { return o = _getPrototypeOf(o), _possibleConstructorReturn(t, _isNativeReflectConstruct() ? Reflect.construct(o, e || [], _getPrototypeOf(t).constructor) : o.apply(t, e)); }
+function _possibleConstructorReturn(t, e) { if (e && ("object" == _typeof(e) || "function" == typeof e)) return e; if (void 0 !== e) throw new TypeError("Derived constructors may only return object or undefined"); return _assertThisInitialized(t); }
+function _assertThisInitialized(e) { if (void 0 === e) throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); return e; }
+function _isNativeReflectConstruct() { try { var t = !Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); } catch (t) {} return (_isNativeReflectConstruct = function _isNativeReflectConstruct() { return !!t; })(); }
+function _getPrototypeOf(t) { return _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function (t) { return t.__proto__ || Object.getPrototypeOf(t); }, _getPrototypeOf(t); }
+function _inherits(t, e) { if ("function" != typeof e && null !== e) throw new TypeError("Super expression must either be null or a function"); t.prototype = Object.create(e && e.prototype, { constructor: { value: t, writable: !0, configurable: !0 } }), Object.defineProperty(t, "prototype", { writable: !1 }), e && _setPrototypeOf(t, e); }
+function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function (t, e) { return t.__proto__ = e, t; }, _setPrototypeOf(t, e); }
+function _regenerator() { /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE */ var e, t, r = "function" == typeof Symbol ? Symbol : {}, n = r.iterator || "@@iterator", o = r.toStringTag || "@@toStringTag"; function i(r, n, o, i) { var c = n && n.prototype instanceof Generator ? n : Generator, u = Object.create(c.prototype); return _regeneratorDefine2(u, "_invoke", function (r, n, o) { var i, c, u, f = 0, p = o || [], y = !1, G = { p: 0, n: 0, v: e, a: d, f: d.bind(e, 4), d: function d(t, r) { return i = t, c = 0, u = e, G.n = r, a; } }; function d(r, n) { for (c = r, u = n, t = 0; !y && f && !o && t < p.length; t++) { var o, i = p[t], d = G.p, l = i[2]; r > 3 ? (o = l === n) && (u = i[(c = i[4]) ? 5 : (c = 3, 3)], i[4] = i[5] = e) : i[0] <= d && ((o = r < 2 && d < i[1]) ? (c = 0, G.v = n, G.n = i[1]) : d < l && (o = r < 3 || i[0] > n || n > l) && (i[4] = r, i[5] = n, G.n = l, c = 0)); } if (o || r > 1) return a; throw y = !0, n; } return function (o, p, l) { if (f > 1) throw TypeError("Generator is already running"); for (y && 1 === p && d(p, l), c = p, u = l; (t = c < 2 ? e : u) || !y;) { i || (c ? c < 3 ? (c > 1 && (G.n = -1), d(c, u)) : G.n = u : G.v = u); try { if (f = 2, i) { if (c || (o = "next"), t = i[o]) { if (!(t = t.call(i, u))) throw TypeError("iterator result is not an object"); if (!t.done) return t; u = t.value, c < 2 && (c = 0); } else 1 === c && (t = i["return"]) && t.call(i), c < 2 && (u = TypeError("The iterator does not provide a '" + o + "' method"), c = 1); i = e; } else if ((t = (y = G.n < 0) ? u : r.call(n, G)) !== a) break; } catch (t) { i = e, c = 1, u = t; } finally { f = 1; } } return { value: t, done: y }; }; }(r, o, i), !0), u; } var a = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} t = Object.getPrototypeOf; var c = [][n] ? t(t([][n]())) : (_regeneratorDefine2(t = {}, n, function () { return this; }), t), u = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(c); function f(e) { return Object.setPrototypeOf ? Object.setPrototypeOf(e, GeneratorFunctionPrototype) : (e.__proto__ = GeneratorFunctionPrototype, _regeneratorDefine2(e, o, "GeneratorFunction")), e.prototype = Object.create(u), e; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, _regeneratorDefine2(u, "constructor", GeneratorFunctionPrototype), _regeneratorDefine2(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = "GeneratorFunction", _regeneratorDefine2(GeneratorFunctionPrototype, o, "GeneratorFunction"), _regeneratorDefine2(u), _regeneratorDefine2(u, o, "Generator"), _regeneratorDefine2(u, n, function () { return this; }), _regeneratorDefine2(u, "toString", function () { return "[object Generator]"; }), (_regenerator = function _regenerator() { return { w: i, m: f }; })(); }
+function _regeneratorDefine2(e, r, n, t) { var i = Object.defineProperty; try { i({}, "", {}); } catch (e) { i = 0; } _regeneratorDefine2 = function _regeneratorDefine(e, r, n, t) { function o(r, n) { _regeneratorDefine2(e, r, function (e) { return this._invoke(r, n, e); }); } r ? i ? i(e, r, { value: n, enumerable: !t, configurable: !t, writable: !t }) : e[r] = n : (o("next", 0), o("throw", 1), o("return", 2)); }, _regeneratorDefine2(e, r, n, t); }
+function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
+function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
+function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
+function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
+function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+/**
+ * SVGOverlayManager - Gerencia importação de SVG via overlay visual no mapa
+ *
+ * Nova abordagem (SVG permanente):
+ * 1. O SVG é renderizado como overlay sobre o mapa
+ * 2. O usuário arrasta, redimensiona e rotaciona para alinhar com o satélite
+ * 3. Cada shape do SVG pode ser vinculado a um lote (via SVGEditorManager)
+ * 4. No frontend, o SVG permanece como overlay (não converte para polígonos)
+ *
+ * Usa Custom Overlay do Google Maps + manipulação manual de transformações
+ */
+var SVGOverlayManager = /*#__PURE__*/function () {
+  function SVGOverlayManager(map, stateManager, eventBus, dataPersistence) {
+    _classCallCheck(this, SVGOverlayManager);
+    this.map = map;
+    this.stateManager = stateManager;
+    this.eventBus = eventBus;
+    this.dataPersistence = dataPersistence;
+
+    // Estado do overlay
+    this.svgContent = null;
+    this.svgElement = null;
+    this.shapes = [];
+    this.viewBox = null;
+
+    // Mapeamento de shapes (recebido do SVGEditorManager)
+    this.shapeMapping = {};
+
+    // Transformação do overlay
+    this.overlay = {
+      // Bounds iniciais (será definido baseado no centro do mapa)
+      bounds: null,
+      // Ângulo de rotação em graus
+      rotation: 0,
+      // Escala
+      scale: 1,
+      // Centro do overlay (lat/lng)
+      center: null,
+      // Tamanho em pixels
+      width: 400,
+      height: 400
+    };
+
+    // Estado de interação
+    this.isDragging = false;
+    this.isResizing = false;
+    this.isRotating = false;
+    this.dragStart = null;
+    this.isModalOpen = false;
+
+    // Modo de edição (para vincular shapes)
+    this.isEditorMode = false;
+    this.selectedShapeIndex = null;
+
+    // Elementos DOM
+    this.modal = null;
+    this.overlayContainer = null;
+    this.overlayElement = null;
+
+    // Google Maps Custom Overlay
+    this.customOverlay = null;
+    this.init();
+  }
+
+  /**
+   * Inicializa os event listeners
+   */
+  return _createClass(SVGOverlayManager, [{
+    key: "init",
+    value: function init() {
+      var _this = this,
+        _document$getElementB,
+        _document$getElementB2,
+        _document$getElementB3,
+        _document$getElementB5,
+        _document$getElementB6,
+        _document$getElementB7,
+        _document$getElementB8,
+        _document$getElementB9,
+        _document$getElementB0,
+        _document$getElementB1,
+        _document$getElementB10,
+        _document$getElementB11;
+      // Botão de abrir modal
+      var btnImportar = document.getElementById('btn_importar_svg');
+      if (btnImportar) {
+        btnImportar.addEventListener('click', function () {
+          return _this.openModal();
+        });
+      }
+
+      // Botão de ajustar posição do SVG
+      var btnAjustar = document.getElementById('btn_ajustar_svg');
+      if (btnAjustar) {
+        btnAjustar.addEventListener('click', function (e) {
+          e.preventDefault();
+          _this.toggleEditMode();
+        });
+      } else {
+        setTimeout(function () {
+          var btn = document.getElementById('btn_ajustar_svg');
+          if (btn) {
+            btn.addEventListener('click', function (e) {
+              e.preventDefault();
+              _this.toggleEditMode();
+            });
+          }
+        }, 500);
+      }
+
+      // Botão de remover SVG
+      var btnRemover = document.getElementById('btn_remover_svg');
+      if (btnRemover) {
+        btnRemover.addEventListener('click', function (e) {
+          e.preventDefault();
+          _this.confirmAndRemoveSvg();
+        });
+      }
+
+      // Elementos do modal
+      this.modal = document.getElementById('svgImportModal');
+      if (!this.modal) return;
+
+      // Botões de fechar/cancelar
+      (_document$getElementB = document.getElementById('svgImportClose')) === null || _document$getElementB === void 0 || _document$getElementB.addEventListener('click', function () {
+        return _this.closeModal(true);
+      });
+      (_document$getElementB2 = document.getElementById('svgImportCancel')) === null || _document$getElementB2 === void 0 || _document$getElementB2.addEventListener('click', function () {
+        return _this.closeModal(true);
+      });
+
+      // Upload de arquivo
+      (_document$getElementB3 = document.getElementById('svgSelectFile')) === null || _document$getElementB3 === void 0 || _document$getElementB3.addEventListener('click', function () {
+        var _document$getElementB4;
+        (_document$getElementB4 = document.getElementById('svgFileInput')) === null || _document$getElementB4 === void 0 || _document$getElementB4.click();
+      });
+      (_document$getElementB5 = document.getElementById('svgFileInput')) === null || _document$getElementB5 === void 0 || _document$getElementB5.addEventListener('change', function (e) {
+        if (e.target.files.length > 0) {
+          _this.handleFileUpload(e.target.files[0]);
+        }
+      });
+
+      // Drag and drop
+      var dropZone = document.getElementById('svgDropZone');
+      if (dropZone) {
+        dropZone.addEventListener('dragover', function (e) {
+          e.preventDefault();
+          dropZone.style.borderColor = '#0073aa';
+          dropZone.style.background = '#f0f7fc';
+        });
+        dropZone.addEventListener('dragleave', function () {
+          dropZone.style.borderColor = '#ccc';
+          dropZone.style.background = 'transparent';
+        });
+        dropZone.addEventListener('drop', function (e) {
+          e.preventDefault();
+          dropZone.style.borderColor = '#ccc';
+          dropZone.style.background = 'transparent';
+          if (e.dataTransfer.files.length > 0) {
+            _this.handleFileUpload(e.dataTransfer.files[0]);
+          }
+        });
+      }
+
+      // Controles de transformação
+      (_document$getElementB6 = document.getElementById('svgRotateLeft')) === null || _document$getElementB6 === void 0 || _document$getElementB6.addEventListener('click', function () {
+        _this.rotateOverlay(-1);
+      });
+      (_document$getElementB7 = document.getElementById('svgRotateRight')) === null || _document$getElementB7 === void 0 || _document$getElementB7.addEventListener('click', function () {
+        _this.rotateOverlay(1);
+      });
+      (_document$getElementB8 = document.getElementById('svgZoomIn')) === null || _document$getElementB8 === void 0 || _document$getElementB8.addEventListener('click', function () {
+        _this.scaleOverlay(1.01);
+      });
+      (_document$getElementB9 = document.getElementById('svgZoomOut')) === null || _document$getElementB9 === void 0 || _document$getElementB9.addEventListener('click', function () {
+        _this.scaleOverlay(0.99);
+      });
+      (_document$getElementB0 = document.getElementById('svgResetTransform')) === null || _document$getElementB0 === void 0 || _document$getElementB0.addEventListener('click', function () {
+        _this.resetTransform();
+      });
+
+      // Slider de opacidade
+      (_document$getElementB1 = document.getElementById('svgOpacitySlider')) === null || _document$getElementB1 === void 0 || _document$getElementB1.addEventListener('input', function (e) {
+        _this.setOverlayOpacity(e.target.value / 100);
+      });
+
+      // Slider de rotação
+      (_document$getElementB10 = document.getElementById('svgRotationSlider')) === null || _document$getElementB10 === void 0 || _document$getElementB10.addEventListener('input', function (e) {
+        _this.setRotation(parseFloat(e.target.value));
+      });
+
+      // Confirmar importação (agora salva como overlay permanente em vez de converter)
+      (_document$getElementB11 = document.getElementById('svgImportConfirm')) === null || _document$getElementB11 === void 0 || _document$getElementB11.addEventListener('click', function () {
+        _this.saveAsOverlay();
+      });
+
+      // Event listeners do SVGEditorManager
+      this.eventBus.on('svg:highlight_shape', function (data) {
+        _this.highlightShape(data.index);
+      });
+      this.eventBus.on('svg:update_colors', function (data) {
+        _this.shapeMapping = data.mapping;
+        _this.updateShapeColors();
+      });
+    }
+
+    /**
+     * Carrega dados salvos (chamado na inicialização)
+     */
+  }, {
+    key: "loadSavedOverlay",
+    value: function loadSavedOverlay() {
+      var svgInput = document.getElementById('terreno_svg_content');
+      var boundsInput = document.getElementById('terreno_svg_bounds');
+      var rotationInput = document.getElementById('terreno_svg_rotation');
+      var mappingInput = document.getElementById('terreno_shape_mapping');
+      if (svgInput !== null && svgInput !== void 0 && svgInput.value) {
+        this.svgContent = svgInput.value;
+      }
+      if (boundsInput !== null && boundsInput !== void 0 && boundsInput.value) {
+        try {
+          var bounds = JSON.parse(boundsInput.value);
+          this.overlay.bounds = new google.maps.LatLngBounds(new google.maps.LatLng(bounds.south, bounds.west), new google.maps.LatLng(bounds.north, bounds.east));
+        } catch (e) {}
+      }
+      if (rotationInput !== null && rotationInput !== void 0 && rotationInput.value) {
+        this.overlay.rotation = parseFloat(rotationInput.value) || 0;
+      }
+      if (mappingInput !== null && mappingInput !== void 0 && mappingInput.value) {
+        try {
+          this.shapeMapping = JSON.parse(mappingInput.value);
+        } catch (e) {}
+      }
+
+      // Se tem SVG salvo, renderiza o overlay
+      if (this.svgContent && this.overlay.bounds) {
+        this.renderSavedOverlay();
+      }
+    }
+
+    /**
+     * Renderiza overlay salvo anteriormente
+     */
+  }, {
+    key: "renderSavedOverlay",
+    value: function renderSavedOverlay() {
+      var _this2 = this;
+      if (!this.svgContent || !this.overlay.bounds) return;
+
+      // Parse o SVG para extrair shapes
+      this.parseSVGContent();
+
+      // Cria o overlay no mapa
+      var OverlayClass = getCustomSVGOverlayClass();
+      this.customOverlay = new OverlayClass(this.overlay.bounds, this.svgContent, this.map, this, true // isEditorMode = true
+      );
+      this.customOverlay.setMap(this.map);
+
+      // Aplica rotação salva
+      if (this.overlay.rotation) {
+        this.customOverlay.updateRotation(this.overlay.rotation);
+      }
+
+      // Aplica cores baseado no mapping e renderiza shapes na sidebar
+      setTimeout(function () {
+        _this2.updateShapeColors();
+        _this2.renderShapesInSidebar();
+      }, 100);
+    }
+
+    /**
+     * Parse do conteúdo SVG para extrair shapes
+     */
+  }, {
+    key: "parseSVGContent",
+    value: function parseSVGContent() {
+      if (!this.svgContent) return;
+      var parser = new DOMParser();
+      var doc = parser.parseFromString(this.svgContent, 'image/svg+xml');
+      var svgEl = doc.documentElement;
+
+      // Extrai viewBox
+      var viewBoxAttr = svgEl.getAttribute('viewBox');
+      if (viewBoxAttr) {
+        var parts = viewBoxAttr.split(/[\s,]+/).map(parseFloat);
+        this.viewBox = {
+          x: parts[0] || 0,
+          y: parts[1] || 0,
+          width: parts[2] || 100,
+          height: parts[3] || 100
+        };
+      }
+
+      // Extrai shapes
+      var shapeSelectors = 'polygon, path, polyline, rect';
+      var shapeElements = svgEl.querySelectorAll(shapeSelectors);
+      this.shapes = Array.from(shapeElements).map(function (el, index) {
+        return {
+          index: index,
+          type: el.tagName.toLowerCase(),
+          id: el.id || "shape_".concat(index),
+          fill: el.getAttribute('fill') || '#ccc',
+          stroke: el.getAttribute('stroke') || '#000'
+        };
+      });
+    }
+
+    /**
+     * Abre o modal de importação
+     */
+  }, {
+    key: "openModal",
+    value: function openModal() {
+      if (this.modal) {
+        this.isModalOpen = true;
+        this.modal.style.display = 'block';
+        this.resetState();
+      }
+    }
+
+    /**
+     * Fecha o modal
+     * @param {boolean} keepOverlay - Se true, mantém o overlay no mapa (usado ao salvar)
+     */
+  }, {
+    key: "closeModal",
+    value: function closeModal() {
+      var keepOverlay = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+      if (this.modal) {
+        this.isModalOpen = false;
+        this.modal.style.display = 'none';
+
+        // Verifica se há um SVG salvo nos inputs hidden
+        var svgInput = document.getElementById('terreno_svg_content');
+        var hasSavedSvg = svgInput && svgInput.value;
+
+        // Só remove o overlay se não tiver SVG salvo e keepOverlay for false
+        if (!keepOverlay && !hasSavedSvg) {
+          this.removeOverlay();
+          this.resetState();
+        }
+      }
+    }
+
+    /**
+     * Reseta o estado
+     */
+  }, {
+    key: "resetState",
+    value: function resetState() {
+      this.svgContent = null;
+      this.svgElement = null;
+      this.shapes = [];
+      this.viewBox = null;
+      this.overlay = {
+        bounds: null,
+        rotation: 0,
+        scale: 1,
+        center: null,
+        width: 400,
+        height: 400
+      };
+
+      // Reset UI
+      var step1 = document.getElementById('svgStep1');
+      var step2 = document.getElementById('svgStep2');
+      if (step1) step1.style.display = 'block';
+      if (step2) step2.style.display = 'none';
+      var uploadStatus = document.getElementById('svgUploadStatus');
+      if (uploadStatus) uploadStatus.style.display = 'none';
+      var confirmBtn = document.getElementById('svgImportConfirm');
+      if (confirmBtn) confirmBtn.disabled = true;
+
+      // Reset sliders
+      var opacitySlider = document.getElementById('svgOpacitySlider');
+      if (opacitySlider) opacitySlider.value = 70;
+      var rotationSlider = document.getElementById('svgRotationSlider');
+      if (rotationSlider) rotationSlider.value = 0;
+      var rotationValue = document.getElementById('svgRotationValue');
+      if (rotationValue) rotationValue.textContent = '0°';
+    }
+
+    /**
+     * Processa o upload do arquivo SVG
+     */
+  }, {
+    key: "handleFileUpload",
+    value: (function () {
+      var _handleFileUpload = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee2(file) {
+        var _this3 = this;
+        var reader;
+        return _regenerator().w(function (_context2) {
+          while (1) switch (_context2.n) {
+            case 0:
+              if (file.name.endsWith('.svg')) {
+                _context2.n = 1;
+                break;
+              }
+              alert('Por favor, selecione um arquivo SVG válido.');
+              return _context2.a(2);
+            case 1:
+              reader = new FileReader();
+              reader.onload = /*#__PURE__*/function () {
+                var _ref = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee(e) {
+                  return _regenerator().w(function (_context) {
+                    while (1) switch (_context.n) {
+                      case 0:
+                        _this3.svgContent = e.target.result;
+                        _context.n = 1;
+                        return _this3.processSVG(file.name);
+                      case 1:
+                        return _context.a(2);
+                    }
+                  }, _callee);
+                }));
+                return function (_x2) {
+                  return _ref.apply(this, arguments);
+                };
+              }();
+              reader.readAsText(file);
+            case 2:
+              return _context2.a(2);
+          }
+        }, _callee2);
+      }));
+      function handleFileUpload(_x) {
+        return _handleFileUpload.apply(this, arguments);
+      }
+      return handleFileUpload;
+    }()
+    /**
+     * Processa o SVG via AJAX (extrai shapes) e cria o overlay
+     */
+    )
+  }, {
+    key: "processSVG",
+    value: (function () {
+      var _processSVG = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee3(fileName) {
+        var uploadStatus, fileNameEl, shapeCountEl, formData, response, result, step1, step2, confirmBtn, _result$data, _t;
+        return _regenerator().w(function (_context3) {
+          while (1) switch (_context3.p = _context3.n) {
+            case 0:
+              _context3.p = 0;
+              // Mostra loading
+              uploadStatus = document.getElementById('svgUploadStatus');
+              fileNameEl = document.getElementById('svgFileName');
+              shapeCountEl = document.getElementById('svgShapeCount');
+              if (uploadStatus) uploadStatus.style.display = 'block';
+              if (fileNameEl) fileNameEl.textContent = "Processando ".concat(fileName, "...");
+              if (shapeCountEl) shapeCountEl.textContent = '';
+
+              // Envia para o backend processar
+              formData = new FormData();
+              formData.append('action', 'terreno_parse_svg');
+              formData.append('nonce', terreno_ajax.nonce);
+              formData.append('svg_content', this.svgContent);
+              _context3.n = 1;
+              return fetch(terreno_ajax.ajax_url, {
+                method: 'POST',
+                body: formData
+              });
+            case 1:
+              response = _context3.v;
+              _context3.n = 2;
+              return response.json();
+            case 2:
+              result = _context3.v;
+              if (result.success) {
+                this.shapes = result.data.shapes;
+                this.viewBox = result.data.viewBox;
+
+                // Atualiza UI
+                if (fileNameEl) fileNameEl.textContent = fileName;
+                if (shapeCountEl) shapeCountEl.textContent = "".concat(this.shapes.length, " shapes encontrados");
+
+                // Mostra step 2
+                step1 = document.getElementById('svgStep1');
+                step2 = document.getElementById('svgStep2');
+                if (step1) step1.style.display = 'none';
+                if (step2) step2.style.display = 'block';
+
+                // Cria o overlay no mapa
+                this.createMapOverlay();
+
+                // Habilita botão de confirmar
+                confirmBtn = document.getElementById('svgImportConfirm');
+                if (confirmBtn) confirmBtn.disabled = false;
+
+                // Renderiza lista de shapes
+                this.renderShapesList();
+              } else {
+                alert('Erro ao processar SVG: ' + (((_result$data = result.data) === null || _result$data === void 0 ? void 0 : _result$data.message) || 'Erro desconhecido'));
+                if (uploadStatus) uploadStatus.style.display = 'none';
+              }
+              _context3.n = 4;
+              break;
+            case 3:
+              _context3.p = 3;
+              _t = _context3.v;
+              console.error('Erro ao processar SVG:', _t);
+              alert('Erro ao processar SVG. Verifique o console para detalhes.');
+            case 4:
+              return _context3.a(2);
+          }
+        }, _callee3, this, [[0, 3]]);
+      }));
+      function processSVG(_x3) {
+        return _processSVG.apply(this, arguments);
+      }
+      return processSVG;
+    }()
+    /**
+     * Cria o overlay do SVG sobre o mapa principal
+     */
+    )
+  }, {
+    key: "createMapOverlay",
+    value: function createMapOverlay() {
+      // Remove overlay anterior se existir
+      this.removeOverlay();
+
+      // Define posição inicial baseada no centro do mapa
+      var mapCenter = this.map.getCenter();
+      this.overlay.center = {
+        lat: mapCenter.lat(),
+        lng: mapCenter.lng()
+      };
+
+      // Calcula bounds iniciais baseado no viewBox do SVG
+      var aspectRatio = this.viewBox ? this.viewBox.width / this.viewBox.height : 1;
+
+      // Tamanho inicial do overlay (em graus, aproximadamente)
+      var initialSize = 0.002; // ~200 metros
+      var halfWidth = initialSize * aspectRatio / 2;
+      var halfHeight = initialSize / 2;
+      this.overlay.bounds = new google.maps.LatLngBounds(new google.maps.LatLng(this.overlay.center.lat - halfHeight, this.overlay.center.lng - halfWidth), new google.maps.LatLng(this.overlay.center.lat + halfHeight, this.overlay.center.lng + halfWidth));
+
+      // Cria Custom Overlay (usa factory function para garantir que Google Maps já está carregado)
+      var OverlayClass = getCustomSVGOverlayClass();
+      this.customOverlay = new OverlayClass(this.overlay.bounds, this.svgContent, this.map, this);
+      this.customOverlay.setMap(this.map);
+
+      // Centraliza o mapa no overlay
+      this.map.setCenter(mapCenter);
+      this.map.setZoom(18);
+    }
+
+    /**
+     * Remove o overlay do mapa
+     */
+  }, {
+    key: "removeOverlay",
+    value: function removeOverlay() {
+      if (this.customOverlay) {
+        this.customOverlay.setMap(null);
+        this.customOverlay = null;
+      }
+    }
+
+    /**
+     * Confirma e remove completamente o SVG e todos os dados relacionados
+     */
+  }, {
+    key: "confirmAndRemoveSvg",
+    value: function confirmAndRemoveSvg() {
+      if (!confirm('Tem certeza que deseja remover o SVG? Esta ação irá remover o overlay e todos os mapeamentos de shapes. Você precisará salvar o post para confirmar a remoção.')) {
+        return;
+      }
+
+      // Remove o overlay do mapa
+      this.removeOverlay();
+
+      // Reseta o estado interno
+      this.svgContent = null;
+      this.svgElement = null;
+      this.shapes = [];
+      this.viewBox = null;
+      this.shapeMapping = {};
+      this.overlay = {
+        bounds: null,
+        rotation: 0,
+        scale: 1,
+        center: null,
+        width: 400,
+        height: 400
+      };
+
+      // Limpa os inputs hidden
+      var svgInput = document.getElementById('terreno_svg_content');
+      var boundsInput = document.getElementById('terreno_svg_bounds');
+      var rotationInput = document.getElementById('terreno_svg_rotation');
+      var mappingInput = document.getElementById('terreno_shape_mapping');
+      if (svgInput) svgInput.value = '';
+      if (boundsInput) boundsInput.value = '';
+      if (rotationInput) rotationInput.value = '';
+      if (mappingInput) mappingInput.value = '';
+
+      // Atualiza a sidebar de shapes
+      var container = document.getElementById('shapes-sidebar-container');
+      var countEl = document.getElementById('total-shapes');
+      var mappedCountEl = document.getElementById('shapes-mapped-count');
+      if (countEl) countEl.textContent = '0';
+      if (mappedCountEl) mappedCountEl.textContent = '0';
+      if (container) {
+        container.innerHTML = "\n        <div class=\"no-lotes\" id=\"no-shapes-message\">\n          <div class=\"no-lotes-icon\">\n            <span class=\"dashicons dashicons-admin-multisite\"></span>\n          </div>\n          <p>Nenhum shape carregado.</p>\n          <p class=\"help-text\">Importe um SVG para visualizar os shapes.</p>\n        </div>\n      ";
+      }
+
+      // Atualiza visibilidade dos botões
+      this.updateSvgButtonsVisibility(false);
+
+      // Emite evento para outros managers
+      this.eventBus.emit('svg:removed', {});
+      alert('SVG removido. Salve o post para confirmar a remoção.');
+    }
+
+    /**
+     * Rotaciona o overlay
+     */
+  }, {
+    key: "rotateOverlay",
+    value: function rotateOverlay(degrees) {
+      this.overlay.rotation += degrees;
+      this.overlay.rotation = this.overlay.rotation % 360;
+      this.updateOverlayTransform();
+      var rotationSlider = document.getElementById('svgRotationSlider');
+      var rotationValue = document.getElementById('svgRotationValue');
+      if (rotationSlider) rotationSlider.value = this.overlay.rotation;
+      if (rotationValue) {
+        rotationValue.textContent = "".concat(Math.round(this.overlay.rotation), "\xB0");
+      }
+    }
+
+    /**
+     * Define rotação específica
+     */
+  }, {
+    key: "setRotation",
+    value: function setRotation(degrees) {
+      this.overlay.rotation = degrees;
+      this.updateOverlayTransform();
+      if (!this.isModalOpen) return;
+      var rotationValue = document.getElementById('svgRotationValue');
+      if (rotationValue) rotationValue.textContent = "".concat(Math.round(degrees), "\xB0");
+    }
+
+    /**
+     * Escala o overlay
+     */
+  }, {
+    key: "scaleOverlay",
+    value: function scaleOverlay(factor) {
+      var _this$customOverlay;
+      if (!this.overlay.bounds || !this.overlay.center) return;
+      var bounds = this.overlay.bounds;
+      var ne = bounds.getNorthEast();
+      var sw = bounds.getSouthWest();
+      var centerLat = this.overlay.center.lat;
+      var centerLng = this.overlay.center.lng;
+      var halfHeight = (ne.lat() - sw.lat()) / 2 * factor;
+      var halfWidth = (ne.lng() - sw.lng()) / 2 * factor;
+      this.overlay.bounds = new google.maps.LatLngBounds(new google.maps.LatLng(centerLat - halfHeight, centerLng - halfWidth), new google.maps.LatLng(centerLat + halfHeight, centerLng + halfWidth));
+      (_this$customOverlay = this.customOverlay) === null || _this$customOverlay === void 0 || _this$customOverlay.updateBounds(this.overlay.bounds);
+    }
+
+    /**
+     * Atualiza os bounds do overlay baseado na escala
+     */
+  }, {
+    key: "updateOverlayBounds",
+    value: function updateOverlayBounds() {
+      if (!this.overlay.bounds || !this.overlay.center) return;
+      var currentBounds = this.overlay.bounds;
+      var ne = currentBounds.getNorthEast();
+      var sw = currentBounds.getSouthWest();
+      var centerLat = this.overlay.center.lat;
+      var centerLng = this.overlay.center.lng;
+      var halfHeight = (ne.lat() - sw.lat()) / 2 * this.overlay.scale;
+      var halfWidth = (ne.lng() - sw.lng()) / 2 * this.overlay.scale;
+      this.overlay.bounds = new google.maps.LatLngBounds(new google.maps.LatLng(centerLat - halfHeight, centerLng - halfWidth), new google.maps.LatLng(centerLat + halfHeight, centerLng + halfWidth));
+      this.overlay.scale = 1; // Reset scale after applying
+
+      if (this.customOverlay) {
+        this.customOverlay.updateBounds(this.overlay.bounds);
+      }
+    }
+
+    /**
+     * Atualiza a transformação visual do overlay
+     */
+  }, {
+    key: "updateOverlayTransform",
+    value: function updateOverlayTransform() {
+      if (this.customOverlay) {
+        this.customOverlay.updateRotation(this.overlay.rotation);
+      }
+    }
+
+    /**
+     * Define a opacidade do overlay
+     */
+  }, {
+    key: "setOverlayOpacity",
+    value: function setOverlayOpacity(opacity) {
+      if (this.customOverlay) {
+        this.customOverlay.setOpacity(opacity);
+      }
+    }
+
+    /**
+     * Reseta as transformações
+     */
+  }, {
+    key: "resetTransform",
+    value: function resetTransform() {
+      // Só reseta se houver SVG carregado
+      if (!this.svgContent || !this.map) return;
+      this.overlay.rotation = 0;
+      this.overlay.scale = 1;
+      this.updateOverlayTransform();
+      this.createMapOverlay(); // Recria na posição inicial
+
+      var rotationSlider = document.getElementById('svgRotationSlider');
+      var rotationValue = document.getElementById('svgRotationValue');
+      if (rotationSlider) rotationSlider.value = 0;
+      if (rotationValue) rotationValue.textContent = '0°';
+    }
+
+    /**
+     * Renderiza lista de shapes detectados (na sidebar)
+     */
+  }, {
+    key: "renderShapesList",
+    value: function renderShapesList() {
+      // Renderiza na sidebar principal
+      this.renderShapesInSidebar();
+    }
+
+    /**
+     * Renderiza lista de shapes na sidebar principal
+     */
+  }, {
+    key: "renderShapesInSidebar",
+    value: function renderShapesInSidebar() {
+      var _this4 = this;
+      var container = document.getElementById('shapes-sidebar-container');
+      var countEl = document.getElementById('total-shapes');
+      var mappedCountEl = document.getElementById('shapes-mapped-count');
+      var noShapesMessage = document.getElementById('no-shapes-message');
+      if (countEl) countEl.textContent = this.shapes.length;
+      if (!container) return;
+      if (this.shapes.length === 0) {
+        if (noShapesMessage) noShapesMessage.style.display = 'block';
+        return;
+      }
+      if (noShapesMessage) noShapesMessage.style.display = 'none';
+
+      // Conta shapes mapeados
+      var mappedCount = Object.keys(this.shapeMapping || {}).length;
+      if (mappedCountEl) mappedCountEl.textContent = mappedCount;
+      var html = this.shapes.map(function (shape, index) {
+        var _this4$shapeMapping;
+        var mapping = (_this4$shapeMapping = _this4.shapeMapping) === null || _this4$shapeMapping === void 0 ? void 0 : _this4$shapeMapping[index];
+        var isMapped = !!mapping;
+        var statusClass = isMapped ? 'shape-mapped' : 'shape-unmapped';
+        var statusText = isMapped ? "Quadra ".concat(mapping.bloco, " | Lote ").concat(mapping.lote_id) : 'Clique para vincular';
+        return "\n          <div class=\"shape-item ".concat(statusClass, "\" data-shape-index=\"").concat(index, "\">\n            <div class=\"shape-header\">\n              \n              <span class=\"shape-name\">").concat(shape.id || "Shape ".concat(index + 1), "</span>\n              \n              <div class=\"shape-status\">").concat(statusText, "</div>\n            </div>\n            \n            <div class=\"shape-actions\">\n              <button type=\"button\" class=\"button button-small shape-edit-btn\" data-shape-index=\"").concat(index, "\">\n                <span class=\"dashicons dashicons-edit\" style=\"font-size: 14px; width: 14px; height: 14px;\"></span>\n                ").concat(isMapped ? 'Editar' : 'Vincular', "\n              </button>\n              ").concat(isMapped ? "\n              <button type=\"button\" class=\"button button-small shape-remove-btn\" data-shape-index=\"".concat(index, "\" style=\"color: #b32d2e;\">\n                <span class=\"dashicons dashicons-no\" style=\"font-size: 14px; width: 14px; height: 14px;\"></span>\n                Remover\n              </button>\n              ") : '', "\n            </div>\n          </div>\n        ");
+      }).join('');
+      container.innerHTML = html;
+
+      // Adiciona event listeners para hover/click nos shapes
+      this.setupShapeItemListeners();
+    }
+
+    /**
+     * Configura event listeners para os itens de shape na sidebar
+     */
+  }, {
+    key: "setupShapeItemListeners",
+    value: function setupShapeItemListeners() {
+      var _this5 = this;
+      var items = document.querySelectorAll('.shape-item');
+      items.forEach(function (item) {
+        var index = parseInt(item.dataset.shapeIndex);
+        item.addEventListener('mouseenter', function () {
+          _this5.highlightShape(index);
+        });
+        item.addEventListener('mouseleave', function () {
+          _this5.unhighlightShape(index);
+        });
+      });
+
+      // Botões de editar
+      var editBtns = document.querySelectorAll('.shape-edit-btn');
+      editBtns.forEach(function (btn) {
+        btn.addEventListener('click', function (e) {
+          e.stopPropagation();
+          var index = parseInt(btn.dataset.shapeIndex);
+          _this5.openShapeEditModal(index);
+        });
+      });
+
+      // Botões de remover vínculo
+      var removeBtns = document.querySelectorAll('.shape-remove-btn');
+      removeBtns.forEach(function (btn) {
+        btn.addEventListener('click', function (e) {
+          e.stopPropagation();
+          var index = parseInt(btn.dataset.shapeIndex);
+          _this5.removeShapeMapping(index);
+        });
+      });
+    }
+
+    /**
+     * Abre modal de edição para um shape específico
+     */
+  }, {
+    key: "openShapeEditModal",
+    value: (function () {
+      var _openShapeEditModal = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee4(index) {
+        var _this$shapeMapping,
+          _this6 = this;
+        var shape, mapping, loteData, modal, unidadeIdInput, blocoInput, nomeInput;
+        return _regenerator().w(function (_context4) {
+          while (1) switch (_context4.n) {
+            case 0:
+              shape = this.shapes[index];
+              mapping = (_this$shapeMapping = this.shapeMapping) === null || _this$shapeMapping === void 0 ? void 0 : _this$shapeMapping[index]; // Prepara dados para o modal
+              loteData = {
+                id: (mapping === null || mapping === void 0 ? void 0 : mapping.lote_id) || '',
+                bloco: (mapping === null || mapping === void 0 ? void 0 : mapping.bloco) || '',
+                nome: (mapping === null || mapping === void 0 ? void 0 : mapping.nome) || (shape === null || shape === void 0 ? void 0 : shape.id) || "Shape ".concat(index + 1)
+              }; // Usa o ModalManager se disponível (através do eventBus)
+              // Emite evento para abrir o modal
+              this.eventBus.emit('modal:open_edit', {
+                loteData: loteData,
+                callback: function callback(result) {
+                  if (result) {
+                    _this6.saveShapeMappingData(index, result);
+                  }
+                }
+              });
+
+              // Fallback: se o modal não foi aberto pelo eventBus, usa método direto
+              modal = document.getElementById('editModal');
+              if (modal && modal.style.display !== 'block') {
+                // Preenche os campos manualmente
+                unidadeIdInput = document.getElementById('editLoteUnidadeId');
+                blocoInput = document.getElementById('editLoteBloco');
+                nomeInput = document.getElementById('editLoteNome');
+                if (unidadeIdInput) unidadeIdInput.value = loteData.id;
+                if (blocoInput) blocoInput.value = loteData.bloco;
+                if (nomeInput) nomeInput.value = loteData.nome;
+
+                // Armazena o índice do shape sendo editado
+                this.editingShapeIndex = index;
+
+                // Mostra o modal
+                modal.style.display = 'block';
+
+                // Adiciona listeners temporários para os botões
+                this.setupModalListeners();
+              }
+            case 1:
+              return _context4.a(2);
+          }
+        }, _callee4, this);
+      }));
+      function openShapeEditModal(_x4) {
+        return _openShapeEditModal.apply(this, arguments);
+      }
+      return openShapeEditModal;
+    }()
+    /**
+     * Configura listeners temporários para o modal
+     */
+    )
+  }, {
+    key: "setupModalListeners",
+    value: function setupModalListeners() {
+      var _this7 = this;
+      var modal = document.getElementById('editModal');
+      if (!modal) return;
+      var saveBtn = modal.querySelector('.button-primary');
+      var cancelBtn = modal.querySelector('.button-secondary');
+
+      // Remove listeners antigos
+      var newSaveBtn = saveBtn.cloneNode(true);
+      var newCancelBtn = cancelBtn.cloneNode(true);
+      saveBtn.parentNode.replaceChild(newSaveBtn, saveBtn);
+      cancelBtn.parentNode.replaceChild(newCancelBtn, cancelBtn);
+
+      // Adiciona novos listeners
+      newSaveBtn.addEventListener('click', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        _this7.handleModalSave();
+      });
+      newCancelBtn.addEventListener('click', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        _this7.closeShapeEditModal();
+      });
+    }
+
+    /**
+     * Handler para salvar do modal
+     */
+  }, {
+    key: "handleModalSave",
+    value: function handleModalSave() {
+      var _document$getElementB12, _document$getElementB13, _document$getElementB14;
+      var index = this.editingShapeIndex;
+      if (index === null || index === undefined) return;
+      var unidadeId = (_document$getElementB12 = document.getElementById('editLoteUnidadeId')) === null || _document$getElementB12 === void 0 || (_document$getElementB12 = _document$getElementB12.value) === null || _document$getElementB12 === void 0 ? void 0 : _document$getElementB12.trim();
+      var bloco = (_document$getElementB13 = document.getElementById('editLoteBloco')) === null || _document$getElementB13 === void 0 || (_document$getElementB13 = _document$getElementB13.value) === null || _document$getElementB13 === void 0 ? void 0 : _document$getElementB13.trim();
+      var nome = (_document$getElementB14 = document.getElementById('editLoteNome')) === null || _document$getElementB14 === void 0 || (_document$getElementB14 = _document$getElementB14.value) === null || _document$getElementB14 === void 0 ? void 0 : _document$getElementB14.trim();
+      if (!unidadeId) {
+        alert('O ID da Unidade é obrigatório');
+        return;
+      }
+      if (!bloco) {
+        alert('A Quadra/Bloco é obrigatória');
+        return;
+      }
+      this.saveShapeMappingData(index, {
+        id: unidadeId,
+        bloco: bloco,
+        nome: nome
+      });
+      this.closeShapeEditModal();
+    }
+
+    /**
+     * Fecha o modal de edição de shape
+     */
+  }, {
+    key: "closeShapeEditModal",
+    value: function closeShapeEditModal() {
+      var modal = document.getElementById('editModal');
+      if (modal) {
+        modal.style.display = 'none';
+      }
+      this.editingShapeIndex = null;
+    }
+
+    /**
+     * Salva o mapeamento do shape com os dados fornecidos
+     */
+  }, {
+    key: "saveShapeMappingData",
+    value: function saveShapeMappingData(index, data) {
+      // Salva no mapeamento
+      if (!this.shapeMapping) {
+        this.shapeMapping = {};
+      }
+      this.shapeMapping[index] = {
+        lote_id: data.id,
+        bloco: data.bloco,
+        nome: data.nome,
+        shape_index: index
+      };
+
+      // Atualiza o input hidden
+      var mappingInput = document.getElementById('terreno_shape_mapping');
+      if (mappingInput) {
+        mappingInput.value = JSON.stringify(this.shapeMapping);
+      }
+
+      // Atualiza a UI
+      this.renderShapesInSidebar();
+      this.updateShapeColors();
+    }
+
+    /**
+     * Remove o mapeamento de um shape
+     */
+  }, {
+    key: "removeShapeMapping",
+    value: function removeShapeMapping(index) {
+      if (!confirm('Tem certeza que deseja remover o vínculo deste shape?')) {
+        return;
+      }
+      if (this.shapeMapping && this.shapeMapping[index]) {
+        delete this.shapeMapping[index];
+      }
+
+      // Atualiza o input hidden
+      var mappingInput = document.getElementById('terreno_shape_mapping');
+      if (mappingInput) {
+        mappingInput.value = JSON.stringify(this.shapeMapping || {});
+      }
+
+      // Atualiza a UI
+      this.renderShapesInSidebar();
+      this.updateShapeColors();
+    }
+
+    /**
+     * Remove destaque de um shape
+     */
+  }, {
+    key: "unhighlightShape",
+    value: function unhighlightShape(index) {
+      if (this.customOverlay) {
+        this.customOverlay.unhighlightShape(index);
+      }
+    }
+
+    /**
+     * Atualiza o centro do overlay (chamado durante drag)
+     */
+  }, {
+    key: "updateOverlayCenter",
+    value: function updateOverlayCenter(newCenter) {
+      var oldCenter = this.overlay.center;
+      var bounds = this.overlay.bounds;
+      if (!oldCenter || !bounds) return;
+      var dLat = newCenter.lat - oldCenter.lat;
+      var dLng = newCenter.lng - oldCenter.lng;
+      var ne = bounds.getNorthEast();
+      var sw = bounds.getSouthWest();
+      this.overlay.bounds = new google.maps.LatLngBounds(new google.maps.LatLng(sw.lat() + dLat, sw.lng() + dLng), new google.maps.LatLng(ne.lat() + dLat, ne.lng() + dLng));
+      this.overlay.center = newCenter;
+    }
+
+    /**
+     * Salva o SVG como overlay permanente (nova abordagem)
+     * Em vez de converter para polígonos, mantém o SVG como overlay
+     */
+  }, {
+    key: "saveAsOverlay",
+    value: function saveAsOverlay() {
+      var _this8 = this;
+      try {
+        if (!this.svgContent) {
+          alert('Nenhum SVG carregado.');
+          return;
+        }
+
+        // Se não tem bounds, tenta criar o overlay primeiro
+        if (!this.overlay.bounds) {
+          this.createMapOverlay();
+
+          // Aguarda um pouco para o overlay ser criado
+          setTimeout(function () {
+            if (_this8.overlay.bounds) {
+              _this8.completeSaveOverlay();
+            } else {
+              alert('Erro: não foi possível posicionar o SVG no mapa. Tente novamente.');
+            }
+          }, 100);
+          return;
+        }
+        this.completeSaveOverlay();
+      } catch (error) {
+        console.error('Erro ao salvar overlay:', error);
+        alert('Erro ao salvar overlay: ' + error.message);
+      }
+    }
+
+    /**
+     * Completa o salvamento do overlay após garantir que bounds existe
+     */
+  }, {
+    key: "completeSaveOverlay",
+    value: function completeSaveOverlay() {
+      // Verifica novamente para segurança
+      if (!this.overlay.bounds) {
+        console.error('Bounds ainda é null após criação do overlay');
+        alert('Erro ao posicionar SVG. Recarregue a página e tente novamente.');
+        return;
+      }
+
+      // Salva os dados nos inputs hidden
+      this.updateHiddenInputs();
+
+      // Captura os valores dos bounds antes de emitir eventos
+      var boundsData = {
+        north: this.overlay.bounds.getNorthEast().lat(),
+        south: this.overlay.bounds.getSouthWest().lat(),
+        east: this.overlay.bounds.getNorthEast().lng(),
+        west: this.overlay.bounds.getSouthWest().lng()
+      };
+
+      // Emite evento para o SVGEditorManager processar
+      this.eventBus.emit('svg:loaded', {
+        svgContent: this.svgContent,
+        shapes: this.shapes,
+        viewBox: this.viewBox
+      });
+      this.eventBus.emit('svg:positioned', {
+        bounds: boundsData,
+        rotation: this.overlay.rotation,
+        center: this.overlay.center
+      });
+
+      // Fecha o modal de importação (mantém o overlay no mapa)
+      this.closeModal(true);
+
+      // Ativa modo de edição no overlay
+      this.enableEditorMode();
+
+      // Atualiza visibilidade dos botões
+      this.updateSvgButtonsVisibility(true);
+    }
+
+    /**
+     * Atualiza a visibilidade dos botões de SVG dinamicamente
+     * @param {boolean} hasSvg - Se true, há SVG importado; se false, não há
+     */
+  }, {
+    key: "updateSvgButtonsVisibility",
+    value: function updateSvgButtonsVisibility(hasSvg) {
+      var _this9 = this;
+      var btnImportar = document.getElementById('btn_importar_svg');
+      var btnAjustar = document.getElementById('btn_ajustar_svg');
+      var btnRemover = document.getElementById('btn_remover_svg');
+      if (hasSvg) {
+        // SVG importado: esconde Importar, mostra Ajustar e Remover
+        if (btnImportar) {
+          btnImportar.style.display = 'none';
+        }
+
+        // Cria botão Ajustar se não existir
+        if (!btnAjustar) {
+          var ajustarBtn = document.createElement('button');
+          ajustarBtn.type = 'button';
+          ajustarBtn.className = 'button';
+          ajustarBtn.id = 'btn_ajustar_svg';
+          ajustarBtn.style.cssText = 'width: 100%; margin-bottom: 5px;';
+          ajustarBtn.innerHTML = '<span class="dashicons dashicons-move" style="margin-top: 3px;"></span> Ajustar Posicao';
+          ajustarBtn.addEventListener('click', function (e) {
+            e.preventDefault();
+            _this9.toggleEditMode();
+          });
+          var container = btnImportar === null || btnImportar === void 0 ? void 0 : btnImportar.parentElement;
+          if (container && btnImportar) {
+            container.insertBefore(ajustarBtn, btnImportar.nextSibling);
+          }
+        } else {
+          btnAjustar.style.display = 'block';
+          btnAjustar.disabled = false;
+        }
+
+        // Cria botão Remover se não existir
+        if (!btnRemover) {
+          var removerBtn = document.createElement('button');
+          removerBtn.type = 'button';
+          removerBtn.className = 'button';
+          removerBtn.id = 'btn_remover_svg';
+          removerBtn.style.cssText = 'width: 100%; color: #b32d2e; border-color: #b32d2e;';
+          removerBtn.innerHTML = '<span class="dashicons dashicons-trash" style="margin-top: 3px;"></span> Remover SVG';
+          removerBtn.addEventListener('click', function (e) {
+            e.preventDefault();
+            _this9.confirmAndRemoveSvg();
+          });
+          var _ajustarBtn = document.getElementById('btn_ajustar_svg');
+          var _container = _ajustarBtn === null || _ajustarBtn === void 0 ? void 0 : _ajustarBtn.parentElement;
+          if (_container && _ajustarBtn) {
+            _container.insertBefore(removerBtn, _ajustarBtn.nextSibling);
+          }
+        } else {
+          btnRemover.style.display = 'block';
+        }
+      } else {
+        // Sem SVG: mostra Importar, esconde Ajustar e Remover
+        if (btnImportar) {
+          btnImportar.style.display = 'block';
+        }
+        if (btnAjustar) {
+          btnAjustar.style.display = 'none';
+        }
+        if (btnRemover) {
+          btnRemover.style.display = 'none';
+        }
+      }
+    }
+
+    /**
+     * Atualiza inputs hidden com dados do overlay
+     */
+  }, {
+    key: "updateHiddenInputs",
+    value: function updateHiddenInputs() {
+      var container = document.querySelector('#terreno-mapa-container');
+      if (!container) return;
+
+      // SVG Content
+      var svgInput = document.getElementById('terreno_svg_content');
+      if (!svgInput) {
+        svgInput = document.createElement('input');
+        svgInput.type = 'hidden';
+        svgInput.id = 'terreno_svg_content';
+        svgInput.name = 'terreno_svg_content';
+        container.appendChild(svgInput);
+      }
+      svgInput.value = this.svgContent || '';
+
+      // Bounds
+      var boundsInput = document.getElementById('terreno_svg_bounds');
+      if (!boundsInput) {
+        boundsInput = document.createElement('input');
+        boundsInput.type = 'hidden';
+        boundsInput.id = 'terreno_svg_bounds';
+        boundsInput.name = 'terreno_svg_bounds';
+        container.appendChild(boundsInput);
+      }
+      if (this.overlay.bounds) {
+        boundsInput.value = JSON.stringify({
+          north: this.overlay.bounds.getNorthEast().lat(),
+          south: this.overlay.bounds.getSouthWest().lat(),
+          east: this.overlay.bounds.getNorthEast().lng(),
+          west: this.overlay.bounds.getSouthWest().lng()
+        });
+      }
+
+      // Rotation
+      var rotationInput = document.getElementById('terreno_svg_rotation');
+      if (!rotationInput) {
+        rotationInput = document.createElement('input');
+        rotationInput.type = 'hidden';
+        rotationInput.id = 'terreno_svg_rotation';
+        rotationInput.name = 'terreno_svg_rotation';
+        container.appendChild(rotationInput);
+      }
+      rotationInput.value = this.overlay.rotation || 0;
+    }
+
+    /**
+     * Ativa modo de edição (shapes clicáveis)
+     */
+  }, {
+    key: "enableEditorMode",
+    value: function enableEditorMode() {
+      this.isEditorMode = true;
+      if (this.customOverlay) {
+        this.customOverlay.enableEditorMode();
+      }
+    }
+
+    /**
+     * Desativa modo de edição
+     */
+  }, {
+    key: "disableEditorMode",
+    value: function disableEditorMode() {
+      this.isEditorMode = false;
+      if (this.customOverlay) {
+        this.customOverlay.disableEditorMode();
+      }
+    }
+
+    /**
+     * Alterna modo de edição/posicionamento do SVG
+     */
+  }, {
+    key: "toggleEditMode",
+    value: function toggleEditMode() {
+      if (!this.svgContent || !this.customOverlay) {
+        alert('Nenhum SVG carregado. Importe um SVG primeiro.');
+        return;
+      }
+
+      // Abre o modal com os controles
+      this.openModalForAdjustment();
+    }
+
+    /**
+     * Abre modal apenas para ajuste (sem upload)
+     */
+  }, {
+    key: "openModalForAdjustment",
+    value: function openModalForAdjustment() {
+      if (!this.modal) return;
+      this.isModalOpen = true;
+      this.modal.style.display = 'block';
+
+      // Esconde step 1 (upload) e mostra step 2 (controles)
+      var step1 = document.getElementById('svgStep1');
+      var step2 = document.getElementById('svgStep2');
+      if (step1) step1.style.display = 'none';
+      if (step2) step2.style.display = 'block';
+
+      // Habilita botão de confirmar
+      var confirmBtn = document.getElementById('svgImportConfirm');
+      if (confirmBtn) {
+        confirmBtn.disabled = false;
+        confirmBtn.textContent = 'Salvar Ajustes';
+      }
+
+      // Ativa modo de posicionamento no overlay (não editor)
+      if (this.customOverlay) {
+        this.customOverlay.disableEditorMode();
+      }
+
+      // Atualiza sliders com valores atuais
+      var rotationSlider = document.getElementById('svgRotationSlider');
+      var rotationValue = document.getElementById('svgRotationValue');
+      if (rotationSlider) rotationSlider.value = this.overlay.rotation || 0;
+      if (rotationValue) rotationValue.textContent = "".concat(Math.round(this.overlay.rotation || 0), "\xB0");
+    }
+
+    /**
+     * Destaca um shape específico no overlay
+     */
+  }, {
+    key: "highlightShape",
+    value: function highlightShape(index) {
+      this.selectedShapeIndex = index;
+      if (this.customOverlay) {
+        this.customOverlay.highlightShape(index);
+      }
+    }
+
+    /**
+     * Atualiza cores dos shapes baseado no mapeamento
+     */
+  }, {
+    key: "updateShapeColors",
+    value: function updateShapeColors() {
+      if (this.customOverlay) {
+        this.customOverlay.updateShapeColors(this.shapeMapping);
+      }
+    }
+
+    /**
+     * Converte um ponto SVG para coordenadas lat/lng
+     *
+     * Leva em conta:
+     * - ViewBox do SVG
+     * - Bounds do overlay no mapa
+     * - Rotação do overlay
+     */
+  }, {
+    key: "svgPointToLatLng",
+    value: function svgPointToLatLng(svgPoint) {
+      var bounds = this.overlay.bounds;
+      var rotation = this.overlay.rotation;
+      var vb = this.viewBox;
+
+      // Normaliza coordenadas do SVG para 0-1
+      var normalizedX = (svgPoint.x - vb.x) / vb.width;
+      var normalizedY = (svgPoint.y - vb.y) / vb.height;
+
+      // Centro do overlay em coordenadas normalizadas
+      var centerX = 0.5;
+      var centerY = 0.5;
+
+      // Aplica rotação em torno do centro
+      var angleRad = rotation * Math.PI / 180;
+      var cos = Math.cos(angleRad);
+      var sin = Math.sin(angleRad);
+
+      // Translada para origem, rotaciona, translada de volta
+      var dx = normalizedX - centerX;
+      var dy = normalizedY - centerY;
+      var rotatedX = centerX + (dx * cos - dy * sin);
+      var rotatedY = centerY + (dx * sin + dy * cos);
+
+      // Converte para lat/lng usando os bounds
+      var ne = bounds.getNorthEast();
+      var sw = bounds.getSouthWest();
+
+      // X corresponde a longitude, Y corresponde a latitude
+      // NOTA: Y do SVG cresce para baixo, latitude cresce para cima
+      var lng = sw.lng() + rotatedX * (ne.lng() - sw.lng());
+      var lat = ne.lat() - rotatedY * (ne.lat() - sw.lat()); // Invertido
+
+      return {
+        lat: lat,
+        lng: lng
+      };
+    }
+
+    /**
+     * Calcula área aproximada de um polígono
+     */
+  }, {
+    key: "calculateArea",
+    value: function calculateArea(coordinates) {
+      if (coordinates.length < 3) return 0;
+      var area = 0;
+      var n = coordinates.length;
+      for (var i = 0; i < n; i++) {
+        var j = (i + 1) % n;
+        area += coordinates[i].lng * coordinates[j].lat;
+        area -= coordinates[j].lng * coordinates[i].lat;
+      }
+      area = Math.abs(area / 2);
+      var metersPerDegree = 111000;
+      area = area * metersPerDegree * metersPerDegree;
+      return area;
+    }
+
+    /**
+     * Gera cor aleatória
+     */
+  }, {
+    key: "generateRandomColor",
+    value: function generateRandomColor() {
+      var colors = ['#FF6B6B', '#4ECDC4', '#45B7D1', '#FFA07A', '#98D8C8', '#F06292', '#AED581', '#FFD54F', '#4DB6AC', '#7986CB'];
+      return colors[Math.floor(Math.random() * colors.length)];
+    }
+  }]);
+}();
+
+/**
+ * Cria a classe CustomSVGOverlay quando necessário (após Google Maps carregar)
+ * Isso evita o erro de referência ao google.maps.OverlayView antes do Maps API estar pronto
+ */
+var CustomSVGOverlayClass = null;
+function getCustomSVGOverlayClass() {
+  if (CustomSVGOverlayClass) {
+    return CustomSVGOverlayClass;
+  }
+
+  // Define a classe apenas quando necessário (após Google Maps estar carregado)
+  CustomSVGOverlayClass = /*#__PURE__*/function (_google$maps$OverlayV) {
+    function CustomSVGOverlay(bounds, svgContent, map, manager) {
+      var _this0;
+      var isEditorMode = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : false;
+      _classCallCheck(this, CustomSVGOverlay);
+      _this0 = _callSuper(this, CustomSVGOverlay);
+      _this0.bounds = bounds;
+      _this0.svgContent = svgContent;
+      _this0.manager = manager;
+      _this0.div = null;
+      _this0.rotation = 0;
+      _this0.opacity = 0.7;
+      _this0.isDragging = false;
+      _this0.isResizing = false;
+      _this0.isEditorMode = isEditorMode;
+      _this0.selectedShapeIndex = null;
+      _this0.shapeMapping = {};
+      return _this0;
+    }
+    _inherits(CustomSVGOverlay, _google$maps$OverlayV);
+    return _createClass(CustomSVGOverlay, [{
+      key: "onAdd",
+      value: function onAdd() {
+        // Cria container do overlay
+        this.div = document.createElement('div');
+        this.div.style.position = 'absolute';
+        this.div.style.cursor = this.isEditorMode ? 'crosshair' : 'move';
+        this.div.innerHTML = this.svgContent;
+
+        // Adiciona classe para o modo editor
+        if (this.isEditorMode) {
+          this.div.classList.add('svg-editor-overlay');
+        }
+
+        // Estiliza o SVG
+        var svg = this.div.querySelector('svg');
+        if (svg) {
+          svg.style.width = '100%';
+          svg.style.height = '100%';
+          svg.style.opacity = this.opacity;
+          // Em modo editor, SVG é clicável
+          svg.style.pointerEvents = this.isEditorMode ? 'auto' : 'none';
+        }
+
+        // Adiciona borda para visualização
+        this.div.style.border = '2px dashed #0073aa';
+        this.div.style.boxSizing = 'border-box';
+
+        // Adiciona handles de resize nos cantos (apenas fora do modo editor)
+        if (!this.isEditorMode) {
+          this.addResizeHandles();
+        }
+
+        // Adiciona eventos de drag (apenas fora do modo editor)
+        if (!this.isEditorMode) {
+          this.addDragListeners();
+        }
+
+        // Em modo editor, adiciona listeners de clique nos shapes
+        if (this.isEditorMode) {
+          this.addShapeClickListeners();
+        }
+
+        // Adiciona ao mapa
+        // z-index maior para ficar ACIMA do Image overlay
+        this.div.style.zIndex = '10';
+        var panes = this.getPanes();
+        panes.overlayMouseTarget.appendChild(this.div);
+      }
+
+      /**
+       * Adiciona listeners de clique em cada shape do SVG
+       */
+    }, {
+      key: "addShapeClickListeners",
+      value: function addShapeClickListeners() {
+        var _this1 = this;
+        var svg = this.div.querySelector('svg');
+        if (!svg) return;
+        var shapes = svg.querySelectorAll('polygon, path, polyline, rect');
+        shapes.forEach(function (shape, index) {
+          // Torna o shape clicável
+          shape.style.cursor = 'pointer';
+          shape.style.pointerEvents = 'auto';
+          shape.dataset.shapeIndex = index;
+
+          // Hover effect
+          shape.addEventListener('mouseenter', function () {
+            if (_this1.selectedShapeIndex !== index) {
+              shape.style.fill = 'rgba(0, 115, 170, 0.5)';
+              shape.style.stroke = '#0073aa';
+              shape.style.strokeWidth = '3px';
+            }
+          });
+          shape.addEventListener('mouseleave', function () {
+            if (_this1.selectedShapeIndex !== index) {
+              _this1.restoreShapeStyle(shape, index);
+            }
+          });
+
+          // Click - emite evento para o editor
+          shape.addEventListener('click', function (e) {
+            e.stopPropagation();
+            _this1.manager.eventBus.emit('svg:shape_clicked', {
+              index: index,
+              shape: shape
+            });
+          });
+        });
+      }
+
+      /**
+       * Restaura estilo original do shape
+       */
+    }, {
+      key: "restoreShapeStyle",
+      value: function restoreShapeStyle(shape, index) {
+        var mapping = this.shapeMapping[index];
+        if (mapping) {
+          // Shape mapeado - verde
+          shape.style.fill = 'rgba(40, 167, 69, 0.4)';
+          shape.style.stroke = '#28a745';
+          shape.style.strokeWidth = '2px';
+        } else {
+          // Shape não mapeado - estilo original ou cinza
+          shape.style.fill = 'rgba(200, 200, 200, 0.3)';
+          shape.style.stroke = '#666';
+          shape.style.strokeWidth = '2px';
+        }
+      }
+
+      /**
+       * Destaca um shape específico
+       */
+    }, {
+      key: "highlightShape",
+      value: function highlightShape(index) {
+        var _this$div;
+        var svg = (_this$div = this.div) === null || _this$div === void 0 ? void 0 : _this$div.querySelector('svg');
+        if (!svg) return;
+
+        // Remove destaque anterior
+        if (this.selectedShapeIndex !== null) {
+          var prevShape = svg.querySelector("[data-shape-index=\"".concat(this.selectedShapeIndex, "\"]"));
+          if (prevShape) {
+            this.restoreShapeStyle(prevShape, this.selectedShapeIndex);
+          }
+        }
+        this.selectedShapeIndex = index;
+
+        // Aplica destaque no novo shape
+        var shape = svg.querySelector("[data-shape-index=\"".concat(index, "\"]"));
+        if (shape) {
+          shape.style.fill = 'rgba(255, 193, 7, 0.5)';
+          shape.style.stroke = '#ffc107';
+          shape.style.strokeWidth = '4px';
+        }
+      }
+
+      /**
+       * Remove destaque de um shape específico
+       */
+    }, {
+      key: "unhighlightShape",
+      value: function unhighlightShape(index) {
+        var _this$div2;
+        var svg = (_this$div2 = this.div) === null || _this$div2 === void 0 ? void 0 : _this$div2.querySelector('svg');
+        if (!svg) return;
+        var shape = svg.querySelector("[data-shape-index=\"".concat(index, "\"]"));
+        if (shape) {
+          this.restoreShapeStyle(shape, index);
+        }
+        if (this.selectedShapeIndex === index) {
+          this.selectedShapeIndex = null;
+        }
+      }
+
+      /**
+       * Atualiza cores dos shapes baseado no mapeamento
+       */
+    }, {
+      key: "updateShapeColors",
+      value: function updateShapeColors(mapping) {
+        var _this$div3,
+          _this10 = this;
+        this.shapeMapping = mapping || {};
+        var svg = (_this$div3 = this.div) === null || _this$div3 === void 0 ? void 0 : _this$div3.querySelector('svg');
+        if (!svg) return;
+        var shapes = svg.querySelectorAll('polygon, path, polyline, rect');
+        shapes.forEach(function (shape, index) {
+          if (_this10.selectedShapeIndex !== index) {
+            _this10.restoreShapeStyle(shape, index);
+          }
+        });
+      }
+
+      /**
+       * Ativa modo editor
+       */
+    }, {
+      key: "enableEditorMode",
+      value: function enableEditorMode() {
+        this.isEditorMode = true;
+        if (this.div) {
+          this.div.style.cursor = 'crosshair';
+          this.div.classList.add('svg-editor-overlay');
+          var svg = this.div.querySelector('svg');
+          if (svg) {
+            svg.style.pointerEvents = 'auto';
+          }
+
+          // Remove handles de resize
+          this.div.querySelectorAll('.svg-resize-handle').forEach(function (h) {
+            return h.remove();
+          });
+
+          // Adiciona listeners de clique
+          this.addShapeClickListeners();
+        }
+      }
+
+      /**
+       * Desativa modo editor
+       */
+    }, {
+      key: "disableEditorMode",
+      value: function disableEditorMode() {
+        this.isEditorMode = false;
+        if (this.div) {
+          this.div.style.cursor = 'move';
+          this.div.classList.remove('svg-editor-overlay');
+          var svg = this.div.querySelector('svg');
+          if (svg) {
+            svg.style.pointerEvents = 'none';
+          }
+
+          // Adiciona handles de resize
+          this.addResizeHandles();
+          this.addDragListeners();
+        }
+      }
+    }, {
+      key: "addResizeHandles",
+      value: function addResizeHandles() {
+        var _this11 = this;
+        var corners = ['nw', 'ne', 'sw', 'se'];
+        corners.forEach(function (corner) {
+          var handle = document.createElement('div');
+          handle.className = "svg-resize-handle svg-resize-".concat(corner);
+          handle.style.cssText = "\n        position: absolute;\n        width: 12px;\n        height: 12px;\n        background: #0073aa;\n        border: 2px solid white;\n        border-radius: 50%;\n        cursor: ".concat(corner, "-resize;\n        z-index: 1000;\n      ");
+
+          // Posiciona os handles
+          if (corner.includes('n')) handle.style.top = '-6px';
+          if (corner.includes('s')) handle.style.bottom = '-6px';
+          if (corner.includes('w')) handle.style.left = '-6px';
+          if (corner.includes('e')) handle.style.right = '-6px';
+          handle.addEventListener('mousedown', function (e) {
+            e.stopPropagation();
+            _this11.startResize(e, corner);
+          });
+          _this11.div.appendChild(handle);
+        });
+      }
+    }, {
+      key: "addDragListeners",
+      value: function addDragListeners() {
+        var _this12 = this;
+        this.div.addEventListener('mousedown', function (e) {
+          if (e.target.classList.contains('svg-resize-handle')) return;
+          _this12.startDrag(e);
+        });
+        document.addEventListener('mousemove', function (e) {
+          if (_this12.isDragging) _this12.onDrag(e);
+          if (_this12.isResizing) _this12.onResize(e);
+        });
+        document.addEventListener('mouseup', function () {
+          if (_this12.isDragging || _this12.isResizing) {
+            // Reabilita o drag do mapa
+            var map = _this12.getMap();
+            if (map) {
+              map.setOptions({
+                draggable: true
+              });
+            }
+            // Atualiza hidden inputs com a nova posição
+            _this12.manager.updateHiddenInputs();
+          }
+          _this12.isDragging = false;
+          _this12.isResizing = false;
+        });
+      }
+    }, {
+      key: "startDrag",
+      value: function startDrag(e) {
+        this.isDragging = true;
+        this.dragStart = {
+          x: e.clientX,
+          y: e.clientY,
+          bounds: new google.maps.LatLngBounds(this.bounds.getSouthWest(), this.bounds.getNorthEast())
+        };
+        // Desabilita o drag do mapa enquanto arrasta o overlay
+        this.getMap().setOptions({
+          draggable: false
+        });
+        e.preventDefault();
+        e.stopPropagation();
+      }
+    }, {
+      key: "onDrag",
+      value: function onDrag(e) {
+        var projection = this.getProjection();
+        if (!projection) return;
+        var dx = e.clientX - this.dragStart.x;
+        var dy = e.clientY - this.dragStart.y;
+        var startSW = this.dragStart.bounds.getSouthWest();
+        var startNE = this.dragStart.bounds.getNorthEast();
+        var swPoint = projection.fromLatLngToDivPixel(startSW);
+        var nePoint = projection.fromLatLngToDivPixel(startNE);
+        var newSW = projection.fromDivPixelToLatLng(new google.maps.Point(swPoint.x + dx, swPoint.y + dy));
+        var newNE = projection.fromDivPixelToLatLng(new google.maps.Point(nePoint.x + dx, nePoint.y + dy));
+        this.bounds = new google.maps.LatLngBounds(newSW, newNE);
+        this.manager.overlay.bounds = this.bounds;
+        this.manager.overlay.center = {
+          lat: (newSW.lat() + newNE.lat()) / 2,
+          lng: (newSW.lng() + newNE.lng()) / 2
+        };
+        this.draw();
+      }
+    }, {
+      key: "startResize",
+      value: function startResize(e, corner) {
+        this.isResizing = true;
+        this.resizeCorner = corner;
+        this.resizeStart = {
+          x: e.clientX,
+          y: e.clientY,
+          bounds: new google.maps.LatLngBounds(this.bounds.getSouthWest(), this.bounds.getNorthEast())
+        };
+        // Desabilita o drag do mapa enquanto redimensiona
+        this.getMap().setOptions({
+          draggable: false
+        });
+        e.preventDefault();
+        e.stopPropagation();
+      }
+    }, {
+      key: "onResize",
+      value: function onResize(e) {
+        var projection = this.getProjection();
+        if (!projection) return;
+        var startSW = this.resizeStart.bounds.getSouthWest();
+        var startNE = this.resizeStart.bounds.getNorthEast();
+        var newSW = startSW;
+        var newNE = startNE;
+        var swPoint = projection.fromLatLngToDivPixel(startSW);
+        var nePoint = projection.fromLatLngToDivPixel(startNE);
+        var dx = e.clientX - this.resizeStart.x;
+        var dy = e.clientY - this.resizeStart.y;
+
+        // Ajusta baseado no corner sendo arrastado
+        if (this.resizeCorner.includes('e')) {
+          newNE = projection.fromDivPixelToLatLng(new google.maps.Point(nePoint.x + dx, nePoint.y));
+        }
+        if (this.resizeCorner.includes('w')) {
+          newSW = projection.fromDivPixelToLatLng(new google.maps.Point(swPoint.x + dx, swPoint.y));
+        }
+        if (this.resizeCorner.includes('n')) {
+          newNE = projection.fromDivPixelToLatLng(new google.maps.Point(this.resizeCorner.includes('e') ? nePoint.x + dx : nePoint.x, nePoint.y + dy));
+        }
+        if (this.resizeCorner.includes('s')) {
+          newSW = projection.fromDivPixelToLatLng(new google.maps.Point(this.resizeCorner.includes('w') ? swPoint.x + dx : swPoint.x, swPoint.y + dy));
+        }
+        this.bounds = new google.maps.LatLngBounds(newSW, newNE);
+        this.manager.overlay.bounds = this.bounds;
+        this.manager.overlay.center = {
+          lat: (newSW.lat() + newNE.lat()) / 2,
+          lng: (newSW.lng() + newNE.lng()) / 2
+        };
+        this.draw();
+      }
+    }, {
+      key: "draw",
+      value: function draw() {
+        if (!this.div) return;
+        var projection = this.getProjection();
+        if (!projection) return;
+        var sw = projection.fromLatLngToDivPixel(this.bounds.getSouthWest());
+        var ne = projection.fromLatLngToDivPixel(this.bounds.getNorthEast());
+        if (!sw || !ne) return;
+        var width = ne.x - sw.x;
+        var height = sw.y - ne.y;
+        this.div.style.left = sw.x + 'px';
+        this.div.style.top = ne.y + 'px';
+        this.div.style.width = width + 'px';
+        this.div.style.height = height + 'px';
+
+        // Aplica rotação
+        this.div.style.transform = "rotate(".concat(this.rotation, "deg)");
+        this.div.style.transformOrigin = 'center center';
+      }
+    }, {
+      key: "updateBounds",
+      value: function updateBounds(bounds) {
+        this.bounds = bounds;
+        this.draw();
+      }
+    }, {
+      key: "updateRotation",
+      value: function updateRotation(rotation) {
+        this.rotation = rotation;
+        this.draw();
+      }
+    }, {
+      key: "setOpacity",
+      value: function setOpacity(opacity) {
+        this.opacity = opacity;
+        if (this.div) {
+          var svg = this.div.querySelector('svg');
+          if (svg) {
+            svg.style.opacity = opacity;
+          }
+        }
+      }
+    }, {
+      key: "onRemove",
+      value: function onRemove() {
+        if (this.div) {
+          this.div.parentNode.removeChild(this.div);
+          this.div = null;
+        }
+      }
+    }]);
+  }(google.maps.OverlayView);
+  return CustomSVGOverlayClass;
+}
+
+/***/ },
+
+/***/ "./assets/js/src/services/AreaCalculator.js"
+/*!**************************************************!*\
+  !*** ./assets/js/src/services/AreaCalculator.js ***!
+  \**************************************************/
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   AreaCalculator: () => (/* binding */ AreaCalculator)
+/* harmony export */ });
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
+function _arrayWithoutHoles(r) { if (Array.isArray(r)) return _arrayLikeToArray(r); }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
+function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
+function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+/**
+ * AreaCalculator - Cálculo de áreas de polígonos
+ *
+ * Usa a Google Maps Geometry API para cálculos precisos
+ *
+ * @example
+ * const area = AreaCalculator.calculateArea(polygon);
+ * const formatted = AreaCalculator.formatArea(area);
+ */
+var AreaCalculator = /*#__PURE__*/function () {
+  function AreaCalculator() {
+    _classCallCheck(this, AreaCalculator);
+  }
+  return _createClass(AreaCalculator, null, [{
+    key: "calculateArea",
+    value:
+    /**
+     * Calcula a área de um polígono em metros quadrados
+     * @param {google.maps.Polygon} polygon - Polígono do Google Maps
+     * @returns {number} Área em m²
+     */
+    function calculateArea(polygon) {
+      if (!polygon || !polygon.getPath) {
+        console.error('Polígono inválido para cálculo de área');
+        return 0;
+      }
+      var area = google.maps.geometry.spherical.computeArea(polygon.getPath());
+      return Math.round(area * 100) / 100; // Arredonda para 2 casas decimais
+    }
+
+    /**
+     * Calcula a área a partir de um array de coordenadas
+     * @param {Array<Object>} coordinates - Array de {lat, lng}
+     * @returns {number} Área em m²
+     */
+  }, {
+    key: "calculateAreaFromCoordinates",
+    value: function calculateAreaFromCoordinates(coordinates) {
+      if (!coordinates || coordinates.length < 3) {
+        return 0;
+      }
+      var path = coordinates.map(function (coord) {
+        return new google.maps.LatLng(coord.lat, coord.lng);
+      });
+      var area = google.maps.geometry.spherical.computeArea(path);
+      return Math.round(area * 100) / 100;
+    }
+
+    /**
+     * Formata área para exibição com separadores de milhar
+     * @param {number} area - Área em m²
+     * @returns {string} Área formatada (ex: "1.234,56 m²")
+     */
+  }, {
+    key: "formatArea",
+    value: function formatArea(area) {
+      if (typeof area !== 'number' || isNaN(area)) {
+        return '0 m²';
+      }
+      var formatted = area.toLocaleString('pt-BR', {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      });
+      return "".concat(formatted, " m\xB2");
+    }
+
+    /**
+     * Converte m² para hectares
+     * @param {number} area - Área em m²
+     * @returns {number} Área em hectares
+     */
+  }, {
+    key: "toHectares",
+    value: function toHectares(area) {
+      return area / 10000;
+    }
+
+    /**
+     * Formata área em hectares
+     * @param {number} area - Área em m²
+     * @returns {string} Área em hectares formatada
+     */
+  }, {
+    key: "formatAsHectares",
+    value: function formatAsHectares(area) {
+      var hectares = this.toHectares(area);
+      var formatted = hectares.toLocaleString('pt-BR', {
+        minimumFractionDigits: 4,
+        maximumFractionDigits: 4
+      });
+      return "".concat(formatted, " ha");
+    }
+
+    /**
+     * Retorna área formatada de forma inteligente (m² ou hectares)
+     * @param {number} area - Área em m²
+     * @returns {string} Área formatada
+     */
+  }, {
+    key: "formatSmart",
+    value: function formatSmart(area) {
+      // Se área maior que 10.000 m² (1 hectare), mostra em hectares
+      if (area >= 10000) {
+        return this.formatAsHectares(area);
+      }
+      return this.formatArea(area);
+    }
+
+    /**
+     * Calcula perímetro de um polígono em metros
+     * @param {google.maps.Polygon} polygon - Polígono do Google Maps
+     * @returns {number} Perímetro em metros
+     */
+  }, {
+    key: "calculatePerimeter",
+    value: function calculatePerimeter(polygon) {
+      if (!polygon || !polygon.getPath) {
+        return 0;
+      }
+      var path = polygon.getPath();
+      var perimeter = 0;
+      for (var i = 0; i < path.getLength(); i++) {
+        var point1 = path.getAt(i);
+        var point2 = path.getAt((i + 1) % path.getLength());
+        perimeter += google.maps.geometry.spherical.computeDistanceBetween(point1, point2);
+      }
+      return Math.round(perimeter * 100) / 100;
+    }
+
+    /**
+     * Calcula perímetro a partir de coordenadas
+     * @param {Array<Object>} coordinates - Array de {lat, lng}
+     * @returns {number} Perímetro em metros
+     */
+  }, {
+    key: "calculatePerimeterFromCoordinates",
+    value: function calculatePerimeterFromCoordinates(coordinates) {
+      if (!coordinates || coordinates.length < 3) {
+        return 0;
+      }
+      var perimeter = 0;
+      for (var i = 0; i < coordinates.length; i++) {
+        var point1 = new google.maps.LatLng(coordinates[i].lat, coordinates[i].lng);
+        var point2 = new google.maps.LatLng(coordinates[(i + 1) % coordinates.length].lat, coordinates[(i + 1) % coordinates.length].lng);
+        perimeter += google.maps.geometry.spherical.computeDistanceBetween(point1, point2);
+      }
+      return Math.round(perimeter * 100) / 100;
+    }
+
+    /**
+     * Formata perímetro para exibição
+     * @param {number} perimeter - Perímetro em metros
+     * @returns {string} Perímetro formatado
+     */
+  }, {
+    key: "formatPerimeter",
+    value: function formatPerimeter(perimeter) {
+      if (typeof perimeter !== 'number' || isNaN(perimeter)) {
+        return '0 m';
+      }
+
+      // Se maior que 1000m, mostra em km
+      if (perimeter >= 1000) {
+        var km = perimeter / 1000;
+        return "".concat(km.toFixed(2), " km");
+      }
+      return "".concat(perimeter.toFixed(2), " m");
+    }
+
+    /**
+     * Calcula área total de múltiplos polígonos
+     * @param {Array<google.maps.Polygon>} polygons - Array de polígonos
+     * @returns {number} Área total em m²
+     */
+  }, {
+    key: "calculateTotalArea",
+    value: function calculateTotalArea(polygons) {
+      var _this = this;
+      if (!polygons || !Array.isArray(polygons)) {
+        return 0;
+      }
+      return polygons.reduce(function (total, polygon) {
+        return total + _this.calculateArea(polygon);
+      }, 0);
+    }
+
+    /**
+     * Calcula estatísticas de área para múltiplos polígonos
+     * @param {Array<google.maps.Polygon>} polygons - Array de polígonos
+     * @returns {Object} {total, average, min, max, count}
+     */
+  }, {
+    key: "calculateStatistics",
+    value: function calculateStatistics(polygons) {
+      var _this2 = this;
+      if (!polygons || !Array.isArray(polygons) || polygons.length === 0) {
+        return {
+          total: 0,
+          average: 0,
+          min: 0,
+          max: 0,
+          count: 0
+        };
+      }
+      var areas = polygons.map(function (p) {
+        return _this2.calculateArea(p);
+      });
+      return {
+        total: areas.reduce(function (sum, area) {
+          return sum + area;
+        }, 0),
+        average: areas.reduce(function (sum, area) {
+          return sum + area;
+        }, 0) / areas.length,
+        min: Math.min.apply(Math, _toConsumableArray(areas)),
+        max: Math.max.apply(Math, _toConsumableArray(areas)),
+        count: areas.length
+      };
+    }
+  }]);
+}();
+
+/***/ },
+
+/***/ "./assets/js/src/ui/ModalManager.js"
+/*!******************************************!*\
+  !*** ./assets/js/src/ui/ModalManager.js ***!
+  \******************************************/
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   ModalManager: () => (/* binding */ ModalManager)
+/* harmony export */ });
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
+function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
+function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+/**
+ * ModalManager - Gerencia o modal de edição de lotes
+ *
+ * Responsável por:
+ * - Abrir/fechar modal
+ * - Preencher campos com dados do lote
+ * - Validar e retornar dados editados
+ *
+ * @example
+ * const modalManager = new ModalManager();
+ * const result = await modalManager.openEditModal(loteData);
+ */
+var ModalManager = /*#__PURE__*/function () {
+  function ModalManager() {
+    _classCallCheck(this, ModalManager);
+    this.modal = null;
+    this.resolveCallback = null;
+    this.rejectCallback = null;
+    this.initialize();
+  }
+
+  /**
+   * Inicializa o modal e configura event listeners
+   */
+  return _createClass(ModalManager, [{
+    key: "initialize",
+    value: function initialize() {
+      var _this = this;
+      this.modal = document.getElementById('editModal');
+      if (!this.modal) {
+        return;
+      }
+
+      // Botão Salvar
+      var saveButton = this.modal.querySelector('button[onclick="saveEditLote()"]');
+      if (saveButton) {
+        // Remove o onclick inline
+        saveButton.removeAttribute('onclick');
+        saveButton.addEventListener('click', function () {
+          return _this.handleSave();
+        });
+      }
+
+      // Botão Cancelar
+      var cancelButton = this.modal.querySelector('button[onclick="closeEditModal()"]');
+      if (cancelButton) {
+        // Remove o onclick inline
+        cancelButton.removeAttribute('onclick');
+        cancelButton.addEventListener('click', function () {
+          return _this.handleCancel();
+        });
+      }
+
+      // Fechar ao clicar fora do modal
+      this.modal.addEventListener('click', function (e) {
+        if (e.target === _this.modal) {
+          _this.handleCancel();
+        }
+      });
+
+      // Fechar com tecla ESC
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && _this.isOpen()) {
+          _this.handleCancel();
+        }
+      });
+    }
+
+    /**
+     * Abre o modal para editar um lote
+     * @param {Object} loteData - Dados do lote a editar
+     * @returns {Promise<Object>} Promise que resolve com os dados editados ou rejeita se cancelado
+     */
+  }, {
+    key: "openEditModal",
+    value: function openEditModal(loteData) {
+      var _this2 = this;
+      return new Promise(function (resolve, reject) {
+        _this2.resolveCallback = resolve;
+        _this2.rejectCallback = reject;
+
+        // Preenche os campos
+        var unidadeIdInput = document.getElementById('editLoteUnidadeId');
+        var blocoInput = document.getElementById('editLoteBloco');
+        var nomeInput = document.getElementById('editLoteNome');
+        if (unidadeIdInput) {
+          unidadeIdInput.value = loteData.id || '';
+        }
+        if (blocoInput) {
+          blocoInput.value = loteData.bloco || '';
+        }
+        if (nomeInput) {
+          nomeInput.value = loteData.nome || '';
+        }
+
+        // Mostra o modal
+        _this2.show();
+
+        // Foca no primeiro campo
+        if (unidadeIdInput) {
+          setTimeout(function () {
+            return unidadeIdInput.focus();
+          }, 100);
+        }
+      });
+    }
+
+    /**
+     * Handler para salvar
+     * @private
+     */
+  }, {
+    key: "handleSave",
+    value: function handleSave() {
+      var unidadeIdInput = document.getElementById('editLoteUnidadeId');
+      var blocoInput = document.getElementById('editLoteBloco');
+      var nomeInput = document.getElementById('editLoteNome');
+      var data = {
+        id: unidadeIdInput ? unidadeIdInput.value.trim() : '',
+        bloco: blocoInput ? blocoInput.value.trim() : '',
+        nome: nomeInput ? nomeInput.value.trim() : ''
+      };
+
+      // Valida os dados obrigatórios
+      if (!data.id) {
+        alert('ID da Unidade é obrigatório');
+        if (unidadeIdInput) unidadeIdInput.focus();
+        return;
+      }
+      if (!data.bloco) {
+        alert('Bloco é obrigatório');
+        if (blocoInput) blocoInput.focus();
+        return;
+      }
+      this.hide();
+      if (this.resolveCallback) {
+        this.resolveCallback(data);
+        this.resolveCallback = null;
+        this.rejectCallback = null;
+      }
+    }
+
+    /**
+     * Handler para cancelar
+     * @private
+     */
+  }, {
+    key: "handleCancel",
+    value: function handleCancel() {
+      this.hide();
+      if (this.rejectCallback) {
+        this.rejectCallback(new Error('Modal cancelado pelo usuário'));
+        this.resolveCallback = null;
+        this.rejectCallback = null;
+      }
+    }
+
+    /**
+     * Mostra o modal
+     */
+  }, {
+    key: "show",
+    value: function show() {
+      if (this.modal) {
+        this.modal.style.display = 'block';
+      }
+    }
+
+    /**
+     * Oculta o modal
+     */
+  }, {
+    key: "hide",
+    value: function hide() {
+      if (this.modal) {
+        this.modal.style.display = 'none';
+      }
+    }
+
+    /**
+     * Verifica se o modal está aberto
+     * @returns {boolean}
+     */
+  }, {
+    key: "isOpen",
+    value: function isOpen() {
+      return this.modal && this.modal.style.display === 'block';
+    }
+
+    /**
+     * Limpa os campos do modal
+     */
+  }, {
+    key: "clear",
+    value: function clear() {
+      var unidadeIdInput = document.getElementById('editLoteUnidadeId');
+      var blocoInput = document.getElementById('editLoteBloco');
+      var nomeInput = document.getElementById('editLoteNome');
+      if (unidadeIdInput) unidadeIdInput.value = '';
+      if (blocoInput) blocoInput.value = '';
+      if (nomeInput) nomeInput.value = '';
+    }
+  }]);
+}();
+
+/***/ },
+
+/***/ "./assets/js/src/ui/UIManager.js"
+/*!***************************************!*\
+  !*** ./assets/js/src/ui/UIManager.js ***!
+  \***************************************/
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   UIManager: () => (/* binding */ UIManager)
+/* harmony export */ });
+/* harmony import */ var _utils_DOMHelper__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utils/DOMHelper */ "./assets/js/src/utils/DOMHelper.js");
+/* harmony import */ var _services_AreaCalculator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../services/AreaCalculator */ "./assets/js/src/services/AreaCalculator.js");
+/* harmony import */ var _utils_ColorGenerator__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utils/ColorGenerator */ "./assets/js/src/utils/ColorGenerator.js");
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
+function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
+function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+/**
+ * UIManager - Gerenciamento geral de UI
+ *
+ * Responsável por:
+ * - Controlar estado dos botões
+ * - Renderizar lista de lotes
+ * - Mostrar notificações
+ * - Atualizar contadores
+ *
+ * @example
+ * const uiManager = new UIManager(stateManager, eventBus);
+ * uiManager.updateDrawingButtons(true);
+ * uiManager.renderLotesList(lotesData);
+ */
+
+
+
+var UIManager = /*#__PURE__*/function () {
+  function UIManager(stateManager, eventBus) {
+    _classCallCheck(this, UIManager);
+    this.stateManager = stateManager;
+    this.eventBus = eventBus;
+  }
+
+  /**
+   * Atualiza estado dos botões de desenho
+   * @param {boolean} isDrawing - Se está em modo de desenho
+   */
+  return _createClass(UIManager, [{
+    key: "updateDrawingButtons",
+    value: function updateDrawingButtons(isDrawing) {
+      if (isDrawing) {
+        _utils_DOMHelper__WEBPACK_IMPORTED_MODULE_0__.DOMHelper.hide('desenhar_lote');
+        _utils_DOMHelper__WEBPACK_IMPORTED_MODULE_0__.DOMHelper.show('aplicar_desenho');
+        _utils_DOMHelper__WEBPACK_IMPORTED_MODULE_0__.DOMHelper.show('cancelar_desenho');
+        _utils_DOMHelper__WEBPACK_IMPORTED_MODULE_0__.DOMHelper.setText('modo_desenho', 'MODO DESENHO ATIVO');
+      } else {
+        _utils_DOMHelper__WEBPACK_IMPORTED_MODULE_0__.DOMHelper.show('desenhar_lote');
+        _utils_DOMHelper__WEBPACK_IMPORTED_MODULE_0__.DOMHelper.hide('aplicar_desenho');
+        _utils_DOMHelper__WEBPACK_IMPORTED_MODULE_0__.DOMHelper.hide('cancelar_desenho');
+        _utils_DOMHelper__WEBPACK_IMPORTED_MODULE_0__.DOMHelper.setText('modo_desenho', '');
+      }
+    }
+
+    /**
+     * Renderiza a lista de lotes na sidebar
+     * @param {Array<Object>} lotesData - Array de lotes
+     */
+  }, {
+    key: "renderLotesList",
+    value: function renderLotesList(lotesData) {
+      var _this = this;
+      var container = _utils_DOMHelper__WEBPACK_IMPORTED_MODULE_0__.DOMHelper.getElement('lista-lotes-container');
+      if (!container) {
+        return;
+      }
+
+      // Se não houver lotes, mostra estado vazio
+      if (!lotesData || lotesData.length === 0) {
+        this.renderEmptyState(container);
+        this.updateLotesCounter(0);
+        this.updateTotalArea(0);
+        return;
+      }
+
+      // Limpa container
+      _utils_DOMHelper__WEBPACK_IMPORTED_MODULE_0__.DOMHelper.clearChildren('lista-lotes-container');
+
+      // Renderiza cada lote
+      lotesData.forEach(function (lote) {
+        var loteElement = _this.createLoteElement(lote);
+        container.appendChild(loteElement);
+      });
+
+      // Atualiza contadores
+      this.updateLotesCounter(lotesData.length);
+      this.updateTotalArea(this.calculateTotalArea(lotesData));
+    }
+
+    /**
+     * Renderiza estado vazio
+     * @private
+     */
+  }, {
+    key: "renderEmptyState",
+    value: function renderEmptyState(container) {
+      _utils_DOMHelper__WEBPACK_IMPORTED_MODULE_0__.DOMHelper.setHTML('lista-lotes-container', "\n      <div class=\"no-lotes\">\n        <div class=\"no-lotes-icon\">\n          <span class=\"dashicons dashicons-admin-multisite\"></span>\n        </div>\n        <p>Nenhum lote cadastrado ainda.</p>\n        <p class=\"help-text\">Clique em \"Desenhar Novo Lote\" para come\xE7ar.</p>\n      </div>\n    ");
+    }
+
+    /**
+     * Cria elemento HTML para um lote
+     * @private
+     */
+  }, {
+    key: "createLoteElement",
+    value: function createLoteElement(lote) {
+      var div = _utils_DOMHelper__WEBPACK_IMPORTED_MODULE_0__.DOMHelper.createElement('div', {
+        "class": 'lote-item',
+        'data-lote-id': lote.id
+      });
+      var statusClass = "status-".concat(lote.status || 'disponivel');
+      var statusLabel = this.getStatusLabel(lote.status);
+      var areaFormatted = _services_AreaCalculator__WEBPACK_IMPORTED_MODULE_1__.AreaCalculator.formatArea(lote.area || 0);
+      div.innerHTML = "\n      <h5>\n        <span class=\"dashicons dashicons-location\"></span>\n        ".concat(lote.nome || lote.id, "\n        <span class=\"status-badge ").concat(statusClass, "\">").concat(statusLabel, "</span>\n      </h5>\n      ").concat(lote.bloco ? "<p><strong>Bloco:</strong> ".concat(lote.bloco, "</p>") : '', "\n      <p><strong>\xC1rea:</strong> ").concat(areaFormatted, "</p>\n      <p><strong>V\xE9rtices:</strong> ").concat(lote.coordinates.length, "</p>\n      <div class=\"lote-actions\">\n        <button type=\"button\" class=\"button button-small lote-action-zoom\" data-lote-id=\"").concat(lote.id, "\">\n          <span class=\"dashicons dashicons-visibility\"></span> Ver\n        </button>\n        <button type=\"button\" class=\"button button-small lote-action-edit\" data-lote-id=\"").concat(lote.id, "\">\n          <span class=\"dashicons dashicons-edit\"></span> Editar\n        </button>\n        <button type=\"button\" class=\"button button-small lote-action-delete\" data-lote-id=\"").concat(lote.id, "\">\n          <span class=\"dashicons dashicons-trash\"></span> Excluir\n        </button>\n      </div>\n    ");
+
+      // Adiciona event listeners
+      this.attachLoteActions(div, lote.id);
+      return div;
+    }
+
+    /**
+     * Adiciona event listeners aos botões de ação do lote
+     * @private
+     */
+  }, {
+    key: "attachLoteActions",
+    value: function attachLoteActions(element, loteId) {
+      var _this2 = this;
+      // Botão Ver/Zoom
+      var zoomBtn = element.querySelector('.lote-action-zoom');
+      if (zoomBtn) {
+        zoomBtn.addEventListener('click', function () {
+          _this2.eventBus.emit('ui:zoom_lote', {
+            loteId: loteId
+          });
+        });
+      }
+
+      // Botão Editar
+      var editBtn = element.querySelector('.lote-action-edit');
+      if (editBtn) {
+        editBtn.addEventListener('click', function () {
+          _this2.eventBus.emit('ui:edit_lote', {
+            loteId: loteId
+          });
+        });
+      }
+
+      // Botão Excluir
+      var deleteBtn = element.querySelector('.lote-action-delete');
+      if (deleteBtn) {
+        deleteBtn.addEventListener('click', function () {
+          if (confirm('Tem certeza que deseja excluir este lote?')) {
+            _this2.eventBus.emit('ui:delete_lote', {
+              loteId: loteId
+            });
+          }
+        });
+      }
+    }
+
+    /**
+     * Atualiza contador de lotes
+     * @private
+     */
+  }, {
+    key: "updateLotesCounter",
+    value: function updateLotesCounter(count) {
+      _utils_DOMHelper__WEBPACK_IMPORTED_MODULE_0__.DOMHelper.setText('total-lotes', count.toString());
+    }
+
+    /**
+     * Atualiza área total
+     * @private
+     */
+  }, {
+    key: "updateTotalArea",
+    value: function updateTotalArea(totalArea) {
+      var formatted = _services_AreaCalculator__WEBPACK_IMPORTED_MODULE_1__.AreaCalculator.formatArea(totalArea);
+      _utils_DOMHelper__WEBPACK_IMPORTED_MODULE_0__.DOMHelper.setText('area-total-value', formatted);
+    }
+
+    /**
+     * Calcula área total de todos os lotes
+     * @private
+     */
+  }, {
+    key: "calculateTotalArea",
+    value: function calculateTotalArea(lotesData) {
+      return lotesData.reduce(function (total, lote) {
+        return total + (lote.area || 0);
+      }, 0);
+    }
+
+    /**
+     * Retorna label de status
+     * @private
+     */
+  }, {
+    key: "getStatusLabel",
+    value: function getStatusLabel(status) {
+      var labels = {
+        'disponivel': 'Disponível',
+        'vendido': 'Vendido',
+        'reservado': 'Reservado'
+      };
+      return labels[status] || 'Disponível';
+    }
+
+    /**
+     * Mostra notificação
+     * @param {string} message - Mensagem
+     * @param {string} type - Tipo (success, error, warning, info)
+     */
+  }, {
+    key: "showNotification",
+    value: function showNotification(message) {
+      var type = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'info';
+      // Implementação simplificada com alert
+      // Pode ser melhorada com um sistema de toasts
+      if (type === 'error') {
+        alert('Erro: ' + message);
+      } else if (type === 'success') {} else {}
+    }
+
+    /**
+     * Mostra/oculta loading
+     * @param {boolean} show - Se deve mostrar loading
+     */
+  }, {
+    key: "toggleLoading",
+    value: function toggleLoading(show) {
+      // Implementação simplificada
+      // Pode ser melhorada com spinner visual
+      if (show) {}
+    }
+  }]);
+}();
+
+/***/ },
+
+/***/ "./assets/js/src/utils/ColorGenerator.js"
+/*!***********************************************!*\
+  !*** ./assets/js/src/utils/ColorGenerator.js ***!
+  \***********************************************/
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   ColorGenerator: () => (/* binding */ ColorGenerator)
+/* harmony export */ });
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
+function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
+function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
+function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+/**
+ * ColorGenerator - Geração de cores para polígonos
+ *
+ * Gera cores aleatórias ou a partir de paleta pré-definida
+ *
+ * @example
+ * const color = ColorGenerator.random();
+ * const paletteColor = ColorGenerator.fromPalette(0);
+ */
+var ColorGenerator = /*#__PURE__*/function () {
+  function ColorGenerator() {
+    _classCallCheck(this, ColorGenerator);
+  }
+  return _createClass(ColorGenerator, null, [{
+    key: "random",
+    value:
+    /**
+     * Gera uma cor aleatória da paleta
+     * @returns {string} Código hexadecimal da cor
+     */
+    function random() {
+      var randomIndex = Math.floor(Math.random() * this.PALETTE.length);
+      return this.PALETTE[randomIndex];
+    }
+
+    /**
+     * Retorna uma cor da paleta por índice
+     * @param {number} index - Índice da cor (faz loop se maior que length)
+     * @returns {string} Código hexadecimal da cor
+     */
+  }, {
+    key: "fromPalette",
+    value: function fromPalette(index) {
+      var adjustedIndex = index % this.PALETTE.length;
+      return this.PALETTE[adjustedIndex];
+    }
+
+    /**
+     * Gera uma cor aleatória completamente aleatória (não da paleta)
+     * @returns {string} Código hexadecimal da cor
+     */
+  }, {
+    key: "randomHex",
+    value: function randomHex() {
+      return '#' + Math.floor(Math.random() * 16777215).toString(16).padStart(6, '0');
+    }
+
+    /**
+     * Gera uma cor baseada em um ID (sempre retorna a mesma cor para o mesmo ID)
+     * @param {string} id - ID único
+     * @returns {string} Código hexadecimal da cor
+     */
+  }, {
+    key: "fromId",
+    value: function fromId(id) {
+      var hash = 0;
+      for (var i = 0; i < id.length; i++) {
+        hash = id.charCodeAt(i) + ((hash << 5) - hash);
+      }
+      var index = Math.abs(hash) % this.PALETTE.length;
+      return this.PALETTE[index];
+    }
+
+    /**
+     * Gera uma cor baseada em status
+     * @param {string} status - Status do lote (disponivel, vendido, reservado)
+     * @returns {string} Código hexadecimal da cor
+     */
+  }, {
+    key: "fromStatus",
+    value: function fromStatus(status) {
+      var statusColors = {
+        'disponivel': '#14d279',
+        // Verde (disponível)
+        'vendido': '#FF6B6B',
+        // Vermelho (vendido)
+        'reservado': '#FFD54F' // Amarelo (reservado)
+      };
+      return statusColors[status] || this.random();
+    }
+
+    /**
+     * Escurece uma cor em uma porcentagem
+     * @param {string} color - Cor hexadecimal
+     * @param {number} percent - Porcentagem para escurecer (0-100)
+     * @returns {string} Cor escurecida
+     */
+  }, {
+    key: "darken",
+    value: function darken(color, percent) {
+      var num = parseInt(color.replace('#', ''), 16);
+      var amt = Math.round(2.55 * percent);
+      var R = (num >> 16) - amt;
+      var G = (num >> 8 & 0x00FF) - amt;
+      var B = (num & 0x0000FF) - amt;
+      return '#' + (0x1000000 + (R < 255 ? R < 1 ? 0 : R : 255) * 0x10000 + (G < 255 ? G < 1 ? 0 : G : 255) * 0x100 + (B < 255 ? B < 1 ? 0 : B : 255)).toString(16).slice(1);
+    }
+
+    /**
+     * Clareia uma cor em uma porcentagem
+     * @param {string} color - Cor hexadecimal
+     * @param {number} percent - Porcentagem para clarear (0-100)
+     * @returns {string} Cor clareada
+     */
+  }, {
+    key: "lighten",
+    value: function lighten(color, percent) {
+      var num = parseInt(color.replace('#', ''), 16);
+      var amt = Math.round(2.55 * percent);
+      var R = (num >> 16) + amt;
+      var G = (num >> 8 & 0x00FF) + amt;
+      var B = (num & 0x0000FF) + amt;
+      return '#' + (0x1000000 + (R < 255 ? R : 255) * 0x10000 + (G < 255 ? G : 255) * 0x100 + (B < 255 ? B : 255)).toString(16).slice(1);
+    }
+
+    /**
+     * Converte hex para RGB
+     * @param {string} hex - Cor hexadecimal
+     * @returns {Object} {r, g, b}
+     */
+  }, {
+    key: "hexToRgb",
+    value: function hexToRgb(hex) {
+      var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+      return result ? {
+        r: parseInt(result[1], 16),
+        g: parseInt(result[2], 16),
+        b: parseInt(result[3], 16)
+      } : null;
+    }
+
+    /**
+     * Converte RGB para hex
+     * @param {number} r - Red (0-255)
+     * @param {number} g - Green (0-255)
+     * @param {number} b - Blue (0-255)
+     * @returns {string} Cor hexadecimal
+     */
+  }, {
+    key: "rgbToHex",
+    value: function rgbToHex(r, g, b) {
+      return '#' + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+    }
+
+    /**
+     * Retorna uma cor de contraste (preto ou branco) para texto
+     * @param {string} backgroundColor - Cor de fundo hexadecimal
+     * @returns {string} '#000000' ou '#FFFFFF'
+     */
+  }, {
+    key: "getContrastColor",
+    value: function getContrastColor(backgroundColor) {
+      var rgb = this.hexToRgb(backgroundColor);
+      if (!rgb) {
+        return '#000000';
+      }
+
+      // Calcula luminância
+      var luminance = (0.299 * rgb.r + 0.587 * rgb.g + 0.114 * rgb.b) / 255;
+      return luminance > 0.5 ? '#000000' : '#FFFFFF';
+    }
+  }]);
+}();
+// Paleta de cores pré-definidas (tons vibrantes e distintos)
+_defineProperty(ColorGenerator, "PALETTE", ['#FF6B6B',
+// Vermelho coral
+'#4ECDC4',
+// Turquesa
+'#45B7D1',
+// Azul céu
+'#FFA07A',
+// Salmão
+'#98D8C8',
+// Verde menta
+'#F06292',
+// Rosa
+'#AED581',
+// Verde limão
+'#FFD54F',
+// Amarelo ouro
+'#4DB6AC',
+// Verde-azulado
+'#7986CB',
+// Azul índigo
+'#9575CD',
+// Roxo
+'#F06292',
+// Rosa escuro
+'#BA68C8',
+// Violeta
+'#4FC3F7',
+// Azul claro
+'#81C784',
+// Verde
+'#DCE775',
+// Lima
+'#FFB74D',
+// Laranja claro
+'#FF8A65',
+// Laranja coral
+'#A1887F',
+// Marrom claro
+'#90A4AE' // Azul acinzentado
+]);
+
+/***/ },
+
+/***/ "./assets/js/src/utils/DOMHelper.js"
+/*!******************************************!*\
+  !*** ./assets/js/src/utils/DOMHelper.js ***!
+  \******************************************/
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   DOMHelper: () => (/* binding */ DOMHelper)
+/* harmony export */ });
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
+function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
+function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
+function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+/**
+ * DOMHelper - Helpers para manipulação de DOM
+ *
+ * Utilitários para trabalhar com elementos do DOM de forma segura
+ *
+ * @example
+ * const element = DOMHelper.getElement('meu-input');
+ * DOMHelper.setValue('meu-input', 'novo valor');
+ */
+var DOMHelper = /*#__PURE__*/function () {
+  function DOMHelper() {
+    _classCallCheck(this, DOMHelper);
+  }
+  return _createClass(DOMHelper, null, [{
+    key: "getElement",
+    value:
+    /**
+     * Obtém um elemento do DOM com cache
+     * @param {string} id - ID do elemento
+     * @param {boolean} useCache - Se deve usar cache (padrão: true)
+     * @returns {HTMLElement|null}
+     */
+    function getElement(id) {
+      var useCache = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
+      if (useCache && this.elementCache.has(id)) {
+        return this.elementCache.get(id);
+      }
+      var element = document.getElementById(id);
+      if (element && useCache) {
+        this.elementCache.set(id, element);
+      }
+      return element;
+    }
+
+    /**
+     * Obtém o valor de um input
+     * @param {string} id - ID do input
+     * @returns {string}
+     */
+  }, {
+    key: "getValue",
+    value: function getValue(id) {
+      var element = this.getElement(id);
+      return element ? element.value : '';
+    }
+
+    /**
+     * Define o valor de um input
+     * @param {string} id - ID do input
+     * @param {string} value - Valor a definir
+     * @returns {boolean} Sucesso da operação
+     */
+  }, {
+    key: "setValue",
+    value: function setValue(id, value) {
+      var element = this.getElement(id);
+      if (!element) {
+        return false;
+      }
+      element.value = value;
+      return true;
+    }
+
+    /**
+     * Mostra um elemento
+     * @param {string} id - ID do elemento
+     */
+  }, {
+    key: "show",
+    value: function show(id) {
+      var element = this.getElement(id);
+      if (element) {
+        element.style.display = '';
+        element.classList.remove('hidden');
+      }
+    }
+
+    /**
+     * Oculta um elemento
+     * @param {string} id - ID do elemento
+     */
+  }, {
+    key: "hide",
+    value: function hide(id) {
+      var element = this.getElement(id);
+      if (element) {
+        element.classList.add('hidden');
+      }
+    }
+
+    /**
+     * Alterna visibilidade de um elemento
+     * @param {string} id - ID do elemento
+     */
+  }, {
+    key: "toggle",
+    value: function toggle(id) {
+      var element = this.getElement(id);
+      if (element) {
+        element.classList.toggle('hidden');
+      }
+    }
+
+    /**
+     * Adiciona uma classe a um elemento
+     * @param {string} id - ID do elemento
+     * @param {string} className - Nome da classe
+     */
+  }, {
+    key: "addClass",
+    value: function addClass(id, className) {
+      var element = this.getElement(id);
+      if (element) {
+        element.classList.add(className);
+      }
+    }
+
+    /**
+     * Remove uma classe de um elemento
+     * @param {string} id - ID do elemento
+     * @param {string} className - Nome da classe
+     */
+  }, {
+    key: "removeClass",
+    value: function removeClass(id, className) {
+      var element = this.getElement(id);
+      if (element) {
+        element.classList.remove(className);
+      }
+    }
+
+    /**
+     * Define o texto de um elemento
+     * @param {string} id - ID do elemento
+     * @param {string} text - Texto a definir
+     */
+  }, {
+    key: "setText",
+    value: function setText(id, text) {
+      var element = this.getElement(id);
+      if (element) {
+        element.textContent = text;
+      }
+    }
+
+    /**
+     * Define o HTML de um elemento
+     * @param {string} id - ID do elemento
+     * @param {string} html - HTML a definir
+     */
+  }, {
+    key: "setHTML",
+    value: function setHTML(id, html) {
+      var element = this.getElement(id);
+      if (element) {
+        element.innerHTML = html;
+      }
+    }
+
+    /**
+     * Limpa o cache de elementos
+     */
+  }, {
+    key: "clearCache",
+    value: function clearCache() {
+      this.elementCache.clear();
+    }
+
+    /**
+     * Remove um elemento específico do cache
+     * @param {string} id - ID do elemento
+     */
+  }, {
+    key: "removeFromCache",
+    value: function removeFromCache(id) {
+      this.elementCache["delete"](id);
+    }
+
+    /**
+     * Adiciona event listener de forma segura
+     * @param {string} id - ID do elemento
+     * @param {string} event - Nome do evento
+     * @param {Function} callback - Função callback
+     * @returns {boolean} Sucesso da operação
+     */
+  }, {
+    key: "addEventListener",
+    value: function addEventListener(id, event, callback) {
+      var element = this.getElement(id);
+      if (!element) {
+        return false;
+      }
+      element.addEventListener(event, callback);
+      return true;
+    }
+
+    /**
+     * Habilita um input
+     * @param {string} id - ID do input
+     */
+  }, {
+    key: "enable",
+    value: function enable(id) {
+      var element = this.getElement(id);
+      if (element) {
+        element.disabled = false;
+      }
+    }
+
+    /**
+     * Desabilita um input
+     * @param {string} id - ID do input
+     */
+  }, {
+    key: "disable",
+    value: function disable(id) {
+      var element = this.getElement(id);
+      if (element) {
+        element.disabled = true;
+      }
+    }
+
+    /**
+     * Verifica se um elemento existe
+     * @param {string} id - ID do elemento
+     * @returns {boolean}
+     */
+  }, {
+    key: "exists",
+    value: function exists(id) {
+      return this.getElement(id) !== null;
+    }
+
+    /**
+     * Foca em um elemento
+     * @param {string} id - ID do elemento
+     */
+  }, {
+    key: "focus",
+    value: function focus(id) {
+      var element = this.getElement(id);
+      if (element && typeof element.focus === 'function') {
+        element.focus();
+      }
+    }
+
+    /**
+     * Cria um elemento HTML
+     * @param {string} tag - Tag do elemento (div, span, etc)
+     * @param {Object} attributes - Atributos do elemento
+     * @param {string} content - Conteúdo do elemento
+     * @returns {HTMLElement}
+     */
+  }, {
+    key: "createElement",
+    value: function createElement(tag) {
+      var attributes = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+      var content = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
+      var element = document.createElement(tag);
+      Object.keys(attributes).forEach(function (key) {
+        if (key === 'class') {
+          element.className = attributes[key];
+        } else if (key === 'style') {
+          Object.assign(element.style, attributes[key]);
+        } else {
+          element.setAttribute(key, attributes[key]);
+        }
+      });
+      if (content) {
+        element.innerHTML = content;
+      }
+      return element;
+    }
+
+    /**
+     * Remove todos os filhos de um elemento
+     * @param {string} id - ID do elemento
+     */
+  }, {
+    key: "clearChildren",
+    value: function clearChildren(id) {
+      var element = this.getElement(id);
+      if (element) {
+        while (element.firstChild) {
+          element.removeChild(element.firstChild);
+        }
+      }
+    }
+  }]);
+}();
+// Cache de elementos para melhor performance
+_defineProperty(DOMHelper, "elementCache", new Map());
+
+/***/ }
+
+/******/ 	});
+/************************************************************************/
+/******/ 	// The module cache
+/******/ 	var __webpack_module_cache__ = {};
+/******/ 	
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/ 		// Check if module is in cache
+/******/ 		var cachedModule = __webpack_module_cache__[moduleId];
+/******/ 		if (cachedModule !== undefined) {
+/******/ 			return cachedModule.exports;
+/******/ 		}
+/******/ 		// Check if module exists (development only)
+/******/ 		if (__webpack_modules__[moduleId] === undefined) {
+/******/ 			var e = new Error("Cannot find module '" + moduleId + "'");
+/******/ 			e.code = 'MODULE_NOT_FOUND';
+/******/ 			throw e;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = __webpack_module_cache__[moduleId] = {
+/******/ 			// no module.id needed
+/******/ 			// no module.loaded needed
+/******/ 			exports: {}
+/******/ 		};
+/******/ 	
+/******/ 		// Execute the module function
+/******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
+/******/ 	
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/ 	
+/************************************************************************/
+/******/ 	/* webpack/runtime/define property getters */
+/******/ 	(() => {
+/******/ 		// define getter functions for harmony exports
+/******/ 		__webpack_require__.d = (exports, definition) => {
+/******/ 			for(var key in definition) {
+/******/ 				if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
+/******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
+/******/ 				}
+/******/ 			}
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/hasOwnProperty shorthand */
+/******/ 	(() => {
+/******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/make namespace object */
+/******/ 	(() => {
+/******/ 		// define __esModule on exports
+/******/ 		__webpack_require__.r = (exports) => {
+/******/ 			if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 				Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 			}
+/******/ 			Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/************************************************************************/
+var __webpack_exports__ = {};
+// This entry needs to be wrapped in an IIFE because it needs to be isolated against other modules in the chunk.
+(() => {
+/*!*******************************!*\
+  !*** ./assets/js/src/main.js ***!
+  \*******************************/
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _core_StateManager__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./core/StateManager */ "./assets/js/src/core/StateManager.js");
+/* harmony import */ var _core_EventBus__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./core/EventBus */ "./assets/js/src/core/EventBus.js");
+/* harmony import */ var _core_MapManager__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./core/MapManager */ "./assets/js/src/core/MapManager.js");
+/* harmony import */ var _managers_GeocodeManager__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./managers/GeocodeManager */ "./assets/js/src/managers/GeocodeManager.js");
+/* harmony import */ var _managers_DataPersistence__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./managers/DataPersistence */ "./assets/js/src/managers/DataPersistence.js");
+/* harmony import */ var _managers_SVGOverlayManager__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./managers/SVGOverlayManager */ "./assets/js/src/managers/SVGOverlayManager.js");
+/* harmony import */ var _managers_SVGEditorManager__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./managers/SVGEditorManager */ "./assets/js/src/managers/SVGEditorManager.js");
+/* harmony import */ var _managers_ImageOverlayManager__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./managers/ImageOverlayManager */ "./assets/js/src/managers/ImageOverlayManager.js");
+/* harmony import */ var _ui_UIManager__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./ui/UIManager */ "./assets/js/src/ui/UIManager.js");
+/* harmony import */ var _ui_ModalManager__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./ui/ModalManager */ "./assets/js/src/ui/ModalManager.js");
+/* harmony import */ var _utils_DOMHelper__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./utils/DOMHelper */ "./assets/js/src/utils/DOMHelper.js");
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _regenerator() { /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE */ var e, t, r = "function" == typeof Symbol ? Symbol : {}, n = r.iterator || "@@iterator", o = r.toStringTag || "@@toStringTag"; function i(r, n, o, i) { var c = n && n.prototype instanceof Generator ? n : Generator, u = Object.create(c.prototype); return _regeneratorDefine2(u, "_invoke", function (r, n, o) { var i, c, u, f = 0, p = o || [], y = !1, G = { p: 0, n: 0, v: e, a: d, f: d.bind(e, 4), d: function d(t, r) { return i = t, c = 0, u = e, G.n = r, a; } }; function d(r, n) { for (c = r, u = n, t = 0; !y && f && !o && t < p.length; t++) { var o, i = p[t], d = G.p, l = i[2]; r > 3 ? (o = l === n) && (u = i[(c = i[4]) ? 5 : (c = 3, 3)], i[4] = i[5] = e) : i[0] <= d && ((o = r < 2 && d < i[1]) ? (c = 0, G.v = n, G.n = i[1]) : d < l && (o = r < 3 || i[0] > n || n > l) && (i[4] = r, i[5] = n, G.n = l, c = 0)); } if (o || r > 1) return a; throw y = !0, n; } return function (o, p, l) { if (f > 1) throw TypeError("Generator is already running"); for (y && 1 === p && d(p, l), c = p, u = l; (t = c < 2 ? e : u) || !y;) { i || (c ? c < 3 ? (c > 1 && (G.n = -1), d(c, u)) : G.n = u : G.v = u); try { if (f = 2, i) { if (c || (o = "next"), t = i[o]) { if (!(t = t.call(i, u))) throw TypeError("iterator result is not an object"); if (!t.done) return t; u = t.value, c < 2 && (c = 0); } else 1 === c && (t = i["return"]) && t.call(i), c < 2 && (u = TypeError("The iterator does not provide a '" + o + "' method"), c = 1); i = e; } else if ((t = (y = G.n < 0) ? u : r.call(n, G)) !== a) break; } catch (t) { i = e, c = 1, u = t; } finally { f = 1; } } return { value: t, done: y }; }; }(r, o, i), !0), u; } var a = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} t = Object.getPrototypeOf; var c = [][n] ? t(t([][n]())) : (_regeneratorDefine2(t = {}, n, function () { return this; }), t), u = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(c); function f(e) { return Object.setPrototypeOf ? Object.setPrototypeOf(e, GeneratorFunctionPrototype) : (e.__proto__ = GeneratorFunctionPrototype, _regeneratorDefine2(e, o, "GeneratorFunction")), e.prototype = Object.create(u), e; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, _regeneratorDefine2(u, "constructor", GeneratorFunctionPrototype), _regeneratorDefine2(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = "GeneratorFunction", _regeneratorDefine2(GeneratorFunctionPrototype, o, "GeneratorFunction"), _regeneratorDefine2(u), _regeneratorDefine2(u, o, "Generator"), _regeneratorDefine2(u, n, function () { return this; }), _regeneratorDefine2(u, "toString", function () { return "[object Generator]"; }), (_regenerator = function _regenerator() { return { w: i, m: f }; })(); }
+function _regeneratorDefine2(e, r, n, t) { var i = Object.defineProperty; try { i({}, "", {}); } catch (e) { i = 0; } _regeneratorDefine2 = function _regeneratorDefine(e, r, n, t) { function o(r, n) { _regeneratorDefine2(e, r, function (e) { return this._invoke(r, n, e); }); } r ? i ? i(e, r, { value: n, enumerable: !t, configurable: !t, writable: !t }) : e[r] = n : (o("next", 0), o("throw", 1), o("return", 2)); }, _regeneratorDefine2(e, r, n, t); }
+function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
+function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
+function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
+function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
+function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+/**
+ * Main Entry Point - Aplicação de Gerenciamento de Terrenos e Lotes
+ *
+ * Inicializa todos os módulos e configura event handlers
+ */
+
+// Core modules
+
+
+
+
+// Managers
+
+
+
+
+
+
+// UI
+
+
+
+// Utils
+
+
+/**
+ * Classe principal da aplicação
+ */
+var TerrenoMapApp = /*#__PURE__*/function () {
+  function TerrenoMapApp() {
+    _classCallCheck(this, TerrenoMapApp);
+    // Inicializa core modules
+    this.eventBus = new _core_EventBus__WEBPACK_IMPORTED_MODULE_1__.EventBus();
+    this.stateManager = new _core_StateManager__WEBPACK_IMPORTED_MODULE_0__.StateManager();
+
+    // Referências dos managers (serão inicializados em initialize())
+    this.mapManager = null;
+    this.geocodeManager = null;
+    this.dataPersistence = null;
+    this.uiManager = null;
+    this.modalManager = null;
+    this.svgImportManager = null;
+    this.svgEditorManager = null;
+    this.imageOverlayManager = null;
+  }
+
+  /**
+   * Inicializa a aplicação
+   */
+  return _createClass(TerrenoMapApp, [{
+    key: "initialize",
+    value: (function () {
+      var _initialize = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee() {
+        var lat, lng, zoom, map, geocoder, _t;
+        return _regenerator().w(function (_context) {
+          while (1) switch (_context.p = _context.n) {
+            case 0:
+              _context.p = 0;
+              // Lê configurações dos inputs
+              lat = parseFloat(_utils_DOMHelper__WEBPACK_IMPORTED_MODULE_10__.DOMHelper.getValue('terreno_latitude')) || -3.7319;
+              lng = parseFloat(_utils_DOMHelper__WEBPACK_IMPORTED_MODULE_10__.DOMHelper.getValue('terreno_longitude')) || -38.5267;
+              zoom = parseInt(_utils_DOMHelper__WEBPACK_IMPORTED_MODULE_10__.DOMHelper.getValue('terreno_zoom')) || 18; // Inicializa o mapa
+              this.mapManager = new _core_MapManager__WEBPACK_IMPORTED_MODULE_2__.MapManager('gmap', this.stateManager, this.eventBus);
+              _context.n = 1;
+              return this.mapManager.initialize(lat, lng, zoom);
+            case 1:
+              map = this.mapManager.getMap();
+              geocoder = this.mapManager.getGeocoder(); // Inicializa managers
+              this.geocodeManager = new _managers_GeocodeManager__WEBPACK_IMPORTED_MODULE_3__.GeocodeManager(geocoder, this.eventBus);
+              this.dataPersistence = new _managers_DataPersistence__WEBPACK_IMPORTED_MODULE_4__.DataPersistence('terreno_lotes_data', this.stateManager, this.eventBus);
+              this.uiManager = new _ui_UIManager__WEBPACK_IMPORTED_MODULE_8__.UIManager(this.stateManager, this.eventBus);
+              this.modalManager = new _ui_ModalManager__WEBPACK_IMPORTED_MODULE_9__.ModalManager();
+              this.svgImportManager = new _managers_SVGOverlayManager__WEBPACK_IMPORTED_MODULE_5__.SVGOverlayManager(map, this.stateManager, this.eventBus, this.dataPersistence);
+
+              // Inicializa editor de SVG para vincular shapes aos lotes
+              this.svgEditorManager = new _managers_SVGEditorManager__WEBPACK_IMPORTED_MODULE_6__.SVGEditorManager(map, this.stateManager, this.eventBus);
+
+              // Inicializa manager de planta humanizada (image overlay)
+              this.imageOverlayManager = new _managers_ImageOverlayManager__WEBPACK_IMPORTED_MODULE_7__.ImageOverlayManager(map, this.stateManager, this.eventBus);
+
+              // Carrega overlay SVG salvo (se existir)
+              this.svgImportManager.loadSavedOverlay();
+
+              // Carrega overlay de imagem salvo (se existir)
+              this.imageOverlayManager.loadSavedOverlay();
+
+              // Setup event handlers
+              this.setupEventHandlers();
+              this.setupDOMEventHandlers();
+              _context.n = 3;
+              break;
+            case 2:
+              _context.p = 2;
+              _t = _context.v;
+              console.error('❌ Erro ao inicializar TerrenoMapApp:', _t);
+              alert('Erro ao inicializar o mapa. Verifique se a chave da API do Google Maps está configurada corretamente.');
+            case 3:
+              return _context.a(2);
+          }
+        }, _callee, this, [[0, 2]]);
+      }));
+      function initialize() {
+        return _initialize.apply(this, arguments);
+      }
+      return initialize;
+    }()
+    /**
+     * Configura event handlers entre módulos
+     */
+    )
+  }, {
+    key: "setupEventHandlers",
+    value: function setupEventHandlers() {
+      var _this = this;
+      // SVG Editor events - clique em shape no overlay
+      this.eventBus.on('svg:shape_clicked', function (_ref) {
+        var index = _ref.index;
+        // Abre o editor e seleciona o shape
+        if (_this.svgEditorManager) {
+          _this.svgEditorManager.openEditor();
+          _this.svgEditorManager.selectShape(index);
+        }
+      });
+    }
+
+    /**
+     * Configura event handlers dos elementos DOM
+     */
+  }, {
+    key: "setupDOMEventHandlers",
+    value: function setupDOMEventHandlers() {
+      var _this2 = this;
+      // Botão Alternar Satélite
+      _utils_DOMHelper__WEBPACK_IMPORTED_MODULE_10__.DOMHelper.addEventListener('toggle_satellite', 'click', function () {
+        var newType = _this2.mapManager.toggleMapType();
+        var buttonText = newType === 'satellite' ? 'Visualização Roadmap' : 'Visualização Satélite';
+        _utils_DOMHelper__WEBPACK_IMPORTED_MODULE_10__.DOMHelper.setText('toggle_satellite', buttonText);
+      });
+
+      // Botão Buscar Endereço
+      _utils_DOMHelper__WEBPACK_IMPORTED_MODULE_10__.DOMHelper.addEventListener('buscar_endereco', 'click', function () {
+        _this2.searchAddress();
+      });
+
+      // Botão Ir para Coordenadas
+      _utils_DOMHelper__WEBPACK_IMPORTED_MODULE_10__.DOMHelper.addEventListener('ir_para_coordenadas', 'click', function () {
+        _this2.goToCoordinates();
+      });
+
+      // Sync inputs com mapa
+      this.eventBus.on('map:zoom_changed', function (zoom) {
+        _utils_DOMHelper__WEBPACK_IMPORTED_MODULE_10__.DOMHelper.setValue('terreno_zoom', zoom);
+      });
+      this.eventBus.on('map:center_updated', function (_ref2) {
+        var lat = _ref2.lat,
+          lng = _ref2.lng;
+        _utils_DOMHelper__WEBPACK_IMPORTED_MODULE_10__.DOMHelper.setValue('terreno_latitude', lat.toFixed(7));
+        _utils_DOMHelper__WEBPACK_IMPORTED_MODULE_10__.DOMHelper.setValue('terreno_longitude', lng.toFixed(7));
+      });
+    }
+
+    /**
+     * Busca endereço
+     */
+  }, {
+    key: "searchAddress",
+    value: (function () {
+      var _searchAddress = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee2() {
+        var address, result, _t2;
+        return _regenerator().w(function (_context2) {
+          while (1) switch (_context2.p = _context2.n) {
+            case 0:
+              address = _utils_DOMHelper__WEBPACK_IMPORTED_MODULE_10__.DOMHelper.getValue('terreno_endereco');
+              if (address) {
+                _context2.n = 1;
+                break;
+              }
+              alert('Digite um endereço para buscar');
+              return _context2.a(2);
+            case 1:
+              _context2.p = 1;
+              _context2.n = 2;
+              return this.geocodeManager.smartSearch(address);
+            case 2:
+              result = _context2.v;
+              // Atualiza mapa
+              this.mapManager.updateCenter(result.lat, result.lng);
+              this.mapManager.updateZoom(18);
+
+              // Atualiza inputs
+              _utils_DOMHelper__WEBPACK_IMPORTED_MODULE_10__.DOMHelper.setValue('terreno_latitude', result.lat.toFixed(7));
+              _utils_DOMHelper__WEBPACK_IMPORTED_MODULE_10__.DOMHelper.setValue('terreno_longitude', result.lng.toFixed(7));
+              if (result.address) {
+                _utils_DOMHelper__WEBPACK_IMPORTED_MODULE_10__.DOMHelper.setValue('terreno_endereco', result.address);
+              }
+              _context2.n = 4;
+              break;
+            case 3:
+              _context2.p = 3;
+              _t2 = _context2.v;
+              alert('Erro ao buscar endereço: ' + _t2.message);
+            case 4:
+              return _context2.a(2);
+          }
+        }, _callee2, this, [[1, 3]]);
+      }));
+      function searchAddress() {
+        return _searchAddress.apply(this, arguments);
+      }
+      return searchAddress;
+    }()
+    /**
+     * Move o mapa para as coordenadas digitadas
+     */
+    )
+  }, {
+    key: "goToCoordinates",
+    value: function goToCoordinates() {
+      var lat = parseFloat(_utils_DOMHelper__WEBPACK_IMPORTED_MODULE_10__.DOMHelper.getValue('terreno_latitude'));
+      var lng = parseFloat(_utils_DOMHelper__WEBPACK_IMPORTED_MODULE_10__.DOMHelper.getValue('terreno_longitude'));
+      var zoom = parseInt(_utils_DOMHelper__WEBPACK_IMPORTED_MODULE_10__.DOMHelper.getValue('terreno_zoom')) || 18;
+      if (isNaN(lat) || isNaN(lng)) {
+        alert('Por favor, digite coordenadas válidas de latitude e longitude.');
+        return;
+      }
+      if (lat < -90 || lat > 90) {
+        alert('Latitude deve estar entre -90 e 90.');
+        return;
+      }
+      if (lng < -180 || lng > 180) {
+        alert('Longitude deve estar entre -180 e 180.');
+        return;
+      }
+
+      // Atualiza mapa
+      this.mapManager.updateCenter(lat, lng);
+      this.mapManager.updateZoom(zoom);
+    }
+  }]);
+}(); // Bootstrap quando DOM estiver pronto
+jQuery(document).ready(function () {
+  // Verifica se o elemento do mapa existe
+  if (jQuery('#gmap').length === 0) {
+    return;
+  }
+  var app = new TerrenoMapApp();
+  app.initialize();
+
+  // Expõe globalmente para compatibilidade/debugging
+  window.TerrenoMapApp = app;
+});
+})();
+
+window.TerrenoMapApp = __webpack_exports__;
+/******/ })()
+;
 //# sourceMappingURL=terreno-admin.bundle.js.map
