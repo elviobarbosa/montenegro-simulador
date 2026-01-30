@@ -10,6 +10,8 @@ if (!defined('ABSPATH')) {
     exit;
 }
 require_once __DIR__ . '/includes/class-cpt.php';
+require_once __DIR__ . '/includes/class-cpt-faq.php';
+require_once __DIR__ . '/includes/class-cpt-features.php';
 require_once __DIR__ . '/includes/class-metabox.php';
 require_once __DIR__ . '/includes/class-metabox-save.php';
 require_once __DIR__ . '/includes/class-enqueue.php';
@@ -20,8 +22,11 @@ require_once __DIR__ . '/includes/class-svg-importer.php';
 require_once __DIR__ . '/includes/class-ajax-handlers.php';
 require_once __DIR__ . '/includes/class-cvcrm-api.php';
 require_once __DIR__ . '/includes/class-template-loader.php';
+require_once __DIR__ . '/includes/class-template-functions.php';
 
 new TerrenosLotes_CPT();
+new TerrenosLotes_CPT_FAQ();
+new TerrenosLotes_CPT_Features();
 new TerrenosLotes_MetaBox();
 new TerrenosLotes_MetaBoxSave();
 new TerrenosLotes_Enqueue();
@@ -30,6 +35,17 @@ new TerrenosLotes_SettingsPage();
 new TerrenosLotes_FacebookPixel();
 new TerrenosLotes_AjaxHandlers();
 new TerrenosLotes_TemplateLoader();
+new TerrenosLotes_TemplateFunctions();
+
+add_filter('rest_authentication_errors', function($result) {
+    // Se já houver um erro, mas for o nosso namespace, liberamos
+    if (true === is_wp_error($result)) {
+        if (strpos($_SERVER['REQUEST_URI'], '/wp-json/cvcrm/v1') !== false) {
+            return null; // 'null' indica ao WP para continuar o processamento
+        }
+    }
+    return $result;
+}, 999); // Prioridade alta para rodar depois de plugins de segurança
 
 function get_terreno_lotes($post_id) {
     $lotes_data = get_post_meta($post_id, '_terreno_lotes', true);
@@ -123,16 +139,43 @@ function terreno_mapa_shortcode($atts) {
 
     async function loadEmpreendimentos(id) {
         try {
+            console.log('[CVCRM] Carregando empreendimento ID:', id);
             const res = await fetch(`/wp-json/cvcrm/v1/empreendimentos/${id}?limite_dados_unidade=60`);
-            if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
-            const data = await res.json();
 
+            console.log('[CVCRM] Status da resposta:', res.status, res.statusText);
+
+            if (!res.ok) {
+                const errorBody = await res.text();
+                console.error('[CVCRM] Erro na resposta:', errorBody);
+
+                let errorMsg = `Erro ao carregar dados do empreendimento (HTTP ${res.status})`;
+                if (res.status === 401) {
+                    errorMsg = 'Erro de autenticação na API. Verifique as credenciais em Terrenos > Configurações.';
+                } else if (res.status === 500) {
+                    errorMsg = 'Erro no servidor. Verifique as credenciais da API CV CRM.';
+                }
+
+                throw new Error(errorMsg);
+            }
+
+            const data = await res.json();
+            console.log('[CVCRM] Dados carregados com sucesso');
             return data;
         } catch (err) {
-            console.error('Erro ao carregar empreendimento:', err);
-            const container = document.getElementById('container');
-            if (container) {
-                container.innerHTML = "<p>Erro ao carregar empreendimento.</p>";
+            console.error('[CVCRM] Erro ao carregar empreendimento:', err);
+            const mapDiv = document.getElementById('<?php echo $map_id; ?>');
+            if (mapDiv) {
+                mapDiv.innerHTML = `
+                    <div style="display:flex; align-items:center; justify-content:center; height:100%; padding:40px; text-align:center;">
+                        <div>
+                            <h3 style="color:#d32f2f; margin-bottom:10px;">Erro ao carregar mapa</h3>
+                            <p style="color:#666;">${err.message}</p>
+                            <p style="color:#999; font-size:12px; margin-top:20px;">
+                                Entre em contato com o administrador do site.
+                            </p>
+                        </div>
+                    </div>
+                `;
             }
             throw err;
         }
@@ -762,6 +805,32 @@ function terreno_mapa_shortcode($atts) {
     }
 
     /**
+     * Ajusta o mapa para garantir que o InfoWindow fique visível
+     */
+    function adjustMapForInfoWindow(map, position) {
+        // Aguarda um momento para o InfoWindow renderizar
+        setTimeout(() => {
+            const scale = Math.pow(2, map.getZoom());
+            const projection = map.getProjection();
+
+            if (projection) {
+                const worldCoordinate = projection.fromLatLngToPoint(position);
+                // Move o mapa um pouco para cima (offset de 200px aproximadamente)
+                const pixelOffset = 200 / scale;
+                const newWorldCoordinate = new google.maps.Point(
+                    worldCoordinate.x,
+                    worldCoordinate.y - pixelOffset
+                );
+                const newPosition = projection.fromPointToLatLng(newWorldCoordinate);
+                map.panTo(newPosition);
+            } else {
+                // Fallback: apenas centraliza na posição
+                map.panTo(position);
+            }
+        }, 100);
+    }
+
+    /**
      * Handler para clique no shape do SVG
      */
     async function handleShapeClick(unidade, mappingData, latLng, infoWindow, map) {
@@ -769,6 +838,9 @@ function terreno_mapa_shortcode($atts) {
         infoWindow.setContent('<div class="info-window-step2" style="text-align:center;padding:20px;">Carregando...</div>');
         infoWindow.setPosition(latLng);
         infoWindow.open(map);
+
+        // Ajusta o mapa para mostrar o InfoWindow
+        adjustMapForInfoWindow(map, latLng);
 
         // Busca dados da tabela de preços (com cache)
         const dadosTabela = await getUnidadeDadosCompletos(mappingData.bloco, mappingData.lote_id);
@@ -809,6 +881,33 @@ function terreno_mapa_shortcode($atts) {
                 google.maps.event.addListenerOnce(infoWindow, "domready", function () {
                     const formEl = document.querySelector('.gm-style-iw .wpcf7 form');
                     if (formEl && typeof wpcf7 !== "undefined") {
+                        // Injeta campos hidden com os dados da simulação
+                        const formatCurrency = (val) => Number(val).toLocaleString("pt-BR", {style: "currency", currency: "BRL"});
+
+                        const hiddenFields = [
+                            { name: 'empreendimento', value: empreedimentosData.nome || '' },
+                            { name: 'quadra', value: unidade.idbloco || '' },
+                            { name: 'lote', value: unidade.nome || '' },
+                            { name: 'idunidade', value: unidade.idunidade || '' },
+                            { name: 'valor-lote', value: formatCurrency(simulacao.preco) },
+                            { name: 'entrada', value: formatCurrency(simulacao.entrada) },
+                            { name: 'valor-financiado', value: formatCurrency(simulacao.financiado) },
+                            { name: 'balao-anual', value: `${formatCurrency(simulacao.valorBalao)} x ${simulacao.qtdBaloes}` },
+                            { name: 'parcelas', value: simulacao.parcelas },
+                            { name: 'valor-parcela', value: formatCurrency(simulacao.valorParcela) }
+                        ];
+
+                        hiddenFields.forEach(field => {
+                            let input = formEl.querySelector(`input[name="${field.name}"]`);
+                            if (!input) {
+                                input = document.createElement('input');
+                                input.type = 'hidden';
+                                input.name = field.name;
+                                formEl.appendChild(input);
+                            }
+                            input.value = field.value;
+                        });
+
                         formEl.addEventListener("keyup", (e) => {
                             if (e.target.matches("input[type=tel]")) {
                                 let value = e.target.value.replace(/\D/g, "");
@@ -900,6 +999,9 @@ function terreno_mapa_shortcode($atts) {
                     infoWindow.setPosition(event.latLng);
                     infoWindow.open(map);
 
+                    // Ajusta o mapa para mostrar o InfoWindow
+                    adjustMapForInfoWindow(map, event.latLng);
+
                     // Busca dados da tabela de preços (com cache)
                     const dadosTabela = await getUnidadeDadosCompletos(lote.bloco, lote.id);
                     if (dadosTabela) {
@@ -938,6 +1040,33 @@ function terreno_mapa_shortcode($atts) {
                             google.maps.event.addListenerOnce(infoWindow, "domready", function () {
                                 const formEl = document.querySelector('.gm-style-iw .wpcf7 form');
                                 if (formEl && typeof wpcf7 !== "undefined") {
+                                    // Injeta campos hidden com os dados da simulação
+                                    const formatCurrency = (val) => Number(val).toLocaleString("pt-BR", {style: "currency", currency: "BRL"});
+
+                                    const hiddenFields = [
+                                        { name: 'empreendimento', value: empreedimentosData.nome || '' },
+                                        { name: 'quadra', value: unidade.idbloco || '' },
+                                        { name: 'lote', value: unidade.nome || '' },
+                                        { name: 'idunidade', value: unidade.idunidade || '' },
+                                        { name: 'valor-lote', value: formatCurrency(simulacao.preco) },
+                                        { name: 'entrada', value: formatCurrency(simulacao.entrada) },
+                                        { name: 'valor-financiado', value: formatCurrency(simulacao.financiado) },
+                                        { name: 'balao-anual', value: `${formatCurrency(simulacao.valorBalao)} x ${simulacao.qtdBaloes}` },
+                                        { name: 'parcelas', value: simulacao.parcelas },
+                                        { name: 'valor-parcela', value: formatCurrency(simulacao.valorParcela) }
+                                    ];
+
+                                    hiddenFields.forEach(field => {
+                                        let input = formEl.querySelector(`input[name="${field.name}"]`);
+                                        if (!input) {
+                                            input = document.createElement('input');
+                                            input.type = 'hidden';
+                                            input.name = field.name;
+                                            formEl.appendChild(input);
+                                        }
+                                        input.value = field.value;
+                                    });
+
                                     formEl.addEventListener("keyup", (e) => {
                                         if (e.target.matches("input[type=tel]")) {
                                             let value = e.target.value.replace(/\D/g, "");

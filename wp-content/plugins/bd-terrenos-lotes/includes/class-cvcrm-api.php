@@ -1,27 +1,37 @@
 <?php
+
 add_action('rest_api_init', function () {
     register_rest_route('cvcrm/v1', '/empreendimentos/(?P<id>\d+)', array(
         'methods' => 'GET',
         'callback' => 'cvcrm_get_empreendimento_by_id',
-        'permission_callback' => '__return_true'
+        'permission_callback' => function() {
+    return true; 
+},
+        'override' => true
     ));
-});
+}, 999);
 
 add_action('rest_api_init', function () {
     register_rest_route('cvcrm/v1', '/simulacoes', array(
         'methods' => 'GET',
         'callback' => 'cvcrm_get_simulacoes',
-        'permission_callback' => '__return_true'
+        'permission_callback' => function() {
+    return true; 
+},
+        'override' => true
     ));
-});
+}, 999);
 
 add_action('rest_api_init', function () {
     register_rest_route('cvcrm/v1', '/unidade/(?P<empreendimento>\d+)/(?P<id>\d+)', array(
         'methods' => 'GET',
         'callback' => 'cvcrm_get_unidade',
-        'permission_callback' => '__return_true'
+        'permission_callback' => function() {
+    return true; 
+},
+        'override' => true
     ));
-});
+}, 999);
 
 
 /**
@@ -36,6 +46,7 @@ function cvcrm_request($endpoint, $cache_key, $timeout = 15, $cache_ttl = 300) {
   $token = get_option('terreno_cvcrm_token', '');
 
   if (empty($email) || empty($token)) {
+    error_log("[CVCRM] ❌ Credenciais não configuradas - Email: " . ($email ? 'OK' : 'VAZIO') . " / Token: " . ($token ? 'OK' : 'VAZIO'));
     return new WP_Error('cvcrm_config_error', 'Email e Token da API CV CRM não configurados. Acesse Terrenos > Configurações.', array('status' => 500));
   }
 
@@ -47,9 +58,8 @@ function cvcrm_request($endpoint, $cache_key, $timeout = 15, $cache_ttl = 300) {
     return $cached;
   }
 
-  if (defined('WP_DEBUG') && WP_DEBUG) {
-    error_log("🌎 [CVCRM] Consultando URL: $endpoint");
-  }
+  error_log("🌎 [CVCRM] Consultando URL: $endpoint");
+  error_log("🔑 [CVCRM] Email: " . substr($email, 0, 3) . "... / Token: " . substr($token, 0, 10) . "...");
 
   $response = wp_remote_get($endpoint, array(
     'headers' => array(
@@ -61,26 +71,36 @@ function cvcrm_request($endpoint, $cache_key, $timeout = 15, $cache_ttl = 300) {
   ));
 
   if (is_wp_error($response)) {
-      error_log("[CVCRM] Erro WP: " . $response->get_error_message());
+      error_log("[CVCRM] ❌ Erro WP: " . $response->get_error_message());
       return new WP_Error('cvcrm_error', 'Erro na comunicação com CVCRM', array('status' => 500));
   }
 
   $status_code = wp_remote_retrieve_response_code($response);
   $body = wp_remote_retrieve_body($response);
 
-  if (defined('WP_DEBUG') && WP_DEBUG) {
-      error_log("[CVCRM] Status: $status_code");
-      error_log("[CVCRM] Body: " . substr($body, 0, 500));
+  error_log("[CVCRM] Status: $status_code");
+  if ($status_code >= 400) {
+      error_log("[CVCRM] ❌ Erro HTTP $status_code - Body: " . substr($body, 0, 500));
   }
 
   if ($status_code >= 400) {
-      return new WP_Error('cvcrm_error', "Erro da API CVCRM (HTTP $status_code): $body", array('status' => $status_code));
+      // Retorna erro mais específico para facilitar debug
+      $error_message = "Erro da API CVCRM (HTTP $status_code)";
+      if ($status_code === 401) {
+          $error_message = "Credenciais inválidas ou expiradas (HTTP 401). Verifique Email e Token em Terrenos > Configurações.";
+      }
+      return new WP_Error('cvcrm_error', $error_message, array('status' => $status_code));
   }
 
   $data = json_decode($body, true);
 
-  
+  if (json_last_error() !== JSON_ERROR_NONE) {
+      error_log("[CVCRM] ❌ Erro ao decodificar JSON: " . json_last_error_msg());
+      return new WP_Error('cvcrm_error', 'Resposta inválida da API CVCRM', array('status' => 500));
+  }
+
   set_transient($cache_key, $data, $cache_ttl);
+  error_log("[CVCRM] ✅ Dados salvos em cache: $cache_key");
 
   return $data;
 }
@@ -88,7 +108,19 @@ function cvcrm_request($endpoint, $cache_key, $timeout = 15, $cache_ttl = 300) {
 function cvcrm_get_simulacoes($request) {
     $base_url = cvcrm_get_base_url();
     $url = "{$base_url}/api/v1/cvdw/simulacoes";
-    return cvcrm_request($url, 'cvcrm_simulacoes', 20, 86400);
+    $data = cvcrm_request($url, 'cvcrm_simulacoes', 20, 86400);
+
+    if (is_wp_error($data)) {
+        $error_data = $data->get_error_data();
+        $status = isset($error_data['status']) ? $error_data['status'] : 500;
+        return new WP_REST_Response(array(
+            'code' => $data->get_error_code(),
+            'message' => $data->get_error_message(),
+            'data' => array('status' => $status)
+        ), $status);
+    }
+
+    return $data;
 }
 
 function cvcrm_get_empreendimento_by_id($request) {
@@ -98,7 +130,13 @@ function cvcrm_get_empreendimento_by_id($request) {
     $data = cvcrm_request($url, "cvcrm_empreendimento_$id", 15, 86400);
 
     if (is_wp_error($data)) {
-        return $data;
+        $error_data = $data->get_error_data();
+        $status = isset($error_data['status']) ? $error_data['status'] : 500;
+        return new WP_REST_Response(array(
+            'code' => $data->get_error_code(),
+            'message' => $data->get_error_message(),
+            'data' => array('status' => $status)
+        ), $status);
     }
 
     return cvcrm_filter_empreendimento($data);
@@ -154,7 +192,13 @@ function cvcrm_get_unidade($request) {
     $data = cvcrm_request($url, "cvcrm_unidade_$id", 15, 86400);
 
     if (is_wp_error($data)) {
-        return $data;
+        $error_data = $data->get_error_data();
+        $status = isset($error_data['status']) ? $error_data['status'] : 500;
+        return new WP_REST_Response(array(
+            'code' => $data->get_error_code(),
+            'message' => $data->get_error_message(),
+            'data' => array('status' => $status)
+        ), $status);
     }
 
     return cvcrm_filter_unidade($data);
@@ -178,15 +222,30 @@ add_action('rest_api_init', function () {
     register_rest_route('cvcrm/v1', '/unidades/(?P<empreendimento_id>\d+)', array(
         'methods' => 'GET',
         'callback' => 'cvcrm_get_unidades_by_empreendimento',
-        'permission_callback' => '__return_true'
+        'permission_callback' => function() {
+    return true; 
+},
+        'override' => true
     ));
-});
+}, 999);
 
 function cvcrm_get_unidades_by_empreendimento($request) {
     $empreendimento_id = intval($request['empreendimento_id']);
     $base_url = cvcrm_get_base_url();
     $url = "{$base_url}/api/v1/cvdw/unidades?a_partir_referencia={$empreendimento_id}";
-    return cvcrm_request($url, "cvcrm_unidades_emp_$empreendimento_id", 15, 300);
+    $data = cvcrm_request($url, "cvcrm_unidades_emp_$empreendimento_id", 15, 300);
+
+    if (is_wp_error($data)) {
+        $error_data = $data->get_error_data();
+        $status = isset($error_data['status']) ? $error_data['status'] : 500;
+        return new WP_REST_Response(array(
+            'code' => $data->get_error_code(),
+            'message' => $data->get_error_message(),
+            'data' => array('status' => $status)
+        ), $status);
+    }
+
+    return $data;
 }
 
 // Endpoint para tabela de preços
@@ -194,9 +253,12 @@ add_action('rest_api_init', function () {
     register_rest_route('cvcrm/v1', '/tabelas/(?P<empreendimento_id>\d+)/(?P<tabela_id>\d+)', array(
         'methods' => 'GET',
         'callback' => 'cvcrm_get_tabela_preco',
-        'permission_callback' => '__return_true'
+        'permission_callback' => function() {
+    return true; 
+},
+        'override' => true
     ));
-});
+}, 999);
 
 /**
  * Busca tabela de preços do CV CRM
@@ -213,7 +275,13 @@ function cvcrm_get_tabela_preco($request) {
     $data = cvcrm_request($url, "cvcrm_tabela_preco_{$empreendimento_id}_{$tabela_id}", 15, 300);
 
     if (is_wp_error($data)) {
-        return $data;
+        $error_data = $data->get_error_data();
+        $status = isset($error_data['status']) ? $error_data['status'] : 500;
+        return new WP_REST_Response(array(
+            'code' => $data->get_error_code(),
+            'message' => $data->get_error_message(),
+            'data' => array('status' => $status)
+        ), $status);
     }
 
     return cvcrm_filter_tabela_preco($data);

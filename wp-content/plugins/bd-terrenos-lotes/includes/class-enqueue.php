@@ -70,6 +70,14 @@ class TerrenosLotes_Enqueue {
             true
         );
 
+        wp_enqueue_script(
+            'terrenos-lotes-faq',
+            plugin_dir_url(dirname(__FILE__)) . 'assets/js/frontend/faq.js',
+            array(),
+            '1.0.0',
+            true
+        );
+
         if (is_singular()) {
             $api_key = get_option('terreno_google_maps_api_key', '');
 

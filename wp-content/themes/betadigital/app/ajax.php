@@ -1,4 +1,20 @@
 <?php
+/**
+ * ============================================================================
+ * CÓDIGO MOVIDO PARA O PLUGIN BD-TERRENOS-LOTES
+ * ============================================================================
+ *
+ * Todas as rotas REST API e funções relacionadas ao CV CRM foram movidas para:
+ * /plugins/bd-terrenos-lotes/includes/class-cvcrm-api.php
+ *
+ * Este arquivo foi mantido para compatibilidade, mas todo código foi comentado.
+ * Se não houver problemas após alguns dias, este arquivo pode ser removido.
+ *
+ * Data da mudança: 2026-01-29
+ * ============================================================================
+ */
+
+/*
 add_action('rest_api_init', function () {
     register_rest_route('cvcrm/v1', '/empreendimentos/(?P<id>\d+)', array(
         'methods' => 'GET',
@@ -24,9 +40,6 @@ add_action('rest_api_init', function () {
 });
 
 
-/**
- * Retorna a URL base da API CV CRM
- */
 function cvcrm_get_base_url() {
   return rtrim(get_option('terreno_cvcrm_base_url', 'https://montenegro.cvcrm.com.br'), '/');
 }
@@ -79,7 +92,7 @@ function cvcrm_request($endpoint, $cache_key, $timeout = 15, $cache_ttl = 300) {
 
   $data = json_decode($body, true);
 
-  
+
   set_transient($cache_key, $data, $cache_ttl);
 
   return $data;
@@ -198,11 +211,6 @@ add_action('rest_api_init', function () {
     ));
 });
 
-/**
- * Busca tabela de preços do CV CRM
- * Endpoint: /wp-json/cvcrm/v1/tabelas/{idEmpreendimento}/{idTabela}
- * Retorna: { empreendimento, idtabela, tabela, unidades: [{bloco, unidade, area_privativa, valor_total, situacao}] }
- */
 function cvcrm_get_tabela_preco($request) {
     $empreendimento_id = intval($request['empreendimento_id']);
     $tabela_id = intval($request['tabela_id']);
@@ -219,9 +227,6 @@ function cvcrm_get_tabela_preco($request) {
     return cvcrm_filter_tabela_preco($data);
 }
 
-/**
- * Filtra dados da tabela de preços para retornar apenas campos necessários
- */
 function cvcrm_filter_tabela_preco($data) {
     $new_data = $data[0];
     $filtered = array(
@@ -247,4 +252,5 @@ function cvcrm_filter_tabela_preco($data) {
 
     return $filtered;
 }
+*/
 
