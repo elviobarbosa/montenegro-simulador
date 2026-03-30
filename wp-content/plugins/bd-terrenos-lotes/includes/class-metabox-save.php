@@ -204,9 +204,54 @@ class TerrenosLotes_MetaBoxSave {
                 update_post_meta($post_id, '_terreno_image_opacity', $image_opacity);
             }
 
-            
+            // ========================================
+            // Limpar cache ao salvar
+            // ========================================
+            $this->clear_cvcrm_cache();
+
         } catch (Exception $e) {
         }
+    }
+
+    /**
+     * Limpa transients do CVCRM e object cache
+     */
+    private function clear_cvcrm_cache() {
+        global $wpdb;
+
+        error_log('[BD Terrenos] clear_cvcrm_cache() chamado');
+
+        // 1. Limpar transients CVCRM
+        $transients = $wpdb->get_col(
+            "SELECT option_name FROM $wpdb->options WHERE option_name LIKE '_transient_cvcrm_%'"
+        );
+
+        error_log('[BD Terrenos] Transients encontrados: ' . count($transients));
+
+        foreach ($transients as $option_name) {
+            $key = str_replace('_transient_', '', $option_name);
+            delete_transient($key);
+            error_log('[BD Terrenos] Removido: ' . $key);
+        }
+
+        // 2. Limpar object cache do WordPress
+        wp_cache_flush();
+
+        // 3. Limpar cache LiteSpeed (Hostinger)
+        do_action('litespeed_purge_all');
+        if (class_exists('LiteSpeed_Cache_API')) {
+            LiteSpeed_Cache_API::purge_all();
+            error_log('[BD Terrenos] LiteSpeed cache purgado via API');
+        }
+        if (function_exists('litespeed_purge_all')) {
+            litespeed_purge_all();
+            error_log('[BD Terrenos] LiteSpeed cache purgado via função');
+        }
+        error_log('[BD Terrenos] LiteSpeed purge_all action disparado');
+
+        // 4. Rewrite rules
+        flush_rewrite_rules();
+        error_log('[BD Terrenos] Cache flush e rewrite rules concluídos');
     }
 
     /**

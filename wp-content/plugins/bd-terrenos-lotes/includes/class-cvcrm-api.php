@@ -5,7 +5,7 @@ add_action('rest_api_init', function () {
         'methods' => 'GET',
         'callback' => 'cvcrm_get_empreendimento_by_id',
         'permission_callback' => function() {
-    return true; 
+    return true;
 },
         'override' => true
     ));
@@ -16,7 +16,7 @@ add_action('rest_api_init', function () {
         'methods' => 'GET',
         'callback' => 'cvcrm_get_simulacoes',
         'permission_callback' => function() {
-    return true; 
+    return true;
 },
         'override' => true
     ));
@@ -27,7 +27,7 @@ add_action('rest_api_init', function () {
         'methods' => 'GET',
         'callback' => 'cvcrm_get_unidade',
         'permission_callback' => function() {
-    return true; 
+    return true;
 },
         'override' => true
     ));
@@ -125,17 +125,21 @@ function cvcrm_get_simulacoes($request) {
 
 function cvcrm_get_empreendimento_by_id($request) {
     $id = intval($request['id']);
+    $limite = intval($request->get_param('limite_dados_unidade') ?? 200);
+
     $base_url = cvcrm_get_base_url();
-    $url = "{$base_url}/api/v1/cadastros/empreendimentos/{$id}";
-    $data = cvcrm_request($url, "cvcrm_empreendimento_$id", 15, 86400);
+    $url = "{$base_url}/api/v1/cadastros/empreendimentos/{$id}?limite_dados_unidade={$limite}";
+
+    // Inclui o limite na chave do cache para não misturar resultados
+    $data = cvcrm_request($url, "cvcrm_empreendimento_{$id}_lim{$limite}", 15, 86400);
 
     if (is_wp_error($data)) {
         $error_data = $data->get_error_data();
         $status = isset($error_data['status']) ? $error_data['status'] : 500;
         return new WP_REST_Response(array(
-            'code' => $data->get_error_code(),
+            'code'    => $data->get_error_code(),
             'message' => $data->get_error_message(),
-            'data' => array('status' => $status)
+            'data'    => array('status' => $status)
         ), $status);
     }
 
@@ -223,7 +227,7 @@ add_action('rest_api_init', function () {
         'methods' => 'GET',
         'callback' => 'cvcrm_get_unidades_by_empreendimento',
         'permission_callback' => function() {
-    return true; 
+    return true;
 },
         'override' => true
     ));
@@ -254,7 +258,7 @@ add_action('rest_api_init', function () {
         'methods' => 'GET',
         'callback' => 'cvcrm_get_tabela_preco',
         'permission_callback' => function() {
-    return true; 
+    return true;
 },
         'override' => true
     ));
@@ -315,4 +319,3 @@ function cvcrm_filter_tabela_preco($data) {
 
     return $filtered;
 }
-

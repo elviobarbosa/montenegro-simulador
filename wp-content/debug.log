@@ -2247,3 +2247,70 @@ Stack trace:
 [29-Jan-2026 15:56:25 UTC] Automatic updates complete.
 [29-Jan-2026 16:26:29 UTC] 💾 [CVCRM] Cache HIT para cvcrm_empreendimento_38
 [29-Jan-2026 16:42:07 UTC] 💾 [CVCRM] Cache HIT para cvcrm_empreendimento_38
+[02-Mar-2026 13:32:24 UTC] Automatic updates starting...
+[02-Mar-2026 13:32:25 UTC]   Automatic plugin updates starting...
+[02-Mar-2026 13:32:25 UTC]   Automatic plugin updates complete.
+[02-Mar-2026 13:32:26 UTC] Automatic updates complete.
+[02-Mar-2026 13:34:53 UTC] [BD Terrenos] clear_cvcrm_cache() chamado
+[02-Mar-2026 13:34:53 UTC] [BD Terrenos] Transients encontrados: 0
+[02-Mar-2026 13:34:53 UTC] [BD Terrenos] LiteSpeed purge_all action disparado
+[02-Mar-2026 13:34:53 UTC] [BD Terrenos] Cache flush e rewrite rules concluídos
+[02-Mar-2026 13:36:38 UTC] [BD Terrenos] clear_cvcrm_cache() chamado
+[02-Mar-2026 13:36:38 UTC] [BD Terrenos] Transients encontrados: 0
+[02-Mar-2026 13:36:38 UTC] [BD Terrenos] LiteSpeed purge_all action disparado
+[02-Mar-2026 13:36:38 UTC] [BD Terrenos] Cache flush e rewrite rules concluídos
+[02-Mar-2026 13:36:40 UTC] 🌎 [CVCRM] Consultando URL: https://montenegro.cvcrm.com.br/api/v1/cadastros/empreendimentos/26
+[02-Mar-2026 13:36:40 UTC] 🔑 [CVCRM] Email: elv... / Token: 247db4c96f...
+[02-Mar-2026 13:36:41 UTC] [CVCRM] Status: 401
+[02-Mar-2026 13:36:41 UTC] [CVCRM] ❌ Erro HTTP 401 - Body: {"error":"E-mail e\/ou token incorreto(s).","code":401}
+[02-Mar-2026 13:36:44 UTC] 🌎 [CVCRM] Consultando URL: https://montenegro.cvcrm.com.br/api/v1/cadastros/empreendimentos/26
+[02-Mar-2026 13:36:44 UTC] 🔑 [CVCRM] Email: elv... / Token: 247db4c96f...
+[02-Mar-2026 13:36:45 UTC] [CVCRM] Status: 401
+[02-Mar-2026 13:36:45 UTC] [CVCRM] ❌ Erro HTTP 401 - Body: {"error":"E-mail e\/ou token incorreto(s).","code":401}
+[02-Mar-2026 13:37:16 UTC] 🌎 [CVCRM] Consultando URL: https://montenegro.cvcrm.com.br/api/v1/cadastros/empreendimentos/26
+[02-Mar-2026 13:37:16 UTC] 🔑 [CVCRM] Email: elv... / Token: 247db4c96f...
+[02-Mar-2026 13:37:17 UTC] [CVCRM] Status: 401
+[02-Mar-2026 13:37:17 UTC] [CVCRM] ❌ Erro HTTP 401 - Body: {"error":"E-mail e\/ou token incorreto(s).","code":401}
+[02-Mar-2026 13:38:04 UTC] 🌎 [CVCRM] Consultando URL: https://montenegro.cvcrm.com.br/api/v1/cadastros/empreendimentos/26
+[02-Mar-2026 13:38:04 UTC] 🔑 [CVCRM] Email: elv... / Token: 38d873d30a...
+[02-Mar-2026 13:38:04 UTC] [CVCRM] Status: 401
+[02-Mar-2026 13:38:04 UTC] [CVCRM] ❌ Erro HTTP 401 - Body: {"error":"E-mail e\/ou token incorreto(s).","code":401}
+[02-Mar-2026 13:38:07 UTC] 🌎 [CVCRM] Consultando URL: https://montenegro.cvcrm.com.br/api/v1/cadastros/empreendimentos/26
+[02-Mar-2026 13:38:07 UTC] 🔑 [CVCRM] Email: elv... / Token: 38d873d30a...
+[02-Mar-2026 13:38:07 UTC] [CVCRM] Status: 401
+[02-Mar-2026 13:38:07 UTC] [CVCRM] ❌ Erro HTTP 401 - Body: {"error":"E-mail e\/ou token incorreto(s).","code":401}
+[02-Mar-2026 13:38:09 UTC] 🌎 [CVCRM] Consultando URL: https://montenegro.cvcrm.com.br/api/v1/cadastros/empreendimentos/26
+[02-Mar-2026 13:38:09 UTC] 🔑 [CVCRM] Email: elv... / Token: 38d873d30a...
+[02-Mar-2026 13:38:10 UTC] [CVCRM] Status: 401
+[02-Mar-2026 13:38:10 UTC] [CVCRM] ❌ Erro HTTP 401 - Body: {"error":"E-mail e\/ou token incorreto(s).","code":401}
+[02-Mar-2026 13:38:27 UTC] 🌎 [CVCRM] Consultando URL: https://montenegro.cvcrm.com.br/api/v1/cadastros/empreendimentos/26
+[02-Mar-2026 13:38:27 UTC] 🔑 [CVCRM] Email: ana... / Token: 38d873d30a...
+[02-Mar-2026 13:38:30 UTC] [CVCRM] Status: 200
+[02-Mar-2026 13:38:30 UTC] [CVCRM] ✅ Dados salvos em cache: cvcrm_empreendimento_26
+[02-Mar-2026 13:38:37 UTC] 🌎 [CVCRM] Consultando URL: https://montenegro.cvcrm.com.br/api/v1/cadastros/empreendimentos/26/tabelasdepreco/236
+[02-Mar-2026 13:38:37 UTC] 🔑 [CVCRM] Email: ana... / Token: 38d873d30a...
+[02-Mar-2026 13:38:38 UTC] [CVCRM] Status: 200
+[02-Mar-2026 13:38:38 UTC] [CVCRM] ✅ Dados salvos em cache: cvcrm_tabela_preco_26_236
+[02-Mar-2026 13:38:38 UTC] PHP Warning:  Undefined array key 0 in /Users/elviobarbosa/Sites/montenegro-simulador/wp-content/plugins/bd-terrenos-lotes/includes/class-cvcrm-api.php on line 294
+[02-Mar-2026 13:38:38 UTC] 💾 [CVCRM] Cache HIT para cvcrm_tabela_preco_26_236
+[02-Mar-2026 13:38:38 UTC] PHP Warning:  Undefined array key 0 in /Users/elviobarbosa/Sites/montenegro-simulador/wp-content/plugins/bd-terrenos-lotes/includes/class-cvcrm-api.php on line 294
+[02-Mar-2026 13:38:38 UTC] 🌎 [CVCRM] Consultando URL: https://montenegro.cvcrm.com.br/api/v1/cvdw/unidades?a_partir_referencia=26
+[02-Mar-2026 13:38:38 UTC] 🔑 [CVCRM] Email: ana... / Token: 38d873d30a...
+[02-Mar-2026 13:38:39 UTC] [CVCRM] Status: 200
+[02-Mar-2026 13:38:39 UTC] [CVCRM] ✅ Dados salvos em cache: cvcrm_unidades_emp_26
+[17-Mar-2026 10:45:31 UTC] Automatic updates starting...
+[17-Mar-2026 10:45:32 UTC]   Automatic plugin updates starting...
+[17-Mar-2026 10:45:32 UTC]   Automatic plugin updates complete.
+[17-Mar-2026 10:45:32 UTC] Automatic updates complete.
+[30-Mar-2026 11:48:08 UTC] Automatic updates starting...
+[30-Mar-2026 11:48:09 UTC]   Automatic plugin updates starting...
+[30-Mar-2026 11:48:09 UTC]   Automatic plugin updates complete.
+[30-Mar-2026 11:48:09 UTC] Automatic updates complete.
+[30-Mar-2026 11:50:34 UTC] [BD Terrenos] clear_cvcrm_cache() chamado
+[30-Mar-2026 11:50:34 UTC] [BD Terrenos] Transients encontrados: 0
+[30-Mar-2026 11:50:34 UTC] [BD Terrenos] LiteSpeed purge_all action disparado
+[30-Mar-2026 11:50:34 UTC] [BD Terrenos] Cache flush e rewrite rules concluídos
+[30-Mar-2026 12:07:59 UTC] 🌎 [CVCRM] Consultando URL: https://montenegro.cvcrm.com.br/api/v1/cadastros/empreendimentos/26?limite_dados_unidade=200
+[30-Mar-2026 12:07:59 UTC] 🔑 [CVCRM] Email: ana... / Token: 38d873d30a...
+[30-Mar-2026 12:08:05 UTC] [CVCRM] Status: 200
+[30-Mar-2026 12:08:05 UTC] [CVCRM] ✅ Dados salvos em cache: cvcrm_empreendimento_26_lim200
